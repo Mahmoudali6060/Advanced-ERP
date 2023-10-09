@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Data\Data\Data.csproj" />
+    <ProjectReference Include="..\Setting\Setting\Setting.csproj" />
+    <ProjectReference Include="..\Shared\Shared\Shared.csproj" />
+    <ProjectReference Include="..\UnitOfWork\UnitOfWork.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Setup\Helpers\" />
+  </ItemGroup>
+
+</Project>

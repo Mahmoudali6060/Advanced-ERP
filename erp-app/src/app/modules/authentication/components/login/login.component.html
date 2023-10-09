@@ -1,0 +1,73 @@
+
+
+<section class=" hero">
+    <div class="u-flex-end mb-4">
+        <div class="lang-switch" > 
+            <app-change-langague></app-change-langague>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-6 col-lg-5 d-none d-md-block">
+                <img  src="assets/images/Computer login-rafiki.svg" alt="login form" class="img-fluid" />
+                <!-- <div class="vl">
+                  </div> -->
+
+            </div>
+            
+            <div class="col-md-6 col-lg-7 d-flex align-items-center ">
+                <div class="card-body p-lg-5 text-black ">
+                    <div class="row ">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9">
+                            <h2>{{'Authentication.WelcomeTo'|translate}}<span class="base">&nbsp;{{'Authentication.Base'|translate}}</span></h2>
+                        </div>
+                    </div>
+                    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+                        <div class="row align-items-center">
+                            <div class="col-md-3"></div>
+                            <div class="form-group col-md-6">
+                                <label translate>Authentication.Username</label>
+                                <input class="au-input au-input--full" ngModel type="text" name="userName"
+                                    placeholder="{{'Authentication.Username' |translate}}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="form-group col-md-6">
+                                <label translate>Authentication.Password</label>
+                                <input class="au-input au-input--full" ngModel type="password" name="password"
+                                    placeholder="{{'Authentication.Password' |translate}}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="login-checkbox col-md-6">
+                                <label> <input type="checkbox" name="remember">{{'Authentication.RememberMe'
+                                    |translate}}
+                                </label>
+                                <label> <a [routerLink]="['/forgotpassword']">{{'Authentication.ForgotPassword'|translate}}</a></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <button class=" btn btn-outline-primary col-md-12" (click)="back()" type="button" translate>
+                                    General.back</button>
+                            </div>
+                            <div class="col-md-3">
+                                <button [disabled]="loginForm.invalid" class=" btn btn-outline-primary  col-md-12"
+                                type="submit" translate>
+                                Authentication.LogIn</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            
+        </div>
+
+    </div>
+</section>

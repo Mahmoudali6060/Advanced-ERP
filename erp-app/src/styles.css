@@ -1,0 +1,236 @@
+/* You can add global styles to this file, and also import other style files */
+
+.table-header-bc {
+    background-color: #484545;
+}
+
+.table-header-fc {
+    color: white !important;
+}
+
+.btn-link {
+    cursor: pointer;
+}
+
+body::-webkit-scrollbar {
+    width: 10px;
+    /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+    background: rgb(223, 222, 221);
+    /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    /* color of the scroll thumb  rgb(151, 151, 255);*/
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
+    /* border: 3px solid orange; */
+    /* creates padding around scroll thumb */
+}
+
+.menu-sidebar2::-webkit-scrollbar {
+    width: 4px;
+    /* width of the entire scrollbar */
+}
+
+.menu-sidebar2::-webkit-scrollbar-track {
+    background: rgb(223, 222, 221);
+    /* color of the tracking area */
+}
+
+.menu-sidebar2::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    /* color of the scroll thumb */
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
+    /* border: 3px solid orange; */
+    /* creates padding around scroll thumb */
+}
+
+
+
+
+
+
+.btn-sm {
+    margin: 5px;
+}
+
+.status-in-progress {
+    /* color: black; */
+    color: rgb(255, 191, 0);
+    font-weight: bold;
+}
+
+.status-approved {
+    /* color: white; */
+    color: blue;
+    font-weight: bold;
+}
+
+.status-waiting-correction {
+    /* color: white; */
+    color: rgb(156, 108, 108);
+    font-weight: bold;
+}
+
+.status-completed {
+    /* color: white; */
+    color: green;
+    font-weight: bold;
+}
+
+.status-canceled {
+    /* color: white; */
+    color: red;
+    font-weight: bold;
+}
+
+.link {
+    color: blue !important;
+    text-decoration: underline !important;
+    cursor: pointer;
+}
+
+i:hover {
+    /* font-size: 30px !important; */
+    cursor: pointer;
+}
+
+
+@media (min-width: 768px) {
+
+    /* show 3 items */
+    .carousel-inner .active,
+    .carousel-inner .active+.carousel-item,
+    .carousel-inner .active+.carousel-item+.carousel-item,
+    .carousel-inner .active+.carousel-item+.carousel-item+.carousel-item {
+        display: block;
+    }
+
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left)+.carousel-item,
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left)+.carousel-item+.carousel-item,
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left)+.carousel-item+.carousel-item+.carousel-item {
+        transition: none;
+    }
+
+    .carousel-inner .carousel-item-next,
+    .carousel-inner .carousel-item-prev {
+        position: relative;
+        transform: translate3d(0, 0, 0);
+    }
+
+    .carousel-inner .active.carousel-item+.carousel-item+.carousel-item+.carousel-item+.carousel-item {
+        position: absolute;
+        top: 0;
+        right: -25%;
+        z-index: -1;
+        display: block;
+        visibility: visible;
+    }
+
+    /* left or forward direction */
+    .active.carousel-item-left+.carousel-item-next.carousel-item-left,
+    .carousel-item-next.carousel-item-left+.carousel-item,
+    .carousel-item-next.carousel-item-left+.carousel-item+.carousel-item,
+    .carousel-item-next.carousel-item-left+.carousel-item+.carousel-item+.carousel-item,
+    .carousel-item-next.carousel-item-left+.carousel-item+.carousel-item+.carousel-item+.carousel-item {
+        position: relative;
+        transform: translate3d(-100%, 0, 0);
+        visibility: visible;
+    }
+
+    /* farthest right hidden item must be abso position for animations */
+    .carousel-inner .carousel-item-prev.carousel-item-right {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        display: block;
+        visibility: visible;
+    }
+
+    /* right or prev direction */
+    .active.carousel-item-right+.carousel-item-prev.carousel-item-right,
+    .carousel-item-prev.carousel-item-right+.carousel-item,
+    .carousel-item-prev.carousel-item-right+.carousel-item+.carousel-item,
+    .carousel-item-prev.carousel-item-right+.carousel-item+.carousel-item+.carousel-item,
+    .carousel-item-prev.carousel-item-right+.carousel-item+.carousel-item+.carousel-item+.carousel-item {
+        position: relative;
+        transform: translate3d(50%, 0, 0);
+        visibility: visible;
+        display: block;
+        visibility: visible;
+    }
+
+}
+
+
+/* Bootstrap Lightbox using Modal */
+
+#profile-grid {
+    overflow: auto;
+    white-space: normal;
+}
+
+#profile-grid .profile {
+    padding-bottom: 40px;
+}
+
+#profile-grid .panel {
+    padding: 0
+}
+
+#profile-grid .panel-body {
+    padding: 15px
+}
+
+#profile-grid .profile-name {
+    font-weight: bold;
+}
+
+#profile-grid .thumbnail {
+    margin-bottom: 6px;
+}
+
+#profile-grid .panel-thumbnail {
+    overflow: hidden;
+}
+
+#profile-grid .img-rounded {
+    border-radius: 4px 4px 0 0;
+}
+
+/* .MultiCarousel { float: left; overflow: hidden; padding: 15px; width: 100%; position:relative; }
+    .MultiCarousel .MultiCarousel-inner { transition: 1s ease all; float: left; }
+        .MultiCarousel .MultiCarousel-inner .item { float: left;}
+        .MultiCarousel .MultiCarousel-inner .item > div { text-align: center; padding:10px; margin:10px; background:#f1f1f1; color:#666;}
+    .MultiCarousel .leftLst, .MultiCarousel .rightLst { position:absolute; border-radius:50%;top:calc(50% - 20px); }
+    .MultiCarousel .leftLst { left:0; }
+    .MultiCarousel .rightLst { right:0; }
+    
+        .MultiCarousel .leftLst.over, .MultiCarousel .rightLst.over { pointer-events: none; background:#ccc; } */
+.filter-section {
+    /* background-color: white; */
+    margin-bottom: 5px;
+}
+
+.lbl-danger {
+    color: red;
+}
+
+.zmdi-delete {
+    color: #c70101 !important;
+}
+
+.zmdi-edit {
+    color: #0a600a !important;
+}
+
+.fa-eye{
+   color:  #464687 !important;
+}

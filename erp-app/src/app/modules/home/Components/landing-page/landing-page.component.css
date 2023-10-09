@@ -1,0 +1,68 @@
+.imgLogo{
+    width: 20%;
+    height: auto;
+    margin-left: 20px;
+}
+.changeLang{
+    color: white !important;
+    margin-top: 10px;
+}
+P {
+    color: white;
+}
+.containerRequest{
+margin-left: 4%;
+margin-right: 4%;
+
+
+}
+.dropdown-item {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8)!important;
+}
+.navbar-expand-lg{
+    justify-content: space-between;
+}
+
+.fontColorInfo{
+    color: black;
+}
+.fixheightInfo{
+    height: 300px;
+}
+.nav-link{
+    cursor: pointer;
+}
+/* .dropdown-toggle{
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8)!important;
+} */
+::ng-deep .p-carousel, .p-carousel-content {
+    direction: ltr !important;
+}
+::ng-deep .p-component, .p-component * {
+    justify-content: center !important;
+}
+::ng-deep .p-carousel, .p-carousel-items-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+/* ::ng-deep .p-carousel  .p-carousel-items-content .p-carousel-items-container .p-carousel-item::after {
+    
+    flex: 1 0 24.5%!important;
+} */
+
+::ng-deep .p-carousel .p-carousel-items-content .p-carousel-items-container .p-carousel-item  {
+    
+    flex: 1 0 26.5%!important;
+}
+.product-image{
+    width: 150px;
+    height: 100px;
+    max-width: 150px;
+    max-height: 100px;
+}
+.direction{
+    direction: ltr !important;
+}

@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="title-5 m-b-35">{{'Settings.Advertisments' | translate}}</h3>
+        <div class="table-data__tool">
+            <div class="table-data__tool-right">
+                <button [routerLink]="['/setup/add-advertisment']" class="au-btn au-btn-icon au-btn--black au-btn--small">
+                    <i class="zmdi zmdi-plus"></i>{{'Settings.AddAdvertisment' | translate}}
+                </button>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-md-3 mb-3" *ngFor="let item of lstAdvertisment">
+            <div class="panel panel-default">
+                <div class="panel-thumbnail">
+                    <a href="#" title="Advertisment" class="thumb">
+                        <img class="img-fluid mx-auto d-block" src="{{serverUrl}}wwwroot/Images/Managment/{{item.media}}"
+                            alt="slide">
+                    </a>
+                </div>
+                <div>
+                <button type="button" [routerLink]="['/setup/edit-advertisment/'+item.id]" class="btn btn-outline-primary">
+                     {{'Settings.Edit' | translate}}</button>
+                 <button type="button" (click)="delete(item)" class="btn btn-outline-danger ml-1 mr-1">
+                         {{'Settings.Delete' | translate}}</button>
+                </div>
+
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

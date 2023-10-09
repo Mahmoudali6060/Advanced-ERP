@@ -1,0 +1,81 @@
+<div class="row">
+    <form #frm="ngForm" (ngSubmit)="save(frm)">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>{{'Settings.AboutUs' |translate}}</strong>
+                </div>
+                <div class="card-body card-block">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="MainTitle"  class=" form-control-label">{{'Settings.MainTitle' |translate}}</label>
+                                <input rows="1" [(ngModel)]="aboutUs.mainTitle"  class="form-control" name="MainTitle"
+                                    id="MainTitle"  >
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="FirstMainSection" class=" form-control-label">{{'Settings.FirstMainSection' |translate}}</label>
+                                <textarea rows="3" [(ngModel)]="aboutUs.firstMainSection" class="form-control" name="FirstMainSection"
+                                    id="FirstMainSection" ></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="SecondMainSection" class=" form-control-label">{{'Settings.SecondMainSection' |translate}}</label>
+                                <textarea rows="3" [(ngModel)]="aboutUs.secondMainSection" class="form-control" name="SecondMainSection"
+                                    id="SecondMainSection" ></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="ThirdMainSection" class=" form-control-label">{{'Settings.ThirdMainSection' |translate}}</label>
+                                <textarea rows="3" [(ngModel)]="aboutUs.thirdMainSection" class="form-control" name="ThirdMainSection"
+                                    id="ThirdMainSection" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="SecondTitle" class=" form-control-label">{{'Settings.SecondTitle' |translate}}</label>
+                                <input rows="1" [(ngModel)]="aboutUs.secondTitle" class="form-control" name="SecondTitle"
+                                    id="SecondTitle"  >
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="ThirdTitle" class=" form-control-label">{{'Settings.ThirdTitle' |translate}}</label>
+                                <input rows="1" [(ngModel)]="aboutUs.thirdTitle" class="form-control" name="ThirdTitle"
+                                    id="ThirdTitle" >
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="SecondTitleSection" class=" form-control-label">{{'Settings.SecondTitleSection' |translate}}</label>
+                                <textarea rows="4" [(ngModel)]="aboutUs.secondTitleSection" class="form-control" name="SecondTitleSection"
+                                    id="SecondTitleSection" ></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="ThirdTitleSection" class=" form-control-label">{{'Settings.ThirdTitleSection' |translate}}</label>
+                                <textarea rows="4" [(ngModel)]="aboutUs.thirdTitleSection" class="form-control" name="ThirdTitleSection"
+                                    id="ThirdTitleSection" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-container p-3">
+                    <button type="submit" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
+                        <i class="fa fa-dot-circle-o"></i>{{'Settings.SaveChanges' |translate}}
+                    </button>
+                    <button type="reset" class="btn btn-danger mr-1" (click)="cancel()">
+                        <i class="fa fa-ban"></i>{{'Settings.Cancel' |translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

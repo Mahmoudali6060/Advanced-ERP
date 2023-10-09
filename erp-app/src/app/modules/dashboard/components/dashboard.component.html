@@ -1,0 +1,310 @@
+<h2>{{'SideMenu.Dashboard' | translate}} </h2>
+<div class="container-fluid">
+    <!-- <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">{{'Dashboard.AllUsers' | translate}}</i>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons ">
+                            <h5>{{totalUsers}}</h5> <span>Users &nbsp;<a
+                                    *ngIf="userProfile.userTypeId==userTypeEnum.Admin"
+                                    [routerLink]="['/user/user-list']">{{'Dashboard.ReadMore' | translate}} </a></span>
+                        </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">{{'Dashboard.ShippingLines' | translate}} </i>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">
+                            <h5>{{companyTotalDetails.totalShippingLine}}</h5><span>{{'Dashboard.ShippingLines' |
+                                translate}} &nbsp;<a [routerLink]="['/user/shipping-line-list']">{{'Dashboard.ReadMore'
+                                    | translate}}</a></span>
+                        </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-danger card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">{{'Dashboard.Importer/Exporter' | translate}}</i>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">
+                            <h5>{{companyTotalDetails.totalImporterExporter}}</h5><span>{{'Dashboard.Importer/Exporter'
+                                | translate}} &nbsp;<a [routerLink]="['/user/user-list']">{{'Dashboard.ReadMore' |
+                                    translate}}</a></span>
+                        </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-info card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">{{'Dashboard.Requests' | translate}}</i>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">
+                            <h5>{{baseRequestTotalDetails.totalRequests}}</h5><span>Requests &nbsp;<a
+                                    [routerLink]="['/base-management/base-request-list']">{{'Dashboard.ReadMore' |
+                                    translate}}</a></span>
+                        </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4"></div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card card-chart">
+                <div class="card-header card-header-success">
+                    <div class="ct-chart" id="dailySalesChart"></div>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">{{'Dashboard.ShippingOffers' | translate}} </h4>
+                    <p class="card-category">
+                        <span class="text-success"><i
+                                class="fa fa-long-arrow-up"></i></span>{{'Dashboard.Selectsuitableoffertorequest' |
+                        translate}} <a [routerLink]="['/base-management/shiping-offer-list']">{{'Dashboard.ReadMore'
+                            | translate}}</a>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">{{'Dashboard.AllOffers' | translate}} <h5>{{totalOffers}}</h5></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-chart">
+                <div class="card-header card-header-warning">
+                    <div class="ct-chart" id="websiteViewsChart"></div>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">{{'Dashboard.ShippingRequests' | translate}} </h4>
+                    <p class="card-category">{{'Dashboard.Youcanviewrequests' | translate}} <a
+                            [routerLink]="['/base-management/base-request-list']">{{'Dashboard.ReadMore' |
+                            translate}}</a> </p>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">{{'Dashboard.TotalShippingRequests' | translate}} <h5>
+                                {{baseRequestTotalDetails.bookingRequests}}</h5></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-chart">
+                <div class="card-header card-header-danger">
+                    <div class="ct-chart" id="completedTasksChart"></div>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">{{'Dashboard.RegisterationRequests' | translate}}</h4>
+                    <p class="card-category">{{'Dashboard.Youcanviewrequests' | translate}} <a
+                            [routerLink]="['/base-management/base-request-list']">{{'Dashboard.ReadMore' |
+                            translate}}</a> </p>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">{{'Dashboard.TotalRegisterationRequests' | translate}}<h5>
+                                {{baseRequestTotalDetails.registerationRequests}}</h5></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <h3 class="col-12">{{'Dashboard.TotalRequestsForEveryStatus' | translate}}</h3>
+    </div>
+    <br>
+    <div class="row">
+        <p-chart type="pie" [data]="dataWithStatus" [options]="chartOptions" [style]="{'width': '50%'}"></p-chart>
+        <p-chart type="doughnut" [data]="dataWithTypes" [options]="chartOptions" [style]="{'width': '50%'}"></p-chart>
+    </div> -->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="row mt-5"></div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-tabs card-header-primary">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                                <span class="nav-tabs-title">Request Status: </span>
+                                <ul class="nav nav-tabs" data-tabs="tabs">
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link" (click)="getRequests(baseRequestStatusEnum.InProgress)"  data-toggle="tab">
+                                            <i class="material-icons"></i> Inprogress
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link" (click)="getRequests(baseRequestStatusEnum.WaitingForCorrection)" data-toggle="tab">
+                                            <i class="material-icons"></i> Waiting For Correction
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link" (click)="getRequests(baseRequestStatusEnum.Approved)"data-toggle="tab">
+                                            <i class="material-icons"></i> Approved
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link" (click)="getRequests(baseRequestStatusEnum.WaitingForBL)" data-toggle="tab">
+                                            <i class="material-icons"></i> Waiting For BL
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link" (click)="getRequests(baseRequestStatusEnum.WaitingForPaymnet)" data-toggle="tab">
+                                            <i class="material-icons"></i> Waiting For Paymnet
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link" (click)="getRequests(baseRequestStatusEnum.WaitingForOriginalBL)" data-toggle="tab">
+                                            <i class="material-icons"></i> Waiting For Original BL
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link" (click)="getRequests(baseRequestStatusEnum.Closed)" data-toggle="tab">
+                                            <i class="material-icons"></i> Closed
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" *ngIf="noOfRequests == 0 ">
+                                <h5>Please select Request status</h5>  
+                              </div>
+                            <div class="tab-pane active" *ngIf="noOfRequests != 0 ">
+                                <h5>Total Requests  {{noOfRequests}}</h5>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+<!-- <div class="row">
+    <div class="col-md-12">
+        <div class="overview-wrap">
+            <h2 class="title-1">{{'dashboard.overview' |translate}}</h2>
+        </div>
+    </div>
+</div>
+<div class="row m-t-25">
+    <div class="col-sm-6 col-lg-3">
+        <div class="overview-item overview-item--c1">
+            <div class="overview__inner">
+                <div class="overview-box clearfix">
+                    <div class="icon">
+                        <i class="zmdi zmdi-account-o"></i>
+                    </div>
+                    <div class="text">
+                        <h2>{{totalUsers}}</h2>
+                        <span>{{'dashboard.users' |translate}}</span>
+                    </div>
+                </div>
+                <div class="overview-chart">
+                    <canvas id="widgetChart1"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="overview-item approved">
+            <div class="overview__inner">
+                <div class="overview-box clearfix">
+                    <div class="icon">
+                        <i class="fas fa-truck iconSize"></i>
+                    </div>
+                    <div class="text">
+                        <h2>{{baseRequestTotalDetails.totalApproved}}</h2>
+                        <span>{{'dashboard.TotalRequestApproved' |translate}}</span>
+                    </div>
+                </div>
+                <div class="overview-chart">
+                    <canvas id="widgetChart2"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="overview-item in-progress">
+            <div class="overview__inner">
+                <div class="overview-box clearfix">
+                    <div class="icon">
+                        <i class="fas fa-truck iconSize"></i>
+                    </div>
+                    <div class="text">
+                        <h2>{{baseRequestTotalDetails.totalInProgress}}</h2>
+                        <span>{{'dashboard.TotalRequestInProgress' |translate}}</span>
+                    </div>
+                </div>
+                <div class="overview-chart">
+                    <canvas id="widgetChart3"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+        <div class="overview-item completed">
+            <div class="overview__inner">
+                <div class="overview-box clearfix">
+                    <div class="icon">
+                        <i class="fas fa-truck iconSize"></i>
+                    </div>
+                    <div class="text">
+                        <h2>{{baseRequestTotalDetails.totalClosed}}</h2>
+                        <span>{{'dashboard.TotalRequestClosed' |translate}} </span>
+                    </div>
+                </div>
+                <div class="overview-chart">
+                    <canvas id="widgetChart4"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

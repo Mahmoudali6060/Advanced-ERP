@@ -1,0 +1,8 @@
+<span>
+    <span *ngIf="translate.currentLang=='ar'" (click)="useLanguage('en')">
+        <a> <i class="zmdi zmdi-globe"></i><span translate>General.English</span> </a>
+</span>
+<span *ngIf="translate.currentLang=='en'" (click)="useLanguage('ar')">
+        <a> <i class="zmdi zmdi-globe"></i><span translate> General.Arabic</span> </a>
+</span>
+</span>

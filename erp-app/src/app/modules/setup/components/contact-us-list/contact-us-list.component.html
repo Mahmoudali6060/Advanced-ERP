@@ -1,0 +1,99 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- DATA TABLE -->
+        <h3 class="title-5 m-b-35">{{'Settings.ContactUs' |translate}}</h3>
+        <div class="table-data__tool">
+            <div class="table-data__tool-left">
+                <button class="au-btn-filter" (click)="toggleFilter()">
+                    <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
+            </div>
+        </div>
+        <!--Filters-->
+        <div class="row" *ngIf="showFilterControls">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">{{'General.Filters'|translate}}</div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="name" class=" form-control-label">{{'Settings.Name'
+                                            |translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.name" type="text" id="name"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="email" class=" form-control-label">{{'Settings.Email'
+                                            |translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.email" type="text" id="email"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="mobile"
+                                            class=" form-control-label">{{'Settings.Mobile'
+                                            |translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.mobile" type="text"
+                                            id="mobile" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="location"
+                                            class=" form-control-label">{{'Settings.Location'
+                                            |translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.location" type="text"
+                                            id="location" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-9"></div>
+                                <div class="col-lg-3">
+                                    <button (click)="search()"
+                                        class="au-btn au-btn-icon au-btn--blue au-btn--small btn-search">
+                                        <i class="zmdi zmdi-search"></i>{{'General.Search'|translate}}
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Filters-->
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2">
+                <thead class="table-header-bc">
+                    <tr>
+                        <th></th>
+                        <th class="table-header-fc">{{'Settings.Name' |translate}}</th>
+                        <th class="table-header-fc">{{'Settings.Email' |translate}}</th>
+                        <th class="table-header-fc">{{'Settings.Mobile' |translate}}</th>
+                        <th class="table-header-fc">{{'Settings.Location' |translate}}</th>
+                        <th class="table-header-fc">{{'Settings.Notes' |translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tr-shadow" *ngFor="let item of contactUsList">
+                        <td></td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.email}}</td>
+                        <td>{{item.mobile}}</td>
+                        <td>{{item.location}}</td>
+                        <td>{{item.notes}}</td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <app-pagination (pageChange)="onPageChange($event)" [totalRecordsCount]="total"
+                [recordsPerPage]="searchCriteriaDTO.pageSize" *ngIf="contactUsList">
+            </app-pagination>
+        </div>
+        <!-- END DATA TABLE -->
+    </div>
+</div>

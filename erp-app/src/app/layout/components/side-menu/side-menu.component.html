@@ -1,0 +1,79 @@
+<!-- MENU SIDEBAR-->
+<aside class="menu-sidebar2">
+    <div class="logo" style="background-color: #484545;justify-content: space-around;">
+        <!-- <svg style="height: 75px;width:100%">
+            <use xlink:href="/assets/images/icon/svg-icons.svg#icon-logo"></use>
+        </svg> -->
+        <div>
+            <img class="logo-default" style="width: 100px;" src="assets/images/logo-white.png" alt="logo" />
+        </div>
+        <h2 style="color: #fff;">Base</h2>
+    </div>
+    <div class="menu-sidebar2__content js-scrollbar1 ps ps--active-y">
+        <div class="account2">
+            <img class="image img-cir img-120" src="{{imageSrc}}" />
+            <!-- <img class="image img-cir img-150 img-fluid" *ngIf="!authService.loggedUserProfile?.imageUrl"
+                src="{{imageSrc}}" /> -->
+            <h4 class="name">
+                {{authService.loggedUserProfile?.firstName}} {{authService.loggedUserProfile?.lastName}}
+            </h4>
+            <a class="btn-link" (click)='logOut()' translate>Authentication.SignOut</a>
+        </div>
+        <ng-container [class.hide-page]="authService.loggedUserProfile==null">
+            <nav class="navbar-sidebar2">
+                <ul class="list-unstyled navbar__list">
+                    <li routerLinkActive="active"
+                        [class.hide-page]="authService.loggedUserProfile?.userTypeId === userTypeEnum.Admin">
+                        <a [routerLink]="['/dashboard']">
+                            <i class="fas fa-chart-bar"></i><span translate>SideMenu.Dashboard</span> </a>
+                        <!-- <span class="inbox-num">3</span> -->
+                    </li>
+                    <li class=" has-sub" [class.hide-page]="authService.loggedUserProfile?.userTypeId === userTypeEnum.Admin">
+                        <a class="js-arrow" href="#">
+                            <i class="fa fa-cog"></i> <span translate>SideMenu.Setup</span>
+                            <span class="arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </span>
+                        </a>
+                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                            <li routerLinkActive="active">
+                                <a [routerLink]="['/setup/trucks-provider-list']">
+                                    <i class="fa fa-users"></i><span translate>SideMenu.TrucksProviders</span></a>
+                            </li>
+                            <li routerLinkActive="active">
+                                <a [routerLink]="['/setup/contact-us-list']">
+                                    <i class="fa fa-envelope"></i><span translate>SideMenu.ContactUs</span></a>
+                            </li>
+                            <li routerLinkActive="active">
+                                <a [routerLink]="['/setup/about-us']">
+                                    <i class="fa fa-question-circle"></i><span translate>SideMenu.AboutUs</span></a>
+                            </li>
+                            <li routerLinkActive="active">
+                                <a [routerLink]="['/setup/advertisment']">
+                                    <i class="fa fa-file-image-o"></i><span translate>SideMenu.Advertisments</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class=" has-sub"
+                    [class.hide-page]="authService.loggedUserProfile?.userTypeId === userTypeEnum.Admin">
+                        <a class="js-arrow" href="#">
+                            <i class="fas fa-users"></i> <span translate>SideMenu.UserManagement</span>
+                            <span class="arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </span>
+                        </a>
+                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                            <li routerLinkActive="active" [class.hide-page]="authService.loggedUserProfile?.userTypeId!=userTypeEnum.Admin">
+                                <a [routerLink]="['/user/user-list']">
+                                    <i class="fas fa-user"></i><span translate>SideMenu.UserList</span></a>
+                            </li>
+                           
+                        </ul>
+                    </li>
+
+                </ul>
+            </nav>
+        </ng-container>
+    </div>
+</aside>
+<!-- END MENU SIDEBAR-->

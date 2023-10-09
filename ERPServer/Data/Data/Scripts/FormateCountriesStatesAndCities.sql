@@ -1,0 +1,8 @@
+DELETE FROM Countries;
+DBCC CHECKIDENT ('Countries', RESEED, 0);
+
+DELETE FROM States;
+DBCC CHECKIDENT ('States', RESEED, 0);
+
+DELETE FROM Cities;
+DBCC CHECKIDENT ('Cities', RESEED, 0);

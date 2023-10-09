@@ -1,0 +1,73 @@
+body{
+  background-color: #2ea3dc !important;
+  /* background-image: url("assets/images/slider/con1.jpg"); */
+  /* background: url("src/assets/images/slider/login.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; 
+  height: 100%; */
+
+}
+
+.vl {
+  border-left: 2px solid blueviolet;
+  height: 500px;
+}
+
+.lang-switch {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #636562;
+  align-items: center;
+  line-height: 17px;
+  cursor: pointer;
+  text-decoration: underline;
+  font-family: "DIN Next LT Arabic Medium" !important;
+  cursor: pointer;
+
+}
+
+.container-logo-Image {
+  width: 5%;
+  margin: 10px;
+}
+
+.imgCard {
+  border-radius: 1rem 0 0 1rem;
+}
+
+.mainCard {
+  border-radius: 1rem;
+}
+
+h3 {
+  color: #0468b1;
+}
+
+.logo-label {
+  color: #95262a;
+  font-size: 30px;
+  margin-top: 30px;
+}
+.dropdown-item {
+  color: rgba(255, 255, 255, 0.8)!important;
+  cursor: pointer;
+}
+.space-around{
+  justify-content: space-around;
+}
+h2{
+  font-weight: 400;
+    font-size: 24px;
+    margin-top: 30px;
+    margin-bottom: 24px;
+}
+.base{
+  color: #2ea3dc;
+  font-weight: 400;
+  font-size: 24px;
+  margin-top: 30px;
+  margin-bottom: 24px;
+}

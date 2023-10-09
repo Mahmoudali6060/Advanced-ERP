@@ -1,0 +1,146 @@
+.img-fluid {
+  max-width: 100%;
+  height: 100%;
+}
+.scrollbar {
+    margin-left: 30px;
+    float: left;
+    height: 700px;
+    background: #fff;
+    overflow-y: scroll;
+    margin-bottom: 25px;
+    margin-top: 15px;
+
+  }
+  .force-overflow {
+    min-height: 450px;
+  }
+  
+  .scrollbar-primary::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+  }
+  
+  .scrollbar-primary::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #4285F4;
+  }
+  
+  .scrollbar-primary {
+    scrollbar-color: #4285F4 #F5F5F5;
+  }
+  
+  .scrollbar-danger::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+    border-radius: 10px;
+  }
+  
+  .scrollbar-danger::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+  }
+  
+  .scrollbar-danger::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #ff3547;
+  }
+  
+  .scrollbar-danger {
+    scrollbar-color: #ff3547 #F5F5F5;
+  }
+  
+  .scrollbar-warning::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+    border-radius: 10px;
+  }
+  
+  .scrollbar-warning::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+  }
+  
+  .scrollbar-warning::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #FF8800;
+  }
+  
+  .scrollbar-warning {
+    scrollbar-color: #FF8800 #F5F5F5;
+  }
+  
+  .scrollbar-success::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+    border-radius: 10px;
+  }
+  
+  .scrollbar-success::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+  }
+  
+  .scrollbar-success::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #00C851;
+  }
+  
+  .scrollbar-success {
+    scrollbar-color: #00C851 #F5F5F5;
+  }
+  
+  .scrollbar-info::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+    border-radius: 10px;
+  }
+  
+  .scrollbar-info::-webkit-scrollbar {
+    width: 6px;
+    background-color: #F5F5F5;
+  }
+  
+  .scrollbar-info::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #33b5e5;
+  }
+  
+  .scrollbar-info {
+    scrollbar-color: #33b5e5 #F5F5F5;
+  }
+  
+  .scrollbar-default::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+    border-radius: 10px;
+  }
+  
+  .scrollbar-default::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+  }
+  
+  .scrollbar-default::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #2BBBAD;
+  }
+  
+  .scrollbar-default {
+    scrollbar-color: #2BBBAD #F5F5F5;
+  }
+  
+  .scrollbar-secondary::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+    border-radius: 10px;
+  }
+  
+  .scrollbar-secondary::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+  }
+  
+  .scrollbar-secondary::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #aa66cc;
+  }
+  
+  .scrollbar-secondary {
+    scrollbar-color: #aa66cc #F5F5F5;
+  }
+  

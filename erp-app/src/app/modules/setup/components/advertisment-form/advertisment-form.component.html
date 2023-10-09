@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="form-group">
+        <label for="image" class=" form-control-label">{{'User.UploadImage' |translate}}</label>
+        <input type="file" id="image" class="form-control" (change)="onFileChange($event)">
+    </div>
+</div>
+
+<div class="row" *ngIf="!editMode">
+    <div class="col-md-3" *ngFor="let item of lstAdvertisment">
+        <div class="panel panel-default">
+            <div class="panel-thumbnail">
+                <a href="#" title="image 8" class="thumb">
+                    <img class="img-fluid mx-auto d-block" src="{{item.mediaBase64}}" alt="slide">
+                </a>
+            </div>
+            <button type="button" (click)="delete(item)" class="btn btn-outline-primary">
+                {{'Settings.Delete' |translate}}</button>
+        </div>
+    </div>
+</div>
+<div class="row mt-3" *ngIf="!ads.id">
+    <span class="ml-1">
+        <button type="button" (click)="cancel()" class="btn btn-outline-danger">
+            {{'Settings.Cancel' |translate}}</button>
+    </span>
+    <span class="ml-1">
+        <button type="button" (click)="save()" [disabled]="!imageSrc"  class="btn btn-outline-primary">
+            {{'Settings.Save' |translate}}</button>
+    </span>
+</div>
+
+<div class="row" *ngIf="editMode">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-thumbnail">
+                <a href="#" title="image 8" class="thumb">
+                    <img class="img-fluid mx-auto d-block" src="{{imageSrc}}" alt="slide">
+                </a>
+            </div>
+        </div>
+        <div class="row mt-3" *ngIf="ads.id">
+            <div class="col-md-2">
+                <button type="button" (click)="update()" class="btn btn-outline-primary">
+                    {{'Settings.Edit' |translate}}</button>
+            </div>
+            <div class="col-md-2">
+                <button type="button" (click)="cancel()" class="btn btn-outline-danger">
+                    {{'Settings.Cancel' |translate}}</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>

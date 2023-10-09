@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- DATA TABLE -->
+        <h3 class="title-5 m-b-35">{{'Settings.AboutUs' |translate}}</h3>
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2">
+                <thead class="table-header-bc">
+                    <tr>
+                        <th></th>
+                        <th class="table-header-fc">{{'Settings.MainTitle' |translate}}</th>
+                        <th class="table-header-fc">{{'Settings.FirstMainSection' |translate}}</th>
+                        <th class="table-header-fc">{{'Settings.SecondMainSection' |translate}}</th>
+                        <th class="table-header-fc">{{'Settings.ThirdMainSection' |translate}}</th>
+                        <th class="table-header-fc">{{'Settings.SecondTitle' |translate}}</th>
+                        <th class="table-header-fc">{{'Settings.SecondTitleSection' |translate}}</th>
+                        <th class="table-header-fc">{{'Settings.ThirdTitle' |translate}}</th>
+                        <th class="table-header-fc">{{'Settings.ThirdTitleSection' |translate}}</th>
+                        <th class="table-header-fc">{{'Settings.Edit' |translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tr-shadow" *ngFor="let item of aboutUsList">
+                        <td></td>
+                        <td>{{item.mainTitle}}</td>
+                        <td>{{item.firstMainSection}}</td>
+                        <td>{{item.secondMainSection}}</td>
+                        <td>{{item.thirdMainSection}}</td>
+                        <td>{{item.secondTitle}}</td>
+                        <td>{{item.secondTitleSection}}</td>
+                        <td>{{item.thirdTitle}}</td>
+                        <td>{{item.thirdTitleSection}}</td>
+                        <td><button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                            data-original-title="Edit" [routerLink]="['/setup/edit-about-us/'+item.id]">
+                            <i class="zmdi zmdi-edit"></i>
+                        </button></td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <!-- END DATA TABLE -->
+    </div>
+</div>

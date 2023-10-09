@@ -1,0 +1,136 @@
+label {
+    float: left;
+}
+
+.menu-sidebar2 {
+    left: 0;
+}
+::ng-deep .p-carousel .p-carousel-items-content .p-carousel-items-container .p-carousel-item  {
+    flex: 1 0 26.5%!important;
+}
+
+@media (max-width: 991px) {
+    .menu-sidebar2 {
+        right: -300px;
+        left: auto;
+
+    }
+    .menu-sidebar2.show-sidebar {
+        right: 0;
+
+    }
+}
+.borderFormRequest{
+    border-radius: 1rem 0 0 1rem;;
+}
+.header-desktop2 {
+    right: 0;
+    left: 305px;
+}
+
+@media (max-width: 991px) {
+    .header-desktop2 {
+        left: 0;
+        position: relative;
+    }
+}
+
+.setting-menu {
+    right: -300px;
+}
+
+.setting-menu:before {
+    right: 47px;
+}
+
+.show-sidebar {
+    right: 0;
+    background: #fff;
+    /* background: #484545; */
+}
+
+.header-button2 .header-button-item .notifi-dropdown {
+    left: auto;
+    right: -68px;
+}
+
+.header-button2 .header-button-item .notifi-dropdown::before {
+    margin-left: 0;
+    left: auto;
+    right: 68px;
+}
+
+.header-button2 .header-button-item:last-child {
+    margin-right: 0;
+}
+
+@media (max-width: 991px) {
+    .header-button2 .header-button-item .search-dropdown {
+        right: -75px;
+    }
+    .header-button2 .header-button-item .search-dropdown::before {
+        right: 79px;
+    }
+}
+
+@media (max-width: 991px) {
+    .header-button2 .header-button-item .notifi-dropdown {
+        right: -48px;
+    }
+    .header-button2 .header-button-item .notifi-dropdown::before {
+        margin-left: 0;
+        left: auto;
+        right: 45px;
+    }
+}
+
+.page-container2 {
+    padding-left: 300px;
+}
+
+@media (max-width: 991px) {
+    .page-container2 {
+        position: relative;
+        padding-left: 0;
+    }
+}
+
+.navbar-sidebar2 .navbar__list li .arrow {
+    right: 15px;
+}
+
+.inbox-num {
+    left: 34px;
+}
+
+/* body {
+     text-align: left; 
+} */
+
+i {
+    margin-right: 5px;
+}
+
+.btn-search {
+    float: right;
+}
+.hero p.intro {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 300;
+    margin-bottom: 80px;
+  }
+  
+  .hero .hero-content {
+    padding-top: 15%;
+    margin-left: 15%;
+  }
+  .imgLogo{
+    margin-left: 20px;
+}
+.cardFormRequest{
+    margin-right: 40px;
+}
+.borderFormRequest{
+    border-radius: 1rem 0 0 1rem;;
+}
