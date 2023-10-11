@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Accout.DataServiceLayer;
 using Data.Constants;
+using DataService.Setup.Contracts;
 using Entities.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Setup.DataServiceLayer;
 using Shared.Entities.Setup;
 using Shared.Entities.Shared;
 

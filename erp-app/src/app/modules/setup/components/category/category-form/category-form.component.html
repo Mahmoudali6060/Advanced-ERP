@@ -1,0 +1,56 @@
+<form #frm="ngForm" (ngSubmit)="save(frm)">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <strong *ngIf="!categoryDTO.id">{{'Category.AddCategory' |translate}}</strong>
+                <strong *ngIf="categoryDTO.id && !viewMode">{{'Category.EditCategory' |translate}}</strong>
+                <strong *ngIf="categoryDTO.id  && viewMode ">{{'Category.ViewCategory' |translate}}</strong>
+            </div>
+            <div class="card-body card-block">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <label for="isActive" class=" form-control-label">{{'General.IsActive'
+                                    |translate}}</label>
+                                    <br>
+                                <p-inputSwitch [disabled]="viewMode" 
+                                    name="isActive"
+                                    [(ngModel)]="categoryDTO.isActive"></p-inputSwitch>
+                            </div>
+                            <div class="col-lg-5" *ngIf="categoryDTO.id">
+                                <div class="form-group">
+                                    <label for="code" class=" form-control-label">{{'General.Code'
+                                        |translate}}</label>
+                                    <input [disabled]="viewMode" [(ngModel)]="categoryDTO.code" type="text" id="code"
+                                        class="form-control" #code="ngModel" readonly [class.is-valid]="code.valid"
+                                        name="code" aria-describedby="helpId">
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="form-group">
+                                    <label for="name" class=" form-control-label">{{'General.Name'
+                                        |translate}}</label>
+                                    <input [disabled]="viewMode" [(ngModel)]="categoryDTO.name" type="text" id="name"
+                                        class="form-control" #name="ngModel"
+                                        [class.is-invalid]="name.invalid && name.touched" [class.is-valid]="name.valid"
+                                        required minlength="3" name="name" aria-describedby="helpId">
+                                    <small [hidden]="name.valid || name.untouched" id="helpId" class="text-muted"
+                                        [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-container p-3">
+                <button type="submit" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
+                    <i class="fa fa-dot-circle-o"></i>{{'General.SaveChanges' |translate}}
+                </button>
+                <button type="reset" class="btn btn-danger mr-1" (click)="back()">
+                    <i class="fa fa-ban"></i>{{'General.Cancel' |translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -6,16 +6,16 @@ import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserProfileService } from './services/user.service';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AuthModule } from '../authentication/auth.module';
-import { SetupModule } from '../setup/setup.module';
-import { CountryService } from '../setup/services/country.service';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import { CompanyService } from './services/company.service';
+import { ConfigurationsModule } from '../configurations/configurations.module';
+import { CountryService } from '../configurations/services/country.service';
 
 @NgModule({
   imports: [
     UserRoutingModule,
     SharedModule,
-    SetupModule,
+    ConfigurationsModule,
     AuthModule,
     InputSwitchModule
   ],

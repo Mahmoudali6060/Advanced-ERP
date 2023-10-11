@@ -35,6 +35,13 @@ namespace App.Helper
                 .ForMember(dest => dest.StateId, opt => opt.MapFrom(src => src.StateId))
                 .ForMember(dest => dest.StateName, opt => opt.MapFrom(src => src.State.Name));
             CreateMap<TrucksProviderDTO, TrucksProvider>();
+
+            CreateMap<Product, ProductDTO>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name));
+            CreateMap<ProductDTO, Product>();
+
+            CreateMap<Category, CategoryDTO>();
+            CreateMap<CategoryDTO, Category>();
             #endregion
 
             #region Users Management

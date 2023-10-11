@@ -15,7 +15,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Setting.DataAccessLayer;
 using Setting.DataServiceLayer;
 using Setup.DataAccessLayer;
-using Setup.DataServiceLayer;
 using UnitOfWork.Contracts;
 using UnitOfWork.Handlers;
 
@@ -25,12 +24,16 @@ namespace App.Helper
     {
         public static void AddTransient(IServiceCollection services)
         {
+
+            #region Unit Of Work
+            services.AddScoped<IUnitOfWork, UnitofWork>();
+            #endregion
+
             #region Settings
             services.AddTransient<ISettingDSL, SettingDSL>();
             services.AddTransient<ISettingDAL, SettingDAL>();
             //services.AddTransient<IDatabaseBackupDSL, DatabaseBackupDSL>();
             #endregion
-
 
             #region Infrastructure
             services.AddTransient<ILoggerManager, LoggerManager>();
@@ -56,6 +59,11 @@ namespace App.Helper
             services.AddTransient<IAdvertismentDAL, AdvertismentDAL>();
             services.AddTransient<IAdvertismentDSL, AdvertismentDSL>();
 
+            services.AddTransient<ICategoryDAL, CategoryDAL>();
+            services.AddTransient<ICategoryDSL, CategoryDSL>();
+
+            services.AddTransient<IProductDAL, ProductDAL>();
+            services.AddTransient<IProductDSL, ProductDSL>();
             #endregion
 
             #region User Management
@@ -69,9 +77,6 @@ namespace App.Helper
 
             #endregion
 
-            #region Unit Of Work
-            services.AddScoped<IUnitOfWork, UnitofWork>();
-            #endregion
 
         }
     }

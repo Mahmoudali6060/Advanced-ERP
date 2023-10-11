@@ -231,6 +231,30 @@ i:hover {
     color: #0a600a !important;
 }
 
-.fa-eye{
-   color:  #464687 !important;
+.fa-eye {
+    color: #464687 !important;
+}
+
+.active-status {
+    background: #57b846;
+}
+
+.in-active-status {
+    background: #fa4251;
+}
+
+.status {
+    display: inline-block;
+    line-height: 30px;
+    font-size: 14px;
+    color: #fff;
+    padding: 0 15px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    text-transform: capitalize;
+}
+
+.input-switch{
+    margin: 2px;
 }

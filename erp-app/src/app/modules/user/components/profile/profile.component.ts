@@ -5,12 +5,6 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ResetPasswordComponent } from 'src/app/modules/authentication/components/reset-password/reset-password.component';
 import { ResetPasswordDTO } from 'src/app/modules/authentication/models/reset-password-dto';
-import { CityModel } from 'src/app/modules/setup/models/city.model';
-import { CountryModel } from 'src/app/modules/setup/models/country.model';
-import { StateModel } from 'src/app/modules/setup/models/state.model';
-import { CityService } from 'src/app/modules/setup/services/city.service';
-import { CountryService } from 'src/app/modules/setup/services/country.service';
-import { StateService } from 'src/app/modules/setup/services/state.service';
 import { LocalStorageItems } from 'src/app/shared/constants/local-storage-items';
 import { LabelValuePair } from 'src/app/shared/enums/label-value-pair';
 import { ConfigService } from 'src/app/shared/services/config.service';
@@ -23,6 +17,12 @@ import { ShippingLineProductDTO } from '../../models/shipping-line-product-dto';
 import { UserProfileDTO } from '../../models/user-profile.dto';
 import { UserTypeEnum } from '../../models/user-type-enum';
 import { UserProfileService } from '../../services/user.service';
+import { CountryModel } from 'src/app/modules/configurations/models/country.model';
+import { StateModel } from 'src/app/modules/configurations/models/state.model';
+import { CityModel } from 'src/app/modules/configurations/models/city.model';
+import { StateService } from 'src/app/modules/configurations/services/state.service';
+import { CountryService } from 'src/app/modules/configurations/services/country.service';
+import { CityService } from 'src/app/modules/configurations/services/city.service';
 
 @Component({
   selector: 'app-profile',

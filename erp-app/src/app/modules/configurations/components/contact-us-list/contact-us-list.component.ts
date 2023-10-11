@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ContactUssearch } from 'src/app/modules/setup/models/contact-us-search';
 import { PaginationComponent } from 'src/app/shared/components/pagination/pagination.component';
 import { DataSourceModel } from 'src/app/shared/models/data-source.model';
 import { ContactUs } from '../../models/contact-us';
 import { ContactUsService } from '../../services/contact-us.service';
+import { ContactUssearch } from '../../models/contact-us-search';
 
 @Component({
   selector: 'app-contact-us-list',

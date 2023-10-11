@@ -72,6 +72,6 @@ export class AdvertismentFormComponent implements OnInit {
 		 });
   }
   cancel() {
-		this.router.navigateByUrl('setup/advertisment');
+		this.router.navigateByUrl('configurations/advertisment');
 	}
 }

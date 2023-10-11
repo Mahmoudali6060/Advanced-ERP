@@ -39,13 +39,29 @@
     "of": "of",
     "entries": "entries",
     "Search": "Search",
-    "Base": "Base",
-    "PleaseLetUsKnowIfYouWantToRequestABase": "Please Let Us Know If You Want To Request A Base",
+    "ERP": "ERP",
+    "PleaseLetUsKnowIfYouWantToRequestAERP": "Please Let Us Know If You Want To Request A ERP",
     "Ok": "Ok",
-    "back": "Back"
+    "back": "Back",
+    "Users": "Users",
+    "IsActive": "Is Active",
+    "DefaultLanguage": "Default Langague",
+    "Image": "Image",
+    "UploadImage": "Upload Image",
+    "SaveChanges": "Save Changes",
+    "Admin": "Admin",
+    "Status": "Status",
+    "Code": "Code",
+    "Active": "Active",
+    "InActive": "In Active",
+    "Category": "Category",
+    "ActualQuantity": "Actual Quantity",
+    "Back": "Back",
+    "LowQuantity": "Low Quantity",
+    "HighQuantity": "High Quantity",
+    "SelectCategory":"Select Category"
     
   },
-
   "Dashboard": {
     "overview": "Overview",
     "users": "Users",
@@ -125,6 +141,7 @@
     "ZipCode": "Zip Code"
   },
   "Authentication": {
+    "Email": "Email",
     "Name": "Name",
     "Name-Ar": "Arabic Name",
     "Name-En": "English Name",
@@ -170,14 +187,18 @@
     "CompanyType": "Company Type",
     "SelectCompanyType": "Select company type",
     "WelcomeTo": "Welcome To",
-    "Base": "Base",
+    "ERP": "ERP",
     "ReadMore": "Read More",
-    "forgetPasswordMessage": "The link has been sent, please check your email to reset your password."
+    "forgetPasswordMessage": "The link has been sent, please check your email to reset your password.",
+    "Register": "Register"
   },
   "SideMenu": {
     "Dashboard": "Dashboard",
+    "Configurations": "Configurations",
     "UserManagement": "User Management",
     "UserList": "User List",
+    "Products": "Products",
+    "Categories": "Categories",
     "ServiceManagement": "Service Management",
     "RequestsInbox": "Requests (Inbox)",
     "RequestsMyInbox": "Requests (My Inbox)",
@@ -264,7 +285,8 @@
     "companyNameArIsRequired": "Company Name-Ar Is Required",
     "AddressDetailsIsRequired": "Address Details Is Required",
     "companyTypeIsRequired": "Company Type Is Required",
-    "CannotDeleteThisRecordDueToRelatedToAnotherData": "Cannot Delete This Record Due To Related To Another Data"
+    "CannotDeleteThisRecordDueToRelatedToAnotherData": "Cannot Delete This Record Due To Related To Another Data",
+    "ThisFieldIsRequired": "This field is required"
   },
   "Warning": {
     "NoDriversAvialable": "There is no any driver available in this period"
@@ -310,8 +332,7 @@
     "active": "Active",
     "inactive": "Inactive"
   },
-
-  "BaseRequestStatusEnum": {
+  "ERPRequestStatusEnum": {
     "InProgress": "In Progress",
     "WaitingForCorrection": "Waiting for correction",
     "Approved": "Approved",
@@ -325,12 +346,12 @@
     "Trader": "Trader"
   },
   "landingPage": {
-    "RequestBase": "Request Base",
+    "RequestERP": "Request ERP",
     "Search": "Search"
   },
   "userTypeEnum": {
     "Admin": "Admin",
-    "Employee":"Employee"  
+    "Employee": "Employee"
   },
   "RequestReviewResultEnum": {
     "Approved": "Approved",
@@ -342,7 +363,6 @@
     "Shipping": "Shipping Request",
     "Booking": "Booking Request"
   },
- 
   "Home": {
     "RegisterAsCustomer": "Register as Customer",
     "RegisterAsShippingLine": "Register as shipping line",
@@ -352,5 +372,20 @@
     "Add": "Add",
     "Update": "Update",
     "Delete": "Delete"
+  },
+  "Category": {
+    "Title": "Categories",
+    "AddCategory": "Add Category",
+    "EditCategory": "Edit Category",
+    "ViewCategory": "View Category"
+  },
+  "Product": {
+    "Title": "Products",
+    "AddProduct": "Add Product",
+    "EditProduct": "Edit Product",
+    "ViewProduct": "View Product",
+    "BarCode": "BarCode",
+    "PurchasingPricePercentage": "Purchasing Price Percentage",
+    "SellingPricePercentage": "Selling Price Percentage"
   }
 }

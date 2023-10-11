@@ -24,14 +24,16 @@ namespace Data.Contexts
         public DbSet<City> Cities { get; set; }
         public DbSet<ContactUs> ContactUs { get; set; }
         public DbSet<AboutUs> AboutUs { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
         #endregion
 
         #region User Management
         public DbSet<UserProfile> UserProfiles { get; set; }
 
         #endregion
-       
-       
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

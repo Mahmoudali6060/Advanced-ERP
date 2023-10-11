@@ -7,8 +7,9 @@ using Infrastructure.Contracts;
 using UnitOfWork.Contracts;
 using Shared.Entities.Setup;
 using Data.Entities.Setup;
+using DataService.Setup.Contracts;
 
-namespace Setup.DataServiceLayer
+namespace DataService.Setup.Handlers
 {
     public class StateDSL : IStateDSL
     {

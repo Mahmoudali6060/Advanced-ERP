@@ -8,11 +8,19 @@ using System.Threading.Tasks;
 
 namespace Data.Entities.Setup
 {
-    public class Product 
+    public class Product : BaseEntity
     {
-        public long Id { get; set; }
-        public string HSCode { get; set; }
-        public string Item { get; set; }
+        public bool IsActive { get; set; }
+        public string Code { get; set; }
+        public string BarCode { get; set; }
+        public string Name { get; set; }
+        public string ImageUrl { get; set; }
+        public decimal Price { get; set; }
+        public decimal SellingPricePercentage { get; set; }//سعر البيع
+        public decimal PurchasingPricePercentage { get; set; }//سعر الشراء
+        public int ActualQuantity { get; set; }
+        public int LowQuantity { get; set; }
+        public int HighQuantity { get; set; }
         public long CategoryId { get; set; }
         public virtual Category Category { get; set; }
     }

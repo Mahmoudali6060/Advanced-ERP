@@ -1,39 +1,42 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
+import { ProductListComponent } from './components/product/product-list/product-list.component';
+import { ProductFormComponent } from './components/product/product-form/product-form.component';
+import { ProductService } from './services/product.service';
+import { AuthModule } from '../authentication/auth.module';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { CompanyService } from './services/company.service';
+import { ConfigurationsModule } from '../configurations/configurations.module';
+import { CountryService } from '../configurations/services/country.service';
 import { SetupRoutingModule } from './setup-routing.module';
-import { CityService } from './services/city.service';
-import { CountryService } from './services/country.service';
-import { StateService } from './services/state.service';
-import { ContactUsListComponent } from './components/contact-us-list/contact-us-list.component';
-import { AboutUsComponent } from './components/about-us/about-us.component';
-import { AboutUsFormComponent } from './components/about-us-form/about-us-form.component';
-import { AdvertismentComponent } from './components/advertisment/advertisment.component';
-import { AdvertismentFormComponent } from './components/advertisment-form/advertisment-form.component';
-import { PortService } from './services/port.service';
-
+import { CategoryListComponent } from './components/category/category-list/category-list.component';
+import { CategoryFormComponent } from './components/category/category-form/category-form.component';
+import { CategoryService } from './services/category.service';
 
 @NgModule({
   imports: [
     SetupRoutingModule,
     SharedModule,
+    ConfigurationsModule,
+    AuthModule,
+    InputSwitchModule
   ],
+  exports: [
 
+  ],
   declarations: [
-  ContactUsListComponent,
-  AboutUsComponent,
-  AboutUsFormComponent,
-  AdvertismentComponent,
-  AdvertismentFormComponent,
+    ProductListComponent,
+    ProductFormComponent,
+    CategoryListComponent,
+    CategoryFormComponent
   ],
-
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
+    ProductService,
     CountryService,
-    StateService,
-    CityService,
-    PortService
+    CompanyService,
+    CategoryService
   ]
-
 })
-
 export class SetupModule {
 }

@@ -1,27 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserFormComponent } from '../user/components/user-form/user-form.component';
-import { AboutUsFormComponent } from './components/about-us-form/about-us-form.component';
-import { AboutUsComponent } from './components/about-us/about-us.component';
-import { AdvertismentFormComponent } from './components/advertisment-form/advertisment-form.component';
-import { AdvertismentComponent } from './components/advertisment/advertisment.component';
-import { ContactUsListComponent } from './components/contact-us-list/contact-us-list.component';
-
+import { ProductListComponent } from './components/product/product-list/product-list.component';
+import { ProductFormComponent } from './components/product/product-form/product-form.component';
+import { CategoryListComponent } from './components/category/category-list/category-list.component';
+import { CategoryFormComponent } from './components/category/category-form/category-form.component';
 
 const routes: Routes = [
-  { path: 'contact-us-list', component: ContactUsListComponent },
-  { path: 'about-us', component: AboutUsComponent },
-  { path: 'edit-about-us/:id', component: AboutUsFormComponent },
-  { path: 'advertisment', component: AdvertismentComponent },
-  { path: 'add-advertisment', component: AdvertismentFormComponent },
-  { path: 'edit-advertisment/:id', component: AdvertismentFormComponent },
-
+  { path: 'product-list', component: ProductListComponent },
+  { path: 'product-form', component: ProductFormComponent },
+  { path: 'product-form/:id', component: ProductFormComponent },
+  { path: 'category-list', component: CategoryListComponent },
+  { path: 'category-form', component: CategoryFormComponent },
+  { path: 'category-form/:id', component: CategoryFormComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-
 export class SetupRoutingModule {
 }

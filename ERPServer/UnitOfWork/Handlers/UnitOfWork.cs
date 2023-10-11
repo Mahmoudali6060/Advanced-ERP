@@ -33,7 +33,8 @@ namespace UnitOfWork.Handlers
         public ICityDAL CityDAL { get; private set; }
         public IContactUsDAL ContactUsDAL { get; private set; }
         public IAboutUsDAL AboutUsDAL { get; private set; }
-
+        public ICategoryDAL CategoryDAL { get; private set; }
+        public IProductDAL ProductDAL { get; private set; }
         #endregion
 
 
@@ -63,7 +64,8 @@ namespace UnitOfWork.Handlers
             ContactUsDAL = new ContactUsDAL(_context);
             AboutUsDAL = new AboutUsDAL(_context);
             AdvertismentDAL = new AdvertismentDAL(_context);
-
+            CategoryDAL = new CategoryDAL(_context);
+            ProductDAL = new ProductDAL(_context);
             #endregion
 
         }
@@ -73,7 +75,7 @@ namespace UnitOfWork.Handlers
             await _context.SaveChangesAsync();
         }
 
-    
+
         public void Dispose()
         {
             _context.Dispose();

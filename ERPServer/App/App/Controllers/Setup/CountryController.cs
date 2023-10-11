@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using DataService.Setup.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using Setup.DataServiceLayer;
 using Shared.Entities.Setup;
 
 

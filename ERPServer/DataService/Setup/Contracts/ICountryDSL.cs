@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Setup.DataServiceLayer
+namespace DataService.Setup.Contracts
 {
     public interface ICountryDSL : ICRUDOperationsDSL<CountryDTO, CountrySearchDTO>
     {

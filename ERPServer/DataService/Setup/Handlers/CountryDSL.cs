@@ -12,8 +12,9 @@ using Data.Entities.UserManagement;
 using Account.Helpers;
 using Shared.Entities.Setup;
 using Data.Entities.Setup;
+using DataService.Setup.Contracts;
 
-namespace Setup.DataServiceLayer
+namespace DataService.Setup.Handlers
 {
     public class CountryDSL : ICountryDSL
     {

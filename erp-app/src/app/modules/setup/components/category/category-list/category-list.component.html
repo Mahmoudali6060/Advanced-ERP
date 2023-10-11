@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- DATA TABLE -->
+        <h3 class="title-5 m-b-35">{{'Category.Title' |translate}}</h3>
+        <div class="table-data__tool">
+            <div class="table-data__tool-left">
+                <button class="au-btn-filter" (click)="toggleFilter()">
+                    <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
+            </div>
+            <div class="table-data__tool-right">
+                <button [routerLink]="['/setup/category-form']" class="au-btn au-btn-icon au-btn--black au-btn--small">
+                    <i class="zmdi zmdi-plus"></i>{{'Category.AddCategory' |translate}}
+                </button>
+            </div>
+        </div>
+        <!--Filters-->
+        <div class="row" *ngIf="showFilterControls">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">{{'General.Filters'|translate}}</div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="form3Example3c">{{'General.Status'|translate}}</label>
+                                        <select name="drivers" id="drivers" class="form-control"
+                                            [(ngModel)]="searchCriteriaDTO.isActive">
+                                            <option value=''> {{'General.All' |translate}}</option>
+                                            <option value=true> {{'General.Active' |translate}}</option>
+                                            <option value=false> {{'General.InActive' |translate}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="code" class=" form-control-label">{{'General.Code'
+                                            |translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.code" type="text" id="code"
+                                            class="form-control" #code="ngModel" name="code">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="name" class=" form-control-label">{{'General.Name'
+                                            |translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.name" type="text" id="name"
+                                            class="form-control" #name="ngModel" name="name">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-lg-9">
+                                    <button (click)="search()"
+                                        class="au-btn au-btn-icon au-btn--blue au-btn--small btn-search mt-4">
+                                        <i class="zmdi zmdi-search"></i>{{'General.Search'|translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Filters-->
+        <!--DATA TABLE -->
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2">
+                <thead class="table-header-bc">
+                    <tr>
+                        <th class="table-header-fc">{{'General.Status' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Code' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Name' |translate}}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tr-shadow" *ngFor="let item of categoryList">
+                        <td>
+                            <span class="status active-status" *ngIf="item.isActive">
+                                {{'General.Active' |translate}}
+                            </span>
+                            <span class="status in-active-status" *ngIf="!item.isActive">
+                                {{'General.InActive' |translate}}
+                            </span>
+                        </td>
+                        <td>{{item.code}}</td>
+                        <td>{{item.name}}</td>
+                        <td>
+                            <div class="table-data-feature">
+                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="Edit" [routerLink]="['/setup/category-form/'+item.id]">
+                                    <i class="zmdi zmdi-edit"></i>
+                                </button>
+                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="Delete" (click)="openConfirmationDialog(item)">
+                                    <i class="zmdi zmdi-delete"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <app-pagination (pageChange)="onPageChange($event)" [totalRecordsCount]="total"
+                [recordsPerPage]="searchCriteriaDTO.pageSize" *ngIf="categoryList">
+            </app-pagination>
+        </div>
+        <!-- END DATA TABLE -->
+    </div>
+</div>

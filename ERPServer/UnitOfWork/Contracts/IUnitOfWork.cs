@@ -20,6 +20,9 @@ namespace UnitOfWork.Contracts
         IContactUsDAL ContactUsDAL { get; }
         IAboutUsDAL AboutUsDAL { get; }
         IAdvertismentDAL AdvertismentDAL { get; }
+        ICategoryDAL CategoryDAL { get; }
+        IProductDAL ProductDAL { get; }
+
         #endregion
 
         Task CompleteAsync();

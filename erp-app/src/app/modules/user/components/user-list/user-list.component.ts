@@ -2,12 +2,6 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { CityModel } from 'src/app/modules/setup/models/city.model';
-import { CountryModel } from 'src/app/modules/setup/models/country.model';
-import { StateModel } from 'src/app/modules/setup/models/state.model';
-import { CityService } from 'src/app/modules/setup/services/city.service';
-import { CountryService } from 'src/app/modules/setup/services/country.service';
-import { StateService } from 'src/app/modules/setup/services/state.service';
 import { PaginationComponent } from 'src/app/shared/components/pagination/pagination.component';
 import { LabelValuePair } from 'src/app/shared/enums/label-value-pair';
 import { ConfigService } from 'src/app/shared/services/config.service';
@@ -18,6 +12,9 @@ import {  UserProfileSearchCriteriaDTO } from '../../models/user-list-search-cri
 import { UserProfileDTO } from '../../models/user-profile.dto';
 import { UserTypeEnum } from '../../models/user-type-enum';
 import { UserProfileService } from '../../services/user.service';
+import { CountryModel } from 'src/app/modules/configurations/models/country.model';
+import { StateModel } from 'src/app/modules/configurations/models/state.model';
+import { CityModel } from 'src/app/modules/configurations/models/city.model';
 
 @Component({
 	selector: 'app-user-list',

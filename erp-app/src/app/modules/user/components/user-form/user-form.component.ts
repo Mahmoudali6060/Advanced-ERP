@@ -12,12 +12,6 @@ import { HelperService } from 'src/app/shared/services/helper.service';
 import { SubjectService } from 'src/app/shared/services/subject.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { LocalStorageItems } from 'src/app/shared/constants/local-storage-items';
-import { CountryService } from 'src/app/modules/setup/services/country.service';
-import { StateService } from 'src/app/modules/setup/services/state.service';
-import { CityService } from 'src/app/modules/setup/services/city.service';
-import { CountryModel } from 'src/app/modules/setup/models/country.model';
-import { StateModel } from 'src/app/modules/setup/models/state.model';
-import { CityModel } from 'src/app/modules/setup/models/city.model';
 import { isNullOrUndefined } from 'util';
 
 @Component({

@@ -1,0 +1,198 @@
+<div class="row">
+    <form #frm="ngForm" (ngSubmit)="save(frm)">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong *ngIf="!productDTO.id">{{'Product.AddProduct' |translate}}</strong>
+                    <strong *ngIf="productDTO.id && !viewMode">{{'Product.EditProduct' |translate}}</strong>
+                    <strong *ngIf="productDTO.id  && viewMode ">{{'Product.ViewProduct' |translate}}</strong>
+                </div>
+                <div class="card-body card-block">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="isActive" class=" form-control-label">{{'General.IsActive'
+                                        |translate}}</label>
+                               
+                                    <p-inputSwitch [disabled]="viewMode" [ngModelOptions]="{standalone: true}"
+                                        name="isActive" class="input-switch"
+                                        [(ngModel)]="productDTO.isActive"></p-inputSwitch>
+                                </div>
+                            </div>
+                           
+                            <div class="row">
+                                <div class="col-lg-6" *ngIf="productDTO.id">
+                                    <div class="form-group">
+                                        <label for="code" class=" form-control-label">{{'General.Code'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="productDTO.code" type="text" id="code"
+                                            class="form-control" #code="ngModel" readonly [class.is-valid]="code.valid"
+                                            name="code" aria-describedby="helpId">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="name" class=" form-control-label">{{'General.Name'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="productDTO.name" type="text" id="name"
+                                            class="form-control" #name="ngModel"
+                                            [class.is-invalid]="name.invalid && name.touched"
+                                            [class.is-valid]="name.valid" required minlength="3" name="name"
+                                            aria-describedby="helpId">
+                                        <small [hidden]="name.valid || name.untouched" id="helpId" class="text-muted"
+                                            [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+                         
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="form3Example3c">{{'General.Category'|translate}}</label>
+                                        <select name="category" id="category" class="form-control"
+                                            [(ngModel)]="productDTO.categoryId">
+                                            <option value="">{{'General.SelectCategory'|translate}}</option>
+                                            <option *ngFor="let item of categoryList" [value]="item.id"> {{item.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="barCode" class=" form-control-label">{{'Product.BarCode'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="productDTO.barCode" type="text"
+                                            id="barCode" class="form-control" #barCode="ngModel"
+                                            [class.is-invalid]="barCode.invalid && barCode.touched"
+                                            [class.is-valid]="barCode.valid" 
+                                           name="barCode" aria-describedby="helpId">
+                                        <small [hidden]="barCode.valid || barCode.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="price" class=" form-control-label">{{'General.Price'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="productDTO.price" type="text"
+                                            id="price" class="form-control" #price="ngModel"
+                                            [class.is-invalid]="price.invalid && price.touched"
+                                            [class.is-valid]="price.valid" required  name="price"
+                                            id="price" class="form-control" aria-describedby="helpId">
+                                        <small [hidden]="price.valid || price.untouched" id="helpId" class="text-muted"
+                                            [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+                           
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="sellingPricePercentage"
+                                            class=" form-control-label">{{'Product.SellingPricePercentage'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="productDTO.sellingPricePercentage"
+                                            type="sellingPricePercentage" id="sellingPricePercentage"
+                                            class="form-control" #sellingPricePercentage="ngModel"
+                                            [class.is-invalid]="sellingPricePercentage.invalid && sellingPricePercentage.touched"
+                                            [class.is-valid]="sellingPricePercentage.valid"
+                                            name="sellingPricePercentage" id="sellingPricePercentage"
+                                            class="form-control" aria-describedby="helpId">
+                                        <small
+                                            [hidden]="sellingPricePercentage.valid || sellingPricePercentage.untouched"
+                                            id="helpId" class="text-muted"
+                                            [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="purchasingPricePercentage"
+                                            class=" form-control-label">{{'Product.PurchasingPricePercentage'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="productDTO.purchasingPricePercentage"
+                                            type="purchasingPricePercentage" id="purchasingPricePercentage"
+                                            class="form-control" #purchasingPricePercentage="ngModel"
+                                            [class.is-invalid]="purchasingPricePercentage.invalid && purchasingPricePercentage.touched"
+                                            [class.is-valid]="purchasingPricePercentage.valid"
+                                            name="purchasingPricePercentage" id="purchasingPricePercentage"
+                                            class="form-control" aria-describedby="helpId">
+                                        <small
+                                            [hidden]="purchasingPricePercentage.valid || purchasingPricePercentage.untouched"
+                                            id="helpId" class="text-muted"
+                                            [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="actualQuantity" class=" form-control-label">{{'General.ActualQuantity'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="productDTO.actualQuantity" type="text"
+                                            id="actualQuantity" class="form-control" #actualQuantity="ngModel"
+                                            [class.is-invalid]="actualQuantity.invalid && actualQuantity.touched"
+                                            [class.is-valid]="actualQuantity.valid" required  name="actualQuantity"
+                                            id="actualQuantity" class="form-control" aria-describedby="helpId">
+                                        <small [hidden]="actualQuantity.valid || actualQuantity.untouched" id="helpId" class="text-muted"
+                                            [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="lowQuantity" class=" form-control-label">{{'General.LowQuantity'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="productDTO.lowQuantity" type="text"
+                                            id="lowQuantity" class="form-control" #lowQuantity="ngModel"
+                                            [class.is-invalid]="lowQuantity.invalid && lowQuantity.touched"
+                                            [class.is-valid]="lowQuantity.valid"  name="lowQuantity"
+                                            id="lowQuantity" class="form-control" aria-describedby="helpId">
+                                        <small [hidden]="lowQuantity.valid || lowQuantity.untouched" id="helpId" class="text-muted"
+                                            [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="highQuantity" class=" form-control-label">{{'General.HighQuantity'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="productDTO.highQuantity" type="text"
+                                            id="highQuantity" class="form-control" #highQuantity="ngModel"
+                                            [class.is-invalid]="highQuantity.invalid && highQuantity.touched"
+                                            [class.is-valid]="highQuantity.valid" name="highQuantity"
+                                            id="highQuantity" class="form-control" aria-describedby="helpId">
+                                        <small [hidden]="highQuantity.valid || highQuantity.untouched" id="helpId" class="text-muted"
+                                            [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6" [hidden]="viewMode">
+                                    <div class="form-group">
+                                        <label for="image" class=" form-control-label">{{'General.UploadImage'
+                                            |translate}}</label>
+                                        <input type="file" id="image" class="form-control"
+                                            (change)="onFileChange($event)">
+                                    </div>
+                                </div>
+                             
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div class="col-lg-12 mb-2" *ngIf="imageSrc">{{'General.Image' |translate}}</div>
+                                <div class="col-lg-12">
+                                    <img src="{{imageSrc}}" *ngIf="productDTO.imageUrl" class="Image">
+                                    <img class="Image" *ngIf="!productDTO.imageUrl" src="{{imageSrc}}" />
+                                </div>
+                                <div class="col-lg-12"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-container p-3">
+                    <button type="submit" class="btn btn-outline-primary mr-1"
+                        [disabled]="frm.invalid">
+                        <i class="fa fa-dot-circle-o"></i>{{'General.SaveChanges' |translate}}
+                    </button>
+                    <button  type="reset" class="btn btn-danger mr-1" (click)="back()">
+                        <i class="fa fa-ban"></i>{{'General.Back' |translate}}
+                    </button>
+                
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

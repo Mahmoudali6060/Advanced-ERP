@@ -34,12 +34,87 @@
                 <div class="card mainCard">
                     <div class="row g-0">
                         <div class="col-md-5 col-lg-5 d-none d-md-block">
-                            <img src="assets/images/Sign up-rafiki.svg" alt="login form" class="img-fluid borderFormRequest"/>
+                            <img src="assets/images/Sign up-rafiki.svg" alt="login form"
+                                class="img-fluid borderFormRequest" />
                         </div>
-                        <div class="col-md-7 col-lg-7 d-flex align-items-center">
-                            <div class="  p-lg-1 text-black">
-                                <app-register-advanced [isRegisterFromOut]="true"></app-register-advanced>
-
+                        <div class="col-md-6 col-lg-7 d-flex align-items-center ">
+                            <div class="card-body p-lg-5 text-black ">
+                                <div class="row ">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-9">
+                                        <h2>{{'Authentication.WelcomeTo'|translate}}<span
+                                                class="base">&nbsp;{{'Authentication.ERP'|translate}}</span></h2>
+                                    </div>
+                                </div>
+                                <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+                                    <div class="row align-items-center">
+                                        <div class="form-group col-md-6">
+                                            <label translate>Authentication.Email</label>
+                                            <input class="au-input au-input--full" [(ngModel)]="registerModel.email"
+                                                type="text" name="email"
+                                                placeholder="{{'Authentication.Email' |translate}}">
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="form-group col-md-6">
+                                            <label translate>Authentication.Username</label>
+                                            <input class="au-input au-input--full" [(ngModel)]="registerModel.username"
+                                                type="text" name="userName"
+                                                placeholder="{{'Authentication.Username' |translate}}">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label translate>Authentication.Password</label>
+                                            <input class="au-input au-input--full" [(ngModel)]="registerModel.password"
+                                                type="password" name="password"
+                                                placeholder="{{'Authentication.Password' |translate}}">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label translate>Authentication.ConfirmPassword</label>
+                                            <input class="au-input au-input--full"
+                                                [(ngModel)]="registerModel.confirmPassword" type="password"
+                                                name="password" placeholder="{{'Authentication.Password' |translate}}">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="role" class=" form-control-label">{{'User.Role'
+                                                |translate}}</label>
+                                            <select name="role" id="select" class="form-control"
+                                                [(ngModel)]="registerModel.userTypeId">
+                                                <option *ngFor="let usertype of userTypes" [value]="usertype.value">
+                                                    {{'userTypeEnum.'+usertype.label |translate}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3"></div>
+                                        <div class="login-checkbox col-md-6">
+                                            <label> <input type="checkbox" name="remember">{{'Authentication.RememberMe'
+                                                |translate}}
+                                            </label>
+                                            <label> <a
+                                                    [routerLink]="['/forgotpassword']">{{'Authentication.ForgotPassword'|translate}}</a></label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-3">
+                                            <button class=" btn btn-outline-primary col-md-12" (click)="back()"
+                                                type="button" translate>
+                                                General.back</button>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button [disabled]="registerForm.invalid"
+                                                class=" btn btn-outline-primary  col-md-12" type="submit" translate>
+                                                Authentication.Register</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

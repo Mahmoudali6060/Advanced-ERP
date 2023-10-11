@@ -72,8 +72,7 @@ namespace Account.DataAccessLayer
         }
         public async Task<UserProfile> GetUserProfileByCompanyId(long CompanyId)
         {
-            return await _appDbContext.UserProfiles.Include(u => u.Company.Country)
-                        .Include(u => u.Company.State).Include(u => u.Company.City)
+            return await _appDbContext.UserProfiles
                         .Include(u => u.AppUser).SingleOrDefaultAsync(x => x.CompanyId == CompanyId);
         }
 

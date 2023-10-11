@@ -9,10 +9,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { SetupModule } from '../setup/setup.module';
 import { RequestFollowingComponent } from './components/request-following/request-following.component';
 import {TabViewModule} from 'primeng/tabview';
 import {ButtonModule} from 'primeng/button';
+import { ConfigurationsModule } from '../configurations/configurations.module';
 
 @NgModule({
   imports: [
@@ -22,7 +22,7 @@ import {ButtonModule} from 'primeng/button';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SetupModule,
+    ConfigurationsModule,
     TabViewModule,
     ButtonModule
     

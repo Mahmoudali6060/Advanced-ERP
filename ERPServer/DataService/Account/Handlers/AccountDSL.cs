@@ -54,15 +54,16 @@ namespace Account.DataServiceLayer
 
 
             #region Create  UserProfile
-            if (model.CompanyDTO.Id > 0)
+            if (createUserResult.Succeeded == true)
             {
                 userDto.AppUserId = appUser.Id;
                 userDto.DefaultLanguage = "en";
-                userDto.CompanyId = model.CompanyDTO.Id;
-                userDto.IsActive = false;
-                userDto.IsFirstLogin = true;
+                userDto.CompanyId = model.CompanyDTO.Id > 0 ? model.CompanyDTO.Id : null;
+                userDto.IsActive = true;
+                userDto.IsFirstLogin = false;
                 userDto.IsHide = false;
-                userDto.Role = model.CompanyDTO.Role;
+                userDto.UserTypeId = userDto.UserTypeId;
+                userDto.Role = UserType;
                 //UploadImage(entity);
                 long userProfileIdResult = await _unitOfWork.UserProfileDAL.Add(_mapper.Map<UserProfile>(userDto));
                 //Create Token
@@ -85,38 +86,38 @@ namespace Account.DataServiceLayer
 
         }
 
-        private void UploadAllDocuments(CompanyDTO model)
-        {
-            if (model.CompanyLogoBase64 != null)
-            {
-                model.CompanyLogoURL = DateTime.Now.ToString("yyyy_MM_dd_HH_ss") + "_" + model.CompanyLogoURL;
-                UploadImage(model.CompanyLogoURL, model.CompanyLogoBase64);
-            }
+        //private void UploadAllDocuments(CompanyDTO model)
+        //{
+        //    if (model.CompanyLogoBase64 != null)
+        //    {
+        //        model.CompanyLogoURL = DateTime.Now.ToString("yyyy_MM_dd_HH_ss") + "_" + model.CompanyLogoURL;
+        //        UploadImage(model.CompanyLogoURL, model.CompanyLogoBase64);
+        //    }
 
-            if (model.CommercialRegistration?.FileBase64 != null)
-            {
-                model.CommercialRegistration.Url = DateTime.Now.ToString("yyyy_MM_dd_HH_ss") + "_" + model.CommercialRegistration.Url;
-                UploadFile(model.CommercialRegistration.Url, model.CommercialRegistration.FileBase64);
-            }
+        //    if (model.CommercialRegistration?.FileBase64 != null)
+        //    {
+        //        model.CommercialRegistration.Url = DateTime.Now.ToString("yyyy_MM_dd_HH_ss") + "_" + model.CommercialRegistration.Url;
+        //        UploadFile(model.CommercialRegistration.Url, model.CommercialRegistration.FileBase64);
+        //    }
 
-            if (model.TaxId?.FileBase64 != null)
-            {
-                model.TaxId.Url = DateTime.Now.ToString("yyyy_MM_dd_HH_ss") + "_" + model.TaxId.Url;
-                UploadFile(model.TaxId.Url, model.TaxId.FileBase64);
-            }
+        //    if (model.TaxId?.FileBase64 != null)
+        //    {
+        //        model.TaxId.Url = DateTime.Now.ToString("yyyy_MM_dd_HH_ss") + "_" + model.TaxId.Url;
+        //        UploadFile(model.TaxId.Url, model.TaxId.FileBase64);
+        //    }
 
-            if (model.VatId?.FileBase64 != null)
-            {
-                model.VatId.Url = DateTime.Now.ToString("yyyy_MM_dd_HH_ss") + "_" + model.VatId.Url;
-                UploadFile(model.VatId.Url, model.VatId.FileBase64);
-            }
+        //    if (model.VatId?.FileBase64 != null)
+        //    {
+        //        model.VatId.Url = DateTime.Now.ToString("yyyy_MM_dd_HH_ss") + "_" + model.VatId.Url;
+        //        UploadFile(model.VatId.Url, model.VatId.FileBase64);
+        //    }
 
-            if (model.IndustrialRegistration?.FileBase64 != null)
-            {
-                model.IndustrialRegistration.Url = DateTime.Now.ToString("yyyy_MM_dd_HH_ss") + "_" + model.IndustrialRegistration.Url;
-                UploadFile(model.IndustrialRegistration.Url, model.IndustrialRegistration.FileBase64);
-            }
-        }
+        //    if (model.IndustrialRegistration?.FileBase64 != null)
+        //    {
+        //        model.IndustrialRegistration.Url = DateTime.Now.ToString("yyyy_MM_dd_HH_ss") + "_" + model.IndustrialRegistration.Url;
+        //        UploadFile(model.IndustrialRegistration.Url, model.IndustrialRegistration.FileBase64);
+        //    }
+        //}
 
         private bool UploadFile(string fileName, string fileBase64)
         {

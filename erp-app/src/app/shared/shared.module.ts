@@ -22,12 +22,12 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { PagerService } from './services/pager.service';
 import { LoaderComponent } from './components/loader/loader.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { CountryService } from '../modules/setup/services/country.service';
-import { StateService } from '../modules/setup/services/state.service';
-import { CityService } from '../modules/setup/services/city.service';
-import { PortService } from '../modules/setup/services/port.service';
 import {CarouselModule} from 'primeng/carousel'
 import {TabViewModule} from 'primeng/tabview';
+import { CountryService } from '../modules/configurations/services/country.service';
+import { StateService } from '../modules/configurations/services/state.service';
+import { CityService } from '../modules/configurations/services/city.service';
+import { PortService } from '../modules/configurations/services/port.service';
 
 @NgModule({
 

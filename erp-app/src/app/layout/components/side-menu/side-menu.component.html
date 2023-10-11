@@ -7,7 +7,7 @@
         <div>
             <img class="logo-default" style="width: 100px;" src="assets/images/logo-white.png" alt="logo" />
         </div>
-        <h2 style="color: #fff;">Base</h2>
+        <h2 style="color: #fff;">ERP</h2>
     </div>
     <div class="menu-sidebar2__content js-scrollbar1 ps ps--active-y">
         <div class="account2">
@@ -23,12 +23,11 @@
             <nav class="navbar-sidebar2">
                 <ul class="list-unstyled navbar__list">
                     <li routerLinkActive="active"
-                        [class.hide-page]="authService.loggedUserProfile?.userTypeId === userTypeEnum.Admin">
+                        [class.hide-page]="authService.loggedUserProfile?.userTypeId != userTypeEnum.Admin">
                         <a [routerLink]="['/dashboard']">
                             <i class="fas fa-chart-bar"></i><span translate>SideMenu.Dashboard</span> </a>
-                        <!-- <span class="inbox-num">3</span> -->
                     </li>
-                    <li class=" has-sub" [class.hide-page]="authService.loggedUserProfile?.userTypeId === userTypeEnum.Admin">
+                    <li class="has-sub">
                         <a class="js-arrow" href="#">
                             <i class="fa fa-cog"></i> <span translate>SideMenu.Setup</span>
                             <span class="arrow">
@@ -37,25 +36,17 @@
                         </a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li routerLinkActive="active">
-                                <a [routerLink]="['/setup/trucks-provider-list']">
-                                    <i class="fa fa-users"></i><span translate>SideMenu.TrucksProviders</span></a>
+                                <a [routerLink]="['/setup/category-list']">
+                                    <i class="fa fa-envelope"></i><span translate>SideMenu.Categories</span></a>
                             </li>
                             <li routerLinkActive="active">
-                                <a [routerLink]="['/setup/contact-us-list']">
-                                    <i class="fa fa-envelope"></i><span translate>SideMenu.ContactUs</span></a>
-                            </li>
-                            <li routerLinkActive="active">
-                                <a [routerLink]="['/setup/about-us']">
-                                    <i class="fa fa-question-circle"></i><span translate>SideMenu.AboutUs</span></a>
-                            </li>
-                            <li routerLinkActive="active">
-                                <a [routerLink]="['/setup/advertisment']">
-                                    <i class="fa fa-file-image-o"></i><span translate>SideMenu.Advertisments</span></a>
+                                <a [routerLink]="['/setup/product-list']">
+                                    <i class="fa fa-question-circle"></i><span translate>SideMenu.Products</span></a>
                             </li>
                         </ul>
                     </li>
-                    <li class=" has-sub"
-                    [class.hide-page]="authService.loggedUserProfile?.userTypeId === userTypeEnum.Admin">
+                    <li class="has-sub"
+                        [class.hide-page]="authService.loggedUserProfile?.userTypeId != userTypeEnum.Admin">
                         <a class="js-arrow" href="#">
                             <i class="fas fa-users"></i> <span translate>SideMenu.UserManagement</span>
                             <span class="arrow">
@@ -63,14 +54,36 @@
                             </span>
                         </a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
-                            <li routerLinkActive="active" [class.hide-page]="authService.loggedUserProfile?.userTypeId!=userTypeEnum.Admin">
+                            <li routerLinkActive="active"
+                                [class.hide-page]="authService.loggedUserProfile?.userTypeId!=userTypeEnum.Admin">
                                 <a [routerLink]="['/user/user-list']">
                                     <i class="fas fa-user"></i><span translate>SideMenu.UserList</span></a>
                             </li>
-                           
+
                         </ul>
                     </li>
-
+                    <li class="has-sub">
+                        <a class="js-arrow" href="#">
+                            <i class="fa fa-cog"></i> <span translate>SideMenu.Configurations</span>
+                            <span class="arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </span>
+                        </a>
+                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                            <li routerLinkActive="active">
+                                <a [routerLink]="['/configurations/contact-us-list']">
+                                    <i class="fa fa-envelope"></i><span translate>SideMenu.ContactUs</span></a>
+                            </li>
+                            <li routerLinkActive="active">
+                                <a [routerLink]="['/configurations/about-us']">
+                                    <i class="fa fa-question-circle"></i><span translate>SideMenu.AboutUs</span></a>
+                            </li>
+                            <li routerLinkActive="active">
+                                <a [routerLink]="['/configurations/advertisment']">
+                                    <i class="fa fa-file-image-o"></i><span translate>SideMenu.Advertisments</span></a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
         </ng-container>
