@@ -1,0 +1,173 @@
+<div class="row">
+    <form #frm="ngForm" (ngSubmit)="save(frm)">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong *ngIf="!clientDTO.id">{{'Client.AddClient' |translate}}</strong>
+                    <strong *ngIf="clientDTO.id && !viewMode">{{'Client.EditClient' |translate}}</strong>
+                    <strong *ngIf="clientDTO.id  && viewMode ">{{'Client.ViewClient' |translate}}</strong>
+                </div>
+                <div class="card-body card-block">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label for="isActive" class=" form-control-label">{{'General.IsActive'
+                                        |translate}}</label>
+
+                                    <p-inputSwitch [disabled]="viewMode" [ngModelOptions]="{standalone: true}"
+                                        name="isActive" class="input-switch"
+                                        [(ngModel)]="clientDTO.isActive"></p-inputSwitch>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="isActive" class=" form-control-label">{{'General.IsVendor'
+                                        |translate}}</label>
+
+                                    <p-inputSwitch [disabled]="viewMode" [ngModelOptions]="{standalone: true}"
+                                        name="isVendor" class="input-switch"
+                                        [(ngModel)]="clientDTO.isVendor"></p-inputSwitch>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6" *ngIf="clientDTO.id">
+                                    <div class="form-group">
+                                        <label for="code" class=" form-control-label">{{'General.Code'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="clientDTO.code" type="text" id="code"
+                                            class="form-control" #code="ngModel" [class.is-valid]="code.valid"
+                                            name="code" aria-describedby="helpId">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="fullName" class=" form-control-label">{{'General.FullName'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="clientDTO.fullName" type="text"
+                                            id="fullName" class="form-control" #fullName="ngModel"
+                                            [class.is-invalid]="fullName.invalid && fullName.touched"
+                                            [class.is-valid]="fullName.valid" required name="fullName"
+                                            aria-describedby="helpId">
+                                        <small [hidden]="fullName.valid || fullName.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+
+
+                              
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="phoneNumber1" class=" form-control-label">{{'General.PhoneNumber1'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="clientDTO.phoneNumber1" type="text"
+                                            id="phoneNumber1" class="form-control" #phoneNumber1="ngModel"
+                                            [class.is-invalid]="phoneNumber1.invalid && phoneNumber1.touched"
+                                            [class.is-valid]="phoneNumber1.valid"  name="phoneNumber1"
+                                            id="phoneNumber1" class="form-control" aria-describedby="helpId">
+                                        <small [hidden]="phoneNumber1.valid || phoneNumber1.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="phoneNumber2" class=" form-control-label">{{'General.PhoneNumber2'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="clientDTO.phoneNumber2" type="text"
+                                            id="phoneNumber2" class="form-control" #phoneNumber2="ngModel"
+                                            [class.is-invalid]="phoneNumber2.invalid && phoneNumber2.touched"
+                                            [class.is-valid]="phoneNumber2.valid"  name="phoneNumber2"
+                                            id="phoneNumber2" class="form-control" aria-describedby="helpId">
+                                        <small [hidden]="phoneNumber2.valid || phoneNumber2.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="address" class=" form-control-label">{{'General.Address'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="clientDTO.address" type="text"
+                                            id="address" class="form-control" #address="ngModel"
+                                            [class.is-invalid]="address.invalid && address.touched"
+                                            [class.is-valid]="address.valid" name="address" aria-describedby="helpId">
+                                        <small [hidden]="address.valid || address.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="balance" class=" form-control-label">{{'General.Balance'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="clientDTO.balance" type="number"
+                                            id="balance" class="form-control" #balance="ngModel"
+                                            [class.is-invalid]="balance.invalid && balance.touched"
+                                            [class.is-valid]="balance.valid" name="balance" id="balance"
+                                            class="form-control" aria-describedby="helpId">
+                                        <small [hidden]="balance.valid || balance.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="notes" class=" form-control-label">{{'General.Notes'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="clientDTO.notes" type="text"
+                                            id="notes" class="form-control" #notes="ngModel"
+                                            [class.is-invalid]="notes.invalid && notes.touched"
+                                            [class.is-valid]="notes.valid" name="notes" id="notes" class="form-control"
+                                            aria-describedby="helpId">
+                                        <small [hidden]="notes.valid || notes.untouched" id="helpId" class="text-muted"
+                                            [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="idNumber" class=" form-control-label">{{'General.IdNumber'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="clientDTO.idNumber" type="text"
+                                            id="idNumber" class="form-control" #idNumber="ngModel"
+                                            [class.is-invalid]="idNumber.invalid && idNumber.touched"
+                                            [class.is-valid]="idNumber.valid"  name="idNumber" id="idNumber"
+                                            class="form-control" aria-describedby="helpId">
+                                        <small [hidden]="idNumber.valid || idNumber.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6" [hidden]="viewMode">
+                                    <div class="form-group">
+                                        <label for="image" class=" form-control-label">{{'General.UploadImage'
+                                            |translate}}</label>
+                                        <input type="file" id="image" class="form-control"
+                                            (change)="onFileChange($event)">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div class="col-lg-12 mb-2" *ngIf="imageSrc">{{'General.Image' |translate}}</div>
+                                <div class="col-lg-12">
+                                    <img src="{{imageSrc}}" *ngIf="clientDTO.imageUrl" class="Image">
+                                    <img class="Image" *ngIf="!clientDTO.imageUrl" src="{{imageSrc}}" />
+                                </div>
+                                <div class="col-lg-12"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-container p-3">
+                    <button type="submit" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
+                        <i class="fa fa-dot-circle-o"></i>{{'General.Save' |translate}}
+                    </button>
+                    <button type="reset" class="btn btn-danger mr-1" (click)="back()">
+                        <i class="fa fa-ban"></i>{{'General.Back' |translate}}
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

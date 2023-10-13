@@ -59,8 +59,16 @@
     "Back": "Back",
     "LowQuantity": "Low Quantity",
     "HighQuantity": "High Quantity",
-    "SelectCategory":"Select Category"
-    
+    "SelectCategory":"Select Category",
+    "FullName":"Full Name",
+    "Phone":"Phone",
+    "Balance":"Balance",
+    "IdNumber":"Id Number",
+    "IsVendor":"Is Vendor",
+    "PhoneNumber1":"Phone Number 1",
+    "PhoneNumber2":"Phone Number 2",
+    "IsClient":"Is client"
+
   },
   "Dashboard": {
     "overview": "Overview",
@@ -199,32 +207,14 @@
     "UserList": "User List",
     "Products": "Products",
     "Categories": "Categories",
-    "ServiceManagement": "Service Management",
-    "RequestsInbox": "Requests (Inbox)",
-    "RequestsMyInbox": "Requests (My Inbox)",
-    "RequestClosed": "Closed Requests",
     "Setup": "Setup",
     "TrucksProviders": "Trucks Providers",
-    "RequestsMyRequest": "My Requests",
-    "ShippingCenter": "Shipping Center",
-    "ShippingLineWorkSpace": "Shipping Line Workspace",
-    "ShippingOffers": "Shipping Offers",
-    "ShippingLineInbox": "Shipping Line Inbox",
-    "BookingHub": "Booking Hub",
-    "ImporterExporterInbox": "Importer Exporter Inbox",
-    "ShippingLineView": "Shipping Line View",
-    "ShippingLineViewInbox": "Inbox",
-    "ShippingLineViewClosed": "Closed",
-    "ShippingLineViewApproved": "Approved",
-    "ShippingLineViewReturnForModification": "Return for modification",
     "ContactUs": "Contact Us",
     "AboutUs": "About Us",
     "Advertisments": "Advertisments",
-    "ShippingLine": "Shipping Line",
-    "TrucksProvidersContacts": "Trucks Providers Contacts",
-    "ShipingLineContacts": "Shiping Line Contacts",
-    "RegistrationRequests": "Registration Requests",
-    "Operations": "Operations"
+    "Clients":"Clients",
+    "Vendors":"Vendors"
+  
   },
   "Errors": {
     "InvalidUsernameOrPassword": "Invalid Username Or Password",
@@ -387,5 +377,17 @@
     "BarCode": "BarCode",
     "PurchasingPricePercentage": "Purchasing Price Percentage",
     "SellingPricePercentage": "Selling Price Percentage"
+  },
+  "Client": {
+    "Title": "Clients",
+    "AddClient": "Add Client",
+    "EditClient": "Edit Client",
+    "ViewClient": "View Client"
+  },
+  "Vendor": {
+    "Title": "Vendors",
+    "AddVendor": "Add vendor",
+    "EditVendor": "Edit vendor",
+    "ViewVendor": "View vendor"
   }
 }

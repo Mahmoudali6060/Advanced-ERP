@@ -42,6 +42,12 @@ namespace App.Helper
 
             CreateMap<Category, CategoryDTO>();
             CreateMap<CategoryDTO, Category>();
+
+            CreateMap<Client, ClientDTO>();
+            CreateMap<ClientDTO, Client>();
+
+            CreateMap<Vendor, VendorDTO>();
+            CreateMap<VendorDTO, Vendor>();
             #endregion
 
             #region Users Management

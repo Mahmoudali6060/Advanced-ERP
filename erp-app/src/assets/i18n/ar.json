@@ -55,7 +55,6 @@
     "entries": "المدخلات",
     "Search": "بحث",
     "ERP": "إدارة الموارد المؤسسية",
-    "PleaseLetUsKnowIfYouWantToRequestAERP": "من فضلك أخبرنا إذا كنت تريد أن تطلب طلب سيارة",
     "Ok": "موافق",
     "back": "رجوع",
     "Active": "فعّال",
@@ -69,9 +68,18 @@
     "Image": "الصورة",
     "UploadImage": "أختر صورة",
     "SaveChanges": "حفظ التغيرات",
-    "Code":"الكود",
-    "Status":"الحالة",
-    "SelectCategory":"اختر الصنف"
+    "Code": "الكود",
+    "Status": "الحالة",
+    "SelectCategory": "اختر الصنف",
+    "FullName": "الإسم بالكامل",
+    "Phone": "رقم الهاتف",
+    "IdNumber": "الرقم القومي",
+    "IsVendor":"يمكن هذا العميل أن يصبح مورد (مزدوج)",
+    "PhoneNumber1":"رقم الهاتف 1",
+    "PhoneNumber2":"رقم الهاتف 2",
+    "IsClient":"يمكن هذا المورد أن يصبح عميل (مزدوج)"
+
+
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -210,32 +218,15 @@
     "Products": "المنتجات",
     "Categories": "الأصناف",
     "UserList": "قائمة المستخدمين",
-    "Management": "إدارة السيارات",
-    "RequestsInbox": "صندوق الواردات",
-    "RequestsMyInbox": " صندوق الواردات الخاصة بي",
     "SetupManagement": "الإعدادات",
     "TrucksProviders": "مزودو الشاحنات",
-    "RequestsMyRequest": "صندوق الطلبات الخاصة بي",
-    "ServiceManagement": "إدارة الخدمات",
     "RequestClosed": "الطلبات المغلقة",
     "Setup": "الإعدادت",
-    "ShippingCenter": "مركز الشحن",
-    "ShippingLineWorkSpace": "منطقة عمل مسؤول الشحن",
-    "ShippingOffers": "عروض الشحن",
-    "ShippingLineInbox": "صندوق واردات مسؤول الشحن",
-    "BookingHub": "مركز الحجز",
-    "ImporterExporterInbox": "صندوق وارد المستورد/المصدر",
-    "ShippingLineView": "عرض مسؤول الشحن",
-    "ShippingLineViewInbox": "الوارد",
-    "ShippingLineViewClosed": "المغلقة",
-    "ShippingLineViewApproved": "الموافق عليها",
-    "ShippingLineViewReturnForModification": "عودة للتعديل",
     "ContactUs": "المتواصلون معنا",
     "AboutUs": "معلومات عنا",
     "Advertisments": "الإعلانات",
-    "ShippingLine": "مسؤول الشحن",
-    "TrucksProvidersContacts": "جهات اتصالات مزودي الشاحنات",
-    "ShipingLineContacts": "جهات اتصالات مسؤول الشحن"
+    "Clients": "العملاء",
+    "Vendors": "الموردين"
   },
   "Errors": {
     "InvalidUsernameOrPassword": "من فضلك تأكد من اسم المستخدم او كلمة المرور",
@@ -380,5 +371,17 @@
     "BarCode": "باركود",
     "PurchasingPricePercentage": "نسبة سعر الشراء",
     "SellingPricePercentage": "نسبة سعر البيع"
+  },
+  "Client": {
+    "Title": "العملاء",
+    "AddClient": "إضافة عميل",
+    "EditClient": "تعديل العميل",
+    "ViewClient": "عرض العميل"
+  },
+  "Vendor": {
+    "Title": "الموردين",
+    "AddVendor": "إضافة مورد",
+    "EditVendor": "تعديل المورد",
+    "ViewVendor": "عرض المورد"
   }
 }

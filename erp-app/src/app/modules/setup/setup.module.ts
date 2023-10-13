@@ -12,6 +12,12 @@ import { SetupRoutingModule } from './setup-routing.module';
 import { CategoryListComponent } from './components/category/category-list/category-list.component';
 import { CategoryFormComponent } from './components/category/category-form/category-form.component';
 import { CategoryService } from './services/category.service';
+import { ClientFormComponent } from './components/client/client-form/client-form.component';
+import { ClientListComponent } from './components/client/client-list/client-list.component';
+import { ClientService } from './services/client.service';
+import { VendorFormComponent } from './components/vendor/vendor-form/vendor-form.component';
+import { VendorListComponent } from './components/vendor/vendor-list/vendor-list.component';
+import { VendorService } from './services/vendor.service';
 
 @NgModule({
   imports: [
@@ -28,14 +34,20 @@ import { CategoryService } from './services/category.service';
     ProductListComponent,
     ProductFormComponent,
     CategoryListComponent,
-    CategoryFormComponent
+    CategoryFormComponent,
+    ClientFormComponent,
+    ClientListComponent,
+    VendorFormComponent,
+    VendorListComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     ProductService,
     CountryService,
     CompanyService,
-    CategoryService
+    CategoryService,
+    ClientService,
+    VendorService
   ]
 })
 export class SetupModule {

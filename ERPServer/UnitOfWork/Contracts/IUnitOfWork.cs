@@ -22,7 +22,8 @@ namespace UnitOfWork.Contracts
         IAdvertismentDAL AdvertismentDAL { get; }
         ICategoryDAL CategoryDAL { get; }
         IProductDAL ProductDAL { get; }
-
+        IClientDAL ClientDAL { get; }
+        IVendorDAL VendorDAL { get; }
         #endregion
 
         Task CompleteAsync();

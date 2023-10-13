@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Shared.Entities.Shared
 {
-    public class BaseAccount : BaseEntity
+    public class BaseAccount : BaseDTO
     {
         public long SafeId { get; set; }
         public decimal? PaidUp { get; set; }

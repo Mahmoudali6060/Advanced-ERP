@@ -7,10 +7,8 @@ using System.Text;
 namespace Shared.Entities.Shared
 {
 
-    public class BaseEntity 
+    public class BaseDTO
     {
         public long Id { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime? Modified { get; set; }
     }
 }

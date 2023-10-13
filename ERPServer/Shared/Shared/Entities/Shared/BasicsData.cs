@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Shared.Entities.Shared
 {
-    public class BasicsData : BaseEntity
+    public class BasicsData : BaseDTO
     {
         public DateTime PayDate { get; set; }
         public decimal Pay { get; set; }

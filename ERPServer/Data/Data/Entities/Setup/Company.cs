@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Data.Entities.Setup
 {
-    public class Company : BaseEntity
+    public class Company : BaseDTO
     {
         public string LogoURL { get; set; }
         public string Name { get; set; }
