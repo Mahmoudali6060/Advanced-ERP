@@ -1,37 +1,24 @@
 import { Injectable, Inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
-import { Enum } from '../enums/enum';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { UserProfileDTO } from 'src/app/modules/user/models/user-profile.dto';
-import { LocalStorage } from '@ngx-pwa/local-storage';
 import { LocalStorageService } from './local-storage.service';
-import { LocalStorageItems } from '../constants/local-storage-items';
 
 
 @Injectable({ providedIn: 'root' })
 
 export class HelperService {
 
-    constructor(private _datePipe: DatePipe, public translate: TranslateService,private localStorageService:LocalStorageService) {
+    constructor(private _datePipe: DatePipe, public translate: TranslateService, private localStorageService: LocalStorageService) {
 
     }
-    
-    //public subject = new Subject<any>();
-    // getMessage(): Observable<any> {
-    //     return this.subject.asObservable();
-    // }
-    // postUserProfile(message: string) {
-    //     this.subject.next({ text: message });
-    // }
+
+
     transformDate(date: any) {
         return this._datePipe.transform(date, "yyyy-MM-dd"); //whatever format you need. 
     }
-
-
-   
-
-
+    conveertDateToString(date: Date) {
+        return (this._datePipe.transform(date, "yyyy-MM-dd"))?.toString(); //whatever format you need. 
+    }
     useLanguage(language: string): void {
         const htmlTag = document.getElementsByTagName("html")[0] as HTMLHtmlElement;
         htmlTag.dir = language === "ar" ? "rtl" : "ltr";
@@ -48,7 +35,6 @@ export class HelperService {
         }
 
     }
-
 
     loadCssToHTMlPage(url: string): void {
         // Create link

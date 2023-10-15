@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using Data.Entities.Purchases;
 using Data.Entities.Setup;
 using Data.Entities.UserManagement;
 using Entities.Account;
+using Shared.Entities.Purchases;
 using Shared.Entities.Setup;
+using System;
 
 namespace App.Helper
 {
@@ -57,6 +60,19 @@ namespace App.Helper
             CreateMap<UserProfileDTO, UserProfile>();
             #endregion
 
+            #region Purchases
+
+            CreateMap<PurchasesBillHeader, PurchasesBillHeaderDTO>()
+                .ForMember(dest => dest.PurchasesBillDetailList, opt => opt.MapFrom(src => src.PurchasesBillDetailList))
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")));
+
+            CreateMap<PurchasesBillHeaderDTO, PurchasesBillHeader>()
+                .ForMember(dest => dest.PurchasesBillDetailList, opt => opt.MapFrom(src => src.PurchasesBillDetailList))
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => DateTime.Parse(src.Date)));
+
+            CreateMap<PurchasesBillDetail, PurchasesBillDetailDTO>();
+            CreateMap<PurchasesBillDetailDTO, PurchasesBillDetail>();
+            #endregion
         }
     }
 }

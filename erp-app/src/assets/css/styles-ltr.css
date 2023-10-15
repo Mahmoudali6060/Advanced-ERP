@@ -134,3 +134,7 @@ i {
 .borderFormRequest{
     border-radius: 1rem 0 0 1rem;;
 }
+
+.element-floating {
+    float: right;
+}

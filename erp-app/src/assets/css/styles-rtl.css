@@ -12,14 +12,17 @@ label {
         right: auto;
 
     }
+
     .menu-sidebar2.show-sidebar {
         left: 0;
 
     }
 }
-.borderFormRequest{
+
+.borderFormRequest {
     border-radius: 0 1rem 1rem 0;
 }
+
 .header-desktop2 {
     left: 0;
     right: 305px;
@@ -65,6 +68,7 @@ label {
     .header-button2 .header-button-item .search-dropdown {
         left: -75px;
     }
+
     .header-button2 .header-button-item .search-dropdown::before {
         left: 79px;
     }
@@ -74,6 +78,7 @@ label {
     .header-button2 .header-button-item .notifi-dropdown {
         left: -48px;
     }
+
     .header-button2 .header-button-item .notifi-dropdown::before {
         margin-right: 0;
         right: auto;
@@ -111,31 +116,42 @@ i {
 .btn-search {
     float: left;
 }
+
 .hero p.intro {
     direction: ltr;
-  
+
     color: #fff;
     font-size: 20px;
     font-weight: 300;
     margin-bottom: 80px;
-  }
-  .hero .hero-content {
+}
+
+.hero .hero-content {
     padding-top: 15%;
     margin-right: 25%;
     margin-left: 0;
-  }
-  .imgLogo{
+}
+
+.imgLogo {
     margin-right: 20px;
 }
-.cardFormRequest{
+
+.cardFormRequest {
     margin-left: 40px;
 }
-.borderFormRequest{
+
+.borderFormRequest {
     border-radius: 0 1rem 1rem 0;
 }
-  ::ng-deep .p-carousel .product-item-content{
+
+::ng-deep .p-carousel .product-item-content {
     direction: ltr !important;
 }
-::ng-deep .p-carousel .p-carousel-items-content .p-carousel-items-container .p-carousel-item  {
-    flex: 1 0 24.5%!important;
+
+::ng-deep .p-carousel .p-carousel-items-content .p-carousel-items-container .p-carousel-item {
+    flex: 1 0 24.5% !important;
+}
+
+.element-floating {
+    float: left;
 }

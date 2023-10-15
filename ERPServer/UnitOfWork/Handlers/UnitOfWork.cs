@@ -6,6 +6,7 @@ using DataAccess.Setup.Handlers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Purchases.DataAccessLayer;
 using Setup.DataAccessLayer;
 
 using System;
@@ -40,6 +41,11 @@ namespace UnitOfWork.Handlers
         public IAdvertismentDAL AdvertismentDAL { get; private set; }
         #endregion
 
+        #region Purchases
+        public IPurchasesBillHeaderDAL PurchasesBillHeaderDAL { get; private set; }
+        public IPurchasesBillDetailDAL PurchasesBillDetailDAL { get; set; }
+
+        #endregion
 
         public UnitofWork(AppDbContext context,
             SignInManager<AppUser> signInManager,
@@ -71,6 +77,10 @@ namespace UnitOfWork.Handlers
 
             #endregion
 
+            #region Purchases
+            PurchasesBillHeaderDAL = new PurchasesBillHeaderDAL(_context);
+            PurchasesBillDetailDAL = new PurchasesBillDetailDAL(_context);
+            #endregion
         }
 
         public async Task CompleteAsync()

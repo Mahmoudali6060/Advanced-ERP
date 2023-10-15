@@ -59,16 +59,28 @@
     "Back": "Back",
     "LowQuantity": "Low Quantity",
     "HighQuantity": "High Quantity",
-    "SelectCategory":"Select Category",
-    "FullName":"Full Name",
-    "Phone":"Phone",
-    "Balance":"Balance",
-    "IdNumber":"Id Number",
-    "IsVendor":"Is Vendor",
-    "PhoneNumber1":"Phone Number 1",
-    "PhoneNumber2":"Phone Number 2",
-    "IsClient":"Is client"
-
+    "SelectCategory": "Select Category",
+    "FullName": "Full Name",
+    "Phone": "Phone",
+    "Balance": "Balance",
+    "IdNumber": "Id Number",
+    "IsVendor": "Is Vendor",
+    "PhoneNumber1": "Phone Number 1",
+    "PhoneNumber2": "Phone Number 2",
+    "IsClient": "Is client",
+    "Vendor": "Vendor",
+    "Discount": "Discount",
+    "TotalAfterDiscount": "Total after discount",
+    "ProductName": "Product",
+    "SubTotal": "Sub Total",
+    "SelectProduct": "Select product",
+    "Transfer": "Transfer",
+    "TotalDiscount": "Total Discount",
+    "PriceBeforeDiscount": "Price Before Discount",
+    "PriceAfterDiscount": "Price After Discount",
+    "TopProducts":"Top Products",
+    "Product":"Product",
+    "BillNumber":"Bill Number"
   },
   "Dashboard": {
     "overview": "Overview",
@@ -212,9 +224,10 @@
     "ContactUs": "Contact Us",
     "AboutUs": "About Us",
     "Advertisments": "Advertisments",
-    "Clients":"Clients",
-    "Vendors":"Vendors"
-  
+    "Clients": "Clients",
+    "Vendors": "Vendors",
+    "Purchases": "Purchases",
+    "PurchasesBills": "Purchases Bill"
   },
   "Errors": {
     "InvalidUsernameOrPassword": "Invalid Username Or Password",
@@ -389,5 +402,11 @@
     "AddVendor": "Add vendor",
     "EditVendor": "Edit vendor",
     "ViewVendor": "View vendor"
+  },
+  "PurchasasBill": {
+    "Title": "PurchasasBills",
+    "AddPurchasesBill": "Add purchases bill",
+    "EditPurchasesBill": "Edit purchases bill",
+    "ViewPurchasesBill": "View purchases bill"
   }
 }

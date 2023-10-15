@@ -243,6 +243,14 @@ i:hover {
     color: #fa4251;
 }
 
-.input-switch{
+.input-switch {
     margin: 2px;
+}
+
+.cell-width-25 {
+    width: 25%;
+}
+
+.cell-width-15 {
+width: 15%;
 }

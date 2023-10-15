@@ -12,6 +12,8 @@ export const routes: Routes = [
       { path: 'user', canActivate: [AuthGuard], loadChildren: () => import('../modules/user/user.module').then(m => m.UserModule) },
       { path: 'configurations', canActivate: [AuthGuard], loadChildren: () => import('../modules/configurations/configurations.module').then(m => m.ConfigurationsModule) },
       { path: 'setup', canActivate: [AuthGuard], loadChildren: () => import('../modules/setup/setup.module').then(m => m.SetupModule) },
+      { path: 'purchases-bill', canActivate: [AuthGuard], loadChildren: () => import('../modules/purchases/purchases.module').then(m => m.PurchasesBillModule) },
+
     ]
   }
 ];

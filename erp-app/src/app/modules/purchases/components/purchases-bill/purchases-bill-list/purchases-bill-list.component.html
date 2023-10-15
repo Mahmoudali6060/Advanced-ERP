@@ -1,0 +1,105 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- DATA TABLE -->
+        <h3 class="title-5 m-b-35">{{'PurchasesBill.Title' |translate}}</h3>
+        <div class="table-data__tool">
+            <div class="table-data__tool-left">
+                <button class="au-btn-filter" (click)="toggleFilter()">
+                    <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
+            </div>
+            <div class="table-data__tool-right">
+                <button [routerLink]="['/purchases-bill/purchases-bill-form']"  class="au-btn au-btn-icon au-btn--black au-btn--small">
+                    <i class="zmdi zmdi-plus"></i>{{'PurchasesBill.AddPurchasesBill' |translate}}
+                </button>
+            </div>
+        </div>
+     
+         <!--Filters-->
+         <div class="row" *ngIf="showFilterControls">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">{{'General.Filters'|translate}}</div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="form3Example3c">{{'General.Status'|translate}}</label>
+                                        <select name="drivers" id="drivers" class="form-control"
+                                            [(ngModel)]="searchCriteriaDTO.isActive">
+                                            <option value=''> {{'General.All' |translate}}</option>
+                                            <option value=true> {{'General.Active' |translate}}</option>
+                                            <option value=false> {{'General.InActive' |translate}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="number" class=" form-control-label">{{'General.Number'
+                                            |translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.number" type="text" id="code"
+                                            class="form-control" #number="ngModel" name="number">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-lg-9">
+                                    <button (click)="search()"
+                                        class="au-btn au-btn-icon au-btn--blue au-btn--small btn-search mt-4">
+                                        <i class="zmdi zmdi-search"></i>{{'General.Search'|translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Filters-->
+
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2">
+                <thead class="table-header-bc">
+                    <tr>
+                        <th>#</th>
+                        <th class="table-header-fc">{{'General.Number' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Date' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Vendor' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Total' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Notes' |translate}}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tr-shadow" *ngFor="let item of purchasesBillHeaderList;let i=index; ">
+                        <td>{{i+1}}</td>
+                        <td>{{item.number}}</td>
+                        <td>{{item.date}}</td>
+                        <td>{{item.vendorName}}</td>
+                        <td>{{item.totalAfterDiscount}}</td>
+                        <td>{{item.notes}}</td>
+                        <td>
+                            <div class="table-data-feature">
+                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="Edit" [routerLink]="['/purchases-bill/purchases-bill-form/'+item.id]">
+                                    <i class="zmdi zmdi-edit"></i>
+                                </button>
+                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="Delete" (click)="openConfirmationDialog(item)">
+                                    <i class="zmdi zmdi-delete"></i>
+                                </button> 
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+       
+            </table>
+            <app-pagination (pageChange)="onPageChange($event)" [totalRecordsCount]="total" [recordsPerPage]="searchCriteriaDTO.pageSize" *ngIf="purchasesBillHeaderList">
+            </app-pagination>
+        </div>
+        <!-- END DATA TABLE -->
+    </div>
+</div>

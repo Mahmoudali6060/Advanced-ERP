@@ -6,6 +6,8 @@ using System.Linq;
 using Data.Entities.Shared;
 using Data.Entities.UserManagement;
 using Data.Entities.Setup;
+using Data.Entities.Purchases;
+
 
 namespace Data.Contexts
 {
@@ -35,7 +37,11 @@ namespace Data.Contexts
 
         #endregion
 
+        #region Purchases
+        public DbSet<PurchasesBillHeader> PurchasesBillHeaders { get; set; }
+        public DbSet<PurchasesBillDetail> PurchasesBillDetails { get; set; }
 
+        #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

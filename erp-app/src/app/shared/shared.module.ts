@@ -28,6 +28,7 @@ import { CountryService } from '../modules/configurations/services/country.servi
 import { StateService } from '../modules/configurations/services/state.service';
 import { CityService } from '../modules/configurations/services/city.service';
 import { PortService } from '../modules/configurations/services/port.service';
+//import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 
 @NgModule({
 
@@ -45,7 +46,8 @@ import { PortService } from '../modules/configurations/services/port.service';
     ReactiveFormsModule,
     NgxSpinnerModule,
     CarouselModule,
-    TabViewModule
+    TabViewModule,
+    //DropDownsModule
 
   ],
 

@@ -1,6 +1,7 @@
 ﻿using Account.DataAccessLayer;
 using Data.Entities.Setup;
 using DataAccess.Setup.Contracts;
+using Purchases.DataAccessLayer;
 using Setup.DataAccessLayer;
 using System.Threading.Tasks;
 
@@ -26,6 +27,10 @@ namespace UnitOfWork.Contracts
         IVendorDAL VendorDAL { get; }
         #endregion
 
+        #region Purchase
+        IPurchasesBillHeaderDAL PurchasesBillHeaderDAL { get; }
+        IPurchasesBillDetailDAL PurchasesBillDetailDAL { get; }
+        #endregion
         Task CompleteAsync();
     }
 }

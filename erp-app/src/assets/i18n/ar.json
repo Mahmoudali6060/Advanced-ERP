@@ -74,12 +74,23 @@
     "FullName": "الإسم بالكامل",
     "Phone": "رقم الهاتف",
     "IdNumber": "الرقم القومي",
-    "IsVendor":"يمكن هذا العميل أن يصبح مورد (مزدوج)",
-    "PhoneNumber1":"رقم الهاتف 1",
-    "PhoneNumber2":"رقم الهاتف 2",
-    "IsClient":"يمكن هذا المورد أن يصبح عميل (مزدوج)"
-
-
+    "IsVendor": "يمكن هذا العميل أن يصبح مورد (مزدوج)",
+    "PhoneNumber1": "رقم الهاتف 1",
+    "PhoneNumber2": "رقم الهاتف 2",
+    "IsClient": "يمكن هذا المورد أن يصبح عميل (مزدوج)",
+    "Vendor": "المورد",
+    "Discount": "الخصم",
+    "TotalAfterDiscount": "الإجمالي بعد الخصم",
+    "ProductName": "المنتج",
+    "SubTotal": "الاجمالي",
+    "SelectProduct": "اختر الصنف",
+    "Transfer": "النقل",
+    "TotalDiscount": "اجمالي الخصومات",
+    "PriceBeforeDiscount": "السعر قبل الخصم",
+    "PriceAfterDiscount": "السعر بعد الخصم",
+    "TopProducts": "المنتجات الأكثر مبيعا",
+    "Product":"المنتج",
+    "BillNumber":"رقم الفاتورة"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -226,7 +237,9 @@
     "AboutUs": "معلومات عنا",
     "Advertisments": "الإعلانات",
     "Clients": "العملاء",
-    "Vendors": "الموردين"
+    "Vendors": "الموردين",
+    "Purchases": "المشتريات",
+    "PurchasesBills": "فواتير المشتريات"
   },
   "Errors": {
     "InvalidUsernameOrPassword": "من فضلك تأكد من اسم المستخدم او كلمة المرور",
@@ -383,5 +396,11 @@
     "AddVendor": "إضافة مورد",
     "EditVendor": "تعديل المورد",
     "ViewVendor": "عرض المورد"
+  },
+  "PurchasesBill": {
+    "Title": "فواتير المشتريات",
+    "AddPurchasesBill": "إضافة فاتورة",
+    "EditPurchasesBill": "تعديل الفاتورة",
+    "ViewPurchasesBill": "عرض الفاتورة"
   }
 }

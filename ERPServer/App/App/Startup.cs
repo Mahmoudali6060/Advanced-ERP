@@ -63,6 +63,7 @@ namespace App
             //    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             //});
 
+
             services.AddCors();
 
             //>>>>> Auto Mapper Configurations

@@ -5,6 +5,7 @@ using Account.DataServiceLayer.Handlers;
 using Accout.DataServiceLayer;
 using DataAccess.Setup.Contracts;
 using DataAccess.Setup.Handlers;
+using DataService.Purchases.Contracts;
 using DataService.Setup.Contracts;
 using DataService.Setup.Handlers;
 
@@ -12,6 +13,7 @@ using DataService.Setup.Handlers;
 using Infrastructure.Contracts;
 using Infrastructure.Handlers;
 using Microsoft.Extensions.DependencyInjection;
+using Purchases.DataAccessLayer;
 using Setting.DataAccessLayer;
 using Setting.DataServiceLayer;
 using Setup.DataAccessLayer;
@@ -83,6 +85,14 @@ namespace App.Helper
 
             #endregion
 
+            #region Purchases
+            services.AddTransient<IPurchasesBillHeaderDAL, PurchasesBillHeaderDAL>();
+            services.AddTransient<IPurchasesBillHeaderDSL, PurchasesBillHeaderDSL>();
+
+            services.AddTransient<IPurchasesBillDetailDAL, PurchasesBillDetailDAL>();
+            services.AddTransient<IPurchasesBillDetailDSL, PurchasesBillDetailDSL>();
+
+            #endregion
 
         }
     }
