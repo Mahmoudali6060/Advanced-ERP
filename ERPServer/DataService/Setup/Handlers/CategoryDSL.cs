@@ -71,7 +71,6 @@ namespace DataService.Setup.Handlers
         #region Command
         public async Task<long> Add(CategoryDTO entity)
         {
-            entity.Code = "C" + DateTime.Now.ToString("ddMMyyHHmmssff");//ddMMyyHHmmssff
             return await _unitOfWork.CategoryDAL.Add(_mapper.Map<Category>(entity));
         }
 

@@ -247,8 +247,15 @@ i:hover {
     margin: 2px;
 }
 
+.cell-width-10{
+    width: 10%;
+}
 .cell-width-25 {
     width: 25%;
+}
+
+.cell-width-35{
+    width: 35%;
 }
 
 .cell-width-15 {

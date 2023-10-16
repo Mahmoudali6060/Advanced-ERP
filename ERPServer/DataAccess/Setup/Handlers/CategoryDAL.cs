@@ -37,6 +37,7 @@ namespace Setup.DataAccessLayer
 
         public async Task<long> Add(Category entity)
         {
+            entity.Code = GenerateSequenceNumber();
             _appDbContext.Entry(entity).State = EntityState.Added;
             await _appDbContext.SaveChangesAsync();
             return entity.Id;
@@ -56,6 +57,20 @@ namespace Setup.DataAccessLayer
             return true;
         }
 
+        #endregion
+
+        #region Helper
+        private string GenerateSequenceNumber()
+        {
+            var lastElement = _appDbContext.Categories.OrderByDescending(p => p.Id)
+                       .FirstOrDefault();
+            if (lastElement == null)
+            {
+                return "1000";
+            }
+            int code = int.Parse(lastElement.Code) + 1;
+            return code.ToString();
+        }
         #endregion
 
     }

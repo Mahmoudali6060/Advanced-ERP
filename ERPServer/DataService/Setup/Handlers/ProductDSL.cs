@@ -78,7 +78,6 @@ namespace DataService.Setup.Handlers
         #region Command
         public async Task<long> Add(ProductDTO entity)
         {
-            entity.Code = "P" + DateTime.Now.ToString("ddMMyyHHmmssff");//ddMMyyHHmmssff
             UploadImage(entity);
             var result = await _unitOfWork.ProductDAL.Add(_mapper.Map<Product>(entity));
             return result;

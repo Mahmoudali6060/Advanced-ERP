@@ -71,7 +71,7 @@ namespace DataService.Setup.Handlers
         #region Command
         public async Task<long> Add(ClientDTO entity)
         {
-            entity.Code = "CL" + DateTime.Now.ToString("ddMMyyHHmmssff");//ddMMyyHHmmssff
+            //entity.Code = "CL" + DateTime.Now.ToString("ddMMyyHHmmssff");//ddMMyyHHmmssff
             UploadImage(entity);
             var result = await _unitOfWork.ClientDAL.Add(_mapper.Map<Client>(entity));
             return result;

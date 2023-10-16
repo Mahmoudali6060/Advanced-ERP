@@ -382,8 +382,8 @@
     "EditProduct": "تعديل المنتج",
     "ViewProduct": "عرض المنتج",
     "BarCode": "باركود",
-    "PurchasingPricePercentage": "نسبة سعر الشراء",
-    "SellingPricePercentage": "نسبة سعر البيع"
+    "PurchasingPricePercentage": "نسبة الخصم من سعر الشراء",
+    "SellingPricePercentage": "نسبة الخصم من سعر البيع"
   },
   "Client": {
     "Title": "العملاء",

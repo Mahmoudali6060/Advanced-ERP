@@ -81,6 +81,7 @@ export class PurchasesBillFormComponent {
 		for (let item of this.purchasesBillHeaderDTO.purchasesBillDetailList) {
 			item.index = index;
 			index++;
+			this.onProductChange(item);
 		}
 	}
 
@@ -141,6 +142,15 @@ export class PurchasesBillFormComponent {
 		this.purchasesBillHeaderDTO.purchasesBillDetailList.push(purchasesBillDetails);
 	}
 
+	onProductChange(item: PurchasesBillDetailsDTO) {
+		let product = this.productList.find(x => x.id == item.productId);
+		if (product) {
+			item.price = product.price;
+			item.discount = product.purchasingPricePercentage;
+			item.actualQuantity = product.actualQuantity;
+			this.updateTotal();
+		}
+	}
 	updateTotal() {
 		this.purchasesBillHeaderDTO.total = 0;
 		for (let item of this.purchasesBillHeaderDTO.purchasesBillDetailList) {

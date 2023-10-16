@@ -37,6 +37,7 @@ namespace Purchases.DataAccessLayer
 
         public async Task<long> Add(PurchasesBillHeader entity)
         {
+            entity.Number = GenerateSequenceNumber();
             await _appDbContext.AddAsync(entity);
             return entity.Id;
         }
@@ -53,6 +54,20 @@ namespace Purchases.DataAccessLayer
             return true;
         }
 
+        #endregion
+
+        #region Helper
+        private string GenerateSequenceNumber()
+        {
+            var lastElement = _appDbContext.Clients.OrderByDescending(p => p.Id)
+                       .FirstOrDefault();
+            if (lastElement == null)
+            {
+                return "1000";
+            }
+            int code = int.Parse(lastElement.Code) + 1;
+            return code.ToString();
+        }
         #endregion
 
     }

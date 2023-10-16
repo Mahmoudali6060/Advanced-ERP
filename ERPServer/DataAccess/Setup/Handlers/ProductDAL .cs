@@ -1,6 +1,8 @@
 ﻿using Data.Contexts;
 using Data.Entities.Setup;
+using IdentityModel;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,7 +19,7 @@ namespace Setup.DataAccessLayer
         #region Query
         public async Task<IQueryable<Product>> GetAll()
         {
-            return _appDbContext.Products.Include(x=>x.Category).OrderBy(x => x.Name).AsQueryable();
+            return _appDbContext.Products.Include(x => x.Category).OrderBy(x => x.Name).AsQueryable();
         }
 
         public async Task<IQueryable<Product>> GetAllLite()
@@ -41,10 +43,13 @@ namespace Setup.DataAccessLayer
 
         public async Task<long> Add(Product entity)
         {
+            entity.Code = GenerateSequenceNumber();
             _appDbContext.Entry(entity).State = EntityState.Added;
             await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
+
+
 
         public async Task<long> Update(Product entity)
         {
@@ -60,6 +65,20 @@ namespace Setup.DataAccessLayer
             return true;
         }
 
+        #endregion
+
+        #region Helper
+        private string GenerateSequenceNumber()
+        {
+            var lastElement = _appDbContext.Products.OrderByDescending(p => p.Id)
+                       .FirstOrDefault();
+            if (lastElement == null)
+            {
+                return "1000";
+            }
+            int code = int.Parse(lastElement.Code) + 1;
+            return code.ToString();
+        }
         #endregion
 
     }

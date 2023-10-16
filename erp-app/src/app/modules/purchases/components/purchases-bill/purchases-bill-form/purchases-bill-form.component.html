@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-9">
+                    <div class="col-lg-12">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="table-responsive table-responsive-data2">
@@ -53,6 +53,7 @@
                                             <tr>
                                                 <th class="table-header-fc">#</th>
                                                 <th class="table-header-fc">{{'General.Product' |translate}}</th>
+                                                <th class="table-header-fc">{{'General.ActualQuantity' |translate}}</th>
                                                 <th class="table-header-fc">{{'General.Quantity' |translate}}</th>
                                                 <th class="table-header-fc">{{'General.Price' |translate}}</th>
                                                 <th class="table-header-fc">{{'General.Discount' |translate}} %</th>
@@ -67,12 +68,12 @@
                                                 <td>
                                                     {{i+1}}
                                                 </td>
-                                                <td class="cell-width-25">
+                                                <td class="cell-width-35">
                                                     <select class="form-control" [(ngModel)]="item.productId"
-                                                        [ngModelOptions]="{standalone: true}">
+                                                        [ngModelOptions]="{standalone: true}" (change)="onProductChange(item)">
                                                         <option value="">{{'General.SelectProduct'|translate}}</option>
-                                                        <option *ngFor="let item of productList" [value]="item.id">
-                                                            {{item.name}}
+                                                        <option *ngFor="let product of productList" [value]="product.id">
+                                                         {{product.code}} - {{product.name}}
                                                         </option>
                                                     </select>
         
@@ -81,10 +82,14 @@
                                                     </kendo-combobox> -->
                                                 </td>
                                                 <td>
+                                                    <input [(ngModel)]="item.actualQuantity" readonly type="number" class="form-control"
+                                                        (change)="updateTotal()" [ngModelOptions]="{standalone: true}">
+                                                </td>
+                                                <td>
                                                     <input [(ngModel)]="item.quantity" type="number" class="form-control"
                                                         (change)="updateTotal()" [ngModelOptions]="{standalone: true}">
                                                 </td>
-                                                <td class="cell-width-15">
+                                                <td class="cell-width-10">
                                                     <input [(ngModel)]="item.price" type="number" class="form-control"
                                                         (change)="updateTotal()" [ngModelOptions]="{standalone: true}">
                                                 </td>
@@ -206,7 +211,7 @@
                             </div>
                         </div>
                     </div>
-                 <div class="col-lg-3">
+                 <!-- <div class="col-lg-3">
                     <div class="top-campaign">
                         <h3 class="title-3 m-b-30">
                             {{'General.TopProducts' |translate}}
@@ -260,7 +265,7 @@
                             </table>
                         </div>
                     </div>
-                 </div>
+                 </div> -->
                 </div>
               
 

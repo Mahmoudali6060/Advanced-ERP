@@ -72,12 +72,12 @@ namespace DataService.Setup.Handlers
         #region Command
         public async Task<long> Add(PurchasesBillHeaderDTO entity)
         {
-            entity.Number = "PB" + DateTime.Now.ToString("ddMMyyHHmmssff");//ddMMyyHHmmssff
             var result = await _unitOfWork.PurchasesBillHeaderDAL.Add(_mapper.Map<PurchasesBillHeader>(entity));
             await _unitOfWork.CompleteAsync();
             return result;
         }
-        
+
+    
         public async Task<long> Update(PurchasesBillHeaderDTO entity)
         {
             var exsitedPurhaseDetails = await _unitOfWork.PurchasesBillDetailDAL.GetAllByHeaderId(entity.Id);

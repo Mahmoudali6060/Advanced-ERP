@@ -388,8 +388,8 @@
     "EditProduct": "Edit Product",
     "ViewProduct": "View Product",
     "BarCode": "BarCode",
-    "PurchasingPricePercentage": "Purchasing Price Percentage",
-    "SellingPricePercentage": "Selling Price Percentage"
+    "PurchasingPricePercentage": "Purchasing Discount Percentage",
+    "SellingPricePercentage": "Selling Discount Percentage"
   },
   "Client": {
     "Title": "Clients",
