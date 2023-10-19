@@ -13,6 +13,7 @@ import { PurchasesBillDetailsDTO } from '../../../models/purchases-bill-details.
 import { Pipe, PipeTransform } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { HelperService } from 'src/app/shared/services/helper.service';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
 	selector: 'app-purchases-bill-form',
 	templateUrl: './purchases-bill-form.component.html',
@@ -26,7 +27,9 @@ export class PurchasesBillFormComponent {
 	viewMode: boolean;
 	productList: Array<ProductDTO> = new Array<ProductDTO>();
 	vendorList: Array<VendorDTO> = new Array<VendorDTO>();
-
+	purchaseHeaderId: any;
+	searchProduct: any;
+	itemList = ['carrot', 'banana', 'apple', 'potato', 'tomato', 'cabbage', 'turnip', 'okra', 'onion', 'cherries', 'plum', 'mango'];
 	constructor(
 		private purchasesBillService: PurchasesBillService,
 		private productService: ProductService,
@@ -35,14 +38,15 @@ export class PurchasesBillFormComponent {
 		private toasterService: ToastrService,
 		private _configService: ConfigService,
 		private router: Router,
-		private helperService: HelperService) {
+		private helperService: HelperService,
+		private translate: TranslateService) {
 	}
 
 	ngOnInit() {
 		this.imageSrc = "assets/images/icon/avatar-big-01.jpg";
-		const id = this.route.snapshot.paramMap.get('id');
-		if (id) {
-			this.getPurchasesBillById(id);
+		this.purchaseHeaderId = this.route.snapshot.paramMap.get('id');
+		if (this.purchaseHeaderId) {
+			this.getPurchasesBillById(this.purchaseHeaderId);
 			if (this.router.url.includes('/view/')) {
 				this.viewMode = true;
 			}
@@ -59,6 +63,7 @@ export class PurchasesBillFormComponent {
 	getAllProducts() {
 		this.productService.getAllLite().subscribe((res: any) => {
 			this.productList = res.list;
+			this.setPurchaseDetailsDefaultData();
 		})
 	}
 
@@ -71,50 +76,36 @@ export class PurchasesBillFormComponent {
 	getPurchasesBillById(purchasesBillId: any) {
 		this.purchasesBillService.getById(purchasesBillId).subscribe((res: any) => {
 			this.purchasesBillHeaderDTO = res;
-			if (this.purchasesBillHeaderDTO.purchasesBillDetailList)
-				this.setInitialIndex();
-		})
+			this.setPurchaseDetailsDefaultData();
+		});
 	}
 
-	setInitialIndex() {
-		let index = 0;
-		for (let item of this.purchasesBillHeaderDTO.purchasesBillDetailList) {
-			item.index = index;
-			index++;
-			this.onProductChange(item);
+	setPurchaseDetailsDefaultData() {
+		if (this.purchasesBillHeaderDTO.purchasesBillDetailList) {
+			let index = 0;
+			for (let item of this.purchasesBillHeaderDTO.purchasesBillDetailList) {
+				item.index = index;
+				index++;
+				this.onProductChange(item);
+			}
 		}
 	}
 
 	back() {
 		this.router.navigateByUrl('purchases-bill/purchases-bill-list');
 	}
-	validattion(purchasesBillDTO: PurchasesBillHeaderDTO): boolean {
-		// if (!purchasesBillDTO.firstName || isNullOrUndefined(purchasesBillDTO.firstName)) {
-		// 	this.toasterService.error(this.translate.instant("Errors.FirstNameIsRequired"));
-		// 	return false;
-		//   }
-		//   if (!purchasesBillDTO.lastName || isNullOrUndefined(purchasesBillDTO.lastName)) {
-		// 	this.toasterService.error(this.translate.instant("Errors.LastNameIsRequired"));
-		// 	return false;
-		//   }
-		//   if (!purchasesBillDTO.mobile || isNullOrUndefined(purchasesBillDTO.mobile)) {
-		// 	this.toasterService.error(this.translate.instant("Errors.MobileIsRequired"));
-		// 	return false;
-		//   }
-		//   if (!purchasesBillDTO.purchasesBillName || isNullOrUndefined(purchasesBillDTO.purchasesBillName)) {
-		// 	this.toasterService.error(this.translate.instant("Errors.PurchasesBillNameIsRequired"));
-		// 	return false;
-		//   }
-		//   if (!purchasesBillDTO.email || isNullOrUndefined(purchasesBillDTO.email)) {
-		// 	this.toasterService.error(this.translate.instant("Errors.EmailIsRequired"));
-		// 	return false;
-		//   }
+	validation(purchasesBillDTO: PurchasesBillHeaderDTO): boolean {
+		if (!purchasesBillDTO.purchasesBillDetailList || this.purchasesBillHeaderDTO.purchasesBillDetailList.length == 0) {
+			this.toasterService.error(this.translate.instant("Errors.YouMustSelectProducts"));
+			return false;
+		}
+
 		return true;
 
 	}
 
 	save(form: NgForm) {
-		if (this.validattion(this.purchasesBillHeaderDTO)) {
+		if (this.validation(this.purchasesBillHeaderDTO)) {
 			if (this.purchasesBillHeaderDTO.id) {
 				this.purchasesBillService.update(this.purchasesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
@@ -130,7 +121,7 @@ export class PurchasesBillFormComponent {
 		}
 	}
 
-	public deleteRow(item: PurchasesBillDetailsDTO) {
+	public deleteRow(event: any, item: PurchasesBillDetailsDTO) {
 		this.purchasesBillHeaderDTO.purchasesBillDetailList = this.purchasesBillHeaderDTO.purchasesBillDetailList.filter(x => x.index != item.index);
 		this.updateTotal();
 	}
@@ -145,8 +136,8 @@ export class PurchasesBillFormComponent {
 	onProductChange(item: PurchasesBillDetailsDTO) {
 		let product = this.productList.find(x => x.id == item.productId);
 		if (product) {
-			item.price = product.price;
-			item.discount = product.purchasingPricePercentage;
+			if (!item.price) item.price = product.price;
+			if (!item.discount) item.discount = product.purchasingPricePercentage;
 			item.actualQuantity = product.actualQuantity;
 			this.updateTotal();
 		}

@@ -28,6 +28,7 @@ import { CountryService } from '../modules/configurations/services/country.servi
 import { StateService } from '../modules/configurations/services/state.service';
 import { CityService } from '../modules/configurations/services/city.service';
 import { PortService } from '../modules/configurations/services/port.service';
+import { ComboBoxComponent } from './components/combo-box/combo-box.component';
 //import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 
 @NgModule({
@@ -65,6 +66,7 @@ import { PortService } from '../modules/configurations/services/port.service';
     MaterialModule,
     ChangeLangagueComponent,
     LoaderComponent,
+    ComboBoxComponent
     // ModalBasicComponent
   ],
   schemas: [
@@ -75,6 +77,7 @@ import { PortService } from '../modules/configurations/services/port.service';
     PaginationComponent,
     ChangeLangagueComponent,
     LoaderComponent,
+    ComboBoxComponent
     ],
   entryComponents: [
     ConfirmationDialogComponent,

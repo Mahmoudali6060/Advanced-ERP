@@ -17,7 +17,7 @@ namespace Shared.Entities.Purchases
         public decimal Quantity { get; set; }
         public decimal Discount { get; set; }
         public decimal PriceAfterDiscount { get; set; }
-        public int SubTotal { get; set; }
+        public decimal SubTotal { get; set; }
         public string Notes { get; set; }
 
         [JsonIgnore]

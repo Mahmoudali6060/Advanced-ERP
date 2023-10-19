@@ -294,7 +294,8 @@
     "AddressDetailsIsRequired": "تفاصيل العنوان مطلوبة",
     "companyTypeIsRequired": "نوع الشركة مطلوب",
     "CannotDeleteThisRecordDueToRelatedToAnotherData": "لا يمكن حذف هذا السجل بسبب ارتباطه ببيانات أخرى",
-    "ThisFieldIsRequired": "يجب ادخال بيانات في هذا الحقل"
+    "ThisFieldIsRequired": "يجب ادخال بيانات في هذا الحقل",
+    "YouMustSelectProducts":"يجب اختيار منتجات لعمل الفاتورة"
   },
   "Warning": {
     "NoDriversAvialable": "لا يوجد سائق متاح في هذه الفترة"

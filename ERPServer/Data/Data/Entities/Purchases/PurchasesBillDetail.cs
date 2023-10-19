@@ -17,7 +17,7 @@ namespace Data.Entities.Purchases
         public decimal Price { get; set; }
         public decimal Discount { get; set; }
         public decimal PriceAfterDiscount { get; set; }
-        public int SubTotal { get; set; }
+        public decimal SubTotal { get; set; }
         public string Notes { get; set; }
         public virtual Product Product { get; set; }
         public virtual PurchasesBillHeader PurchasesBillHeader { get; set; }
