@@ -69,6 +69,7 @@
     "PhoneNumber2": "Phone Number 2",
     "IsClient": "Is client",
     "Vendor": "Vendor",
+    "Client":"Client",
     "Discount": "Discount",
     "TotalAfterDiscount": "Total after discount",
     "ProductName": "Product",
@@ -78,9 +79,9 @@
     "TotalDiscount": "Total Discount",
     "PriceBeforeDiscount": "Price Before Discount",
     "PriceAfterDiscount": "Price After Discount",
-    "TopProducts":"Top Products",
-    "Product":"Product",
-    "BillNumber":"Bill Number"
+    "TopProducts": "Top Products",
+    "Product": "Product",
+    "BillNumber": "Bill Number"
   },
   "Dashboard": {
     "overview": "Overview",
@@ -227,7 +228,9 @@
     "Clients": "Clients",
     "Vendors": "Vendors",
     "Purchases": "Purchases",
-    "PurchasesBills": "Purchases Bill"
+    "PurchasesBills": "Purchases Bills",
+    "Sales": "Sales",
+    "SalesBills": "Sales Bills"
   },
   "Errors": {
     "InvalidUsernameOrPassword": "Invalid Username Or Password",
@@ -290,7 +293,7 @@
     "companyTypeIsRequired": "Company Type Is Required",
     "CannotDeleteThisRecordDueToRelatedToAnotherData": "Cannot Delete This Record Due To Related To Another Data",
     "ThisFieldIsRequired": "This field is required",
-    "YouMustSelectProducts":"You must select products"
+    "YouMustSelectProducts": "You must select products"
   },
   "Warning": {
     "NoDriversAvialable": "There is no any driver available in this period"
@@ -404,10 +407,16 @@
     "EditVendor": "Edit vendor",
     "ViewVendor": "View vendor"
   },
-  "PurchasasBill": {
-    "Title": "PurchasasBills",
+  "Purchasas": {
+    "PurchasasBillTitle": "Purchasas Bills",
     "AddPurchasesBill": "Add purchases bill",
     "EditPurchasesBill": "Edit purchases bill",
     "ViewPurchasesBill": "View purchases bill"
+  },
+  "Sales": {
+    "SalesBillTitle": "Sales Bills",
+    "AddSalesBill": "Add sales bill",
+    "EditSalesBill": "Edit sales bill",
+    "ViewSalesBill": "View sales bill"
   }
 }

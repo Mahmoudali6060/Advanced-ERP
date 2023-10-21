@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Data.Entities.Purchases;
+using Data.Entities.Sales;
 using Data.Entities.Setup;
 using Data.Entities.UserManagement;
 using Entities.Account;
 using Shared.Entities.Purchases;
+using Shared.Entities.Sales;
 using Shared.Entities.Setup;
 using System;
 
@@ -64,7 +66,8 @@ namespace App.Helper
 
             CreateMap<PurchasesBillHeader, PurchasesBillHeaderDTO>()
                 .ForMember(dest => dest.PurchasesBillDetailList, opt => opt.MapFrom(src => src.PurchasesBillDetailList))
-                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")));
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")))
+                .ForMember(dest => dest.VendorName, opt => opt.MapFrom(src => src.Vendor.FullName));
 
             CreateMap<PurchasesBillHeaderDTO, PurchasesBillHeader>()
                 .ForMember(dest => dest.PurchasesBillDetailList, opt => opt.MapFrom(src => src.PurchasesBillDetailList))
@@ -72,6 +75,21 @@ namespace App.Helper
 
             CreateMap<PurchasesBillDetail, PurchasesBillDetailDTO>();
             CreateMap<PurchasesBillDetailDTO, PurchasesBillDetail>();
+            #endregion
+
+            #region Sales
+
+            CreateMap<SalesBillHeader, SalesBillHeaderDTO>()
+                .ForMember(dest => dest.SalesBillDetailList, opt => opt.MapFrom(src => src.SalesBillDetailList))
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")))
+                .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client.FullName));
+
+            CreateMap<SalesBillHeaderDTO, SalesBillHeader>()
+                .ForMember(dest => dest.SalesBillDetailList, opt => opt.MapFrom(src => src.SalesBillDetailList))
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => DateTime.Parse(src.Date)));
+
+            CreateMap<SalesBillDetail, SalesBillDetailDTO>();
+            CreateMap<SalesBillDetailDTO, SalesBillDetail>();
             #endregion
         }
     }

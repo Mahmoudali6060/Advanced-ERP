@@ -1,15 +1,15 @@
 <div class="row">
     <div class="col-md-12">
         <!-- DATA TABLE -->
-        <h3 class="title-5 m-b-35">{{'Purchases.PurchasesTitle' |translate}}</h3>
+        <h3 class="title-5 m-b-35">{{'Sales.SalesTitle' |translate}}</h3>
         <div class="table-data__tool">
             <div class="table-data__tool-left">
                 <button class="au-btn-filter" (click)="toggleFilter()">
                     <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
             </div>
             <div class="table-data__tool-right">
-                <button [routerLink]="['/purchases-bill/purchases-bill-form']"  class="au-btn au-btn-icon au-btn--black au-btn--small">
-                    <i class="zmdi zmdi-plus"></i>{{'PurchasesBill.AddPurchasesBill' |translate}}
+                <button [routerLink]="['/sales-bill/sales-bill-form']"  class="au-btn au-btn-icon au-btn--black au-btn--small">
+                    <i class="zmdi zmdi-plus"></i>{{'Sales.AddSalesBill' |translate}}
                 </button>
             </div>
         </div>
@@ -67,24 +67,24 @@
                         <th>#</th>
                         <th class="table-header-fc">{{'General.Number' |translate}}</th>
                         <th class="table-header-fc">{{'General.Date' |translate}}</th>
-                        <th class="table-header-fc">{{'General.Vendor' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Client' |translate}}</th>
                         <th class="table-header-fc">{{'General.Total' |translate}}</th>
                         <th class="table-header-fc">{{'General.Notes' |translate}}</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="tr-shadow" *ngFor="let item of purchasesBillHeaderList;let i=index; ">
+                    <tr class="tr-shadow" *ngFor="let item of salesBillHeaderList;let i=index; ">
                         <td>{{i+1}}</td>
                         <td>{{item.number}}</td>
                         <td>{{item.date}}</td>
-                        <td>{{item.vendorName}}</td>
+                        <td>{{item.clientName}}</td>
                         <td>{{item.totalAfterDiscount}}</td>
                         <td>{{item.notes}}</td>
                         <td>
                             <div class="table-data-feature">
                                 <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
-                                    data-original-title="Edit" [routerLink]="['/purchases-bill/purchases-bill-form/'+item.id]">
+                                    data-original-title="Edit" [routerLink]="['/sales-bill/sales-bill-form/'+item.id]">
                                     <i class="zmdi zmdi-edit"></i>
                                 </button>
                                 <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
@@ -97,7 +97,7 @@
                 </tbody>
        
             </table>
-            <app-pagination (pageChange)="onPageChange($event)" [totalRecordsCount]="total" [recordsPerPage]="searchCriteriaDTO.pageSize" *ngIf="purchasesBillHeaderList">
+            <app-pagination (pageChange)="onPageChange($event)" [totalRecordsCount]="total" [recordsPerPage]="searchCriteriaDTO.pageSize" *ngIf="salesBillHeaderList">
             </app-pagination>
         </div>
         <!-- END DATA TABLE -->

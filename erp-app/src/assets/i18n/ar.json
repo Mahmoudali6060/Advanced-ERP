@@ -79,6 +79,7 @@
     "PhoneNumber2": "رقم الهاتف 2",
     "IsClient": "يمكن هذا المورد أن يصبح عميل (مزدوج)",
     "Vendor": "المورد",
+    "Client":"العميل",
     "Discount": "الخصم",
     "TotalAfterDiscount": "الإجمالي بعد الخصم",
     "ProductName": "المنتج",
@@ -239,7 +240,10 @@
     "Clients": "العملاء",
     "Vendors": "الموردين",
     "Purchases": "المشتريات",
-    "PurchasesBills": "فواتير المشتريات"
+    "PurchasesBills": "فواتير المشتريات",
+    "Sales": "المبيعات",
+    "SalesBills": "فواتير المبيعات"
+    
   },
   "Errors": {
     "InvalidUsernameOrPassword": "من فضلك تأكد من اسم المستخدم او كلمة المرور",
@@ -398,10 +402,16 @@
     "EditVendor": "تعديل المورد",
     "ViewVendor": "عرض المورد"
   },
-  "PurchasesBill": {
-    "Title": "فواتير المشتريات",
-    "AddPurchasesBill": "إضافة فاتورة",
-    "EditPurchasesBill": "تعديل الفاتورة",
-    "ViewPurchasesBill": "عرض الفاتورة"
+  "Purchasas": {
+    "PurchasasTitle": "فواتير المشتريات",
+    "AddPurchasesBill": "إضافة فاتورة مشتريات",
+    "EditPurchasesBill": "تعديل فاتورة المشتريات",
+    "ViewPurchasesBill": "عرض فاتورة المشتريات"
+  },
+  "Sales": {
+    "SalesTitle": "فاتورة المبيعات",
+    "AddSalesBill": "إضافة فاتورة المبيعات",
+    "EditSalesBill": "تعديل فاتورة المبيعات",
+    "ViewSalesBill": "عرض فاتورة المبيعات"
   }
 }

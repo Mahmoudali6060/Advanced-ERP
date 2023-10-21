@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Sales\Helpers\" />
     <Folder Include="Purchases\Helpers\" />
     <Folder Include="Setup\Helpers\" />
   </ItemGroup>

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Purchases.DataAccessLayer;
+using Sales.DataAccessLayer;
 using Setup.DataAccessLayer;
 
 using System;
@@ -44,7 +45,11 @@ namespace UnitOfWork.Handlers
         #region Purchases
         public IPurchasesBillHeaderDAL PurchasesBillHeaderDAL { get; private set; }
         public IPurchasesBillDetailDAL PurchasesBillDetailDAL { get; set; }
+        #endregion
 
+        #region Sales
+        public ISalesBillHeaderDAL SalesBillHeaderDAL { get; private set; }
+        public ISalesBillDetailDAL SalesBillDetailDAL { get; set; }
         #endregion
 
         public UnitofWork(AppDbContext context,
@@ -80,6 +85,11 @@ namespace UnitOfWork.Handlers
             #region Purchases
             PurchasesBillHeaderDAL = new PurchasesBillHeaderDAL(_context);
             PurchasesBillDetailDAL = new PurchasesBillDetailDAL(_context);
+            #endregion
+
+            #region Sales
+            SalesBillHeaderDAL = new SalesBillHeaderDAL(_context);
+            SalesBillDetailDAL = new SalesBillDetailDAL(_context);
             #endregion
         }
 

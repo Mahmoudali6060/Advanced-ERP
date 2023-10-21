@@ -7,7 +7,7 @@ using Data.Entities.Shared;
 using Data.Entities.UserManagement;
 using Data.Entities.Setup;
 using Data.Entities.Purchases;
-
+using Data.Entities.Sales;
 
 namespace Data.Contexts
 {
@@ -40,7 +40,11 @@ namespace Data.Contexts
         #region Purchases
         public DbSet<PurchasesBillHeader> PurchasesBillHeaders { get; set; }
         public DbSet<PurchasesBillDetail> PurchasesBillDetails { get; set; }
+        #endregion
 
+        #region Sales
+        public DbSet<SalesBillHeader> SalesBillHeaders { get; set; }
+        public DbSet<SalesBillDetail> SalesBillDetails { get; set; }
         #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

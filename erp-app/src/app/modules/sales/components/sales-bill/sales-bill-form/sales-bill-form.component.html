@@ -2,19 +2,19 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <strong *ngIf="!purchasesBillHeaderDTO.id">{{'Purchases.AddPurchasesBill' |translate}}</strong>
-                <strong *ngIf="purchasesBillHeaderDTO.id && !viewMode">{{'Purchases.EditPurchasesBill'
+                <strong *ngIf="!salesBillHeaderDTO.id">{{'Sales.AddSalesBill' |translate}}</strong>
+                <strong *ngIf="salesBillHeaderDTO.id && !viewMode">{{'Sales.EditSalesBill'
                     |translate}}</strong>
-                <strong *ngIf="purchasesBillHeaderDTO.id  && viewMode ">{{'Purchases.ViewPurchasesBill'
+                <strong *ngIf="salesBillHeaderDTO.id  && viewMode ">{{'Sales.ViewSalesBill'
                     |translate}}</strong>
             </div>
             <div class="card-body card-block">
                 <div class="row">
-                    <div class="col-lg-4" *ngIf="purchasesBillHeaderDTO.id">
+                    <div class="col-lg-4" *ngIf="salesBillHeaderDTO.id">
                         <div class="form-group">
                             <label for="number" class=" form-control-label">{{'General.BillNumber'
                                 |translate}}</label>
-                            <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.number" type="text"
+                            <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.number" type="text"
                                 id="number" class="form-control" #number="ngModel" readonly name="number"
                                 aria-describedby="helpId">
                         </div>
@@ -22,11 +22,11 @@
 
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label class="form-label" for="vendorId">{{'General.Vendor'|translate}}</label>
-                            <select name="vendorId" id="vendorId" class="form-control"
-                                [(ngModel)]="purchasesBillHeaderDTO.vendorId">
-                                <option value="">{{'General.SelectVendor'|translate}}</option>
-                                <option *ngFor="let item of vendorList" [value]="item.id"> {{item.fullName}}
+                            <label class="form-label" for="clientId">{{'General.Client'|translate}}</label>
+                            <select name="clientId" id="clientId" class="form-control"
+                                [(ngModel)]="salesBillHeaderDTO.clientId">
+                                <option value="">{{'General.SelectClient'|translate}}</option>
+                                <option *ngFor="let item of clientList" [value]="item.id"> {{item.fullName}}
                                 </option>
                             </select>
                         </div>
@@ -35,8 +35,8 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label class="form-label" for="date">{{'General.Date'|translate}}</label>
-                            <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.date" type="date" id="date"
-                                class="form-control" #date="ngModel" name="date" [value]="purchasesBillHeaderDTO.date"
+                            <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.date" type="date" id="date"
+                                class="form-control" #date="ngModel" name="date" [value]="salesBillHeaderDTO.date"
                                 aria-describedby="helpId">
 
                         </div>
@@ -65,7 +65,7 @@
                                         </thead>
                                         <tbody>
                                             <tr class="tr-shadow"
-                                                *ngFor="let item of purchasesBillHeaderDTO.purchasesBillDetailList;let i=index; ">
+                                                *ngFor="let item of salesBillHeaderDTO.salesBillDetailList;let i=index; ">
                                                 <td>
                                                     {{i+1}}
                                                 </td>
@@ -138,7 +138,7 @@
                                         <div class="form-group">
                                             <label for="transfer" class=" form-control-label">{{'General.Transfer'
                                                 |translate}}</label>
-                                            <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.transfer"
+                                            <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.transfer"
                                                 type="number" id="transfer" (change)="updateTotal()"
                                                 class="form-control" #transfer="ngModel" name="transfer"
                                                 aria-describedby="helpId">
@@ -150,7 +150,7 @@
                                         <div class="form-group">
                                             <label for="discount" class=" form-control-label">{{'General.Discount'
                                                 |translate}} </label>
-                                            <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.discount"
+                                            <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.discount"
                                                 type="number" id="discount" (change)="updateTotal()"
                                                 class="form-control" (change)="updateTotal()" #discount="ngModel"
                                                 name="discount">
@@ -162,7 +162,7 @@
                                         <div class="form-group">
                                             <label for="notes" class=" form-control-label">{{'General.Notes'
                                                 |translate}}</label>
-                                            <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.notes"
+                                            <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.notes"
                                                 type="text" id="notes" class="form-control" #notes="ngModel"
                                                 name="notes" aria-describedby="helpId">
                                         </div>
@@ -175,7 +175,7 @@
                                         <div class="form-group">
                                             <label for="total" class=" form-control-label">{{'General.Total'
                                                 |translate}}</label>
-                                            <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.total"
+                                            <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.total"
                                                 type="text" id="total" class="form-control" #total="ngModel" readonly
                                                 name="total" aria-describedby="helpId">
                                         </div>
@@ -189,7 +189,7 @@
                                                 class=" form-control-label">{{'General.TotalDiscount'
                                                 |translate}}</label>
                                             <input [disabled]="viewMode" readonly
-                                                [(ngModel)]="purchasesBillHeaderDTO.totalDiscount" type="text"
+                                                [(ngModel)]="salesBillHeaderDTO.totalDiscount" type="text"
                                                 id="discount" class="form-control" (change)="updateTotal()"
                                                 #TotalDiscount="ngModel" name="TotalDiscount">
                                         </div>
@@ -202,7 +202,7 @@
                                                 class=" form-control-label">{{'General.TotalAfterDiscount'
                                                 |translate}}</label>
                                             <input [disabled]="viewMode"
-                                                [(ngModel)]="purchasesBillHeaderDTO.totalAfterDiscount" type="text"
+                                                [(ngModel)]="salesBillHeaderDTO.totalAfterDiscount" type="text"
                                                 id="totalAfterDiscount" class="form-control"
                                                 #totalAfterDiscount="ngModel" readonly name="totalAfterDiscount"
                                                 aria-describedby="helpId">
