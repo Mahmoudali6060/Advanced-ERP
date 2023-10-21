@@ -7,7 +7,7 @@ import { LabelValuePair } from 'src/app/shared/enums/label-value-pair';
 import { ConfigService } from 'src/app/shared/services/config.service';
 import { HelperService } from 'src/app/shared/services/helper.service';
 import { DataSourceModel } from '../../../../shared/models/data-source.model';
-import { ConfirmationDialogService } from '../../../../shared/services/confirmation-dialog.service';
+import { DialogService } from '../../../../shared/services/confirmation-dialog.service';
 import {  UserProfileSearchCriteriaDTO } from '../../models/user-list-search-criteria-dto';
 import { UserProfileDTO } from '../../models/user-profile.dto';
 import { UserTypeEnum } from '../../models/user-type-enum';
@@ -42,7 +42,7 @@ export class UserListComponent {
 	statusDDL: any;
 
 	constructor(private userProfileService: UserProfileService,
-		private confirmationDialogService: ConfirmationDialogService,
+		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
 		private translate: TranslateService,
 		private _configService: ConfigService,

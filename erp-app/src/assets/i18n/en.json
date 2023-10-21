@@ -81,7 +81,9 @@
     "PriceAfterDiscount": "Price After Discount",
     "TopProducts": "Top Products",
     "Product": "Product",
-    "BillNumber": "Bill Number"
+    "BillNumber": "Bill Number",
+    "SelectClient":"Select client",
+    "SelectVendor":"Select vendor"
   },
   "Dashboard": {
     "overview": "Overview",
@@ -407,14 +409,14 @@
     "EditVendor": "Edit vendor",
     "ViewVendor": "View vendor"
   },
-  "Purchasas": {
-    "PurchasasBillTitle": "Purchasas Bills",
+  "Purchases": {
+    "PurchasesBillsTitle": "Purchasas Bills",
     "AddPurchasesBill": "Add purchases bill",
     "EditPurchasesBill": "Edit purchases bill",
     "ViewPurchasesBill": "View purchases bill"
   },
   "Sales": {
-    "SalesBillTitle": "Sales Bills",
+    "SalesBillsTitle": "Sales Bills",
     "AddSalesBill": "Add sales bill",
     "EditSalesBill": "Edit sales bill",
     "ViewSalesBill": "View sales bill"

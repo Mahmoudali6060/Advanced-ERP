@@ -265,3 +265,8 @@ width: 15%;
 .table-responsive{
     overflow-x: clip !important;
 }
+
+.ng-select.ng-select-single .ng-select-container{
+    width: 300px;
+    height: 38px !important;
+}

@@ -46,6 +46,8 @@ export class VendorFormComponent {
 			this.vendorDTO = res;
 			this.serverUrl = this._configService.getServerUrl();
 			this.imageSrc = this.serverUrl + "wwwroot/Images/Vendors/" + this.vendorDTO.imageUrl;
+			if (this.vendorDTO.clientId)
+				this.vendorDTO.isClient = true;
 			// if (!this.vendorDTO.imageUrl) {
 			// 	this.imageSrc = "assets/images/icon/avatar-big-01.jpg";
 			// }

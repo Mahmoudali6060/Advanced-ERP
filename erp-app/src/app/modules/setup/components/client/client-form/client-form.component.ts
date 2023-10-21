@@ -46,6 +46,8 @@ export class ClientFormComponent {
 			this.clientDTO = res;
 			this.serverUrl = this._configService.getServerUrl();
 			this.imageSrc = this.serverUrl + "wwwroot/Images/Clients/" + this.clientDTO.imageUrl;
+			if (this.clientDTO.vendorId)
+				this.clientDTO.isVendor = true;
 			// if (!this.clientDTO.imageUrl) {
 			// 	this.imageSrc = "assets/images/icon/avatar-big-01.jpg";
 			// }

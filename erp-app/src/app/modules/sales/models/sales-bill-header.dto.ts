@@ -10,7 +10,7 @@ export class SalesBillHeaderDTO {
     totalDiscount: number | 0;
     totalAfterDiscount: number;
     date: string | undefined;
-    clientId: number;
+    clientId: number | null;
     clientName: string;
     notes: string;
     salesBillDetailList: Array<SalesBillDetailsDTO> = Array<SalesBillDetailsDTO>();

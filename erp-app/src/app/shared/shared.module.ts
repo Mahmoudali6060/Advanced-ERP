@@ -8,7 +8,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { OrderModule } from 'ngx-order-pipe';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MaterialModule } from '../shared/modules/material.module';
 import { ConfirmationDialogComponent } from '../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { AuthGuardService } from './guards/auth-guard.service';
@@ -17,7 +17,7 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { ChangeLangagueComponent } from './components/change-langague/change-langague.component';
 import { UserProfileService } from '../modules/user/services/user.service';
-import { ConfirmationDialogService } from './services/confirmation-dialog.service';
+import { DialogService } from './services/confirmation-dialog.service';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { PagerService } from './services/pager.service';
 import { LoaderComponent } from './components/loader/loader.component';
@@ -29,7 +29,6 @@ import { StateService } from '../modules/configurations/services/state.service';
 import { CityService } from '../modules/configurations/services/city.service';
 import { PortService } from '../modules/configurations/services/port.service';
 import { ComboBoxComponent } from './components/combo-box/combo-box.component';
-//import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 
 @NgModule({
 
@@ -89,12 +88,13 @@ import { ComboBoxComponent } from './components/combo-box/combo-box.component';
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
     UserProfileService,
-    ConfirmationDialogService,
+    DialogService,
     PagerService,
     CountryService,
     StateService,
     CityService,
-    PortService
+    PortService,
+    
   ],
 })
 

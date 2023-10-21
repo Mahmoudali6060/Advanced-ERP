@@ -6,7 +6,7 @@ import { PaginationComponent } from 'src/app/shared/components/pagination/pagina
 import { ConfigService } from 'src/app/shared/services/config.service';
 import { HelperService } from 'src/app/shared/services/helper.service';
 import { DataSourceModel } from '../../../../../shared/models/data-source.model';
-import { ConfirmationDialogService } from '../../../../../shared/services/confirmation-dialog.service';
+import { DialogService } from '../../../../../shared/services/confirmation-dialog.service';
 import { CategoryService } from '../../../services/category.service';
 import { CountryModel } from 'src/app/modules/configurations/models/country.model';
 import { StateModel } from 'src/app/modules/configurations/models/state.model';
@@ -39,7 +39,7 @@ export class CategoryListComponent {
 	statusDDL: any;
 
 	constructor(private categoryService: CategoryService,
-		private confirmationDialogService: ConfirmationDialogService,
+		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
 		public translate: TranslateService,
 		private _configService: ConfigService,

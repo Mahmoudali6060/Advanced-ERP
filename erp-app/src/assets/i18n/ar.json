@@ -91,7 +91,9 @@
     "PriceAfterDiscount": "السعر بعد الخصم",
     "TopProducts": "المنتجات الأكثر مبيعا",
     "Product":"المنتج",
-    "BillNumber":"رقم الفاتورة"
+    "BillNumber":"رقم الفاتورة",
+    "SelectClient":"اختر العميل",
+    "SelectVendor":"اختر المورد"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -402,14 +404,14 @@
     "EditVendor": "تعديل المورد",
     "ViewVendor": "عرض المورد"
   },
-  "Purchasas": {
-    "PurchasasTitle": "فواتير المشتريات",
+  "Purchases": {
+    "PurchasesBillsTitle": "فواتير المشتريات",
     "AddPurchasesBill": "إضافة فاتورة مشتريات",
     "EditPurchasesBill": "تعديل فاتورة المشتريات",
     "ViewPurchasesBill": "عرض فاتورة المشتريات"
   },
   "Sales": {
-    "SalesTitle": "فاتورة المبيعات",
+    "SalesBillsTitle": "فواتير المبيعات",
     "AddSalesBill": "إضافة فاتورة المبيعات",
     "EditSalesBill": "تعديل فاتورة المبيعات",
     "ViewSalesBill": "عرض فاتورة المبيعات"

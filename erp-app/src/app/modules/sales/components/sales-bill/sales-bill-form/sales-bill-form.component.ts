@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfigService } from 'src/app/shared/services/config.service';
@@ -14,6 +14,10 @@ import { DatePipe } from '@angular/common';
 import { HelperService } from 'src/app/shared/services/helper.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ClientService } from 'src/app/modules/setup/services/client.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProductFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/product-form-popup/product-form-popup.component';
+import { DialogService } from 'src/app/shared/services/confirmation-dialog.service';
+import { PurchasesBillDetailsDTO } from 'src/app/modules/purchases/models/purchases-bill-details.dto';
 
 @Component({
 	selector: 'app-sales-bill-form',
@@ -23,14 +27,12 @@ import { ClientService } from 'src/app/modules/setup/services/client.service';
 export class SalesBillFormComponent {
 
 	salesBillHeaderDTO: SalesBillHeaderDTO = new SalesBillHeaderDTO();
-	imageSrc!: string;
 	serverUrl: string;
 	viewMode: boolean;
 	productList: Array<ProductDTO> = new Array<ProductDTO>();
 	clientList: Array<ClientDTO> = new Array<ClientDTO>();
 	purchaseHeaderId: any;
-	searchProduct: any;
-	itemList = ['carrot', 'banana', 'apple', 'potato', 'tomato', 'cabbage', 'turnip', 'okra', 'onion', 'cherries', 'plum', 'mango'];
+
 	constructor(
 		private salesBillService: SalesBillService,
 		private productService: ProductService,
@@ -40,11 +42,11 @@ export class SalesBillFormComponent {
 		private _configService: ConfigService,
 		private router: Router,
 		private helperService: HelperService,
-		private translate: TranslateService) {
+		private translate: TranslateService,
+		private dialogService: DialogService) {
 	}
 
 	ngOnInit() {
-		this.imageSrc = "assets/images/icon/avatar-big-01.jpg";
 		this.purchaseHeaderId = this.route.snapshot.paramMap.get('id');
 		if (this.purchaseHeaderId) {
 			this.getSalesBillById(this.purchaseHeaderId);
@@ -53,6 +55,7 @@ export class SalesBillFormComponent {
 			}
 		}
 		else {
+			this.salesBillHeaderDTO.clientId = null;
 			this.addNewRow();
 			//set today by default>>Insert Mode
 			this.salesBillHeaderDTO.date = this.helperService.conveertDateToString(new Date());
@@ -154,4 +157,14 @@ export class SalesBillFormComponent {
 		this.salesBillHeaderDTO.totalAfterDiscount = this.salesBillHeaderDTO.total - this.salesBillHeaderDTO.totalDiscount;
 	}
 
+	showProductFormPopUp(item: PurchasesBillDetailsDTO) {
+		this.dialogService.show("sm", ProductFormPopupComponent)
+			.then((product) => {
+				if (product) {
+					item.productId = product.id;
+					this.getAllProducts();
+				}
+			})
+			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+	}
 }

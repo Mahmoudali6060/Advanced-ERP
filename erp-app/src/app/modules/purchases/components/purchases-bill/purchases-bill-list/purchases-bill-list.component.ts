@@ -6,7 +6,7 @@ import { PaginationComponent } from 'src/app/shared/components/pagination/pagina
 import { ConfigService } from 'src/app/shared/services/config.service';
 import { HelperService } from 'src/app/shared/services/helper.service';
 import { DataSourceModel } from '../../../../../shared/models/data-source.model';
-import { ConfirmationDialogService } from '../../../../../shared/services/confirmation-dialog.service';
+import { DialogService } from '../../../../../shared/services/confirmation-dialog.service';
 import { CountryModel } from 'src/app/modules/configurations/models/country.model';
 import { StateModel } from 'src/app/modules/configurations/models/state.model';
 import { CityModel } from 'src/app/modules/configurations/models/city.model';
@@ -32,7 +32,7 @@ export class PurchasesBillListComponent {
 	statusDDL: any;
 
 	constructor(private productService: PurchasesBillService,
-		private confirmationDialogService: ConfirmationDialogService,
+		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
 		private translate: TranslateService) {
 

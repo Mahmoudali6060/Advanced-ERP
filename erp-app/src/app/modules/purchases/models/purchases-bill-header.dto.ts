@@ -10,7 +10,7 @@ export class PurchasesBillHeaderDTO {
     totalDiscount: number | 0;
     totalAfterDiscount: number;
     date: string | undefined;
-    vendorId: number;
+    vendorId: number | null;
     vendorName: string;
     notes: string;
     purchasesBillDetailList: Array<PurchasesBillDetailsDTO> = Array<PurchasesBillDetailsDTO>();

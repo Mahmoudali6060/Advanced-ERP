@@ -14,6 +14,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { HelperService } from 'src/app/shared/services/helper.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ProductFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/product-form-popup/product-form-popup.component';
+import { DialogService } from 'src/app/shared/services/confirmation-dialog.service';
 @Component({
 	selector: 'app-purchases-bill-form',
 	templateUrl: './purchases-bill-form.component.html',
@@ -36,10 +38,10 @@ export class PurchasesBillFormComponent {
 		private vendorService: VendorService,
 		private route: ActivatedRoute,
 		private toasterService: ToastrService,
-		private _configService: ConfigService,
 		private router: Router,
 		private helperService: HelperService,
-		private translate: TranslateService) {
+		private translate: TranslateService,
+		private dialogService: DialogService) {
 	}
 
 	ngOnInit() {
@@ -52,6 +54,7 @@ export class PurchasesBillFormComponent {
 			}
 		}
 		else {
+			this.purchasesBillHeaderDTO.vendorId = null;
 			this.addNewRow();
 			//set today by default>>Insert Mode
 			this.purchasesBillHeaderDTO.date = this.helperService.conveertDateToString(new Date());
@@ -151,6 +154,17 @@ export class PurchasesBillFormComponent {
 		}
 		this.purchasesBillHeaderDTO.totalDiscount = this.purchasesBillHeaderDTO.transfer + this.purchasesBillHeaderDTO.discount;
 		this.purchasesBillHeaderDTO.totalAfterDiscount = this.purchasesBillHeaderDTO.total - this.purchasesBillHeaderDTO.totalDiscount;
+	}
+
+	showProductFormPopUp(item: PurchasesBillDetailsDTO) {
+		this.dialogService.show("sm", ProductFormPopupComponent)
+			.then((product) => {
+				if (product) {
+					item.productId = product.id;
+					this.getAllProducts();
+				}
+			})
+			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
 	}
 
 }

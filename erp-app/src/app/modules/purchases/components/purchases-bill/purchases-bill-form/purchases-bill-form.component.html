@@ -21,14 +21,18 @@
                     </div>
 
                     <div class="col-lg-4">
-                        <div class="form-group">
-                            <label class="form-label" for="vendorId">{{'General.Vendor'|translate}}</label>
+                        <label class="form-label" for="vendorId">{{'General.Vendor'|translate}}</label>
+                        <div class="input-group">
                             <select name="vendorId" id="vendorId" class="form-control"
                                 [(ngModel)]="purchasesBillHeaderDTO.vendorId">
-                                <option value="">{{'General.SelectVendor'|translate}}</option>
+                                <option value="null" disabled>{{'General.SelectVendor'|translate}}</option>
                                 <option *ngFor="let item of vendorList" [value]="item.id"> {{item.fullName}}
                                 </option>
                             </select>
+                            <div class="input-group-addon" data-toggle="tooltip" data-placement="top"
+                                title="Add Vendor">
+                                <i class="fa fa-plus-square"></i>
+                            </div>
                         </div>
                     </div>
 
@@ -70,13 +74,20 @@
                                                     {{i+1}}
                                                 </td>
                                                 <td class="cell-width-35">
-                                                    <ng-select [(ngModel)]="item.productId"
-                                                        [ngModelOptions]="{standalone: true}"
-                                                        (change)="onProductChange(item)">
-                                                        <ng-option *ngFor="let product of productList"
-                                                            [value]="product.id">{{product.code}} -
-                                                            {{product.name}}</ng-option>
-                                                    </ng-select>
+                                                    <div class="input-group">
+                                                        <ng-select [(ngModel)]="item.productId"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            (change)="onProductChange(item)" >
+                                                            <ng-option *ngFor="let product of productList"
+                                                                [value]="product.id">{{product.code}} -
+                                                                {{product.name}}</ng-option>
+                                                        </ng-select>
+                                                        <div class="input-group-addon" data-toggle="tooltip"
+                                                            data-placement="top" title="Add Product"
+                                                            (click)="showProductFormPopUp(item)">
+                                                            <i class="fa fa-plus-square"></i>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <input [(ngModel)]="item.actualQuantity" readonly type="number"
