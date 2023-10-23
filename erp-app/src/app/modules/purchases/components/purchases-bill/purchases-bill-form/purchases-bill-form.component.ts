@@ -7,8 +7,6 @@ import { ProductDTO } from 'src/app/modules/setup/models/product.dto';
 import { PurchasesBillService } from '../../../services/purchases-bill.service';
 import { ProductService } from 'src/app/modules/setup/services/product.service';
 import { PurchasesBillHeaderDTO } from '../../../models/purchases-bill-header.dto';
-import { VendorDTO } from 'src/app/modules/setup/models/vendor.dto';
-import { VendorService } from 'src/app/modules/setup/services/vendor.service';
 import { PurchasesBillDetailsDTO } from '../../../models/purchases-bill-details.dto';
 import { Pipe, PipeTransform } from '@angular/core';
 import { DatePipe } from '@angular/common';
@@ -16,6 +14,8 @@ import { HelperService } from 'src/app/shared/services/helper.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/product-form-popup/product-form-popup.component';
 import { DialogService } from 'src/app/shared/services/confirmation-dialog.service';
+import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
+import { ClientVendorDTO, ClientVendorTypeEnum } from 'src/app/modules/setup/models/client-vendor.dto';
 @Component({
 	selector: 'app-purchases-bill-form',
 	templateUrl: './purchases-bill-form.component.html',
@@ -28,14 +28,14 @@ export class PurchasesBillFormComponent {
 	serverUrl: string;
 	viewMode: boolean;
 	productList: Array<ProductDTO> = new Array<ProductDTO>();
-	vendorList: Array<VendorDTO> = new Array<VendorDTO>();
+	vendorList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
 	purchaseHeaderId: any;
 	searchProduct: any;
 	itemList = ['carrot', 'banana', 'apple', 'potato', 'tomato', 'cabbage', 'turnip', 'okra', 'onion', 'cherries', 'plum', 'mango'];
 	constructor(
 		private purchasesBillService: PurchasesBillService,
 		private productService: ProductService,
-		private vendorService: VendorService,
+		private clientVendorService: ClientVendorService,
 		private route: ActivatedRoute,
 		private toasterService: ToastrService,
 		private router: Router,
@@ -71,7 +71,7 @@ export class PurchasesBillFormComponent {
 	}
 
 	getAllVendors() {
-		this.vendorService.getAllLite().subscribe((res: any) => {
+		this.clientVendorService.getAllLiteByTypeId(ClientVendorTypeEnum.Vendor).subscribe((res: any) => {
 			this.vendorList = res.list;
 		})
 	}

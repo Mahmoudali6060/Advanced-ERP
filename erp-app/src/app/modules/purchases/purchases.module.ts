@@ -9,8 +9,7 @@ import { PurchasesBillListComponent } from './components/purchases-bill/purchase
 import { PurchasesBillFormComponent } from './components/purchases-bill/purchases-bill-form/purchases-bill-form.component';
 import { ProductService } from '../setup/services/product.service';
 import { CategoryService } from '../setup/services/category.service';
-import { ClientService } from '../setup/services/client.service';
-import { VendorService } from '../setup/services/vendor.service';
+import { ClientVendorService } from '../setup/services/client-vendor.service';
 import { PurchasesBillService } from './services/purchases-bill.service';
 
 @NgModule({
@@ -33,8 +32,7 @@ import { PurchasesBillService } from './services/purchases-bill.service';
   providers: [
     ProductService,
     CategoryService,
-    ClientService,
-    VendorService,
+    ClientVendorService,
     PurchasesBillService
   ]
 })

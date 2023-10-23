@@ -37,8 +37,7 @@ namespace UnitOfWork.Handlers
         public IAboutUsDAL AboutUsDAL { get; private set; }
         public ICategoryDAL CategoryDAL { get; private set; }
         public IProductDAL ProductDAL { get; private set; }
-        public IClientDAL ClientDAL { get; private set; }
-        public IVendorDAL VendorDAL { get; private set; }
+        public IClientVendorDAL ClientVendorDAL { get; private set; }
         public IAdvertismentDAL AdvertismentDAL { get; private set; }
         #endregion
 
@@ -77,9 +76,7 @@ namespace UnitOfWork.Handlers
             AdvertismentDAL = new AdvertismentDAL(_context);
             CategoryDAL = new CategoryDAL(_context);
             ProductDAL = new ProductDAL(_context);
-            ClientDAL = new ClientDAL(_context);
-            VendorDAL = new VendorDAL(_context);
-
+            ClientVendorDAL = new ClientVendorDAL(_context);
             #endregion
 
             #region Purchases

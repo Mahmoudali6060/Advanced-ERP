@@ -1,5 +1,6 @@
 ﻿using Data.Entities.Shared;
 using Data.Entities.UserManagement;
+using Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Data.Entities.Setup
 {
-    public class Client : BaseEntity
+    public class ClientVendor : BaseEntity
     {
         public bool IsActive { get; set; }
         public string Code { get; set; }
@@ -17,9 +18,10 @@ namespace Data.Entities.Setup
         public string PhoneNumber1 { get; set; }
         public string PhoneNumber2 { get; set; }
         public string ImageUrl { get; set; }
-        public decimal Balance { get; set; }
+        public decimal Debit { get; set; }
+        public decimal Credit { get; set; }
         public string Notes { get; set; }
         public string IdNumber { get; set; }
-        public long? VendorId { get; set; }
+        public ClientVendorTypeEnum TypeId { get; set; }
     }
 }

@@ -9,8 +9,7 @@ import { SalesBillListComponent } from './components/sales-bill/sales-bill-list/
 import { SalesBillFormComponent } from './components/sales-bill/sales-bill-form/sales-bill-form.component';
 import { ProductService } from '../setup/services/product.service';
 import { CategoryService } from '../setup/services/category.service';
-import { ClientService } from '../setup/services/client.service';
-import { VendorService } from '../setup/services/vendor.service';
+import { ClientVendorService } from '../setup/services/client-vendor.service';
 import { SalesBillService } from './services/sales-bill.service';
 import { SetupSharedModule } from 'src/app/shared/modules/setup-shared/setup-shared.module';
 
@@ -35,8 +34,7 @@ import { SetupSharedModule } from 'src/app/shared/modules/setup-shared/setup-sha
   providers: [
     ProductService,
     CategoryService,
-    ClientService,
-    VendorService,
+    ClientVendorService,
     SalesBillService
   ]
 })

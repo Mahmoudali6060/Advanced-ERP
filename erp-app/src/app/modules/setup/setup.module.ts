@@ -14,10 +14,9 @@ import { CategoryFormComponent } from './components/category/category-form/categ
 import { CategoryService } from './services/category.service';
 import { ClientFormComponent } from './components/client/client-form/client-form.component';
 import { ClientListComponent } from './components/client/client-list/client-list.component';
-import { ClientService } from './services/client.service';
 import { VendorFormComponent } from './components/vendor/vendor-form/vendor-form.component';
 import { VendorListComponent } from './components/vendor/vendor-list/vendor-list.component';
-import { VendorService } from './services/vendor.service';
+import { ClientVendorService } from './services/client-vendor.service';
 
 @NgModule({
   imports: [
@@ -46,8 +45,7 @@ import { VendorService } from './services/vendor.service';
     CountryService,
     CompanyService,
     CategoryService,
-    ClientService,
-    VendorService
+    ClientVendorService
   ]
 })
 export class SetupModule {

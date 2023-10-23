@@ -7,22 +7,22 @@
 
 	<ItemGroup>
 		<Compile Remove="Controllers\Accounting\**" />
-		<Compile Remove="Controllers\Clients\**" />
+		<Compile Remove="Controllers\ClientVendors\**" />
 		<Compile Remove="Controllers\HR\**" />
 		<Compile Remove="Controllers\Suppliers\**" />
 		<Compile Remove="wwwroot\Images\Trips\**" />
 		<Content Remove="Controllers\Accounting\**" />
-		<Content Remove="Controllers\Clients\**" />
+		<Content Remove="Controllers\ClientVendors\**" />
 		<Content Remove="Controllers\HR\**" />
 		<Content Remove="Controllers\Suppliers\**" />
 		<Content Remove="wwwroot\Images\Trips\**" />
 		<EmbeddedResource Remove="Controllers\Accounting\**" />
-		<EmbeddedResource Remove="Controllers\Clients\**" />
+		<EmbeddedResource Remove="Controllers\ClientVendors\**" />
 		<EmbeddedResource Remove="Controllers\HR\**" />
 		<EmbeddedResource Remove="Controllers\Suppliers\**" />
 		<EmbeddedResource Remove="wwwroot\Images\Trips\**" />
 		<None Remove="Controllers\Accounting\**" />
-		<None Remove="Controllers\Clients\**" />
+		<None Remove="Controllers\ClientVendors\**" />
 		<None Remove="Controllers\HR\**" />
 		<None Remove="Controllers\Suppliers\**" />
 		<None Remove="wwwroot\Images\Trips\**" />
@@ -66,9 +66,7 @@
 	<ItemGroup>
 		<Folder Include="Logs\" />
 		<Folder Include="Reports\" />
-		<Folder Include="wwwroot\Images\Vendors\" />
 		<Folder Include="wwwroot\Images\Managment\" />
-		<Folder Include="wwwroot\Images\Clients\" />
 		<Folder Include="wwwroot\Images\Users\" />
 	</ItemGroup>
 

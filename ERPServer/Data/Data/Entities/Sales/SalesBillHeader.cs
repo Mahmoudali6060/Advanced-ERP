@@ -20,8 +20,8 @@ namespace Data.Entities.Sales
         public decimal TotalAfterDiscount { get; set; }
         public decimal TotalDiscount { get; set; }
         public string Notes { get; set; }
-        public long ClientId { get; set; }
-        public virtual Client Client { get; set; }
+        public long ClientVendorId { get; set; }
+        public virtual ClientVendor ClientVendor { get; set; }
         public virtual List<SalesBillDetail> SalesBillDetailList { get; set; }
 
     }

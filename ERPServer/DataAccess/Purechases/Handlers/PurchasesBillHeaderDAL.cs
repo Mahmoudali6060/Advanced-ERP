@@ -17,7 +17,7 @@ namespace Purchases.DataAccessLayer
         #region Query
         public async Task<IQueryable<PurchasesBillHeader>> GetAll()
         {
-            return _appDbContext.PurchasesBillHeaders.Include(x=>x.Vendor).OrderByDescending(x => x.Date).AsQueryable();
+            return _appDbContext.PurchasesBillHeaders.Include(x=>x.ClientVendor).OrderByDescending(x => x.Date).AsQueryable();
         }
 
         public async Task<IQueryable<PurchasesBillHeader>> GetAllLite()
@@ -27,7 +27,7 @@ namespace Purchases.DataAccessLayer
 
         public async Task<PurchasesBillHeader> GetById(long id)
         {
-            var PurchasesBillHeader = _appDbContext.PurchasesBillHeaders.Include(x => x.Vendor).Include(x => x.PurchasesBillDetailList).SingleOrDefaultAsync(x => x.Id == id);
+            var PurchasesBillHeader = _appDbContext.PurchasesBillHeaders.Include(x => x.ClientVendor).Include(x => x.PurchasesBillDetailList).SingleOrDefaultAsync(x => x.Id == id);
             return await PurchasesBillHeader;
         }
 
@@ -59,7 +59,7 @@ namespace Purchases.DataAccessLayer
         #region Helper
         private string GenerateSequenceNumber()
         {
-            var lastElement = _appDbContext.Clients.OrderByDescending(p => p.Id)
+            var lastElement = _appDbContext.ClientVendors.OrderByDescending(p => p.Id)
                        .FirstOrDefault();
             if (lastElement == null)
             {

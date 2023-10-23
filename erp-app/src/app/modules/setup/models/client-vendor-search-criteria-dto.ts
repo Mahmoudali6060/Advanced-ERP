@@ -1,6 +1,7 @@
 import { DataSourceModel } from "src/app/shared/models/data-source.model";
+import { ClientVendorTypeEnum } from "./client-vendor.dto";
 
-export class VendorSearchCriteriaDTO extends DataSourceModel {
+export class ClientVendorSearchCriteriaDTO extends DataSourceModel{
     id: number;
     code: string;
     isActive: boolean;
@@ -8,4 +9,6 @@ export class VendorSearchCriteriaDTO extends DataSourceModel {
     address: string;
     phone: string;
     idNumber:string;
+    typeId: ClientVendorTypeEnum;
+
 }

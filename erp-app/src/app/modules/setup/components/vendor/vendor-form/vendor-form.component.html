@@ -25,7 +25,7 @@
 
                                     <p-inputSwitch [disabled]="viewMode" [ngModelOptions]="{standalone: true}"
                                         name="isVendor" class="input-switch"
-                                        [(ngModel)]="vendorDTO.isClient"></p-inputSwitch>
+                                        [(ngModel)]="isClient"></p-inputSwitch>
                                 </div>
                             </div>
 
@@ -97,17 +97,32 @@
                                 
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="balance" class=" form-control-label">{{'General.Balance'
+                                        <label for="debit" class=" form-control-label">{{'General.Debit'
                                             |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="vendorDTO.balance" type="number"
-                                            id="balance" class="form-control" #balance="ngModel"
-                                            [class.is-invalid]="balance.invalid && balance.touched"
-                                            [class.is-valid]="balance.valid" name="balance" id="balance"
+                                        <input [disabled]="viewMode" [(ngModel)]="vendorDTO.debit" type="number"
+                                            id="debit" class="form-control" #debit="ngModel"
+                                            [class.is-invalid]="debit.invalid && debit.touched"
+                                            [class.is-valid]="debit.valid" name="debit" id="debit"
                                             class="form-control" aria-describedby="helpId">
-                                        <small [hidden]="balance.valid || balance.untouched" id="helpId"
+                                        <small [hidden]="debit.valid || debit.untouched" id="helpId"
                                             class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="credit" class=" form-control-label">{{'General.Credit'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="vendorDTO.credit" type="number"
+                                            id="credit" class="form-control" #credit="ngModel"
+                                            [class.is-invalid]="credit.invalid && credit.touched"
+                                            [class.is-valid]="credit.valid" name="credit" id="credit"
+                                            class="form-control" aria-describedby="helpId">
+                                        <small [hidden]="credit.valid || credit.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+                                
+
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="notes" class=" form-control-label">{{'General.Notes'

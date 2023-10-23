@@ -70,11 +70,9 @@ namespace App.Helper
             services.AddTransient<IProductDAL, ProductDAL>();
             services.AddTransient<IProductDSL, ProductDSL>();
 
-            services.AddTransient<IClientDAL, ClientDAL>();
-            services.AddTransient<IClientDSL, ClientDSL>();
+            services.AddTransient<IClientVendorDAL, ClientVendorDAL>();
+            services.AddTransient<IClientVendorDSL, ClientVendorDSL>();
 
-            services.AddTransient<IVendorDAL, VendorDAL>();
-            services.AddTransient<IVendorDSL, VendorDSL>();
             #endregion
 
             #region User Management

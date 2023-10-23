@@ -1,5 +1,5 @@
 
-export class ClientDTO {
+export class ClientVendorDTO {
     id: number;
     code: string;
     isActive: boolean;
@@ -8,10 +8,18 @@ export class ClientDTO {
     imageUrl: string;
     phoneNumber1: string;
     phoneNumber2: string;
-    balance: number//سعر البيع
+    debit: number//سعر 
+    credit: number//سعر 
     notes: string;
     idNumber: string;
     imageBase64: string;
-    vendorId: number;
-    isVendor: boolean = false;
+    typeId: ClientVendorTypeEnum;
+
+}
+
+
+export enum ClientVendorTypeEnum {
+    Client = 1,
+    Vendor = 2,
+    All = 3,
 }

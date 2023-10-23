@@ -3,10 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfigService } from 'src/app/shared/services/config.service';
 import { NgForm } from '@angular/forms';
-import { VendorDTO } from '../../../models/vendor.dto';
-import { VendorService } from '../../../services/vendor.service';
 import { CategoryDTO } from '../../../models/category.dto';
 import { CategoryService } from '../../../services/category.service';
+import { ClientVendorService } from '../../../services/client-vendor.service';
+import { ClientVendorDTO, ClientVendorTypeEnum } from '../../../models/client-vendor.dto';
 
 @Component({
 	selector: 'app-vendor-form',
@@ -15,13 +15,14 @@ import { CategoryService } from '../../../services/category.service';
 })
 export class VendorFormComponent {
 
-	vendorDTO: VendorDTO = new VendorDTO();
+	vendorDTO: ClientVendorDTO = new ClientVendorDTO();
 	imageSrc!: string;
 	serverUrl: string;
 	viewMode: boolean;
 	categoryList: Array<CategoryDTO> = new Array<CategoryDTO>();
+	isClient: boolean = false;
 	constructor(
-		private vendorService: VendorService,
+		private clientVendorService: ClientVendorService,
 		private categoryService: CategoryService,
 		private route: ActivatedRoute,
 		private toasterService: ToastrService,
@@ -31,7 +32,7 @@ export class VendorFormComponent {
 
 	ngOnInit() {
 		this.imageSrc = "assets/images/icon/avatar-big-01.jpg";
-		this.vendorDTO = new VendorDTO();
+		this.vendorDTO = new ClientVendorDTO();
 		const id = this.route.snapshot.paramMap.get('id');
 		if (id) {
 			this.getVendorById(id);
@@ -42,12 +43,12 @@ export class VendorFormComponent {
 	}
 
 	getVendorById(vendorId: any) {
-		this.vendorService.getById(vendorId).subscribe((res: any) => {
+		this.clientVendorService.getById(vendorId).subscribe((res: any) => {
 			this.vendorDTO = res;
 			this.serverUrl = this._configService.getServerUrl();
-			this.imageSrc = this.serverUrl + "wwwroot/Images/Vendors/" + this.vendorDTO.imageUrl;
-			if (this.vendorDTO.clientId)
-				this.vendorDTO.isClient = true;
+			this.imageSrc = this.serverUrl + "wwwroot/Images/ClientVendors/" + this.vendorDTO.imageUrl;
+			if (this.vendorDTO.typeId == ClientVendorTypeEnum.All)
+				this.isClient = true;
 			// if (!this.vendorDTO.imageUrl) {
 			// 	this.imageSrc = "assets/images/icon/avatar-big-01.jpg";
 			// }
@@ -60,7 +61,7 @@ export class VendorFormComponent {
 	back() {
 		this.router.navigateByUrl('setup/vendor-list');
 	}
-	validattion(vendorDTO: VendorDTO): boolean {
+	validattion(vendorDTO: ClientVendorDTO): boolean {
 		// if (!vendorDTO.firstName || isNullOrUndefined(vendorDTO.firstName)) {
 		// 	this.toasterService.error(this.translate.instant("Errors.FirstNameIsRequired"));
 		// 	return false;
@@ -86,9 +87,14 @@ export class VendorFormComponent {
 	}
 
 	save(form: NgForm) {
+		if (this.isClient)
+			this.vendorDTO.typeId = ClientVendorTypeEnum.All
+		else
+			this.vendorDTO.typeId = ClientVendorTypeEnum.Vendor
+
 		if (this.validattion(this.vendorDTO)) {
 			if (this.vendorDTO.id) {
-				this.vendorService.update(this.vendorDTO).subscribe(res => {
+				this.clientVendorService.update(this.vendorDTO).subscribe(res => {
 					if (res) {
 						this.toasterService.success("success");
 						this.back();
@@ -96,7 +102,7 @@ export class VendorFormComponent {
 				})
 			}
 			else {
-				this.vendorService.add(this.vendorDTO).subscribe(res => {
+				this.clientVendorService.add(this.vendorDTO).subscribe(res => {
 					if (res) {
 						this.toasterService.success("success");
 						this.back();

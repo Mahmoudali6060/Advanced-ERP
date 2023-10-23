@@ -24,8 +24,7 @@ namespace UnitOfWork.Contracts
         IAdvertismentDAL AdvertismentDAL { get; }
         ICategoryDAL CategoryDAL { get; }
         IProductDAL ProductDAL { get; }
-        IClientDAL ClientDAL { get; }
-        IVendorDAL VendorDAL { get; }
+        IClientVendorDAL ClientVendorDAL { get; }
         #endregion
 
         #region Purchase
@@ -33,7 +32,7 @@ namespace UnitOfWork.Contracts
         IPurchasesBillDetailDAL PurchasesBillDetailDAL { get; }
         #endregion
 
-        #region Purchase
+        #region Sales
         ISalesBillHeaderDAL SalesBillHeaderDAL { get; }
         ISalesBillDetailDAL SalesBillDetailDAL { get; }
         #endregion

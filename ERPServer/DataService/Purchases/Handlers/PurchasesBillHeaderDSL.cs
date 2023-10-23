@@ -115,7 +115,7 @@ namespace DataService.Setup.Handlers
 
             if (searchCriteriaDTO.VendorId.HasValue)
             {
-                purchasesBillHeaderList = purchasesBillHeaderList.Where(x => x.VendorId == searchCriteriaDTO.VendorId);
+                purchasesBillHeaderList = purchasesBillHeaderList.Where(x => x.ClientVendorId == searchCriteriaDTO.VendorId);
             }
             return purchasesBillHeaderList;
         }

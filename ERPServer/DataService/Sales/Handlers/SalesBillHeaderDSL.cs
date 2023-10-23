@@ -113,9 +113,9 @@ namespace DataService.Sales.Handlers
                 salesBillHeaderList = salesBillHeaderList.Where(x => x.Number.Contains(searchCriteriaDTO.Number));
             }
 
-            if (searchCriteriaDTO.ClientId.HasValue)
+            if (searchCriteriaDTO.ClientVendorId.HasValue)
             {
-                salesBillHeaderList = salesBillHeaderList.Where(x => x.ClientId == searchCriteriaDTO.ClientId);
+                salesBillHeaderList = salesBillHeaderList.Where(x => x.ClientVendorId == searchCriteriaDTO.ClientVendorId);
             }
             return salesBillHeaderList;
         }

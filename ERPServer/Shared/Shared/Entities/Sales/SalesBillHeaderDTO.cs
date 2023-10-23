@@ -20,8 +20,8 @@ namespace Shared.Entities.Sales
         public decimal TotalAfterDiscount { get; set; }
         public decimal TotalDiscount { get; set; }
         public string Notes { get; set; }
-        public long ClientId { get; set; }
-        public string ClientName { get; set; }
+        public long ClientVendorId { get; set; }
+        public string ClientVendorName { get; set; }
 
         public virtual List<SalesBillDetailDTO> SalesBillDetailList { get; set; }
 

@@ -8,7 +8,7 @@ namespace Data.Entities.Sales
         public string Number { get; set; }
         public DateTime Date { get; set; }
         public string Notes { get; set; }
-        public long? ClientId { get; set; }
+        public long? ClientVendorId { get; set; }
 
     }
 }

@@ -119,14 +119,14 @@
                             </span>
                         </td>
                         <td>
-                            <img *ngIf="item.imageUrl" src="{{serverUrl}}wwwroot/Images/Vendors/{{item.imageUrl}}"
+                            <img *ngIf="item.imageUrl" src="{{serverUrl}}wwwroot/Images/ClientVendors/{{item.imageUrl}}"
                                 class="image img-cir img-40 img-fluid">
                             <img class="image img-cir img-40 img-fluid" *ngIf="!item.imageUrl"
                                 src="assets/images/icon/avatar-big-01.jpg" />
                         </td>
                         <td>{{item.code}}</td>
                         <td>{{item.fullName}}</td>
-                        <td>{{item.balance}}</td>
+                        <td>{{item.debit-item.credit}}</td>
                         <td>{{item.phoneNumber1}} | {{item.phoneNumber2}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.notes}}</td>

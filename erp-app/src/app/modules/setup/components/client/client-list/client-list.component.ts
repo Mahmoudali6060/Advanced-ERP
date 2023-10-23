@@ -7,12 +7,12 @@ import { ConfigService } from 'src/app/shared/services/config.service';
 import { HelperService } from 'src/app/shared/services/helper.service';
 import { DataSourceModel } from '../../../../../shared/models/data-source.model';
 import { DialogService } from '../../../../../shared/services/confirmation-dialog.service';
-import { ClientService } from '../../../services/client.service';
 import { CountryModel } from 'src/app/modules/configurations/models/country.model';
 import { StateModel } from 'src/app/modules/configurations/models/state.model';
 import { CityModel } from 'src/app/modules/configurations/models/city.model';
-import { ClientDTO } from '../../../models/client.dto';
-import { ClientSearchCriteriaDTO } from '../../../models/client-search-criteria-dto';
+import { ClientVendorDTO, ClientVendorTypeEnum } from '../../../models/client-vendor.dto';
+import { ClientVendorSearchCriteriaDTO } from '../../../models/client-vendor-search-criteria-dto';
+import { ClientVendorService } from '../../../services/client-vendor.service';
 
 @Component({
 	selector: 'app-client-list',
@@ -24,10 +24,10 @@ import { ClientSearchCriteriaDTO } from '../../../models/client-search-criteria-
 export class ClientListComponent {
 	@ViewChild(PaginationComponent) paginationComponent: PaginationComponent;
 	dataSource: DataSourceModel = new DataSourceModel();
-	clientList: Array<ClientDTO>;
+	clientList: Array<ClientVendorDTO>;
 	serverUrl: string;
 	showFilterControls: boolean = false;
-	searchCriteriaDTO: ClientSearchCriteriaDTO = new ClientSearchCriteriaDTO()
+	searchCriteriaDTO: ClientVendorSearchCriteriaDTO = new ClientVendorSearchCriteriaDTO()
 	total: number;
 	recordsPerPage: number = 5;
 	clientTypeEnum: any;
@@ -37,7 +37,7 @@ export class ClientListComponent {
 	statusList: Array<string> | Boolean
 	statusDDL: any;
 
-	constructor(private clientService: ClientService,
+	constructor(private clientVendorService: ClientVendorService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
 		private translate: TranslateService,
@@ -58,12 +58,13 @@ export class ClientListComponent {
 	}
 
 	toggleFilter() {
-		this.searchCriteriaDTO = new ClientSearchCriteriaDTO();
+		this.searchCriteriaDTO = new ClientVendorSearchCriteriaDTO();
 		this.showFilterControls = !this.showFilterControls;
 	}
 
 	getAllClients() {
-		this.clientService.getAll(this.searchCriteriaDTO).subscribe((res: any) => {
+		this.searchCriteriaDTO.typeId = ClientVendorTypeEnum.Client;
+		this.clientVendorService.getAll(this.searchCriteriaDTO).subscribe((res: any) => {
 			this.clientList = res.list;
 			this.total = res.total;
 			if (this.paginationComponent) {
@@ -79,7 +80,7 @@ export class ClientListComponent {
 	}
 
 	delete(id: any) {
-		this.clientService.delete(id).subscribe((res: any) => {
+		this.clientVendorService.delete(id).subscribe((res: any) => {
 			if (res) {
 				this.toastrService.success(this.translate.instant("Message.DeletedSuccessfully"));
 				this.getAllClients();
@@ -87,7 +88,7 @@ export class ClientListComponent {
 		});
 	}
 
-	public openConfirmationDialog(item: ClientDTO) {
+	public openConfirmationDialog(item: ClientVendorDTO) {
 		this.confirmationDialogService.confirm(this.translate.instant("ConfirmaionDialog.Title"), this.translate.instant("ConfirmaionDialog.Description"))
 			.then((confirmed) => {
 				if (confirmed) {

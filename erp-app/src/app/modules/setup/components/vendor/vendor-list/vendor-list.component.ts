@@ -7,12 +7,12 @@ import { ConfigService } from 'src/app/shared/services/config.service';
 import { HelperService } from 'src/app/shared/services/helper.service';
 import { DataSourceModel } from '../../../../../shared/models/data-source.model';
 import { DialogService } from '../../../../../shared/services/confirmation-dialog.service';
-import { VendorService } from '../../../services/vendor.service';
 import { CountryModel } from 'src/app/modules/configurations/models/country.model';
 import { StateModel } from 'src/app/modules/configurations/models/state.model';
 import { CityModel } from 'src/app/modules/configurations/models/city.model';
-import { VendorDTO } from '../../../models/vendor.dto';
-import { VendorSearchCriteriaDTO } from '../../../models/vendor-search-criteria-dto';
+import { ClientVendorService } from '../../../services/client-vendor.service';
+import { ClientVendorDTO, ClientVendorTypeEnum } from '../../../models/client-vendor.dto';
+import { ClientVendorSearchCriteriaDTO } from '../../../models/client-vendor-search-criteria-dto';
 
 @Component({
 	selector: 'app-vendor-list',
@@ -24,10 +24,10 @@ import { VendorSearchCriteriaDTO } from '../../../models/vendor-search-criteria-
 export class VendorListComponent {
 	@ViewChild(PaginationComponent) paginationComponent: PaginationComponent;
 	dataSource: DataSourceModel = new DataSourceModel();
-	vendorList: Array<VendorDTO>;
+	vendorList: Array<ClientVendorDTO>;
 	serverUrl: string;
 	showFilterControls: boolean = false;
-	searchCriteriaDTO: VendorSearchCriteriaDTO = new VendorSearchCriteriaDTO()
+	searchCriteriaDTO: ClientVendorSearchCriteriaDTO = new ClientVendorSearchCriteriaDTO()
 	total: number;
 	recordsPerPage: number = 5;
 	vendorTypeEnum: any;
@@ -37,7 +37,7 @@ export class VendorListComponent {
 	statusList: Array<string> | Boolean
 	statusDDL: any;
 
-	constructor(private vendorService: VendorService,
+	constructor(private clientVendorService: ClientVendorService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
 		private translate: TranslateService,
@@ -58,12 +58,13 @@ export class VendorListComponent {
 	}
 
 	toggleFilter() {
-		this.searchCriteriaDTO = new VendorSearchCriteriaDTO();
+		this.searchCriteriaDTO = new ClientVendorSearchCriteriaDTO();
 		this.showFilterControls = !this.showFilterControls;
 	}
 
 	getAllVendors() {
-		this.vendorService.getAll(this.searchCriteriaDTO).subscribe((res: any) => {
+		this.searchCriteriaDTO.typeId = ClientVendorTypeEnum.Vendor;
+		this.clientVendorService.getAll(this.searchCriteriaDTO).subscribe((res: any) => {
 			this.vendorList = res.list;
 			this.total = res.total;
 			if (this.paginationComponent) {
@@ -79,7 +80,7 @@ export class VendorListComponent {
 	}
 
 	delete(id: any) {
-		this.vendorService.delete(id).subscribe((res: any) => {
+		this.clientVendorService.delete(id).subscribe((res: any) => {
 			if (res) {
 				this.toastrService.success(this.translate.instant("Message.DeletedSuccessfully"));
 				this.getAllVendors();
@@ -87,7 +88,7 @@ export class VendorListComponent {
 		});
 	}
 
-	public openConfirmationDialog(item: VendorDTO) {
+	public openConfirmationDialog(item: ClientVendorDTO) {
 		this.confirmationDialogService.confirm(this.translate.instant("ConfirmaionDialog.Title"), this.translate.instant("ConfirmaionDialog.Description"))
 			.then((confirmed) => {
 				if (confirmed) {

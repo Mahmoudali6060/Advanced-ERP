@@ -48,11 +48,9 @@ namespace App.Helper
             CreateMap<Category, CategoryDTO>();
             CreateMap<CategoryDTO, Category>();
 
-            CreateMap<Client, ClientDTO>();
-            CreateMap<ClientDTO, Client>();
+            CreateMap<ClientVendor, ClientVendorDTO>();
+            CreateMap<ClientVendorDTO, ClientVendor>();
 
-            CreateMap<Vendor, VendorDTO>();
-            CreateMap<VendorDTO, Vendor>();
             #endregion
 
             #region Users Management
@@ -67,7 +65,7 @@ namespace App.Helper
             CreateMap<PurchasesBillHeader, PurchasesBillHeaderDTO>()
                 .ForMember(dest => dest.PurchasesBillDetailList, opt => opt.MapFrom(src => src.PurchasesBillDetailList))
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")))
-                .ForMember(dest => dest.VendorName, opt => opt.MapFrom(src => src.Vendor.FullName));
+                .ForMember(dest => dest.VendorName, opt => opt.MapFrom(src => src.ClientVendor.FullName));
 
             CreateMap<PurchasesBillHeaderDTO, PurchasesBillHeader>()
                 .ForMember(dest => dest.PurchasesBillDetailList, opt => opt.MapFrom(src => src.PurchasesBillDetailList))
@@ -82,7 +80,7 @@ namespace App.Helper
             CreateMap<SalesBillHeader, SalesBillHeaderDTO>()
                 .ForMember(dest => dest.SalesBillDetailList, opt => opt.MapFrom(src => src.SalesBillDetailList))
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")))
-                .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client.FullName));
+                .ForMember(dest => dest.ClientVendorName, opt => opt.MapFrom(src => src.ClientVendor.FullName));
 
             CreateMap<SalesBillHeaderDTO, SalesBillHeader>()
                 .ForMember(dest => dest.SalesBillDetailList, opt => opt.MapFrom(src => src.SalesBillDetailList))

@@ -10,15 +10,16 @@ using Data.Entities.Setup;
 using DataService.Setup.Contracts;
 using System;
 using Entities.Account;
+using Shared.Enums;
 
 namespace DataService.Setup.Handlers
 {
-    public class ClientDSL : IClientDSL
+    public class ClientVendorDSL : IClientVendorDSL
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IFileManager _fileManager;
         private readonly IMapper _mapper;
-        public ClientDSL(IUnitOfWork unitOfWork, IFileManager fileManager, IMapper mapper)
+        public ClientVendorDSL(IUnitOfWork unitOfWork, IFileManager fileManager, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _fileManager = fileManager;
@@ -26,9 +27,9 @@ namespace DataService.Setup.Handlers
         }
 
         #region Query
-        public async Task<ResponseEntityList<ClientDTO>> GetAll(ClientSearchDTO searchCriteriaDTO)
+        public async Task<ResponseEntityList<ClientVendorDTO>> GetAll(ClientVendorSearchDTO searchCriteriaDTO)
         {
-            var userProfileList = await _unitOfWork.ClientDAL.GetAll();
+            var userProfileList = await _unitOfWork.ClientVendorDAL.GetAll();
             int total = userProfileList.Count();
 
             #region Apply Filters
@@ -40,8 +41,8 @@ namespace DataService.Setup.Handlers
             #endregion
 
             #region Mapping and Return List
-            var userProfileDTOList = _mapper.Map<IEnumerable<ClientDTO>>(userProfileList);
-            return new ResponseEntityList<ClientDTO>
+            var userProfileDTOList = _mapper.Map<IEnumerable<ClientVendorDTO>>(userProfileList);
+            return new ResponseEntityList<ClientVendorDTO>
             {
                 List = userProfileDTOList,
                 Total = total
@@ -50,18 +51,26 @@ namespace DataService.Setup.Handlers
 
         }
 
-        public async Task<ClientDTO> GetById(long id)
+        public async Task<ClientVendorDTO> GetById(long id)
         {
-            var test = _mapper.Map<ClientDTO>(await _unitOfWork.ClientDAL.GetById(id));
-            return _mapper.Map<ClientDTO>(await _unitOfWork.ClientDAL.GetById(id));
+            return _mapper.Map<ClientVendorDTO>(await _unitOfWork.ClientVendorDAL.GetById(id));
         }
 
-        public async Task<ResponseEntityList<ClientDTO>> GetAllLite()
+        public async Task<ResponseEntityList<ClientVendorDTO>> GetAllLite()
         {
-            return new ResponseEntityList<ClientDTO>()
+            return new ResponseEntityList<ClientVendorDTO>()
             {
-                List = _mapper.Map<IEnumerable<ClientDTO>>(_unitOfWork.ClientDAL.GetAllLite().Result),
-                Total = _unitOfWork.ClientDAL.GetAllLite().Result.Count()
+                List = _mapper.Map<IEnumerable<ClientVendorDTO>>(_unitOfWork.ClientVendorDAL.GetAllLite().Result),
+                Total = _unitOfWork.ClientVendorDAL.GetAllLite().Result.Count()
+            };
+        }
+
+        public async Task<ResponseEntityList<ClientVendorDTO>> GetAllLiteByTypeId(ClientVendorTypeEnum typeId)
+        {
+            return new ResponseEntityList<ClientVendorDTO>()
+            {
+                List = _mapper.Map<IEnumerable<ClientVendorDTO>>(_unitOfWork.ClientVendorDAL.GetAllLite().Result.Where(x => x.TypeId == typeId)),
+                Total = _unitOfWork.ClientVendorDAL.GetAllLite().Result.Count(x => x.TypeId == typeId)
             };
         }
 
@@ -69,26 +78,26 @@ namespace DataService.Setup.Handlers
         #endregion
 
         #region Command
-        public async Task<long> Add(ClientDTO entity)
+        public async Task<long> Add(ClientVendorDTO entity)
         {
             //entity.Code = "CL" + DateTime.Now.ToString("ddMMyyHHmmssff");//ddMMyyHHmmssff
-            UploadClientImage(entity);
-            var result = await _unitOfWork.ClientDAL.Add(_mapper.Map<Client>(entity));
+            UploadClientVendorImage(entity);
+            var result = await _unitOfWork.ClientVendorDAL.Add(_mapper.Map<ClientVendor>(entity));
             //if (entity.IsVendor)//Update Vendor
             //{
-            //    var vendorDTO = MapClientToVendor(entity);
+            //    var vendorDTO = MapClientVendorToVendor(entity);
             //    await _unitOfWork.VendorDAL.Add(_mapper.Map<Vendor>(vendorDTO));
             //}
             return result;
         }
 
-        public async Task<long> Update(ClientDTO entity)
+        public async Task<long> Update(ClientVendorDTO entity)
         {
-            UploadClientImage(entity);
-            var result = await _unitOfWork.ClientDAL.Update(_mapper.Map<Client>(entity));
+            UploadClientVendorImage(entity);
+            var result = await _unitOfWork.ClientVendorDAL.Update(_mapper.Map<ClientVendor>(entity));
             //if (entity.IsVendor)//Update Vendor
             //{
-            //    var vendorDTO = MapClientToVendor(entity);
+            //    var vendorDTO = MapClientVendorToVendor(entity);
             //    UploadVendorImage(vendorDTO);
             //    if (entity.VendorId.HasValue) await _unitOfWork.VendorDAL.Update(_mapper.Map<Vendor>(vendorDTO));
             //    else await _unitOfWork.VendorDAL.Add(_mapper.Map<Vendor>(vendorDTO));
@@ -101,35 +110,19 @@ namespace DataService.Setup.Handlers
             return result;
         }
 
-        private VendorDTO MapClientToVendor(ClientDTO entity)
-        {
-            return new VendorDTO()
-            {
-                Id = entity.VendorId.HasValue  ? entity.VendorId.Value : 0,
-                IsActive = entity.IsActive,
-                Code = entity.Code,
-                FullName = entity.FullName,
-                Address = entity.Address,
-                PhoneNumber1 = entity.PhoneNumber1,
-                PhoneNumber2 = entity.PhoneNumber2,
-                ImageUrl = entity.ImageUrl,
-                Balance = entity.Balance,
-                Notes = entity.Notes,
-                IdNumber = entity.IdNumber,
-                ClientId = entity.Id
-            };
-        }
 
         public async Task<bool> Delete(long id)
         {
-            Client entity = await _unitOfWork.ClientDAL.GetById(id);
-            return await _unitOfWork.ClientDAL.Delete(entity);
+            ClientVendor entity = await _unitOfWork.ClientVendorDAL.GetById(id);
+            return await _unitOfWork.ClientVendorDAL.Delete(entity);
         }
         #endregion
 
         #region Helper Methods
-        private IQueryable<Client> ApplyFilert(IQueryable<Client> clientList, ClientSearchDTO searchCriteriaDTO)
+        private IQueryable<ClientVendor> ApplyFilert(IQueryable<ClientVendor> clientList, ClientVendorSearchDTO searchCriteriaDTO)
         {
+            clientList = clientList.Where(x => x.TypeId == searchCriteriaDTO.TypeId || x.TypeId== ClientVendorTypeEnum.All);
+
             if (searchCriteriaDTO.IsActive.HasValue)
             {
                 clientList = clientList.Where(x => x.IsActive == searchCriteriaDTO.IsActive);
@@ -147,21 +140,12 @@ namespace DataService.Setup.Handlers
             return clientList;
         }
 
-        private bool UploadClientImage(ClientDTO entity)
+        private bool UploadClientVendorImage(ClientVendorDTO entity)
         {
             if (entity.ImageBase64 != null)
             {
                 entity.ImageUrl = string.IsNullOrWhiteSpace(entity.ImageBase64) ? null : entity.FullName + "_" + DateTime.Now.ToString("yyyy_MM_dd_HH_ss") + ".jpg";
-                return _fileManager.UploadImageBase64("wwwroot/Images/Clients/" + entity.ImageUrl, entity.ImageBase64);
-            }
-            return true;
-        }
-        private bool UploadVendorImage(VendorDTO entity)
-        {
-            if (entity.ImageBase64 != null)
-            {
-                entity.ImageUrl = string.IsNullOrWhiteSpace(entity.ImageBase64) ? null : entity.FullName + "_" + DateTime.Now.ToString("yyyy_MM_dd_HH_ss") + ".jpg";
-                return _fileManager.UploadImageBase64("wwwroot/Images/Vendors/" + entity.ImageUrl, entity.ImageBase64);
+                return _fileManager.UploadImageBase64("wwwroot/Images/ClientVendors/" + entity.ImageUrl, entity.ImageBase64);
             }
             return true;
         }

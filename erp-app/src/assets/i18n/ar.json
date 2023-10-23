@@ -93,7 +93,9 @@
     "Product":"المنتج",
     "BillNumber":"رقم الفاتورة",
     "SelectClient":"اختر العميل",
-    "SelectVendor":"اختر المورد"
+    "SelectVendor":"اختر المورد",
+    "Credit":"مدين(عليه)",
+    "Debit":"دائن(له)"
   },
   "Dashboard": {
     "overview": "نظرة عامة",

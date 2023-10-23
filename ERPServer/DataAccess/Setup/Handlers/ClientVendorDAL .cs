@@ -6,36 +6,36 @@ using System.Threading.Tasks;
 
 namespace Setup.DataAccessLayer
 {
-    public class ClientDAL : IClientDAL
+    public class ClientVendorDAL : IClientVendorDAL
     {
         private readonly AppDbContext _appDbContext;
-        public ClientDAL(AppDbContext appDbContext)
+        public ClientVendorDAL(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
 
         #region Query
-        public async Task<IQueryable<Client>> GetAll()
+        public async Task<IQueryable<ClientVendor>> GetAll()
         {
-            return _appDbContext.Clients.OrderBy(x => x.FullName).AsQueryable();
+            return _appDbContext.ClientVendors.OrderBy(x => x.FullName).AsQueryable();
         }
 
-        public async Task<IQueryable<Client>> GetAllLite()
+        public async Task<IQueryable<ClientVendor>> GetAllLite()
         {
-            return _appDbContext.Clients.OrderBy(x => x.FullName).AsQueryable();
+            return _appDbContext.ClientVendors.OrderBy(x => x.FullName).AsQueryable();
         }
 
-        public async Task<Client> GetById(long id)
+        public async Task<ClientVendor> GetById(long id)
         {
-            var Client = _appDbContext.Clients.SingleOrDefaultAsync(x => x.Id == id);
-            return await Client;
+            var ClientVendor = _appDbContext.ClientVendors.SingleOrDefaultAsync(x => x.Id == id);
+            return await ClientVendor;
         }
 
         #endregion
 
         #region Command
 
-        public async Task<long> Add(Client entity)
+        public async Task<long> Add(ClientVendor entity)
         {
             entity.Code = GenerateSequenceNumber();
             _appDbContext.Entry(entity).State = EntityState.Added;
@@ -43,16 +43,16 @@ namespace Setup.DataAccessLayer
             return entity.Id;
         }
 
-        public async Task<long> Update(Client entity)
+        public async Task<long> Update(ClientVendor entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
             await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
 
-        public async Task<bool> Delete(Client entity)
+        public async Task<bool> Delete(ClientVendor entity)
         {
-            _appDbContext.Clients.Remove(entity);
+            _appDbContext.ClientVendors.Remove(entity);
             await _appDbContext.SaveChangesAsync();
             return true;
         }
@@ -61,7 +61,7 @@ namespace Setup.DataAccessLayer
 
         private string GenerateSequenceNumber()
         {
-            var lastElement = _appDbContext.Clients.OrderByDescending(p => p.Id)
+            var lastElement = _appDbContext.ClientVendors.OrderByDescending(p => p.Id)
                        .FirstOrDefault();
             if (lastElement == null)
             {

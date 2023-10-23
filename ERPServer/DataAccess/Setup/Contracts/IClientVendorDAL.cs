@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Setup.DataAccessLayer
 {
-    public interface IClientDAL : ICRUDOperationsDAL<Client>
+    public interface IClientVendorDAL : ICRUDOperationsDAL<ClientVendor>
     {
 
     }

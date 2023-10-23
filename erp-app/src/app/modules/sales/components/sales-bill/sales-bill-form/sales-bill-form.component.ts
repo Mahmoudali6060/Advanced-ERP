@@ -7,17 +7,17 @@ import { ProductDTO } from 'src/app/modules/setup/models/product.dto';
 import { SalesBillService } from '../../../services/sales-bill.service';
 import { ProductService } from 'src/app/modules/setup/services/product.service';
 import { SalesBillHeaderDTO } from '../../../models/sales-bill-header.dto';
-import { ClientDTO } from 'src/app/modules/setup/models/client.dto';
+import { ClientVendorDTO, ClientVendorTypeEnum } from 'src/app/modules/setup/models/client-vendor.dto';
 import { SalesBillDetailsDTO } from '../../../models/sales-bill-details.dto';
 import { Pipe, PipeTransform } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { HelperService } from 'src/app/shared/services/helper.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ClientService } from 'src/app/modules/setup/services/client.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/product-form-popup/product-form-popup.component';
 import { DialogService } from 'src/app/shared/services/confirmation-dialog.service';
 import { PurchasesBillDetailsDTO } from 'src/app/modules/purchases/models/purchases-bill-details.dto';
+import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 
 @Component({
 	selector: 'app-sales-bill-form',
@@ -30,13 +30,13 @@ export class SalesBillFormComponent {
 	serverUrl: string;
 	viewMode: boolean;
 	productList: Array<ProductDTO> = new Array<ProductDTO>();
-	clientList: Array<ClientDTO> = new Array<ClientDTO>();
+	clientList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
 	purchaseHeaderId: any;
 
 	constructor(
 		private salesBillService: SalesBillService,
 		private productService: ProductService,
-		private clientService: ClientService,
+		private clientVendorService: ClientVendorService,
 		private route: ActivatedRoute,
 		private toasterService: ToastrService,
 		private _configService: ConfigService,
@@ -72,7 +72,7 @@ export class SalesBillFormComponent {
 	}
 
 	getAllClients() {
-		this.clientService.getAllLite().subscribe((res: any) => {
+		this.clientVendorService.getAllLiteByTypeId(ClientVendorTypeEnum.Client).subscribe((res: any) => {
 			this.clientList = res.list;
 		})
 	}
