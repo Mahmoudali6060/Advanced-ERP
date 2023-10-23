@@ -365,7 +365,7 @@ section {
 }
 
 .main-content {
-    padding-top: 116px;
+    padding-top: 20px;
     min-height: 100vh;
 }
 
@@ -2209,7 +2209,7 @@ section {
     width: 310px;
     position: fixed;
     left: 0;
-    top: 0;
+    top: 76px;
     bottom: 0;
     background: #fff;
     overflow-y: auto;

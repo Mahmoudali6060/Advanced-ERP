@@ -303,7 +303,9 @@
     "CannotDeleteThisRecordDueToRelatedToAnotherData": "لا يمكن حذف هذا السجل بسبب ارتباطه ببيانات أخرى",
     "ThisFieldIsRequired": "يجب ادخال بيانات في هذا الحقل",
     "YouMustSelectProducts": "يجب اختيار منتجات لعمل الفاتورة",
-    "DuplicatedFullName": "هذا الاسم مكرر"
+    "DuplicatedFullName": "هذا الاسم مكرر",
+    "DuplicatedSelectedProduct":"لقد اخترت هذا المنتج من قبل",
+    "Error":"خطأ"
   },
   "Warning": {
     "NoDriversAvialable": "لا يوجد سائق متاح في هذه الفترة"

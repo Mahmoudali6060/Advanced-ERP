@@ -69,7 +69,7 @@
     "PhoneNumber2": "Phone Number 2",
     "IsClient": "Is client",
     "Vendor": "Vendor",
-    "Client":"Client",
+    "Client": "Client",
     "Discount": "Discount",
     "TotalAfterDiscount": "Total after discount",
     "ProductName": "Product",
@@ -82,8 +82,8 @@
     "TopProducts": "Top Products",
     "Product": "Product",
     "BillNumber": "Bill Number",
-    "SelectClient":"Select client",
-    "SelectVendor":"Select vendor"
+    "SelectClient": "Select client",
+    "SelectVendor": "Select vendor"
   },
   "Dashboard": {
     "overview": "Overview",
@@ -296,7 +296,9 @@
     "CannotDeleteThisRecordDueToRelatedToAnotherData": "Cannot Delete This Record Due To Related To Another Data",
     "ThisFieldIsRequired": "This field is required",
     "YouMustSelectProducts": "You must select products",
-    "DuplicatedFullName":"Duplicated FullName"
+    "DuplicatedFullName": "Duplicated FullName",
+    "DuplicatedSelectedProduct": "You have already select this product before",
+    "Error": "Error"
   },
   "Warning": {
     "NoDriversAvialable": "There is no any driver available in this period"

@@ -18,6 +18,7 @@ import { ProductFormPopupComponent } from 'src/app/shared/modules/setup-shared/c
 import { DialogService } from 'src/app/shared/services/confirmation-dialog.service';
 import { PurchasesBillDetailsDTO } from 'src/app/modules/purchases/models/purchases-bill-details.dto';
 import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
 	selector: 'app-sales-bill-form',
@@ -43,7 +44,9 @@ export class SalesBillFormComponent {
 		private router: Router,
 		private helperService: HelperService,
 		private translate: TranslateService,
-		private dialogService: DialogService) {
+		private dialogService: DialogService,
+		private alertService: AlertService
+	) {
 	}
 
 	ngOnInit() {
@@ -90,7 +93,7 @@ export class SalesBillFormComponent {
 			for (let item of this.salesBillHeaderDTO.salesBillDetailList) {
 				item.index = index;
 				index++;
-				this.onProductChange(item);
+				this.setProductToPurchase(item);
 			}
 		}
 	}
@@ -137,7 +140,18 @@ export class SalesBillFormComponent {
 		this.salesBillHeaderDTO.salesBillDetailList.push(salesBillDetails);
 	}
 
-	onProductChange(item: SalesBillDetailsDTO) {
+	onProductChange(item: SalesBillDetailsDTO, event: any) {
+		let exsitedProduct = this.salesBillHeaderDTO.salesBillDetailList.filter(x => x.productId == item.productId);
+		if (exsitedProduct != null && exsitedProduct.length > 1) {
+			item.productId = null;
+			event = null;
+			this.alertService.showError(this.translate.instant("Errors.DuplicatedSelectedProduct"), this.translate.instant("Errors.Error"));
+			return;
+		}
+		this.setProductToPurchase(item);
+	}
+
+	setProductToPurchase(item: SalesBillDetailsDTO) {
 		let product = this.productList.find(x => x.id == item.productId);
 		if (product) {
 			if (!item.price) item.price = product.price;

@@ -72,16 +72,12 @@
                                                     <div class="input-group">
                                                         <ng-select [(ngModel)]="item.productId"
                                                             [ngModelOptions]="{standalone: true}"
-                                                            (change)="onProductChange(item)" >
+                                                            (change)="onProductChange(item,$event)">
                                                             <ng-option *ngFor="let product of productList"
                                                                 [value]="product.id">{{product.code}} -
                                                                 {{product.name}}</ng-option>
                                                         </ng-select>
-                                                        <div class="input-group-addon" data-toggle="tooltip"
-                                                            data-placement="top" title="Add Product"
-                                                            (click)="showProductFormPopUp(item)">
-                                                            <i class="fa fa-plus-square"></i>
-                                                        </div>
+
                                                     </div>
                                                 </td>
                                                 <td>
