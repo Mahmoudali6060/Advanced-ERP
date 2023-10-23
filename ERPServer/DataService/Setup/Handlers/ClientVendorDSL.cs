@@ -80,6 +80,7 @@ namespace DataService.Setup.Handlers
         #region Command
         public async Task<long> Add(ClientVendorDTO entity)
         {
+            
             //entity.Code = "CL" + DateTime.Now.ToString("ddMMyyHHmmssff");//ddMMyyHHmmssff
             UploadClientVendorImage(entity);
             var result = await _unitOfWork.ClientVendorDAL.Add(_mapper.Map<ClientVendor>(entity));

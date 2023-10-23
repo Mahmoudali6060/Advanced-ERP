@@ -1,123 +1,145 @@
 <div class="row">
     <form #frm="ngForm" (ngSubmit)="save(frm)">
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <strong *ngIf="!userProfileDTO.id">{{'User.addUser' |translate}}</strong>
-                <strong *ngIf="userProfileDTO.id && !viewMode">{{'User.editUser' |translate}}</strong>
-                <strong *ngIf="userProfileDTO.id  && viewMode ">{{'User.viewUser' |translate}}</strong>
-            </div>
-            <div class="card-body card-block">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="row">
-                            <div class="col-lg-1">
-                                <label for="isActive" class=" form-control-label">{{'User.IsActive' |translate}}</label>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong *ngIf="!userProfileDTO.id">{{'User.addUser' |translate}}</strong>
+                    <strong *ngIf="userProfileDTO.id && !viewMode">{{'User.editUser' |translate}}</strong>
+                    <strong *ngIf="userProfileDTO.id  && viewMode ">{{'User.viewUser' |translate}}</strong>
+                </div>
+                <div class="card-body card-block">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-lg-1">
+                                    <label for="isActive" class=" form-control-label">{{'User.IsActive'
+                                        |translate}}</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <p-inputSwitch [disabled]="viewMode" [ngModelOptions]="{standalone: true}"
+                                        name="isActive" (onChange)="handleChange($event)"
+                                        [(ngModel)]="userProfileDTO.isActive"></p-inputSwitch>
+                                </div>
                             </div>
-                            <div class="col-lg-6">
-                                <p-inputSwitch [disabled]="viewMode" [ngModelOptions]="{standalone: true}" name="isActive" (onChange)="handleChange($event)"
-                                    [(ngModel)]="userProfileDTO.isActive"></p-inputSwitch>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="firstName" class=" form-control-label">{{'User.FirstName'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.firstName" type="text"
+                                            id="firstName" class="form-control" #firstName="ngModel"
+                                            [class.is-invalid]="firstName.invalid && firstName.touched"
+                                            [class.is-valid]="firstName.valid" required    name="firstName"
+                                            aria-describedby="helpId">
+                                        <small [hidden]="firstName.valid || firstName.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.InvalidFirstName'"></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="lastName" class=" form-control-label">{{'User.LastName'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.lastName" type="text"
+                                            id="lastName" class="form-control" #lastName="ngModel"
+                                            [class.is-invalid]="lastName.invalid && lastName.touched"
+                                            [class.is-valid]="lastName.valid"    name="lastName"
+                                            aria-describedby="helpId">
+                                        <small [hidden]="lastName.valid || lastName.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.InvalidLastName'"></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="mobile" class=" form-control-label">{{'User.Mobile'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.mobile" type="number"
+                                            id="mobile" class="form-control" #mobile="ngModel"
+                                            [class.is-invalid]="mobile.invalid && mobile.touched"
+                                            [pattern]="mobNumberPattern" [class.is-valid]="mobile.valid"  ="11"
+                                            name="mobile" aria-describedby="helpId">
+                                        <small [hidden]="mobile.valid || mobile.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.InvalidMobile'"></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="username" class=" form-control-label">{{'User.UserName'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.userName" type="text"
+                                            id="username" class="form-control" #username="ngModel"
+                                            [class.is-invalid]="username.invalid && username.touched"
+                                            [class.is-valid]="username.valid" required    name="userName"
+                                            id="username" class="form-control" aria-describedby="helpId">
+                                        <small [hidden]="username.valid || username.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.InvalidUserName'"></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="email" class=" form-control-label">{{'User.Email'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.email" type="email"
+                                            id="email" class="form-control" #email="ngModel"
+                                            [class.is-invalid]="email.invalid && email.touched"
+                                            [class.is-valid]="email.valid"  ="8" name="email" id="email"
+                                            class="form-control" aria-describedby="helpId">
+                                        <small [hidden]="email.valid || email.untouched" id="helpId" class="text-muted"
+                                            [translate]="'Errors.InvalidEmail'"></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6" [hidden]="viewMode">
+                                    <div class="form-group">
+                                        <label for="image" class=" form-control-label">{{'User.UploadImage'
+                                            |translate}}</label>
+                                        <input type="file" id="image" class="form-control"
+                                            (change)="onFileChange($event)">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="role" class=" form-control-label">{{'User.Role' |translate}}</label>
+                                        <select name="role" required id="select" class="form-control"
+                                            [disabled]="viewMode" [(ngModel)]="userProfileDTO.userTypeId"
+                                            #userTypeId="ngModel">
+                                            <option *ngFor="let usertype of userTypes" [value]="usertype.value">
+                                                {{'userTypeEnum.'+usertype.label |translate}}
+                                            </option>
+                                        </select>
+                                        <small [hidden]="userTypeId.valid || userTypeId.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="firstName" class=" form-control-label">{{'User.FirstName' |translate}}</label>
-                                    <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.firstName" type="text" id="firstName" class="form-control"
-                                    #firstName="ngModel" [class.is-invalid]="firstName.invalid && firstName.touched"
-                                    [class.is-valid]="firstName.valid"  required minlength="3" name="firstName" aria-describedby="helpId">
-                                    <small [hidden]="firstName.valid || firstName.untouched" id="helpId" class="text-muted"
-                                    [translate]="'Errors.InvalidFirstName'"></small>
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div class="col-lg-12 mb-2" *ngIf="imageSrc">{{'User.Image' |translate}}</div>
+                                <div class="col-lg-12">
+                                    <img src="{{imageSrc}}" *ngIf="userProfileDTO.imageUrl" class="Image">
+                                    <img class="Image" *ngIf="!userProfileDTO.imageUrl" src="{{imageSrc}}" />
                                 </div>
+                                <div class="col-lg-12"></div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="lastName" class=" form-control-label">{{'User.LastName' |translate}}</label>
-                                    <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.lastName" type="text" id="lastName" class="form-control"
-                                    #lastName="ngModel" [class.is-invalid]="lastName.invalid && lastName.touched"
-                                    [class.is-valid]="lastName.valid"  required minlength="3" name="lastName" aria-describedby="helpId">
-                                    <small [hidden]="lastName.valid || lastName.untouched" id="helpId" class="text-muted"
-                                    [translate]="'Errors.InvalidLastName'"></small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="mobile" class=" form-control-label">{{'User.Mobile' |translate}}</label>
-                                    <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.mobile" type="number" id="mobile" class="form-control"
-                                    #mobile="ngModel" [class.is-invalid]="mobile.invalid && mobile.touched"  [pattern]="mobNumberPattern"
-                                    [class.is-valid]="mobile.valid"  required minlength="11" name="mobile" aria-describedby="helpId">
-                                    <small [hidden]="mobile.valid || mobile.untouched" id="helpId" class="text-muted"
-                                    [translate]="'Errors.InvalidMobile'"></small>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="username" class=" form-control-label">{{'User.UserName' |translate}}</label>
-                                    <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.userName" type="text" id="username" class="form-control"
-                                    #username="ngModel" [class.is-invalid]="username.invalid && username.touched"
-                                    [class.is-valid]="username.valid"  required minlength="3" name="userName"
-                                    id="username" class="form-control"  aria-describedby="helpId">
-                                <small [hidden]="username.valid || username.untouched" id="helpId" class="text-muted"
-                                    [translate]="'Errors.InvalidUserName'"></small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="email" class=" form-control-label">{{'User.Email' |translate}}</label>
-                                    <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.email" type="email" id="email" class="form-control"
-                                    #email="ngModel" [class.is-invalid]="email.invalid && email.touched"
-                                    [class.is-valid]="email.valid"  required minlength="8" name="email"
-                                    id="email" class="form-control"  aria-describedby="helpId">
-                                <small [hidden]="email.valid || email.untouched" id="helpId" class="text-muted"
-                                    [translate]="'Errors.InvalidEmail'"></small>
-                                </div>
-                            </div>
-                            <div class="col-lg-6" [hidden]="viewMode">
-                                <div class="form-group">
-                                    <label for="image" class=" form-control-label">{{'User.UploadImage' |translate}}</label>
-                                    <input type="file" id="image" class="form-control" (change)="onFileChange($event)">
-                                </div>
-                            </div>
-                            <div class="col-lg-6" >
-                                <div class="form-group">
-                                    <label for="role" class=" form-control-label">{{'User.Role' |translate}}</label>
-                                    <select name="role" id="select" class="form-control" [disabled]="viewMode" [(ngModel)]="userProfileDTO.userTypeId">
-                                        <option *ngFor="let usertype of userTypes" [value]="usertype.value">
-                                            {{'userTypeEnum.'+usertype.label |translate}}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="row">
-                            <div class="col-lg-12 mb-2" *ngIf="imageSrc">{{'User.Image' |translate}}</div>
-                            <div class="col-lg-12">
-                                <img  src="{{imageSrc}}" *ngIf="userProfileDTO.imageUrl" class="Image">
-                                <img   class="Image" *ngIf="!userProfileDTO.imageUrl"  src="{{imageSrc}}"/>
-                            </div>
-                            <div class="col-lg-12"></div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="flex-container p-3">
-                <button *ngIf="!viewMode" type="submit" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
-                    <i class="fa fa-dot-circle-o"></i>{{'User.SaveChanges' |translate}} 
-                </button>
-                <button *ngIf="!viewMode"  type="reset" class="btn btn-danger mr-1" (click)="cancel()">
-                    <i class="fa fa-ban"></i>{{'User.Cancel' |translate}} 
-                </button>
-                <button *ngIf="viewMode" type="reset" class="btn btn-danger" (click)="cancel()">
-                    <i class="fa fa-ban"></i>{{'User.back' |translate}} 
-                </button>
+                <div class="flex-container p-3">
+                    <button *ngIf="!viewMode" type="submit" class="btn btn-outline-primary mr-1"
+                        [disabled]="frm.invalid">
+                        <i class="fa fa-dot-circle-o"></i>{{'User.SaveChanges' |translate}}
+                    </button>
+                    <button *ngIf="!viewMode" type="reset" class="btn btn-danger mr-1" (click)="cancel()">
+                        <i class="fa fa-ban"></i>{{'User.Cancel' |translate}}
+                    </button>
+                    <button *ngIf="viewMode" type="reset" class="btn btn-danger" (click)="cancel()">
+                        <i class="fa fa-ban"></i>{{'User.back' |translate}}
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
 </div>

@@ -47,6 +47,10 @@ namespace Data.Contexts
         #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ClientVendor>()
+           .HasIndex(p => new { p.FullName })
+           .IsUnique(true);
+
             base.OnModelCreating(modelBuilder);
         }
         public override int SaveChanges()

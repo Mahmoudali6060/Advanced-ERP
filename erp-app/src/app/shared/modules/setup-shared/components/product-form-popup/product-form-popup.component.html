@@ -23,7 +23,7 @@
                             |translate}}</label>
                         <input  [(ngModel)]="productDTO.name" type="text" id="name"
                             class="form-control" #name="ngModel"
-                            required minlength="3" name="name"
+                            required name="name"
                             aria-describedby="helpId">
                         <small [hidden]="name.valid || name.untouched" id="helpId" class="text-muted"
                             [translate]="'Errors.ThisFieldIsRequired'"></small>

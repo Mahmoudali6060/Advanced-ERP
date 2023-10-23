@@ -295,7 +295,8 @@
     "companyTypeIsRequired": "Company Type Is Required",
     "CannotDeleteThisRecordDueToRelatedToAnotherData": "Cannot Delete This Record Due To Related To Another Data",
     "ThisFieldIsRequired": "This field is required",
-    "YouMustSelectProducts": "You must select products"
+    "YouMustSelectProducts": "You must select products",
+    "DuplicatedFullName":"Duplicated FullName"
   },
   "Warning": {
     "NoDriversAvialable": "There is no any driver available in this period"

@@ -26,8 +26,8 @@ namespace Entities.Account
         //[RegularExpression("^(01)[0-2,5]{1}[0-9]{8}", ErrorMessage = "Errors.InvalidMobile")]
         public string Mobile { get; set; }
 
-        [Required(ErrorMessage = "Errors.EmailIsRequired")]
-        [RegularExpression("^[a-z0-9_\\+-]+(\\.[a-z0-9_\\+-]+)*@[a-z0-9-]+(\\.[a-z0-9]+)*\\.([a-z]{2,4})$", ErrorMessage = "Errors.InvalidEmail")]
+        //[Required(ErrorMessage = "Errors.EmailIsRequired")]
+        //[RegularExpression("^[a-z0-9_\\+-]+(\\.[a-z0-9_\\+-]+)*@[a-z0-9-]+(\\.[a-z0-9]+)*\\.([a-z]{2,4})$", ErrorMessage = "Errors.InvalidEmail")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Errors.UserNameIsRequired")]

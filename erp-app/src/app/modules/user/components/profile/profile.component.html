@@ -40,7 +40,7 @@
                                 <label class="labels">{{'User.FirstName' |translate}}</label>
                                 <input [(ngModel)]="profile.firstName" type="text" id="firstName" class="form-control"
                                     #firstName="ngModel" [class.is-invalid]="firstName.invalid && firstName.touched"
-                                    [class.is-valid]="firstName.valid" required minlength="3" name="firstName"
+                                    [class.is-valid]="firstName.valid" required     name="firstName"
                                     aria-describedby="helpId" [disabled]="viewMode">
                                 <small [hidden]="firstName.valid || firstName.untouched" id="helpId" class="text-muted"
                                     [translate]="'Errors.InvalidFirstName'"></small>
@@ -49,7 +49,7 @@
                                 <label class="labels">{{'User.LastName' |translate}}</label>
                                 <input [(ngModel)]="profile.lastName" type="text" id="lastName" class="form-control"
                                     #lastName="ngModel" [class.is-invalid]="lastName.invalid && lastName.touched"
-                                    [class.is-valid]="lastName.valid" required minlength="3" name="lastName"
+                                    [class.is-valid]="lastName.valid" required     name="lastName"
                                     aria-describedby="helpId" [disabled]="viewMode">
                                 <small [hidden]="lastName.valid || lastName.untouched" id="helpId" class="text-muted"
                                     [translate]="'Errors.InvalidLastName'"></small>
@@ -60,7 +60,7 @@
                                 <label class="labels">{{'User.Mobile' |translate}}</label>
                                 <input [(ngModel)]="profile.mobile" type="text" id="mobile" class="form-control"
                                     #mobile="ngModel" [class.is-invalid]="mobile.invalid && mobile.touched"
-                                    [class.is-valid]="mobile.valid" required minlength="11" name="mobile"
+                                    [class.is-valid]="mobile.valid" required  ="11" name="mobile"
                                     [pattern]="mobNumberPattern" aria-describedby="helpId" [disabled]="viewMode">
                                 <small [hidden]="mobile.valid || mobile.untouched" id="helpId" class="text-muted"
                                     [translate]="'Errors.InvalidMobile'"></small>
@@ -72,7 +72,7 @@
                                 <input [disabled]="viewMode" [(ngModel)]="profile.userName" type="text" id="username"
                                     class="form-control" #username="ngModel"
                                     [class.is-invalid]="username.invalid && username.touched"
-                                    [class.is-valid]="username.valid" required minlength="3" name="userName"
+                                    [class.is-valid]="username.valid" required     name="userName"
                                     id="username" class="form-control" aria-describedby="helpId">
                                 <small [hidden]="username.valid || username.untouched" id="helpId" class="text-muted"
                                     [translate]="'Errors.InvalidUserName'"></small>
@@ -82,7 +82,7 @@
                                 <input [disabled]="viewMode" [(ngModel)]="profile.email" type="email" id="email"
                                     class="form-control" #email="ngModel"
                                     [class.is-invalid]="email.invalid && email.touched" [class.is-valid]="email.valid"
-                                    required minlength="8" name="email" id="email" class="form-control"
+                                    required  ="8" name="email" id="email" class="form-control"
                                     aria-describedby="helpId">
                                 <small [hidden]="email.valid || email.untouched" id="helpId" class="text-muted"
                                     [translate]="'Errors.InvalidEmail'"></small>
@@ -92,7 +92,7 @@
                                 <input [(ngModel)]="profile.companyDTO.addressDetails" type="text" id="AddressDetails"
                                     class="form-control" #AddressDetails="ngModel" [disabled]="viewMode"
                                     [class.is-invalid]="AddressDetails.invalid && AddressDetails.touched"
-                                    [class.is-valid]="AddressDetails.valid" required minlength="2" name="AddressDetails"
+                                    [class.is-valid]="AddressDetails.valid" required  ="2" name="AddressDetails"
                                     id="AddressDetails" class="form-control" aria-describedby="helpId">
                                 <small [hidden]="AddressDetails.valid || AddressDetails.untouched" id="helpId"
                                     class="text-muted" [translate]="'Errors.InvalidAddressDetails'"></small>
@@ -151,7 +151,7 @@
                                 <input [disabled]="viewMode" [(ngModel)]="profile.companyDTO.contactPerson" type="text"
                                     id="contactPerson" class="form-control" #contactPerson="ngModel"
                                     [class.is-invalid]="contactPerson.invalid && contactPerson.touched"
-                                    [class.is-valid]="contactPerson.valid" required minlength="3" name="contactPerson"
+                                    [class.is-valid]="contactPerson.valid" required     name="contactPerson"
                                     id="contactPerson" class="form-control" aria-describedby="helpId">
                                 <small [hidden]="contactPerson.valid || contactPerson.untouched" id="helpId"
                                     class="text-muted" [translate]="'Errors.InvalidcontactPerson'"></small>
@@ -162,7 +162,7 @@
                                     type="text" id="contactTelephone" class="form-control" #contactTelephone="ngModel"
                                     [pattern]="mobNumberPattern"
                                     [class.is-invalid]="contactTelephone.invalid && contactTelephone.touched"
-                                    [class.is-valid]="contactTelephone.valid" required minlength="8"
+                                    [class.is-valid]="contactTelephone.valid" required  ="8"
                                     name="contactTelephone" id="contactTelephone" class="form-control"
                                     aria-describedby="helpId">
                                 <small [hidden]="contactTelephone.valid || contactTelephone.untouched" id="helpId"

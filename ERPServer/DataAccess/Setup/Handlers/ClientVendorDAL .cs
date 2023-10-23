@@ -1,6 +1,8 @@
 ﻿using Data.Contexts;
 using Data.Entities.Setup;
+using Data.Entities.UserManagement;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -37,6 +39,11 @@ namespace Setup.DataAccessLayer
 
         public async Task<long> Add(ClientVendor entity)
         {
+            var exsited=_appDbContext.ClientVendors.SingleOrDefault(x=>x.FullName== entity.FullName);
+            if(exsited != null)
+            {
+                    throw new Exception("Errors.DuplicatedFullName");
+            }
             entity.Code = GenerateSequenceNumber();
             _appDbContext.Entry(entity).State = EntityState.Added;
             await _appDbContext.SaveChangesAsync();

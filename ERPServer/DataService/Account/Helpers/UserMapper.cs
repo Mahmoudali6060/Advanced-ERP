@@ -25,7 +25,7 @@ namespace Account.Helpers
             return new AppUser
             {
                 UserName = model.UserName,
-                Email = model.Email
+                Email = string.IsNullOrWhiteSpace(model.Email) ? model.UserName : model.Email
             };
         }
         public static AppUser MapAppUser(CompanyDTO model)

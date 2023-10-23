@@ -34,7 +34,7 @@
                                     <input [disabled]="viewMode" [(ngModel)]="categoryDTO.name" type="text" id="name"
                                         class="form-control" #name="ngModel"
                                         [class.is-invalid]="name.invalid && name.touched" [class.is-valid]="name.valid"
-                                        required minlength="3" name="name" aria-describedby="helpId">
+                                        required   name="name" aria-describedby="helpId">
                                     <small [hidden]="name.valid || name.untouched" id="helpId" class="text-muted"
                                         [translate]="'Errors.ThisFieldIsRequired'"></small>
                                 </div>

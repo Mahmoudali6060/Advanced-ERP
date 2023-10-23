@@ -59,7 +59,7 @@
     "back": "رجوع",
     "Active": "فعّال",
     "InActive": "غير فعّال",
-    "Category": "الصنف",
+    "Category": "التصنيف",
     "ActualQuantity": "الكمية الفعلية",
     "Back": "إلغاء",
     "IsActive": "فعًال",
@@ -70,7 +70,7 @@
     "SaveChanges": "حفظ التغيرات",
     "Code": "الكود",
     "Status": "الحالة",
-    "SelectCategory": "اختر الصنف",
+    "SelectCategory": "اختر التصنيف",
     "FullName": "الإسم بالكامل",
     "Phone": "رقم الهاتف",
     "IdNumber": "الرقم القومي",
@@ -79,23 +79,23 @@
     "PhoneNumber2": "رقم الهاتف 2",
     "IsClient": "يمكن هذا المورد أن يصبح عميل (مزدوج)",
     "Vendor": "المورد",
-    "Client":"العميل",
+    "Client": "العميل",
     "Discount": "الخصم",
     "TotalAfterDiscount": "الإجمالي بعد الخصم",
     "ProductName": "المنتج",
     "SubTotal": "الاجمالي",
-    "SelectProduct": "اختر الصنف",
+    "SelectProduct": "اختر التصنيف",
     "Transfer": "النقل",
     "TotalDiscount": "اجمالي الخصومات",
     "PriceBeforeDiscount": "السعر قبل الخصم",
     "PriceAfterDiscount": "السعر بعد الخصم",
     "TopProducts": "المنتجات الأكثر مبيعا",
-    "Product":"المنتج",
-    "BillNumber":"رقم الفاتورة",
-    "SelectClient":"اختر العميل",
-    "SelectVendor":"اختر المورد",
-    "Credit":"مدين(عليه)",
-    "Debit":"دائن(له)"
+    "Product": "المنتج",
+    "BillNumber": "رقم الفاتورة",
+    "SelectClient": "اختر العميل",
+    "SelectVendor": "اختر المورد",
+    "Credit": "مدين(عليه)",
+    "Debit": "دائن(له)"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -232,7 +232,7 @@
     "Configurations": "الاعدادات العامة",
     "UserManagement": "اعدادات المستخدمين",
     "Products": "المنتجات",
-    "Categories": "الأصناف",
+    "Categories": "التصنيفات الرئيسية",
     "UserList": "قائمة المستخدمين",
     "SetupManagement": "الإعدادات",
     "TrucksProviders": "مزودو الشاحنات",
@@ -247,7 +247,6 @@
     "PurchasesBills": "فواتير المشتريات",
     "Sales": "المبيعات",
     "SalesBills": "فواتير المبيعات"
-    
   },
   "Errors": {
     "InvalidUsernameOrPassword": "من فضلك تأكد من اسم المستخدم او كلمة المرور",
@@ -303,7 +302,8 @@
     "companyTypeIsRequired": "نوع الشركة مطلوب",
     "CannotDeleteThisRecordDueToRelatedToAnotherData": "لا يمكن حذف هذا السجل بسبب ارتباطه ببيانات أخرى",
     "ThisFieldIsRequired": "يجب ادخال بيانات في هذا الحقل",
-    "YouMustSelectProducts":"يجب اختيار منتجات لعمل الفاتورة"
+    "YouMustSelectProducts": "يجب اختيار منتجات لعمل الفاتورة",
+    "DuplicatedFullName": "هذا الاسم مكرر"
   },
   "Warning": {
     "NoDriversAvialable": "لا يوجد سائق متاح في هذه الفترة"
@@ -380,10 +380,10 @@
     "Login": "تسجل الدخول"
   },
   "Category": {
-    "Title": "الأصناف",
-    "AddCategory": "إضافة صنف",
-    "EditCategory": "تعديل الصنف",
-    "ViewCategory": "عرض الصنف"
+    "Title": "التصنيفات الرئيسية",
+    "AddCategory": "إضافة تصنيف",
+    "EditCategory": "تعديل التصنيف",
+    "ViewCategory": "عرض التصنيف"
   },
   "Product": {
     "Title": "المنتجات",

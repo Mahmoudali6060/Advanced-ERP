@@ -67,35 +67,25 @@ export class UserFormComponent {
 			}
 		})
 	}
-	handleChange(event: boolean){
+	handleChange(event: boolean) {
 		// this.userProfileDTO.isActive = event.target
 	}
 
 	cancel() {
 
-			this.router.navigateByUrl('user/user-list');
+		this.router.navigateByUrl('user/user-list');
 	}
 	validattion(userProfileDTO: UserProfileDTO): boolean {
 		if (!userProfileDTO.firstName || isNullOrUndefined(userProfileDTO.firstName)) {
 			this.toasterService.error(this.translate.instant("Errors.FirstNameIsRequired"));
 			return false;
-		  }
-		  if (!userProfileDTO.lastName || isNullOrUndefined(userProfileDTO.lastName)) {
-			this.toasterService.error(this.translate.instant("Errors.LastNameIsRequired"));
-			return false;
-		  }
-		  if (!userProfileDTO.mobile || isNullOrUndefined(userProfileDTO.mobile)) {
-			this.toasterService.error(this.translate.instant("Errors.MobileIsRequired"));
-			return false;
-		  }
-		  if (!userProfileDTO.userName || isNullOrUndefined(userProfileDTO.userName)) {
+		}
+
+		if (!userProfileDTO.userName || isNullOrUndefined(userProfileDTO.userName)) {
 			this.toasterService.error(this.translate.instant("Errors.UserNameIsRequired"));
 			return false;
-		  }
-		  if (!userProfileDTO.email || isNullOrUndefined(userProfileDTO.email)) {
-			this.toasterService.error(this.translate.instant("Errors.EmailIsRequired"));
-			return false;
-		  }
+		}
+
 		// if (!userProfileDTO.role) {
 		// 	this.toasterService.error(this.translate.instant("Errors.RoleIsRequired"));
 		// 	return false;
@@ -104,6 +94,7 @@ export class UserFormComponent {
 	}
 	save(frm: NgForm) {
 		// if (this.validattion(this.userProfileDTO)) {
+		this.userProfileDTO.defaultLanguage = 'ar';
 		this.userProfileDTO.role = this.userTypeEnum[this.userProfileDTO.userTypeId]
 		if (this.validattion(this.userProfileDTO)) {
 
@@ -128,7 +119,7 @@ export class UserFormComponent {
 		}
 	}
 
-	
+
 	sendUserProfile(): void {
 		// send message to subscribers via observable subject
 		this.subjectService.sendUserProfile(this.userProfileDTO);

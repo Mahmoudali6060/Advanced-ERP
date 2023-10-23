@@ -44,6 +44,9 @@ export class ProductFormComponent {
 				this.viewMode = true;
 			}
 		}
+		else {
+			this.productDTO.actualQuantity = 0;
+		}
 		this.getAllCategories();
 	}
 
