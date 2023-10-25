@@ -9,9 +9,11 @@ export class SalesBillHeaderDTO {
     total: number;
     totalDiscount: number | 0;
     totalAfterDiscount: number;
+    paid: number;
+    remaining: number|0;
     date: string | undefined;
-    clientId: number | null;
-    clientName: string;
+    clientVendorId: number | null;
+    clientVendorName: string;
     notes: string;
     salesBillDetailList: Array<SalesBillDetailsDTO> = Array<SalesBillDetailsDTO>();
     constructor() {

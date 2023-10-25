@@ -1,5 +1,5 @@
 ﻿using Data.Entities.Setup;
-using Shared.DataAccessLayer;
+using Shared.DataAccessLayer.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;

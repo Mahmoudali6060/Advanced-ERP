@@ -3,6 +3,7 @@ using Entities.Account;
 using IdentityModel;
 using Sales.DataAccessLayer;
 using Shared.DataServiceLayer;
+using Shared.Entities.Purchases;
 using Shared.Entities.Sales;
 using Shared.Entities.Shared;
 using System;
@@ -14,6 +15,7 @@ namespace DataService.Sales.Contracts
 {
     public interface ISalesBillHeaderDSL : ICRUDOperationsDSL<SalesBillHeaderDTO, SalesBillHeaderSearchDTO>
     {
+        Task<SalesBillHeaderDTO> GetByNumber(string number);
 
     }
 }

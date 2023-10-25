@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shared.DataAccessLayer
+namespace Shared.DataAccessLayer.Contracts
 {
     public interface ICRUDOperationsDAL<TEntity>
     {

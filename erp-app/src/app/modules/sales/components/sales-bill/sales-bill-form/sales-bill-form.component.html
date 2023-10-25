@@ -10,28 +10,36 @@
             </div>
             <div class="card-body card-block">
                 <div class="row">
-                    <div class="col-lg-4" *ngIf="salesBillHeaderDTO.id">
+                    <div class="col-lg-3" >
                         <div class="form-group">
                             <label for="number" class=" form-control-label">{{'General.BillNumber'
                                 |translate}}</label>
                             <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.number" type="text" id="number"
-                                class="form-control" #number="ngModel" readonly name="number" aria-describedby="helpId">
+                                class="form-control"   name="number" aria-describedby="helpId">
                         </div>
                     </div>
 
-                    <div class="col-lg-4">
+                    <div class="col-lg-3" *ngIf="!searhByCodeMode">
                         <div class="form-group">
                             <label class="form-label" for="clientId">{{'General.Client'|translate}}</label>
                             <select name="clientId" id="clientId" class="form-control"
-                                [(ngModel)]="salesBillHeaderDTO.clientId">
+                                [(ngModel)]="salesBillHeaderDTO.clientVendorId" (change)="onClientChange()">
                                 <option value="null" disabled>{{'General.SelectClient'|translate}}</option>
                                 <option *ngFor="let item of clientList" [value]="item.id"> {{item.fullName}}
                                 </option>
                             </select>
                         </div>
                     </div>
+                    <div class="col-lg-3" *ngIf="!searhByCodeMode">
+                        <div class="form-group">
+                            <label for="previousBalance" class=" form-control-label">{{'General.CurrentBalance'
+                                |translate}}</label>
+                            <input [disabled]="viewMode" [value]="previousBalance" type="text" id="previousBalance"
+                                class="form-control" readonly name="previousBalance" aria-describedby="helpId">
+                        </div>
+                    </div>
 
-                    <div class="col-lg-4">
+                    <div class="col-lg-3" *ngIf="!searhByCodeMode">
                         <div class="form-group">
                             <label class="form-label" for="date">{{'General.Date'|translate}}</label>
                             <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.date" type="date" id="date"
@@ -42,7 +50,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row" *ngIf="!searhByCodeMode">
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="col-lg-12">
@@ -53,6 +61,7 @@
                                                 <th class="table-header-fc">#</th>
                                                 <th class="table-header-fc">{{'General.Product' |translate}}</th>
                                                 <th class="table-header-fc">{{'General.ActualQuantity' |translate}}</th>
+                                                <th class="table-header-fc">{{'General.SellingPrice' |translate}}</th>
                                                 <th class="table-header-fc">{{'General.Quantity' |translate}}</th>
                                                 <th class="table-header-fc">{{'General.Price' |translate}}</th>
                                                 <th class="table-header-fc">{{'General.Discount' |translate}} %</th>
@@ -81,9 +90,11 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <input [(ngModel)]="item.actualQuantity" readonly type="number"
-                                                        class="form-control" (change)="updateTotal()"
-                                                        [ngModelOptions]="{standalone: true}">
+                                                    {{item.actualQuantity}}
+                                                </td>
+                                                <td>
+                                                    {{item.sellingPrice}}
+                                                    
                                                 </td>
                                                 <td>
                                                     <input [(ngModel)]="item.quantity" type="number"
@@ -133,10 +144,12 @@
 
                         </div>
 
+
                         <div class="row">
-                            <div class="col-lg-4">
+                            <br><br>
+                            <div class="col-lg-2">
                                 <div class="row">
-                                    <!-- <div class="col-lg-12">
+                                    <div class="col-lg-12">
                                         <div class="form-group">
                                             <label for="transfer" class=" form-control-label">{{'General.Transfer'
                                                 |translate}}</label>
@@ -145,33 +158,8 @@
                                                 class="form-control" #transfer="ngModel" name="transfer"
                                                 aria-describedby="helpId">
                                         </div>
-                                    </div> -->
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label for="discount" class=" form-control-label">{{'General.Discount'
-                                                |translate}} </label>
-                                            <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.discount"
-                                                type="number" id="discount" (change)="updateTotal()"
-                                                class="form-control" (change)="updateTotal()" #discount="ngModel"
-                                                name="discount">
-                                        </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label for="notes" class=" form-control-label">{{'General.Notes'
-                                                |translate}}</label>
-                                            <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.notes"
-                                                type="text" id="notes" class="form-control" #notes="ngModel"
-                                                name="notes" aria-describedby="helpId">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="form-group">
@@ -183,6 +171,9 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-lg-2">
+
                                 <div class="row">
 
                                     <div class="col-lg-12">
@@ -190,10 +181,9 @@
                                             <label for="TotalDiscount"
                                                 class=" form-control-label">{{'General.TotalDiscount'
                                                 |translate}}</label>
-                                            <input [disabled]="viewMode" readonly
-                                                [(ngModel)]="salesBillHeaderDTO.totalDiscount" type="text" id="discount"
-                                                class="form-control" (change)="updateTotal()" #TotalDiscount="ngModel"
-                                                name="TotalDiscount">
+                                            <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.totalDiscount"
+                                                type="text" id="discount" class="form-control" (change)="updateTotal()"
+                                                #TotalDiscount="ngModel" name="TotalDiscount">
                                         </div>
                                     </div>
                                 </div>
@@ -212,73 +202,54 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-2">
 
+                                <div class="row">
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label for="paid" class=" form-control-label">{{'General.Paid'
+                                                |translate}}</label>
+                                            <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.paid"
+                                                type="text" id="discount" class="form-control" (change)="updateTotal()"
+                                                #paid="ngModel" name="paid">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label for="remaining" class=" form-control-label">{{'General.Remaining'
+                                                |translate}}</label>
+                                            <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.remaining"
+                                                type="text" id="remaining" class="form-control" #remaining="ngModel"
+                                                readonly name="remaining" aria-describedby="helpId">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label for="notes" class=" form-control-label">{{'General.Notes'
+                                                |translate}}</label>
+                                            <textarea [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.notes"
+                                                id="notes" class="form-control" #notes="ngModel" name="notes"
+                                                aria-describedby="helpId"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="col-lg-3">
-                    <div class="top-campaign">
-                        <h3 class="title-3 m-b-30">
-                            {{'General.TopProducts' |translate}}
-                        </h3>
-                        <div class="table-responsive">
-                            <table class="table table-top-campaign">
-                                <tbody>
-                                    <tr>
-                                        <td>1. كوع نص بوصة</td>
-                                        <td>$70,261.65</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2. طقم حمام كيلوباتر</td>
-                                        <td>$46,399.22</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1. كوع نص بوصة</td>
-                                        <td>$70,261.65</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2. طقم حمام كيلوباتر</td>
-                                        <td>$46,399.22</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1. كوع نص بوصة</td>
-                                        <td>$70,261.65</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2. طقم حمام كيلوباتر</td>
-                                        <td>$46,399.22</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1. كوع نص بوصة</td>
-                                        <td>$70,261.65</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2. طقم حمام كيلوباتر</td>
-                                        <td>$46,399.22</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1. كوع نص بوصة</td>
-                                        <td>$70,261.65</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2. طقم حمام كيلوباتر</td>
-                                        <td>$46,399.22</td>
-                                    </tr>
-                                
-                                    
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                 </div> -->
                 </div>
 
 
 
 
             </div>
-            <div class="flex-container p-3">
+            <div class="flex-container p-3" *ngIf="!searhByCodeMode">
                 <button (click)="save(frm)" type="button" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
                     <i class="fa fa-dot-circle-o"></i>{{'General.Save' |translate}}
                 </button>

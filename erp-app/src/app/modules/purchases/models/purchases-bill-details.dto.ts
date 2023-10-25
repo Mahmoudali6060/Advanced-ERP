@@ -1,8 +1,8 @@
 
 export class PurchasesBillDetailsDTO {
     id: number;
-    productId: number;
-    actualQuantity:number;
+    productId: number | null;
+    actualQuantity: number;
     quantity: number;
     price: number;
     discount: number;

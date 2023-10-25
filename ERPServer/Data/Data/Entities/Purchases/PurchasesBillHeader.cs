@@ -19,6 +19,8 @@ namespace Data.Entities.Purchases
         public decimal Transfer { get; set; }
         public decimal TotalAfterDiscount { get; set; }
         public decimal TotalDiscount { get; set; }
+        public decimal Paid { get; set; }
+        public decimal Remaining { get; set; }
         public string Notes { get; set; }
         public long ClientVendorId { get; set; }
         public virtual ClientVendor ClientVendor { get; set; }

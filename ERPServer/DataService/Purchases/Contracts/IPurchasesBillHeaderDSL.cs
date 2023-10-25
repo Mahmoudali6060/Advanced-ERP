@@ -14,6 +14,7 @@ namespace DataService.Purchases.Contracts
 {
     public interface IPurchasesBillHeaderDSL : ICRUDOperationsDSL<PurchasesBillHeaderDTO, PurchasesBillHeaderSearchDTO>
     {
+        Task<PurchasesBillHeaderDTO> GetByNumber(string number);
 
     }
 }

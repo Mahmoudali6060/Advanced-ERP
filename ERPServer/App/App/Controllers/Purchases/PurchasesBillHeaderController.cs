@@ -33,6 +33,13 @@ namespace App.Controllers.Setup
             return Ok(result);
         }
 
+        [HttpGet, Route("GetByNumber/{number}")]
+        //[Authorize(Roles = Roles.Admin)]
+        public async Task<IActionResult> GetByNumber(string number)
+        {
+            var result = await _purchasesBillHeaderDSL.GetByNumber(number);
+            return Ok(result);
+        }
         [HttpGet, Route("GetAllLite")]
         //[Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> GetAllLite() => Ok(await _purchasesBillHeaderDSL.GetAllLite());

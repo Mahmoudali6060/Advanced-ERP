@@ -95,7 +95,11 @@
     "SelectClient": "اختر العميل",
     "SelectVendor": "اختر المورد",
     "Credit": "مدين(عليه)",
-    "Debit": "دائن(له)"
+    "Debit": "دائن(له)",
+    "CurrentBalance": "الرصيد الحالي",
+    "Paid": "المدفوع",
+    "Remaining": "المتبقي",
+    "SellingPrice":"سعر الشراء"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -304,8 +308,9 @@
     "ThisFieldIsRequired": "يجب ادخال بيانات في هذا الحقل",
     "YouMustSelectProducts": "يجب اختيار منتجات لعمل الفاتورة",
     "DuplicatedFullName": "هذا الاسم مكرر",
-    "DuplicatedSelectedProduct":"لقد اخترت هذا المنتج من قبل",
-    "Error":"خطأ"
+    "DuplicatedSelectedProduct": "لقد اخترت هذا المنتج من قبل",
+    "Error": "خطأ ي شرمووط",
+    "NotFound":"لا يوجد فاتورة بهذا الرقم يا خول"
   },
   "Warning": {
     "NoDriversAvialable": "لا يوجد سائق متاح في هذه الفترة"

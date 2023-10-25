@@ -12,6 +12,7 @@ using System;
 using Entities.Account;
 using Microsoft.EntityFrameworkCore;
 using MimeKit;
+using Shared.Entities.Purchases;
 
 namespace DataService.Sales.Handlers
 {
@@ -52,6 +53,10 @@ namespace DataService.Sales.Handlers
 
         }
 
+        public async Task<SalesBillHeaderDTO> GetByNumber(string number)
+        {
+            return _mapper.Map<SalesBillHeaderDTO>(await _unitOfWork.SalesBillHeaderDAL.GetByNumber(number));
+        }
         public async Task<SalesBillHeaderDTO> GetById(long id)
         {
             var tt = _mapper.Map<SalesBillHeaderDTO>(await _unitOfWork.SalesBillHeaderDAL.GetById(id));

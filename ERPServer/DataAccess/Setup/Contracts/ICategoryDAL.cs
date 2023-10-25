@@ -1,7 +1,7 @@
 ﻿
 
 using Data.Entities.Setup;
-using Shared.DataAccessLayer;
+using Shared.DataAccessLayer.Contracts;
 
 namespace Setup.DataAccessLayer
 {

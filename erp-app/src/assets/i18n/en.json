@@ -83,7 +83,11 @@
     "Product": "Product",
     "BillNumber": "Bill Number",
     "SelectClient": "Select client",
-    "SelectVendor": "Select vendor"
+    "SelectVendor": "Select vendor",
+    "CurrentBalance": "Current Balance",
+    "Paid": "Paid",
+    "Remaining": "Remaining",
+    "SellingPrice": "Selling Price"
   },
   "Dashboard": {
     "overview": "Overview",
@@ -298,7 +302,8 @@
     "YouMustSelectProducts": "You must select products",
     "DuplicatedFullName": "Duplicated FullName",
     "DuplicatedSelectedProduct": "You have already select this product before",
-    "Error": "Error"
+    "Error": "Error",
+    "NotFound": "Not Found"
   },
   "Warning": {
     "NoDriversAvialable": "There is no any driver available in this period"

@@ -31,6 +31,12 @@ namespace Purchases.DataAccessLayer
             return await PurchasesBillHeader;
         }
 
+        public async Task<PurchasesBillHeader> GetByNumber(string number)
+        {
+            var PurchasesBillHeader = _appDbContext.PurchasesBillHeaders.Include(x => x.ClientVendor).Include(x => x.PurchasesBillDetailList).SingleOrDefaultAsync(x => x.Number == number);
+            return await PurchasesBillHeader;
+        }
+
         #endregion
 
         #region Command

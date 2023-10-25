@@ -33,7 +33,8 @@ export class SalesBillFormComponent {
 	productList: Array<ProductDTO> = new Array<ProductDTO>();
 	clientList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
 	purchaseHeaderId: any;
-
+	previousBalance: number = 0;
+	searhByCodeMode: any = false;
 	constructor(
 		private salesBillService: SalesBillService,
 		private productService: ProductService,
@@ -51,6 +52,9 @@ export class SalesBillFormComponent {
 
 	ngOnInit() {
 		this.purchaseHeaderId = this.route.snapshot.paramMap.get('id');
+		this.searhByCodeMode = this.route.snapshot.paramMap.get('searhByCodeMode');
+
+
 		if (this.purchaseHeaderId) {
 			this.getSalesBillById(this.purchaseHeaderId);
 			if (this.router.url.includes('/view/')) {
@@ -58,13 +62,14 @@ export class SalesBillFormComponent {
 			}
 		}
 		else {
-			this.salesBillHeaderDTO.clientId = null;
+			this.salesBillHeaderDTO.clientVendorId = null;
 			this.addNewRow();
 			//set today by default>>Insert Mode
 			this.salesBillHeaderDTO.date = this.helperService.conveertDateToString(new Date());
+			this.getAllProducts();
+			this.getAllClients();
 		}
-		this.getAllProducts();
-		this.getAllClients();
+
 	}
 
 	getAllProducts() {
@@ -77,13 +82,17 @@ export class SalesBillFormComponent {
 	getAllClients() {
 		this.clientVendorService.getAllLiteByTypeId(ClientVendorTypeEnum.Client).subscribe((res: any) => {
 			this.clientList = res.list;
+			this.onClientChange();
+
 		})
 	}
 
 	getSalesBillById(salesBillId: any) {
 		this.salesBillService.getById(salesBillId).subscribe((res: any) => {
+			debugger;
 			this.salesBillHeaderDTO = res;
-			this.setPurchaseDetailsDefaultData();
+			this.getAllProducts();
+			this.getAllClients();
 		});
 	}
 
@@ -93,7 +102,7 @@ export class SalesBillFormComponent {
 			for (let item of this.salesBillHeaderDTO.salesBillDetailList) {
 				item.index = index;
 				index++;
-				this.setProductToPurchase(item);
+				this.setProductToSales(item);
 			}
 		}
 	}
@@ -148,28 +157,33 @@ export class SalesBillFormComponent {
 			this.alertService.showError(this.translate.instant("Errors.DuplicatedSelectedProduct"), this.translate.instant("Errors.Error"));
 			return;
 		}
-		this.setProductToPurchase(item);
+		this.setProductToSales(item);
 	}
 
-	setProductToPurchase(item: SalesBillDetailsDTO) {
+	setProductToSales(item: SalesBillDetailsDTO) {
 		let product = this.productList.find(x => x.id == item.productId);
 		if (product) {
 			if (!item.price) item.price = product.price;
 			if (!item.discount) item.discount = product.purchasingPricePercentage;
 			item.actualQuantity = product.actualQuantity;
+			item.sellingPrice = (product.price - (product.purchasingPricePercentage / 100) * product.price);
 			this.updateTotal();
 		}
 	}
+
+
 	updateTotal() {
 		this.salesBillHeaderDTO.total = 0;
 		for (let item of this.salesBillHeaderDTO.salesBillDetailList) {
-			item.priceAfterDiscount = item.price - (item.discount / 100) * item.price;
+			item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
 			item.subTotal = item.priceAfterDiscount * item.quantity;
 			this.salesBillHeaderDTO.total += item.subTotal;
 		}
-		this.salesBillHeaderDTO.totalDiscount = this.salesBillHeaderDTO.transfer + this.salesBillHeaderDTO.discount;
-		this.salesBillHeaderDTO.totalAfterDiscount = this.salesBillHeaderDTO.total - this.salesBillHeaderDTO.totalDiscount;
+		this.salesBillHeaderDTO.totalAfterDiscount = parseFloat((this.salesBillHeaderDTO.transfer + this.salesBillHeaderDTO.total - this.salesBillHeaderDTO.totalDiscount).toFixed(2));
+		this.salesBillHeaderDTO.remaining = this.salesBillHeaderDTO.totalAfterDiscount - this.salesBillHeaderDTO.paid;
 	}
+
+
 
 	showProductFormPopUp(item: PurchasesBillDetailsDTO) {
 		this.dialogService.show("sm", ProductFormPopupComponent)
@@ -180,5 +194,12 @@ export class SalesBillFormComponent {
 				}
 			})
 			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+	}
+
+	onClientChange() {
+		if (this.salesBillHeaderDTO.clientVendorId) {
+			let selectedClient: any = this.clientList.find(c => c.id == this.salesBillHeaderDTO.clientVendorId);
+			this.previousBalance = selectedClient?.debit - selectedClient?.credit;
+		}
 	}
 }

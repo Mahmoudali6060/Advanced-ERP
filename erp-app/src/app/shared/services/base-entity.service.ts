@@ -8,6 +8,7 @@ import { HttpHelperService } from './http-helper.service';
 export class BaseEntityService {
     private urlGetAll = "GetAll";
     private urlGetById = "GetById";
+    private urlGetByNumber = "GetByNumber";
     private urlAdd = "Add";
     private urlUpdate = "Update";
     private urlDelete = "Delete";
@@ -15,7 +16,7 @@ export class BaseEntityService {
     controllerName: string = "";
 
     constructor(public httpHelperService: HttpHelperService) {
-        
+
     }
 
     getAll(dataSourceModel: any): any {
@@ -30,6 +31,9 @@ export class BaseEntityService {
         return this.httpHelperService.get(this.controllerName + '/' + this.urlGetById + '/' + id);
     }
 
+    getByNumber(number: string): any {
+        return this.httpHelperService.get(this.controllerName + '/' + this.urlGetByNumber + '/' + number);
+    }
     add(entity: any) {
         return this.httpHelperService.post(`${this.controllerName}/${this.urlAdd}/`, entity);
     }

@@ -16,6 +16,7 @@ import { ProductFormPopupComponent } from 'src/app/shared/modules/setup-shared/c
 import { DialogService } from 'src/app/shared/services/confirmation-dialog.service';
 import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 import { ClientVendorDTO, ClientVendorTypeEnum } from 'src/app/modules/setup/models/client-vendor.dto';
+import { AlertService } from 'src/app/shared/services/alert.service';
 @Component({
 	selector: 'app-purchases-bill-form',
 	templateUrl: './purchases-bill-form.component.html',
@@ -31,7 +32,8 @@ export class PurchasesBillFormComponent {
 	vendorList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
 	purchaseHeaderId: any;
 	searchProduct: any;
-	itemList = ['carrot', 'banana', 'apple', 'potato', 'tomato', 'cabbage', 'turnip', 'okra', 'onion', 'cherries', 'plum', 'mango'];
+	currentBalance: number | null = 0;
+
 	constructor(
 		private purchasesBillService: PurchasesBillService,
 		private productService: ProductService,
@@ -41,7 +43,8 @@ export class PurchasesBillFormComponent {
 		private router: Router,
 		private helperService: HelperService,
 		private translate: TranslateService,
-		private dialogService: DialogService) {
+		private dialogService: DialogService,
+		private alertService: AlertService) {
 	}
 
 	ngOnInit() {
@@ -54,13 +57,14 @@ export class PurchasesBillFormComponent {
 			}
 		}
 		else {
-			this.purchasesBillHeaderDTO.vendorId = null;
+			this.purchasesBillHeaderDTO.clientVendorId = null;
 			this.addNewRow();
 			//set today by default>>Insert Mode
 			this.purchasesBillHeaderDTO.date = this.helperService.conveertDateToString(new Date());
+			this.getAllProducts();
+			this.getAllVendors();
 		}
-		this.getAllProducts();
-		this.getAllVendors();
+
 	}
 
 	getAllProducts() {
@@ -73,13 +77,29 @@ export class PurchasesBillFormComponent {
 	getAllVendors() {
 		this.clientVendorService.getAllLiteByTypeId(ClientVendorTypeEnum.Vendor).subscribe((res: any) => {
 			this.vendorList = res.list;
+			this.onVendorChange()
 		})
 	}
 
 	getPurchasesBillById(purchasesBillId: any) {
 		this.purchasesBillService.getById(purchasesBillId).subscribe((res: any) => {
 			this.purchasesBillHeaderDTO = res;
-			this.setPurchaseDetailsDefaultData();
+			this.getAllProducts();
+			this.getAllVendors();
+		});
+	}
+
+	getPurchaseByNumber() {
+		this.purchasesBillService.getByNumber(this.purchasesBillHeaderDTO.number).subscribe((res: any) => {
+			if (!res) {
+				this.purchasesBillHeaderDTO = new PurchasesBillHeaderDTO();
+				this.currentBalance = null;
+				this.alertService.showError(this.translate.instant("Errors.NotFound"), this.translate.instant("Errors.Error"));
+				return;
+			}
+			this.purchasesBillHeaderDTO = res;
+			this.getAllProducts();
+			this.getAllVendors();
 		});
 	}
 
@@ -89,7 +109,7 @@ export class PurchasesBillFormComponent {
 			for (let item of this.purchasesBillHeaderDTO.purchasesBillDetailList) {
 				item.index = index;
 				index++;
-				this.onProductChange(item);
+				this.setProductToPurchase(item);
 			}
 		}
 	}
@@ -136,7 +156,20 @@ export class PurchasesBillFormComponent {
 		this.purchasesBillHeaderDTO.purchasesBillDetailList.push(purchasesBillDetails);
 	}
 
-	onProductChange(item: PurchasesBillDetailsDTO) {
+
+	onProductChange(item: PurchasesBillDetailsDTO, event: any) {
+		let exsitedProduct = this.purchasesBillHeaderDTO.purchasesBillDetailList.filter(x => x.productId == item.productId);
+		if (exsitedProduct != null && exsitedProduct.length > 1) {
+			item.productId = null;
+			event = null;
+			this.alertService.showError(this.translate.instant("Errors.DuplicatedSelectedProduct"), this.translate.instant("Errors.Error"));
+			return;
+		}
+		this.setProductToPurchase(item);
+	}
+
+
+	setProductToPurchase(item: PurchasesBillDetailsDTO) {
 		let product = this.productList.find(x => x.id == item.productId);
 		if (product) {
 			if (!item.price) item.price = product.price;
@@ -145,15 +178,18 @@ export class PurchasesBillFormComponent {
 			this.updateTotal();
 		}
 	}
+
+
+
 	updateTotal() {
 		this.purchasesBillHeaderDTO.total = 0;
 		for (let item of this.purchasesBillHeaderDTO.purchasesBillDetailList) {
-			item.priceAfterDiscount = item.price - (item.discount / 100) * item.price;
+			item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
 			item.subTotal = item.priceAfterDiscount * item.quantity;
 			this.purchasesBillHeaderDTO.total += item.subTotal;
 		}
-		this.purchasesBillHeaderDTO.totalDiscount = this.purchasesBillHeaderDTO.transfer + this.purchasesBillHeaderDTO.discount;
-		this.purchasesBillHeaderDTO.totalAfterDiscount = this.purchasesBillHeaderDTO.total - this.purchasesBillHeaderDTO.totalDiscount;
+		this.purchasesBillHeaderDTO.totalAfterDiscount = parseFloat((this.purchasesBillHeaderDTO.transfer + this.purchasesBillHeaderDTO.total - this.purchasesBillHeaderDTO.totalDiscount).toFixed(2));
+		this.purchasesBillHeaderDTO.remaining = this.purchasesBillHeaderDTO.totalAfterDiscount - this.purchasesBillHeaderDTO.paid;
 	}
 
 	showProductFormPopUp(item: PurchasesBillDetailsDTO) {
@@ -167,4 +203,10 @@ export class PurchasesBillFormComponent {
 			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
 	}
 
+	onVendorChange() {
+		if (this.purchasesBillHeaderDTO.clientVendorId) {
+			let selectedVendor: any = this.vendorList.find(c => c.id == this.purchasesBillHeaderDTO.clientVendorId);
+			this.currentBalance = selectedVendor?.debit - selectedVendor?.credit;
+		}
+	}
 }

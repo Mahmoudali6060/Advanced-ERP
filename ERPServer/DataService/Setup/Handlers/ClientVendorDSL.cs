@@ -69,7 +69,7 @@ namespace DataService.Setup.Handlers
         {
             return new ResponseEntityList<ClientVendorDTO>()
             {
-                List = _mapper.Map<IEnumerable<ClientVendorDTO>>(_unitOfWork.ClientVendorDAL.GetAllLite().Result.Where(x => x.TypeId == typeId)),
+                List = _mapper.Map<IEnumerable<ClientVendorDTO>>(_unitOfWork.ClientVendorDAL.GetAllLite().Result.Where(x => x.TypeId == typeId || x.TypeId == ClientVendorTypeEnum.All)),
                 Total = _unitOfWork.ClientVendorDAL.GetAllLite().Result.Count(x => x.TypeId == typeId)
             };
         }
@@ -80,7 +80,7 @@ namespace DataService.Setup.Handlers
         #region Command
         public async Task<long> Add(ClientVendorDTO entity)
         {
-            
+
             //entity.Code = "CL" + DateTime.Now.ToString("ddMMyyHHmmssff");//ddMMyyHHmmssff
             UploadClientVendorImage(entity);
             var result = await _unitOfWork.ClientVendorDAL.Add(_mapper.Map<ClientVendor>(entity));
@@ -122,7 +122,7 @@ namespace DataService.Setup.Handlers
         #region Helper Methods
         private IQueryable<ClientVendor> ApplyFilert(IQueryable<ClientVendor> clientList, ClientVendorSearchDTO searchCriteriaDTO)
         {
-            clientList = clientList.Where(x => x.TypeId == searchCriteriaDTO.TypeId || x.TypeId== ClientVendorTypeEnum.All);
+            clientList = clientList.Where(x => x.TypeId == searchCriteriaDTO.TypeId || x.TypeId == ClientVendorTypeEnum.All);
 
             if (searchCriteriaDTO.IsActive.HasValue)
             {

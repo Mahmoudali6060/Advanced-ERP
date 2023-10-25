@@ -65,7 +65,7 @@ namespace App.Helper
             CreateMap<PurchasesBillHeader, PurchasesBillHeaderDTO>()
                 .ForMember(dest => dest.PurchasesBillDetailList, opt => opt.MapFrom(src => src.PurchasesBillDetailList))
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")))
-                .ForMember(dest => dest.VendorName, opt => opt.MapFrom(src => src.ClientVendor.FullName));
+                .ForMember(dest => dest.ClientVendorName, opt => opt.MapFrom(src => src.ClientVendor.FullName));
 
             CreateMap<PurchasesBillHeaderDTO, PurchasesBillHeader>()
                 .ForMember(dest => dest.PurchasesBillDetailList, opt => opt.MapFrom(src => src.PurchasesBillDetailList))

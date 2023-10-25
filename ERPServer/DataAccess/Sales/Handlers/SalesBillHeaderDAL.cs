@@ -31,6 +31,12 @@ namespace Sales.DataAccessLayer
             return await SalesBillHeader;
         }
 
+        public async Task<SalesBillHeader> GetByNumber(string number)
+        {
+            var SalesBillHeader = _appDbContext.SalesBillHeaders.Include(x => x.ClientVendor).Include(x => x.SalesBillDetailList).SingleOrDefaultAsync(x => x.Number==number);
+            return await SalesBillHeader;
+        }
+
         #endregion
 
         #region Command

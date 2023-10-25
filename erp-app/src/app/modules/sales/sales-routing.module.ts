@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'sales-bill-form', component: SalesBillFormComponent },
   { path: 'sales-bill-form/:id', component: SalesBillFormComponent },
 
+
 ];
 
 @NgModule({

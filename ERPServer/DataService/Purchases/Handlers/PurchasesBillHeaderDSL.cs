@@ -58,6 +58,11 @@ namespace DataService.Setup.Handlers
             return tt;
         }
 
+        public async Task<PurchasesBillHeaderDTO> GetByNumber(string number)
+        {
+            return _mapper.Map<PurchasesBillHeaderDTO>(await _unitOfWork.PurchasesBillHeaderDAL.GetByNumber(number));
+        }
+
         public async Task<ResponseEntityList<PurchasesBillHeaderDTO>> GetAllLite()
         {
             return new ResponseEntityList<PurchasesBillHeaderDTO>()

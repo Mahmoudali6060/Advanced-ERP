@@ -9,9 +9,11 @@ export class PurchasesBillHeaderDTO {
     total: number;
     totalDiscount: number | 0;
     totalAfterDiscount: number;
+    paid: number;
+    remaining: number|0;
     date: string | undefined;
-    vendorId: number | null;
-    vendorName: string;
+    clientVendorId: number | null;
+    clientVendorName: string;
     notes: string;
     purchasesBillDetailList: Array<PurchasesBillDetailsDTO> = Array<PurchasesBillDetailsDTO>();
     constructor() {
