@@ -1,6 +1,6 @@
 <!-- MENU SIDEBAR-->
 <aside class="menu-sidebar2">
-  
+
     <div class="menu-sidebar2__content js-scrollbar1 ps ps--active-y">
         <div class="account2">
             <img class="image img-cir img-120" src="{{imageSrc}}" />
@@ -74,7 +74,7 @@
                         </ul>
                     </li>
 
-                   
+
 
                     <li class="has-sub"
                         [class.hide-page]="authService.loggedUserProfile?.userTypeId != userTypeEnum.Admin">
@@ -89,6 +89,10 @@
                                 [class.hide-page]="authService.loggedUserProfile?.userTypeId!=userTypeEnum.Admin">
                                 <a [routerLink]="['/user/user-list']">
                                     <i class="fas fa-user"></i><span translate>SideMenu.UserList</span></a>
+                            </li>
+                            <li routerLinkActive="active">
+                                <a [routerLink]="['/user/role-list']">
+                                    <i class="fas fa-user"></i><span translate>SideMenu.RoleList</span></a>
                             </li>
 
                         </ul>

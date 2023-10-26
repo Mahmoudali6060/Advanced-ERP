@@ -1,0 +1,71 @@
+<form #frm="ngForm" (ngSubmit)="save(frm)">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <strong *ngIf="!roleDTO.id">{{'Role.addRole' |translate}}</strong>
+                <strong *ngIf="roleDTO.id && !viewMode">{{'Role.editRole' |translate}}</strong>
+                <strong *ngIf="roleDTO.id  && viewMode ">{{'Role.viewRole' |translate}}</strong>
+            </div>
+            <div class="card-body card-block">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-1">
+                                <label for="isActive" class=" form-control-label">{{'Role.IsActive'
+                                    |translate}}</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <p-inputSwitch [disabled]="viewMode" [ngModelOptions]="{standalone: true}"
+                                    name="isActive" [(ngModel)]="roleDTO.isActive"></p-inputSwitch>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="name" class=" form-control-label">{{'Role.Name'
+                                        |translate}}</label>
+                                    <input [disabled]="viewMode" [(ngModel)]="roleDTO.name" type="text" id="name"
+                                        class="form-control" #name="ngModel"
+                                        [class.is-invalid]="name.invalid && name.touched" [class.is-valid]="name.valid"
+                                        required name="name" aria-describedby="helpId">
+                                    <small [hidden]="name.valid || name.untouched" id="helpId" class="text-muted"
+                                        [translate]="'Errors.Invalidname'"></small>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="description" class=" form-control-label">{{'Role.Description'
+                                        |translate}}</label>
+                                    <input [disabled]="viewMode" [(ngModel)]="roleDTO.description" type="text"
+                                        id="description" class="form-control" #description="ngModel"
+                                        [class.is-invalid]="description.invalid && description.touched"
+                                        [class.is-valid]="description.valid" name="description"
+                                        aria-describedby="helpId">
+                                    <small [hidden]="description.valid || description.untouched" id="helpId"
+                                        class="text-muted" [translate]="'Errors.Invaliddescription'"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="flex-container p-3">
+                <button *ngIf="!viewMode" type="submit" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
+                    <i class="fa fa-dot-circle-o"></i>{{'Role.SaveChanges' |translate}}
+                </button>
+                <button *ngIf="!viewMode" type="reset" class="btn btn-danger mr-1" (click)="cancel()">
+                    <i class="fa fa-ban"></i>{{'Role.Cancel' |translate}}
+                </button>
+                <button *ngIf="viewMode" type="reset" class="btn btn-danger" (click)="cancel()">
+                    <i class="fa fa-ban"></i>{{'Role.back' |translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
