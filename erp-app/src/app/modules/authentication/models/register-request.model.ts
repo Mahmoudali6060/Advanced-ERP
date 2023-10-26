@@ -1,4 +1,4 @@
-import { CompanyDTO } from "../../user/models/company-dto";
+import { CompanyDTO } from "../../user-management/models/company-dto";
 import { RegisterModel } from "./register.model";
 
 export class RegisterRequestModel {

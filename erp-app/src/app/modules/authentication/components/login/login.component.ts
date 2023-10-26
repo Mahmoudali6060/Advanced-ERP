@@ -10,7 +10,7 @@ import { LocalStorageItems } from '../../../../shared/constants/local-storage-it
 import { HelperService } from '../../../../shared/services/helper.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
-import { UserTypeEnum } from 'src/app/modules/user/models/user-type-enum';
+import { UserTypeEnum } from 'src/app/modules/user-management/models/user-type-enum';
 
 @Component({
   selector: 'app-login',

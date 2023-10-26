@@ -6,11 +6,11 @@ import { HttpHelperService } from '../../../shared/services/http-helper.service'
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { LocalStorageItems } from '../../../shared/constants/local-storage-items';
-import { UserProfileDTO } from '../../user/models/user-profile.dto';
 import { Observable } from 'rxjs';
 import { ResetPasswordDTO } from '../models/reset-password-dto';
 import { ForgotPassword } from '../models/forgot-password';
 import { RegisterRequestModel } from '../models/register-request.model';
+import { UserProfileDTO } from '../../user-management/models/user-profile.dto';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

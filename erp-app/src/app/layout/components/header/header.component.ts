@@ -6,11 +6,11 @@ import { Router } from '@angular/router';
 import { DatabaseBackupComponent } from 'src/app/modules/database/components/database-backup/database-backup.component';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { LocalStorageItems } from 'src/app/shared/constants/local-storage-items';
-import { UserProfileDTO } from 'src/app/modules/user/models/user-profile.dto';
-import { UserProfileService } from 'src/app/modules/user/services/user.service';
 import { Subscription } from 'rxjs';
 import { ConfigService } from 'src/app/shared/services/config.service';
 import { HelperService } from 'src/app/shared/services/helper.service';
+import { UserProfileService } from 'src/app/modules/user-management/services/user.service';
+import { UserProfileDTO } from 'src/app/modules/user-management/models/user-profile.dto';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html'

@@ -16,7 +16,6 @@ import { HelperService } from './services/helper.service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { ChangeLangagueComponent } from './components/change-langague/change-langague.component';
-import { UserProfileService } from '../modules/user/services/user.service';
 import { DialogService } from './services/confirmation-dialog.service';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { PagerService } from './services/pager.service';
@@ -29,6 +28,7 @@ import { StateService } from '../modules/configurations/services/state.service';
 import { CityService } from '../modules/configurations/services/city.service';
 import { PortService } from '../modules/configurations/services/port.service';
 import { ComboBoxComponent } from './components/combo-box/combo-box.component';
+import { UserProfileService } from '../modules/user-management/services/user.service';
 
 @NgModule({
 

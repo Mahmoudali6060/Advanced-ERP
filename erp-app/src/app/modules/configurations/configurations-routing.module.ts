@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserFormComponent } from '../user/components/user-form/user-form.component';
 import { AboutUsFormComponent } from './components/about-us-form/about-us-form.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { AdvertismentFormComponent } from './components/advertisment-form/advertisment-form.component';

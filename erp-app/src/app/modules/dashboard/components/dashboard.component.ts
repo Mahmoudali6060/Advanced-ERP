@@ -5,12 +5,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { PaginationComponent } from 'src/app/shared/components/pagination/pagination.component';
 import { LocalStorageItems } from 'src/app/shared/constants/local-storage-items';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
-import { CompanyTotalDetails } from '../../user/models/company-total-details';
-import { UserProfileSearchCriteriaDTO } from '../../user/models/user-list-search-criteria-dto';
-import { UserProfileDTO } from '../../user/models/user-profile.dto';
-import { UserTypeEnum } from '../../user/models/user-type-enum';
-import { CompanyService } from '../../user/services/company.service';
-import { UserProfileService } from '../../user/services/user.service';
+import { UserProfileSearchCriteriaDTO } from '../../user-management/models/user-list-search-criteria-dto';
+import { CompanyTotalDetails } from '../../setup/models/company-total-details';
+import { UserProfileDTO } from '../../user-management/models/user-profile.dto';
+import { UserTypeEnum } from '../../user-management/models/user-type-enum';
+import { UserProfileService } from '../../user-management/services/user.service';
+import { CompanyService } from '../../user-management/services/company.service';
 declare var jQuery: any;
 
 @Component({
@@ -29,23 +29,23 @@ export class DashboardComponent {
 	inprogress: boolean;
 	noOfRequests: number = 0;
 	totalTrucksProvider: number;
-	companyTotalDetails:CompanyTotalDetails = new CompanyTotalDetails();
+	companyTotalDetails: CompanyTotalDetails = new CompanyTotalDetails();
 	totalOffers: any;
-    dataWithStatus: any;
-    dataWithTypes: any;
-    chartOptions: any;
+	dataWithStatus: any;
+	dataWithTypes: any;
+	chartOptions: any;
 	waitingForCorrection: any;
 	approved: any;
 	closed: any;
 	waitingForBL: any;
 	waitingForPaymnet: any;
 	waitingForOriginalBL: any;
-	userProfile:UserProfileDTO = new UserProfileDTO();
+	userProfile: UserProfileDTO = new UserProfileDTO();
 	userTypeEnum = UserTypeEnum;
 
-	constructor(private userProfileService: UserProfileService, 
+	constructor(private userProfileService: UserProfileService,
 		private datepipe: DatePipe,
-		private companyService:CompanyService, private translate:TranslateService,private localStorageService:LocalStorageService) {
+		private companyService: CompanyService, private translate: TranslateService, private localStorageService: LocalStorageService) {
 
 	}
 	ngOnInit() {
@@ -59,8 +59,8 @@ export class DashboardComponent {
 		});
 	}
 
-	getAllCompanyTotalDetails(){
-		this.companyService.GetAllCompanyTotalDetails().subscribe((res:CompanyTotalDetails) => {
+	getAllCompanyTotalDetails() {
+		this.companyService.GetAllCompanyTotalDetails().subscribe((res: CompanyTotalDetails) => {
 			this.companyTotalDetails = res
 		})
 	}

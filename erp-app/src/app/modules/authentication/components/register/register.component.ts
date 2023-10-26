@@ -3,13 +3,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { UserTypeEnum } from 'src/app/modules/user/models/user-type-enum';
 import { ToastrService } from 'ngx-toastr';
 import { HelperService } from 'src/app/shared/services/helper.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { LocalStorageItems } from 'src/app/shared/constants/local-storage-items';
 import { RegisterModel } from '../../models/register.model';
 import { RegisterRequestModel } from '../../models/register-request.model';
+import { UserTypeEnum } from 'src/app/modules/user-management/models/user-type-enum';
 
 @Component({
   selector: 'app-register',

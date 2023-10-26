@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { PrimeNGConfig } from 'primeng/api';
-import { UserProfileDTO } from './modules/user/models/user-profile.dto';
 import { LocalStorageItems } from './shared/constants/local-storage-items';
 import { LocalStorageService } from './shared/services/local-storage.service';
+import { UserProfileDTO } from './modules/user-management/models/user-profile.dto';
 
 @Component({
   selector: 'app-root',

@@ -1,4 +1,4 @@
-import { UserTypeEnum } from "../../user/models/user-type-enum";
+import { UserTypeEnum } from "../../user-management/models/user-type-enum";
 
 export class RegisterModel {
     email: string | undefined;

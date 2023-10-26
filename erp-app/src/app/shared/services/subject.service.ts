@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { UserProfileDTO } from 'src/app/modules/user/models/user-profile.dto';
-import { UserProfileService } from 'src/app/modules/user/services/user.service';
 import { LocalStorageItems } from '../constants/local-storage-items';
 import { LocalStorageService } from './local-storage.service';
+import { UserProfileService } from 'src/app/modules/user-management/services/user.service';
+import { UserProfileDTO } from 'src/app/modules/user-management/models/user-profile.dto';
 
 @Injectable({
   providedIn: 'root'

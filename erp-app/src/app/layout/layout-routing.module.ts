@@ -9,7 +9,7 @@ export const routes: Routes = [
     component: FullLayoutComponent,
     children: [
       { path: 'dashboard', loadChildren: () => import('../modules/dashboard/dashboard.module').then(m => m.DashboardModule) },
-      { path: 'user', canActivate: [AuthGuard], loadChildren: () => import('../modules/user/user.module').then(m => m.UserModule) },
+      { path: 'user', canActivate: [AuthGuard], loadChildren: () => import('../modules/user-management/user-management.module').then(m => m.UserManagementModule) },
       { path: 'configurations', canActivate: [AuthGuard], loadChildren: () => import('../modules/configurations/configurations.module').then(m => m.ConfigurationsModule) },
       { path: 'setup', canActivate: [AuthGuard], loadChildren: () => import('../modules/setup/setup.module').then(m => m.SetupModule) },
       { path: 'purchases-bill', canActivate: [AuthGuard], loadChildren: () => import('../modules/purchases/purchases.module').then(m => m.PurchasesBillModule) },

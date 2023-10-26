@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as $ from 'jquery'
-import { UserProfileDTO } from 'src/app/modules/user/models/user-profile.dto';
+import { UserProfileDTO } from 'src/app/modules/user-management/models/user-profile.dto';
 import { LocalStorageItems } from 'src/app/shared/constants/local-storage-items';
 import { HelperService } from 'src/app/shared/services/helper.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';

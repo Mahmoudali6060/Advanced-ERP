@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Output, ViewChild, Inject } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
-import { UserProfileDTO } from '../../../modules/user/models/user-profile.dto';
-import { UserProfileService } from '../../../modules/user/services/user.service';
 import { LocalStorageItems } from '../../constants/local-storage-items';
 import { HelperService } from '../../services/helper.service';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { UserProfileDTO } from 'src/app/modules/user-management/models/user-profile.dto';
+import { UserProfileService } from 'src/app/modules/user-management/services/user.service';
 
 @Component({
   selector: 'app-change-langague',

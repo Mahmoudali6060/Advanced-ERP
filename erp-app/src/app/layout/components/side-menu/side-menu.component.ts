@@ -1,9 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { UserProfileDTO } from 'src/app/modules/user/models/user-profile.dto';
-import { UserTypeEnum } from 'src/app/modules/user/models/user-type-enum';
-import { UserProfileService } from 'src/app/modules/user/services/user.service';
 import { LocalStorageItems } from 'src/app/shared/constants/local-storage-items';
 import { RequestTypeEnum } from 'src/app/shared/enums/request-type.enum';
 import { HelperService } from 'src/app/shared/services/helper.service';
@@ -11,6 +8,9 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
 import { SubjectService } from 'src/app/shared/services/subject.service';
 import { AuthService } from '../../../modules/authentication/services/auth.service';
 import { ConfigService } from '../../../shared/services/config.service';
+import { UserProfileDTO } from 'src/app/modules/user-management/models/user-profile.dto';
+import { UserTypeEnum } from 'src/app/modules/user-management/models/user-type-enum';
+import { UserProfileService } from 'src/app/modules/user-management/services/user.service';
 
 @Component({
   selector: 'app-side-menu',
