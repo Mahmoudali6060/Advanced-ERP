@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231010195258_UpdateProduct_v2")]
-    partial class UpdateProduct_v2
+    [Migration("20231030204824_Privileges")]
+    partial class Privileges
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,214 @@ namespace Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Data.Entities.Purchases.PurchasesBillDetail", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PriceAfterDiscount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PurchasesBillHeaderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("PurchasesBillHeaderId");
+
+                    b.ToTable("PurchasesBillDetails");
+                });
+
+            modelBuilder.Entity("Data.Entities.Purchases.PurchasesBillHeader", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("ClientVendorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Paid")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Remaining")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalAfterDiscount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalDiscount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Transfer")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientVendorId");
+
+                    b.ToTable("PurchasesBillHeaders");
+                });
+
+            modelBuilder.Entity("Data.Entities.Sales.SalesBillDetail", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PriceAfterDiscount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("SalesBillHeaderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SalesBillHeaderId");
+
+                    b.ToTable("SalesBillDetails");
+                });
+
+            modelBuilder.Entity("Data.Entities.Sales.SalesBillHeader", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("ClientVendorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Paid")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Remaining")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalAfterDiscount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalDiscount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Transfer")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientVendorId");
+
+                    b.ToTable("SalesBillHeaders");
+                });
 
             modelBuilder.Entity("Data.Entities.Setup.AboutUs", b =>
                 {
@@ -133,6 +341,65 @@ namespace Data.Migrations
                     b.ToTable("Cities");
                 });
 
+            modelBuilder.Entity("Data.Entities.Setup.ClientVendor", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Credit")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Debit")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("IdNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FullName")
+                        .IsUnique()
+                        .HasFilter("[FullName] IS NOT NULL");
+
+                    b.ToTable("ClientVendors");
+                });
+
             modelBuilder.Entity("Data.Entities.Setup.Company", b =>
                 {
                     b.Property<long>("Id")
@@ -150,14 +417,8 @@ namespace Data.Migrations
                     b.Property<string>("ContactTelephone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("LogoURL")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("Modified")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -398,6 +659,58 @@ namespace Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Data.Entities.UserManagement.RoleGroup", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoleGroups");
+                });
+
+            modelBuilder.Entity("Data.Entities.UserManagement.RolePrivilege", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("PrivilegeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RoleGroupId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleGroupId");
+
+                    b.ToTable("RolePrivileges");
+                });
+
             modelBuilder.Entity("Data.Entities.UserManagement.UserProfile", b =>
                 {
                     b.Property<long>("Id")
@@ -578,6 +891,66 @@ namespace Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Data.Entities.Purchases.PurchasesBillDetail", b =>
+                {
+                    b.HasOne("Data.Entities.Setup.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Entities.Purchases.PurchasesBillHeader", "PurchasesBillHeader")
+                        .WithMany("PurchasesBillDetailList")
+                        .HasForeignKey("PurchasesBillHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("PurchasesBillHeader");
+                });
+
+            modelBuilder.Entity("Data.Entities.Purchases.PurchasesBillHeader", b =>
+                {
+                    b.HasOne("Data.Entities.Setup.ClientVendor", "ClientVendor")
+                        .WithMany()
+                        .HasForeignKey("ClientVendorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ClientVendor");
+                });
+
+            modelBuilder.Entity("Data.Entities.Sales.SalesBillDetail", b =>
+                {
+                    b.HasOne("Data.Entities.Setup.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Entities.Sales.SalesBillHeader", "SalesBillHeader")
+                        .WithMany("SalesBillDetailList")
+                        .HasForeignKey("SalesBillHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("SalesBillHeader");
+                });
+
+            modelBuilder.Entity("Data.Entities.Sales.SalesBillHeader", b =>
+                {
+                    b.HasOne("Data.Entities.Setup.ClientVendor", "ClientVendor")
+                        .WithMany()
+                        .HasForeignKey("ClientVendorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ClientVendor");
+                });
+
             modelBuilder.Entity("Data.Entities.Setup.Product", b =>
                 {
                     b.HasOne("Data.Entities.Setup.Category", "Category")
@@ -587,6 +960,17 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Data.Entities.UserManagement.RolePrivilege", b =>
+                {
+                    b.HasOne("Data.Entities.UserManagement.RoleGroup", "RoleGroup")
+                        .WithMany("RolePrivileges")
+                        .HasForeignKey("RoleGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RoleGroup");
                 });
 
             modelBuilder.Entity("Data.Entities.UserManagement.UserProfile", b =>
@@ -667,6 +1051,16 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Data.Entities.Purchases.PurchasesBillHeader", b =>
+                {
+                    b.Navigation("PurchasesBillDetailList");
+                });
+
+            modelBuilder.Entity("Data.Entities.Sales.SalesBillHeader", b =>
+                {
+                    b.Navigation("SalesBillDetailList");
+                });
+
             modelBuilder.Entity("Data.Entities.Setup.City", b =>
                 {
                     b.Navigation("UserProfile");
@@ -680,6 +1074,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Setup.State", b =>
                 {
                     b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("Data.Entities.UserManagement.RoleGroup", b =>
+                {
+                    b.Navigation("RolePrivileges");
                 });
 #pragma warning restore 612, 618
         }

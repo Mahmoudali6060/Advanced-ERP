@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -91,7 +91,9 @@ namespace Data.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -114,6 +116,32 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ClientVendors",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FullName = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Debit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Credit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IdNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TypeId = table.Column<int>(type: "int", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClientVendors", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Companies",
                 columns: table => new
                 {
@@ -123,9 +151,7 @@ namespace Data.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddressDetails = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ContactPerson = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ContactTelephone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    ContactTelephone = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -162,6 +188,22 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Countries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoleGroups",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleGroups", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -302,14 +344,20 @@ namespace Data.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BarCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DefaultPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    SellingPricePercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PurchasingPricePercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ActualQuantity = table.Column<int>(type: "int", nullable: false),
                     LowQuantity = table.Column<int>(type: "int", nullable: false),
                     HighQuantity = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<long>(type: "bigint", nullable: false)
+                    CategoryId = table.Column<long>(type: "bigint", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -318,6 +366,88 @@ namespace Data.Migrations
                         name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PurchasesBillHeaders",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Transfer = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalAfterDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Paid = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Remaining = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClientVendorId = table.Column<long>(type: "bigint", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PurchasesBillHeaders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PurchasesBillHeaders_ClientVendors_ClientVendorId",
+                        column: x => x.ClientVendorId,
+                        principalTable: "ClientVendors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SalesBillHeaders",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Transfer = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalAfterDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Paid = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Remaining = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClientVendorId = table.Column<long>(type: "bigint", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SalesBillHeaders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SalesBillHeaders_ClientVendors_ClientVendorId",
+                        column: x => x.ClientVendorId,
+                        principalTable: "ClientVendors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RolePrivileges",
+                columns: table => new
+                {
+                    PrivilegeId = table.Column<long>(type: "bigint", nullable: false),
+                    RoleGroupId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RolePrivileges", x => x.PrivilegeId);
+                    table.ForeignKey(
+                        name: "FK_RolePrivileges_RoleGroups_RoleGroupId",
+                        column: x => x.RoleGroupId,
+                        principalTable: "RoleGroups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -376,6 +506,74 @@ namespace Data.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PurchasesBillDetails",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PurchasesBillHeaderId = table.Column<long>(type: "bigint", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
+                    Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PriceAfterDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    SubTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PurchasesBillDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PurchasesBillDetails_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PurchasesBillDetails_PurchasesBillHeaders_PurchasesBillHeaderId",
+                        column: x => x.PurchasesBillHeaderId,
+                        principalTable: "PurchasesBillHeaders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SalesBillDetails",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SalesBillHeaderId = table.Column<long>(type: "bigint", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
+                    Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PriceAfterDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    SubTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SalesBillDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SalesBillDetails_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SalesBillDetails_SalesBillHeaders_SalesBillHeaderId",
+                        column: x => x.SalesBillHeaderId,
+                        principalTable: "SalesBillHeaders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -416,9 +614,51 @@ namespace Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ClientVendors_FullName",
+                table: "ClientVendors",
+                column: "FullName",
+                unique: true,
+                filter: "[FullName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchasesBillDetails_ProductId",
+                table: "PurchasesBillDetails",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchasesBillDetails_PurchasesBillHeaderId",
+                table: "PurchasesBillDetails",
+                column: "PurchasesBillHeaderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchasesBillHeaders_ClientVendorId",
+                table: "PurchasesBillHeaders",
+                column: "ClientVendorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RolePrivileges_RoleGroupId",
+                table: "RolePrivileges",
+                column: "RoleGroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SalesBillDetails_ProductId",
+                table: "SalesBillDetails",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SalesBillDetails_SalesBillHeaderId",
+                table: "SalesBillDetails",
+                column: "SalesBillHeaderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SalesBillHeaders_ClientVendorId",
+                table: "SalesBillHeaders",
+                column: "ClientVendorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProfiles_AppUserId",
@@ -473,7 +713,13 @@ namespace Data.Migrations
                 name: "ContactUs");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "PurchasesBillDetails");
+
+            migrationBuilder.DropTable(
+                name: "RolePrivileges");
+
+            migrationBuilder.DropTable(
+                name: "SalesBillDetails");
 
             migrationBuilder.DropTable(
                 name: "Settings");
@@ -485,7 +731,16 @@ namespace Data.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "PurchasesBillHeaders");
+
+            migrationBuilder.DropTable(
+                name: "RoleGroups");
+
+            migrationBuilder.DropTable(
+                name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "SalesBillHeaders");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
@@ -501,6 +756,12 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "States");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "ClientVendors");
         }
     }
 }

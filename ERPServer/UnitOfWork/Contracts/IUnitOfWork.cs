@@ -13,6 +13,7 @@ namespace UnitOfWork.Contracts
         #region User Management
         IUserProfileDAL UserProfileDAL { get; }
         IAccountDAL AccountDAL { get; }
+        IRoleDAL RoleDAL { get; }
         #endregion
 
         #region Setup

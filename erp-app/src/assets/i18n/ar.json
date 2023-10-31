@@ -99,7 +99,7 @@
     "CurrentBalance": "الرصيد الحالي",
     "Paid": "المدفوع",
     "Remaining": "المتبقي",
-    "SellingPrice":"سعر الشراء"
+    "SellingPrice": "سعر الشراء"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -237,7 +237,8 @@
     "UserManagement": "اعدادات المستخدمين",
     "Products": "المنتجات",
     "Categories": "التصنيفات الرئيسية",
-    "UserList": "قائمة المستخدمين",
+    "UserList": " المستخدمين",
+    "RoleList": "الأدوار",
     "SetupManagement": "الإعدادات",
     "TrucksProviders": "مزودو الشاحنات",
     "RequestClosed": "الطلبات المغلقة",
@@ -310,7 +311,7 @@
     "DuplicatedFullName": "هذا الاسم مكرر",
     "DuplicatedSelectedProduct": "لقد اخترت هذا المنتج من قبل",
     "Error": "خطأ ي شرمووط",
-    "NotFound":"لا يوجد فاتورة بهذا الرقم يا خول"
+    "NotFound": "لا يوجد فاتورة بهذا الرقم يا خول"
   },
   "Warning": {
     "NoDriversAvialable": "لا يوجد سائق متاح في هذه الفترة"
@@ -350,6 +351,19 @@
     "companyNameEn": "اسم الشركة بالإنجليزية",
     "companyNameAr": "اسم الشركة بالعربية",
     "category": "فئة",
+    "Status": "الحالة"
+  },
+  "Role": {
+    "Roles": "الادوار",
+    "IsActive": "فعًال",
+    "Name": "الإسم",
+    "Description": "الوصف",
+    "AddRole": "إضافة دور",
+    "SaveChanges": "حفظ التغيرات",
+    "Cancel": "الغاء",
+    "EditRole": "تعديل الدور",
+    "back": "رجوع",
+    "ViewUser": "عرض الدور",
     "Status": "الحالة"
   },
   "UserStatusEnum": {
@@ -424,5 +438,14 @@
     "AddSalesBill": "إضافة فاتورة المبيعات",
     "EditSalesBill": "تعديل فاتورة المبيعات",
     "ViewSalesBill": "عرض فاتورة المبيعات"
+  },
+  "Privileges": {
+    "UserManagement": "اعدادات المستخدمين",
+    "Users": "المستخدمين",
+    "Roles": "الادوار",
+    "Add": "إضافة",
+    "View": "عرض",
+    "Edit": "تعديل",
+    "Delete": "حذف"
   }
 }

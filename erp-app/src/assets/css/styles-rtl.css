@@ -155,3 +155,7 @@ i {
 .element-floating {
     float: left;
 }
+
+.privilege-checkbox {
+    margin-right: 20px;
+}

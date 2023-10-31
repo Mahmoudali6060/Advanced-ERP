@@ -224,6 +224,7 @@
     "Configurations": "Configurations",
     "UserManagement": "User Management",
     "UserList": "User List",
+    "RoleList": "Role List",
     "Products": "Products",
     "Categories": "Categories",
     "Setup": "Setup",
@@ -343,6 +344,19 @@
     "companyNameEn": "Company Name-En",
     "companyNameAr": "Company Name-Ar",
     "category": "Category",
+    "Status": "Status"
+  },
+  "Role": {
+    "Roles": "Roles",
+    "IsActive": "IsActive",
+    "Name": "Name",
+    "Description": "Description",
+    "AddRole": "Add Role",
+    "Cancel": "Cancel",
+    "SaveChanges": "Save Changes",
+    "back": "Back",
+    "ViewRole": "View Role",
+    "EditRole": "Edit Role",
     "Status": "Status"
   },
   "UserStatusEnum": {

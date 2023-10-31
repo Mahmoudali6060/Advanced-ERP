@@ -4,7 +4,7 @@
 
 namespace Data.Migrations
 {
-    public partial class UpdateSalesTables : Migration
+    public partial class Privileges : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

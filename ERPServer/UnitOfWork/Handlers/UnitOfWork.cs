@@ -27,6 +27,7 @@ namespace UnitOfWork.Handlers
         #region User Management
         public IUserProfileDAL UserProfileDAL { get; private set; }
         public IAccountDAL AccountDAL { get; private set; }
+        public IRoleDAL RoleDAL { get; private set; }
         #endregion
 
         #region Setup
@@ -64,6 +65,7 @@ namespace UnitOfWork.Handlers
             _logger = loggerFactory.CreateLogger("logs");
             #region User Management
             UserProfileDAL = new UserProfileDAL(_context);
+            RoleDAL = new RoleDAL(_context);
             AccountDAL = new AccountDAL(_signInManager, _userManager, _context, _roleManager);
             #endregion
 

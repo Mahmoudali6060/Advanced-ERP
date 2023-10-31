@@ -84,6 +84,9 @@ namespace App.Helper
 
             services.AddTransient<IEmailSender, EmailSender>();
 
+            services.AddTransient<IRoleDAL,RoleDAL>();
+            services.AddTransient<IRoleDSL, RoleDSL>();
+
             #endregion
 
             #region Purchases

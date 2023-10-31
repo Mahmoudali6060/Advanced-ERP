@@ -33,7 +33,8 @@ namespace Data.Contexts
 
         #region User Management
         public DbSet<UserProfile> UserProfiles { get; set; }
-
+        public DbSet<RoleGroup> RoleGroups { get; set; }
+        public DbSet<RolePrivilege> RolePrivileges { get; set; }
         #endregion
 
         #region Purchases
@@ -50,6 +51,10 @@ namespace Data.Contexts
             modelBuilder.Entity<ClientVendor>()
            .HasIndex(p => new { p.FullName })
            .IsUnique(true);
+
+            //modelBuilder.Entity<RolePrivilege>()
+            //.HasNoKey();
+
 
             base.OnModelCreating(modelBuilder);
         }

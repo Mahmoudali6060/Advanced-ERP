@@ -9,7 +9,7 @@
             </div>
             <div class="table-data__tool-right">
                 <button [routerLink]="['/user/role-form']" class="au-btn au-btn-icon au-btn--black au-btn--small">
-                    <i class="zmdi zmdi-plus"></i>{{'Role.addRole' |translate}}
+                    <i class="zmdi zmdi-plus"></i>{{'Role.AddRole' |translate}}
                 </button>
             </div>
         </div>
@@ -21,7 +21,7 @@
                     <div class="card-body">
                         <div class="col-lg-12">
                             <div class="row">
-                                <div class="col-lg-3">
+                                <!-- <div class="col-lg-3">
                                     <div class="form-group">
                                         <label class="form-label"
                                             for="form3Example3c">{{'Role.Status'|translate}}</label>
@@ -32,7 +32,7 @@
                                             <option value=false> {{'RoleStatusEnum.inactive' |translate}}</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <label for="name" class=" form-control-label">{{'Role.Name'
@@ -71,7 +71,6 @@
             <table class="table table-data2">
                 <thead class="table-header-bc">
                     <tr>
-                        <th></th>
                         <th class="table-header-fc">{{'Role.Name' |translate}}</th>
                         <th class="table-header-fc">{{'Role.Description' |translate}}</th>
                         <th></th>
@@ -83,10 +82,7 @@
                         <td>{{item.description}}</td>
                         <td>
                             <div class="table-data-feature">
-                                <button class="item" data-toggle="tooltip" data-placement="top" title=""
-                                    data-original-title="More" [routerLink]="['/user/view/'+item.id]">
-                                    <i class="fa fa-eye"></i>
-                                </button>
+                              
                                 <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Edit" [routerLink]="['/user/role-form/'+item.id]">
                                     <i class="zmdi zmdi-edit"></i>

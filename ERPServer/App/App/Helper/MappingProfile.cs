@@ -58,6 +58,14 @@ namespace App.Helper
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.AppUser.UserName))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.AppUser.Email));
             CreateMap<UserProfileDTO, UserProfile>();
+
+            CreateMap<RoleGroup, RoleGroupDTO>()
+                .ForMember(dest => dest.RolePrivileges, opt => opt.MapFrom(src => src.RolePrivileges));
+            CreateMap<RoleGroupDTO, RoleGroup>()
+                .ForMember(dest => dest.RolePrivileges, opt => opt.MapFrom(src => src.RolePrivileges));
+
+            CreateMap<RolePrivilege, RolePrivilegeDTO>();
+            CreateMap<RolePrivilegeDTO, RolePrivilege>();
             #endregion
 
             #region Purchases

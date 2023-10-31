@@ -5,7 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { AuthService } from './services/auth.service';
 import { RegisterComponent } from 'src/app/modules/authentication/components/register/register.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
-import { CommonModule } from '@angular/common';
+// import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
@@ -18,7 +18,7 @@ import { ConfigurationsModule } from '../configurations/configurations.module';
   imports: [
     AuthRoutingModule,
     SharedModule,
-    CommonModule ,
+    // CommonModule ,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

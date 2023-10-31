@@ -6,8 +6,10 @@ using System.Text;
 
 namespace Data.Entities.UserManagement
 {
-    public class Privilege : BaseEntity
+    public class RoleGroup :BaseEntity
     {
         public string Name { get; set; }
+        public string Description { get; set; }
+        public virtual List<RolePrivilege> RolePrivileges { get; set; }
     }
 }

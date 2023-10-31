@@ -657,6 +657,58 @@ namespace Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Data.Entities.UserManagement.RoleGroup", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoleGroups");
+                });
+
+            modelBuilder.Entity("Data.Entities.UserManagement.RolePrivilege", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("PrivilegeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RoleGroupId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleGroupId");
+
+                    b.ToTable("RolePrivileges");
+                });
+
             modelBuilder.Entity("Data.Entities.UserManagement.UserProfile", b =>
                 {
                     b.Property<long>("Id")
@@ -908,6 +960,17 @@ namespace Data.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("Data.Entities.UserManagement.RolePrivilege", b =>
+                {
+                    b.HasOne("Data.Entities.UserManagement.RoleGroup", "RoleGroup")
+                        .WithMany("RolePrivileges")
+                        .HasForeignKey("RoleGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RoleGroup");
+                });
+
             modelBuilder.Entity("Data.Entities.UserManagement.UserProfile", b =>
                 {
                     b.HasOne("Data.Entities.UserManagement.AppUser", "AppUser")
@@ -1009,6 +1072,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Setup.State", b =>
                 {
                     b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("Data.Entities.UserManagement.RoleGroup", b =>
+                {
+                    b.Navigation("RolePrivileges");
                 });
 #pragma warning restore 612, 618
         }

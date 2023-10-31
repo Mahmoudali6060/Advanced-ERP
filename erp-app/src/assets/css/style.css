@@ -8,6 +8,7 @@
 /*=== MEDIA QUERY ===*/
 @import url("https://fonts.googleapis.com/css?family=Catamaran:400,500,600,700,700|Source+Sans+Pro:400,600");
 @import "~@ng-select/ng-select/themes/default.theme.css";
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 body {
   line-height: 1.4;
   font-family: "Source Sans Pro", sans-serif;

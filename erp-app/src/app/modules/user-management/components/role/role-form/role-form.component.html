@@ -2,14 +2,14 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <strong *ngIf="!roleDTO.id">{{'Role.addRole' |translate}}</strong>
-                <strong *ngIf="roleDTO.id && !viewMode">{{'Role.editRole' |translate}}</strong>
-                <strong *ngIf="roleDTO.id  && viewMode ">{{'Role.viewRole' |translate}}</strong>
+                <strong *ngIf="!roleDTO.id">{{'Role.AddRole' |translate}}</strong>
+                <strong *ngIf="roleDTO.id && !viewMode">{{'Role.EditRole' |translate}}</strong>
+                <strong *ngIf="roleDTO.id  && viewMode ">{{'Role.ViewRole' |translate}}</strong>
             </div>
             <div class="card-body card-block">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-lg-1">
                                 <label for="isActive" class=" form-control-label">{{'Role.IsActive'
                                     |translate}}</label>
@@ -18,7 +18,7 @@
                                 <p-inputSwitch [disabled]="viewMode" [ngModelOptions]="{standalone: true}"
                                     name="isActive" [(ngModel)]="roleDTO.isActive"></p-inputSwitch>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="form-group">
@@ -48,7 +48,43 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                               
+
+                                <div class="row">
+                                    <div class="col-lg-12" *ngFor="let category of privileges">
+                                        <label for="category.id" class="form-check-label" (click)="select(category)">
+                                            <input [checked]="category.checked" type="checkbox" id="{{category.id}}"
+                                                name="inline-checkbox1" value="option1" class="">
+                                            {{('Privileges.'+category.name) |translate }}
+                                        </label>
+                                        <br><br>
+                                        <div class="row">
+                                            <div class="col-lg-12" *ngFor="let page of category.children">
+                                                <label for="page.id" class="form-check-label privilege-checkbox"
+                                                    (click)="select(page)">
+                                                    <input [checked]="page.checked" type="checkbox" id="{{page.id}}"
+                                                        name="inline-checkbox1" value="option1" class="">
+                                                    {{('Privileges.'+page.name) |translate }}
+                                                </label>
+                                                <br>
+                                                <div class="row privilege-checkbox">
+                                                    <br>
+                                                    <br>
+                                                    <div class="col-lg-2 " *ngFor="let privilege of page.children">
+                                                        <label for="privilege.id " class="form-check-label"
+                                                            (click)="select(privilege)">
+                                                            <input [checked]="privilege.checked" type="checkbox"
+                                                                id="{{privilege.id}}" name="inline-checkbox1"
+                                                                value="option1" class="">
+                                                            {{('Privileges.'+privilege.name) |translate }}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                             </div>
                         </div>
                     </div>
