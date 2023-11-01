@@ -4,6 +4,7 @@ using Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231031144409_UpdateUserProfile")]
+    partial class UpdateUserProfile
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -762,6 +764,9 @@ namespace Data.Migrations
                     b.Property<long>("RoleId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("RoleName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long?>("StateId")
                         .HasColumnType("bigint");
 
@@ -774,8 +779,6 @@ namespace Data.Migrations
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("CountryId");
-
-                    b.HasIndex("RoleId");
 
                     b.HasIndex("StateId");
 
@@ -988,12 +991,6 @@ namespace Data.Migrations
                         .WithMany("UserProfile")
                         .HasForeignKey("CountryId");
 
-                    b.HasOne("Data.Entities.UserManagement.RoleGroup", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Data.Entities.Setup.State", null)
                         .WithMany("UserProfile")
                         .HasForeignKey("StateId");
@@ -1001,8 +998,6 @@ namespace Data.Migrations
                     b.Navigation("AppUser");
 
                     b.Navigation("Company");
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -21,14 +21,16 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { PagerService } from './services/pager.service';
 import { LoaderComponent } from './components/loader/loader.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import {CarouselModule} from 'primeng/carousel'
-import {TabViewModule} from 'primeng/tabview';
+import { CarouselModule } from 'primeng/carousel'
+import { TabViewModule } from 'primeng/tabview';
 import { CountryService } from '../modules/configurations/services/country.service';
 import { StateService } from '../modules/configurations/services/state.service';
 import { CityService } from '../modules/configurations/services/city.service';
 import { PortService } from '../modules/configurations/services/port.service';
 import { ComboBoxComponent } from './components/combo-box/combo-box.component';
 import { UserProfileService } from '../modules/user-management/services/user.service';
+import { AuthService } from '../modules/authentication/services/auth.service';
+import { IfPrivilegeDirective } from './directives/if-privilege.directive';
 
 @NgModule({
 
@@ -65,7 +67,9 @@ import { UserProfileService } from '../modules/user-management/services/user.ser
     MaterialModule,
     ChangeLangagueComponent,
     LoaderComponent,
-    ComboBoxComponent
+    ComboBoxComponent,
+    IfPrivilegeDirective,
+
     // ModalBasicComponent
   ],
   schemas: [
@@ -76,10 +80,13 @@ import { UserProfileService } from '../modules/user-management/services/user.ser
     PaginationComponent,
     ChangeLangagueComponent,
     LoaderComponent,
-    ComboBoxComponent
-    ],
+    ComboBoxComponent,
+    IfPrivilegeDirective,
+
+  ],
   entryComponents: [
     ConfirmationDialogComponent,
+
   ],
   providers: [
     DatePipe,
@@ -93,8 +100,8 @@ import { UserProfileService } from '../modules/user-management/services/user.ser
     CountryService,
     StateService,
     CityService,
-    PortService,
-    
+    PortService
+
   ],
 })
 

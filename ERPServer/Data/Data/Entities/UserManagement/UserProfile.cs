@@ -1,6 +1,6 @@
 ﻿using Data.Entities.Setup;
 using Data.Entities.Shared;
-
+using NLog.Fluent;
 
 namespace Data.Entities.UserManagement
 {
@@ -13,13 +13,14 @@ namespace Data.Entities.UserManagement
         public bool IsFirstLogin { get; set; }
         public bool IsHide { get; set; }
         public string ImageUrl { get; set; }
-        public UserTypeEnum UserTypeId { get; set; }
-        public string Role { get; set; }
+        public long RoleId { get; set; }
         public string DefaultLanguage { get; set; }
         public string AppUserId { get; set; }
         public virtual AppUser AppUser { get; set; }
         public  long? CompanyId { get; set; }
         public virtual Company Company { get; set; }
+        public virtual RoleGroup Role { get; set; }
+
 
 
 

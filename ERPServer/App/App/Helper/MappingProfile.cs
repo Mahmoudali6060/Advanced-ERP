@@ -56,7 +56,10 @@ namespace App.Helper
             #region Users Management
             CreateMap<UserProfile, UserProfileDTO>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.AppUser.UserName))
-                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.AppUser.Email));
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.AppUser.Email))
+                .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name));
+
+
             CreateMap<UserProfileDTO, UserProfile>();
 
             CreateMap<RoleGroup, RoleGroupDTO>()

@@ -57,18 +57,11 @@ namespace Account.Helpers
                 Email = appUser.Email,
                 UserName = appUser.UserName,
                 DefaultLanguage = userProfile.DefaultLanguage,
-                Role = userProfile.Role,
-                UserTypeId = (int)userProfile.UserTypeId,
-                UserType = Enum.GetName(typeof(UserTypeEnum), userProfile.UserTypeId),
+                RoleId = userProfile.RoleId,
+                RoleName = userProfile.Role.Name,
                 AppUserId = appUser.Id,
                 ImageUrl = userProfile.ImageUrl,
-                //AddressDetails = userProfile.AddressDetails,
-                //CityId = userProfile.CityId.Value , // we need to put validation when id = 0
-                //StateId = userProfile.StateId,
-                //CountryId = userProfile.CountryId,
-                //WebsiteLink = userProfile.WebsiteLink,
-                //ContactPerson = userProfile.ContactPerson,
-                //ContactTelephone = userProfile.ContactTelephone,
+              
                 IsActive = userProfile.IsActive,
                 IsFirstLogin = userProfile.IsFirstLogin,
                 CompanyId = userProfile?.CompanyId,
@@ -84,8 +77,6 @@ namespace Account.Helpers
                 UserName = registerRequestViewModel.RegisterDTO.Username,
                 Email = registerRequestViewModel.RegisterDTO.Email,
                 Password = registerRequestViewModel.RegisterDTO.Password,
-                Role = GetUserRole((UserTypeEnum)registerRequestViewModel.RegisterDTO.UserTypeId),
-                UserTypeId = registerRequestViewModel.RegisterDTO.UserTypeId,
             };
         }
 

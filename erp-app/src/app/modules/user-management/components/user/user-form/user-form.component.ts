@@ -13,6 +13,8 @@ import { SubjectService } from 'src/app/shared/services/subject.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { LocalStorageItems } from 'src/app/shared/constants/local-storage-items';
 import { isNullOrUndefined } from 'util';
+import { RoleDTO } from '../../../models/role.dto';
+import { RoleService } from '../../../services/role.service';
 
 @Component({
 	selector: 'app-user-form',
@@ -31,22 +33,24 @@ export class UserFormComponent {
 	types: any
 	userProfile: UserProfileDTO;
 	viewMode: boolean;
+	roleList: Array<RoleDTO> = new Array<RoleDTO>();
 	constructor(private userProfileService: UserProfileService,
 		private route: ActivatedRoute,
 		private toasterService: ToastrService,
 		private location: Location, private _configService: ConfigService,
 		private helperService: HelperService,
-		private translate: TranslateService,
+		public translate: TranslateService,
 		private subjectService: SubjectService,
 		private localStorageService: LocalStorageService,
-		private router: Router) {
+		private router: Router,
+		private roleService: RoleService,) {
 	}
 
 	ngOnInit() {
 		this.userTypeEnum = UserTypeEnum;
 		this.userProfile = this.localStorageService.getItem(LocalStorageItems.userProfile);
 		this.userTypes = this.helperService.enumSelector(this.userTypeEnum);
-
+		this.getRoleList();
 		this.imageSrc = "assets/images/icon/avatar-big-01.jpg";
 		this.userProfileDTO = new UserProfileDTO();
 		const id = this.route.snapshot.paramMap.get('id');
@@ -65,6 +69,11 @@ export class UserFormComponent {
 			if (!this.userProfileDTO.imageUrl) {
 				this.imageSrc = "assets/images/icon/avatar-big-01.jpg";
 			}
+		})
+	}
+	getRoleList() {
+		this.roleService.getAllLite().subscribe((res: any) => {
+			this.roleList = res.list;
 		})
 	}
 	handleChange(event: boolean) {
@@ -95,7 +104,6 @@ export class UserFormComponent {
 	save(frm: NgForm) {
 		// if (this.validattion(this.userProfileDTO)) {
 		this.userProfileDTO.defaultLanguage = 'ar';
-		this.userProfileDTO.role = this.userTypeEnum[this.userProfileDTO.userTypeId]
 		if (this.validattion(this.userProfileDTO)) {
 
 			if (this.userProfileDTO.id) {

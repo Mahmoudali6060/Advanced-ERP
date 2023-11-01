@@ -40,7 +40,7 @@
                                 <label class="labels">{{'User.FirstName' |translate}}</label>
                                 <input [(ngModel)]="profile.firstName" type="text" id="firstName" class="form-control"
                                     #firstName="ngModel" [class.is-invalid]="firstName.invalid && firstName.touched"
-                                    [class.is-valid]="firstName.valid" required     name="firstName"
+                                    [class.is-valid]="firstName.valid" required name="firstName"
                                     aria-describedby="helpId" [disabled]="viewMode">
                                 <small [hidden]="firstName.valid || firstName.untouched" id="helpId" class="text-muted"
                                     [translate]="'Errors.InvalidFirstName'"></small>
@@ -49,8 +49,8 @@
                                 <label class="labels">{{'User.LastName' |translate}}</label>
                                 <input [(ngModel)]="profile.lastName" type="text" id="lastName" class="form-control"
                                     #lastName="ngModel" [class.is-invalid]="lastName.invalid && lastName.touched"
-                                    [class.is-valid]="lastName.valid" required     name="lastName"
-                                    aria-describedby="helpId" [disabled]="viewMode">
+                                    [class.is-valid]="lastName.valid" required name="lastName" aria-describedby="helpId"
+                                    [disabled]="viewMode">
                                 <small [hidden]="lastName.valid || lastName.untouched" id="helpId" class="text-muted"
                                     [translate]="'Errors.InvalidLastName'"></small>
                             </div>
@@ -60,7 +60,7 @@
                                 <label class="labels">{{'User.Mobile' |translate}}</label>
                                 <input [(ngModel)]="profile.mobile" type="text" id="mobile" class="form-control"
                                     #mobile="ngModel" [class.is-invalid]="mobile.invalid && mobile.touched"
-                                    [class.is-valid]="mobile.valid" required  ="11" name="mobile"
+                                    [class.is-valid]="mobile.valid" required="11" name="mobile"
                                     [pattern]="mobNumberPattern" aria-describedby="helpId" [disabled]="viewMode">
                                 <small [hidden]="mobile.valid || mobile.untouched" id="helpId" class="text-muted"
                                     [translate]="'Errors.InvalidMobile'"></small>
@@ -72,8 +72,8 @@
                                 <input [disabled]="viewMode" [(ngModel)]="profile.userName" type="text" id="username"
                                     class="form-control" #username="ngModel"
                                     [class.is-invalid]="username.invalid && username.touched"
-                                    [class.is-valid]="username.valid" required     name="userName"
-                                    id="username" class="form-control" aria-describedby="helpId">
+                                    [class.is-valid]="username.valid" required name="userName" id="username"
+                                    class="form-control" aria-describedby="helpId">
                                 <small [hidden]="username.valid || username.untouched" id="helpId" class="text-muted"
                                     [translate]="'Errors.InvalidUserName'"></small>
                             </div>
@@ -82,91 +82,9 @@
                                 <input [disabled]="viewMode" [(ngModel)]="profile.email" type="email" id="email"
                                     class="form-control" #email="ngModel"
                                     [class.is-invalid]="email.invalid && email.touched" [class.is-valid]="email.valid"
-                                    required  ="8" name="email" id="email" class="form-control"
-                                    aria-describedby="helpId">
+                                    required="8" name="email" id="email" class="form-control" aria-describedby="helpId">
                                 <small [hidden]="email.valid || email.untouched" id="helpId" class="text-muted"
                                     [translate]="'Errors.InvalidEmail'"></small>
-                            </div>
-                            <div class="col-md-6 mt-2" *ngIf="loggedProfile.userTypeId != userTypeEnum.Operator">
-                                <label class="labels">{{'Settings.AddressDetails' |translate}}</label>
-                                <input [(ngModel)]="profile.companyDTO.addressDetails" type="text" id="AddressDetails"
-                                    class="form-control" #AddressDetails="ngModel" [disabled]="viewMode"
-                                    [class.is-invalid]="AddressDetails.invalid && AddressDetails.touched"
-                                    [class.is-valid]="AddressDetails.valid" required  ="2" name="AddressDetails"
-                                    id="AddressDetails" class="form-control" aria-describedby="helpId">
-                                <small [hidden]="AddressDetails.valid || AddressDetails.untouched" id="helpId"
-                                    class="text-muted" [translate]="'Errors.InvalidAddressDetails'"></small>
-                            </div>
-                        </div>
-
-                        <div class="row mt-3" *ngIf="loggedProfile.userTypeId != userTypeEnum.Operator">
-                            <div class="col-md-6">
-                                <label class="labels">{{'Settings.Country' |translate}}</label>
-                                <select name="country" id="country" class="form-control" [disabled]="viewMode"
-                                    [(ngModel)]="profile.companyDTO.countryId" (change)="onCountrySelected($event)">
-                                    <option *ngFor="let item of countryList" [value]="item.id">
-                                        {{item.name}}
-                                    </option>
-                                    <label class="form-label select-label">Choose option</label>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="labels">{{'Settings.State' |translate}}</label>
-                                <select name="state" id="State" class="form-control" [disabled]="viewMode"
-                                    [(ngModel)]="profile.companyDTO.stateId" (change)="onStateSelected($event)">
-                                    <option *ngFor="let item of stateList" [value]="item.id">
-                                        {{item.name}}
-                                    </option>
-                                    <label class="form-label select-label">Choose option</label>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="row mt-3" *ngIf="loggedProfile.userTypeId != userTypeEnum.Operator">
-                            <div class="col-md-6">
-                                <label class="labels">{{'Settings.City' |translate}}</label>
-                                <select name="city" id="city" class="form-control" [disabled]="viewMode"
-                                    [(ngModel)]="profile.companyDTO.cityId">
-                                    <option *ngFor="let item of cityList" [value]="item.id">
-                                        {{item.name}}
-                                    </option>
-                                    <label class="form-label select-label">Choose option</label>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="labels">{{'User.websiteLink' |translate}}</label>
-                                <input [disabled]="viewMode" [(ngModel)]="profile.companyDTO.websiteLink" type="text"
-                                    id="websiteLink" class="form-control" #websiteLink="ngModel"
-                                    [class.is-invalid]="websiteLink.invalid && websiteLink.touched"
-                                    [class.is-valid]="websiteLink.valid" required name="websiteLink"
-                                    aria-describedby="helpId">
-                                <small [hidden]="websiteLink.valid || websiteLink.untouched" id="helpId"
-                                    class="text-muted" [translate]="'Errors.InvalidwebsiteLink'"></small>
-                            </div>
-                        </div>
-
-                        <div class="row mt-3" *ngIf="loggedProfile.userTypeId != userTypeEnum.Operator">
-                            <div class="col-md-6">
-                                <label class="labels">{{'Authentication.ContactPerson' |translate}}</label>
-                                <input [disabled]="viewMode" [(ngModel)]="profile.companyDTO.contactPerson" type="text"
-                                    id="contactPerson" class="form-control" #contactPerson="ngModel"
-                                    [class.is-invalid]="contactPerson.invalid && contactPerson.touched"
-                                    [class.is-valid]="contactPerson.valid" required     name="contactPerson"
-                                    id="contactPerson" class="form-control" aria-describedby="helpId">
-                                <small [hidden]="contactPerson.valid || contactPerson.untouched" id="helpId"
-                                    class="text-muted" [translate]="'Errors.InvalidcontactPerson'"></small>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="labels">{{'Authentication.ContactTelephone' |translate}}</label>
-                                <input [disabled]="viewMode" [(ngModel)]="profile.companyDTO.contactTelephone"
-                                    type="text" id="contactTelephone" class="form-control" #contactTelephone="ngModel"
-                                    [pattern]="mobNumberPattern"
-                                    [class.is-invalid]="contactTelephone.invalid && contactTelephone.touched"
-                                    [class.is-valid]="contactTelephone.valid" required  ="8"
-                                    name="contactTelephone" id="contactTelephone" class="form-control"
-                                    aria-describedby="helpId">
-                                <small [hidden]="contactTelephone.valid || contactTelephone.untouched" id="helpId"
-                                    class="text-muted" [translate]="'Errors.InvalidcontactTelephone'"></small>
                             </div>
                         </div>
 

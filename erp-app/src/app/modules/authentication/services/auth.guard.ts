@@ -10,17 +10,14 @@ import { LocalStorageService } from '../../../shared/services/local-storage.serv
 })
 export class AuthGuard implements CanActivate {
 
-
   constructor(private router: Router,
     private localStorageService: LocalStorageService, private authService: AuthGuardService) {
   }
-  canActivate(): boolean {
-    if (this.authService.canActivate()) {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    const privilegeId = route.data['privilegeId'] as number;
+    if (!privilegeId || (privilegeId && this.authService.isAuthorize(privilegeId)))
       return true;
-    }
-    else {
-      return false;
-    }
+    return false;
   }
   // canActivate(
   //   next: ActivatedRouteSnapshot,

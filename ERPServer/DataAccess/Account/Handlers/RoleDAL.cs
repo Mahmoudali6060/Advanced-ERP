@@ -22,7 +22,7 @@ namespace Account.DataAccessLayer
 
         public async Task<IQueryable<RoleGroup>> GetAllLite()
         {
-            return _appDbContext.RoleGroups.Include(x => x.RolePrivileges).AsQueryable();
+            return _appDbContext.RoleGroups.AsQueryable();
         }
 
         public async Task<RoleGroup> GetById(long id)

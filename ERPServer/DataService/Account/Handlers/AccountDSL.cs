@@ -48,8 +48,7 @@ namespace Account.DataServiceLayer
 
             #region Create AspNetUser
             AppUser appUser = UserMapper.MapAppUser(userDto);
-            string UserType = Enum.GetName(typeof(UserTypeEnum), userDto.UserTypeId);
-            var createUserResult = await _unitOfWork.AccountDAL.CreateUserAsync(appUser, userDto.Password, UserType);
+            var createUserResult = await _unitOfWork.AccountDAL.CreateUserAsync(appUser, userDto.Password);
             #endregion
 
 
@@ -62,8 +61,6 @@ namespace Account.DataServiceLayer
                 userDto.IsActive = true;
                 userDto.IsFirstLogin = false;
                 userDto.IsHide = false;
-                userDto.UserTypeId = userDto.UserTypeId;
-                userDto.Role = UserType;
                 //UploadImage(entity);
                 long userProfileIdResult = await _unitOfWork.UserProfileDAL.Add(_mapper.Map<UserProfile>(userDto));
                 //Create Token
@@ -152,9 +149,8 @@ namespace Account.DataServiceLayer
                 if (userProfile == null)
                     throw new Exception("Errors.InvalidUsernameOrPassword");
                 UserProfileDTO userDto = UserMapper.MapAppUser(appUser, userProfile);
-
-                var role = await _unitOfWork.AccountDAL.GetRolesAsync(appUser);
-                userDto.Token = AddToken(appUser, role);
+                userDto.RoleGroupDTO = _mapper.Map<RoleGroupDTO>(userProfile.Role);
+                userDto.Token = AddToken(appUser, userDto.RoleName);
                 userDto.Email = appUser.Email;
                 return userDto;
             }
@@ -205,7 +201,7 @@ namespace Account.DataServiceLayer
         }
 
         #region Helper Methods
-        private string AddToken(AppUser appUser, IList<string> role)
+        private string AddToken(AppUser appUser, string role)
         {
             IdentityOptions _options = new IdentityOptions();
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -213,7 +209,7 @@ namespace Account.DataServiceLayer
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                             new Claim("UserID",appUser.Id.ToString()),
-                            new Claim(_options.ClaimsIdentity.RoleClaimType,role.FirstOrDefault())
+                            new Claim(_options.ClaimsIdentity.RoleClaimType,role)
                 }),
                 Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1234567890123456")), SecurityAlgorithms.HmacSha256Signature)

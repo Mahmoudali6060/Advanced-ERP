@@ -70,10 +70,11 @@ namespace Accout.DataServiceLayer
 
         public async Task<ResponseEntityList<RoleGroupDTO>> GetAllLite()
         {
+            var roleList = _unitOfWork.RoleDAL.GetAllLite().Result;
             return new ResponseEntityList<RoleGroupDTO>()
             {
-                List = _mapper.Map<IQueryable<RoleGroupDTO>>(_unitOfWork.RoleDAL.GetAllLite().Result),
-                Total = _unitOfWork.RoleDAL.GetAllLite().Result.Count()
+                List = _mapper.Map<IEnumerable<RoleGroupDTO>>(roleList),
+                Total = roleList.Count()
             };
         }
 

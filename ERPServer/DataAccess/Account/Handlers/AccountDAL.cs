@@ -16,7 +16,7 @@ namespace Account.DataAccessLayer
         private readonly RoleManager<AppRole> _roleManager;
         private readonly AppDbContext _appDbContext;
 
-        public AccountDAL(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, AppDbContext appDbContext,RoleManager<AppRole> roleManager)
+        public AccountDAL(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, AppDbContext appDbContext, RoleManager<AppRole> roleManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -25,24 +25,11 @@ namespace Account.DataAccessLayer
         }
 
 
-        public async Task<IdentityResult> CreateUserAsync(AppUser user, string password, string role)
+        public async Task<IdentityResult> CreateUserAsync(AppUser user, string password)
         {
-            var IsRoleExist = await _roleManager.RoleExistsAsync(role);
-            if(IsRoleExist)
-            {
-                await ValidateEmailAndUserName(user);
-                var result = await _userManager.CreateAsync(user, password);
-                if (result.Succeeded)
-                {
-                    return await AddToRoleAsync(user, role);
-
-                }
-                return result;
-            }
-            else
-            {
-                throw new Exception("Errors.NonExistRole");
-            }
+            await ValidateEmailAndUserName(user);
+            var result = await _userManager.CreateAsync(user, password);
+            return result;
 
         }
         private async Task<bool> ValidateEmailAndUserName(AppUser user)
@@ -101,7 +88,7 @@ namespace Account.DataAccessLayer
         public async Task<IdentityResult> AddToRoleAsync(AppUser user, string role)
         {
 
-             return  await _userManager.AddToRoleAsync(user, role);
+            return await _userManager.AddToRoleAsync(user, role);
         }
 
         public async Task<IList<string>> GetRolesAsync(AppUser user)

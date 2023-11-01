@@ -54,10 +54,7 @@ namespace Accout.DataServiceLayer
         private IQueryable<UserProfile> ApplyFilert(IQueryable<UserProfile> UserProfileList, UserProfileSearchCriteriaDTO searchCriteriaDTO)
         {
             //Filter
-            if (searchCriteriaDTO.UserTypeId > 0)
-            {
-                UserProfileList = UserProfileList.Where(x => x.UserTypeId == (UserTypeEnum)searchCriteriaDTO.UserTypeId);
-            }
+            
             if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.FirstName))
             {
                 UserProfileList = UserProfileList.Where(x => x.FirstName.Contains(searchCriteriaDTO.FirstName));
@@ -140,8 +137,7 @@ namespace Accout.DataServiceLayer
                 entity.IsFirstLogin = true;
                 entity.IsHide= false;
                 AppUser appUser = UserMapper.MapAppUser(entity);
-                string UserType = Enum.GetName(typeof(UserTypeEnum), entity.UserTypeId);
-                var createUserResult = await _unitOfWork.AccountDAL.CreateUserAsync(appUser, entity.Password, UserType);
+                var createUserResult = await _unitOfWork.AccountDAL.CreateUserAsync(appUser, entity.Password);
                 if (createUserResult.Succeeded)
                 {
                     entity.AppUserId = appUser.Id;

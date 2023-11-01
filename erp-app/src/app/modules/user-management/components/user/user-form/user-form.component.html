@@ -3,6 +3,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
+                    {{translate.currentLang}}
                     <strong *ngIf="!userProfileDTO.id">{{'User.addUser' |translate}}</strong>
                     <strong *ngIf="userProfileDTO.id && !viewMode">{{'User.editUser' |translate}}</strong>
                     <strong *ngIf="userProfileDTO.id  && viewMode ">{{'User.viewUser' |translate}}</strong>
@@ -29,7 +30,7 @@
                                         <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.firstName" type="text"
                                             id="firstName" class="form-control" #firstName="ngModel"
                                             [class.is-invalid]="firstName.invalid && firstName.touched"
-                                            [class.is-valid]="firstName.valid" required    name="firstName"
+                                            [class.is-valid]="firstName.valid" required name="firstName"
                                             aria-describedby="helpId">
                                         <small [hidden]="firstName.valid || firstName.untouched" id="helpId"
                                             class="text-muted" [translate]="'Errors.InvalidFirstName'"></small>
@@ -42,8 +43,7 @@
                                         <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.lastName" type="text"
                                             id="lastName" class="form-control" #lastName="ngModel"
                                             [class.is-invalid]="lastName.invalid && lastName.touched"
-                                            [class.is-valid]="lastName.valid"    name="lastName"
-                                            aria-describedby="helpId">
+                                            [class.is-valid]="lastName.valid" name="lastName" aria-describedby="helpId">
                                         <small [hidden]="lastName.valid || lastName.untouched" id="helpId"
                                             class="text-muted" [translate]="'Errors.InvalidLastName'"></small>
                                     </div>
@@ -54,13 +54,10 @@
                                     <div class="form-group">
                                         <label for="mobile" class=" form-control-label">{{'User.Mobile'
                                             |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.mobile" type="number"
-                                            id="mobile" class="form-control" #mobile="ngModel"
-                                            [class.is-invalid]="mobile.invalid && mobile.touched"
-                                            [pattern]="mobNumberPattern" [class.is-valid]="mobile.valid"  ="11"
-                                            name="mobile" aria-describedby="helpId">
-                                        <small [hidden]="mobile.valid || mobile.untouched" id="helpId"
-                                            class="text-muted" [translate]="'Errors.InvalidMobile'"></small>
+                                        <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.mobile" type="text"
+                                            id="mobile" class="form-control" [pattern]="mobNumberPattern" name="mobile"
+                                            aria-describedby="helpId">
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -70,8 +67,8 @@
                                         <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.userName" type="text"
                                             id="username" class="form-control" #username="ngModel"
                                             [class.is-invalid]="username.invalid && username.touched"
-                                            [class.is-valid]="username.valid" required    name="userName"
-                                            id="username" class="form-control" aria-describedby="helpId">
+                                            [class.is-valid]="username.valid" required name="userName" id="username"
+                                            class="form-control" aria-describedby="helpId">
                                         <small [hidden]="username.valid || username.untouched" id="helpId"
                                             class="text-muted" [translate]="'Errors.InvalidUserName'"></small>
                                     </div>
@@ -83,12 +80,13 @@
                                         <label for="email" class=" form-control-label">{{'User.Email'
                                             |translate}}</label>
                                         <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.email" type="email"
-                                            id="email" class="form-control" #email="ngModel"
+                                            id="email" class="form-control" name="email" id="email"
+                                            class="form-control">
+                                            <!-- #email="ngModel"
                                             [class.is-invalid]="email.invalid && email.touched"
-                                            [class.is-valid]="email.valid"  ="8" name="email" id="email"
-                                            class="form-control" aria-describedby="helpId">
-                                        <small [hidden]="email.valid || email.untouched" id="helpId" class="text-muted"
-                                            [translate]="'Errors.InvalidEmail'"></small>
+                                            [class.is-valid]="email.valid"="8" -->
+                                        <!-- <small [hidden]="email.valid || email.untouched" id="helpId" class="text-muted"
+                                            [translate]="'Errors.InvalidEmail'"></small> -->
                                     </div>
                                 </div>
                                 <div class="col-lg-6" [hidden]="viewMode">
@@ -103,13 +101,12 @@
                                     <div class="form-group">
                                         <label for="role" class=" form-control-label">{{'User.Role' |translate}}</label>
                                         <select name="role" required id="select" class="form-control"
-                                            [disabled]="viewMode" [(ngModel)]="userProfileDTO.userTypeId"
-                                            #userTypeId="ngModel">
-                                            <option *ngFor="let usertype of userTypes" [value]="usertype.value">
-                                                {{'userTypeEnum.'+usertype.label |translate}}
+                                            [disabled]="viewMode" [(ngModel)]="userProfileDTO.roleId" #roleId="ngModel">
+                                            <option *ngFor="let role of roleList" [value]="role.id">
+                                                {{role.name}}
                                             </option>
                                         </select>
-                                        <small [hidden]="userTypeId.valid || userTypeId.untouched" id="helpId"
+                                        <small [hidden]="roleId.valid || roleId.untouched" id="helpId"
                                             class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
                                     </div>
                                 </div>

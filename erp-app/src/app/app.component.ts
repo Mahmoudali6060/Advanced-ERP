@@ -4,6 +4,7 @@ import { PrimeNGConfig } from 'primeng/api';
 import { LocalStorageItems } from './shared/constants/local-storage-items';
 import { LocalStorageService } from './shared/services/local-storage.service';
 import { UserProfileDTO } from './modules/user-management/models/user-profile.dto';
+import { HelperService } from './shared/services/helper.service';
 
 @Component({
   selector: 'app-root',
@@ -13,19 +14,20 @@ import { UserProfileDTO } from './modules/user-management/models/user-profile.dt
 export class AppComponent {
   title = 'base';
   typeSelected: string;
-  constructor(private primengConfig: PrimeNGConfig,private translate: TranslateService,
+  constructor(private primengConfig: PrimeNGConfig, private translate: TranslateService,
     private localStorageService: LocalStorageService,
-) {
-  this.typeSelected = 'ball-clip-rotate-multiple';
+    private helperService: HelperService
+  ) {
+    this.typeSelected = 'ball-clip-rotate-multiple';
     let userProfileDTO = this.localStorageService.getItem(LocalStorageItems.userProfile) as UserProfileDTO;
-   // if (userProfileDTO) {
-    //  this.helpserService.useLanguage(userProfileDTO.defaultLanguage);
-   // }
- //   else {
+    if (userProfileDTO) {
+      this.helperService.useLanguage(userProfileDTO.defaultLanguage);
+    }
+    else {
       this.primengConfig.ripple = true;
       translate.setDefaultLang('en');
       translate.currentLang = 'en';
-  //  }
+    }
 
   }
 }

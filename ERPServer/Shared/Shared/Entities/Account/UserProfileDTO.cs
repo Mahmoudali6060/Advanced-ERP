@@ -41,9 +41,8 @@ namespace Entities.Account
 
         //[Required( ErrorMessage = "Errors.InvalidRole")]
         //[StringLength(50, MinimumLength = 2)]
-        public string Role { get; set; }
-        public int UserTypeId { get; set; }
-        public string UserType { get; set; }
+        public string RoleName { get; set; }
+        public long RoleId { get; set; }
         public string Token { get; set; }
         public string AppUserId { get; set; }
         public string ImageBase64 { get; set; }
@@ -52,6 +51,7 @@ namespace Entities.Account
         public bool IsFirstLogin { get; set; }
         public bool IsHide { get; set; }
         public  CompanyDTO CompanyDTO { get; set; }
+        public RoleGroupDTO RoleGroupDTO { get; set; }
 
     }
 }

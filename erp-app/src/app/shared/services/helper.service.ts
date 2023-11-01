@@ -2,11 +2,14 @@ import { Injectable, Inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageService } from './local-storage.service';
+import { Privileges } from '../enums/privileges.enum';
 
 
 @Injectable({ providedIn: 'root' })
 
 export class HelperService {
+
+    privileges = Privileges;
 
     constructor(private _datePipe: DatePipe, public translate: TranslateService, private localStorageService: LocalStorageService) {
 

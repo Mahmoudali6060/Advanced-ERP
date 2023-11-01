@@ -17,12 +17,12 @@ namespace Account.DataAccessLayer
 
         public async Task<IQueryable<UserProfile>> GetAll()
         {
-            return _appDbContext.UserProfiles.Where(x=>x.IsHide == false).Include(x => x.AppUser).AsQueryable();
+            return _appDbContext.UserProfiles.Where(x=>x.IsHide == false).Include(x => x.AppUser).Include(x=>x.Role).AsQueryable();
         }
 
         public async Task<IQueryable<UserProfile>> GetAllLite()
         {
-            return _appDbContext.UserProfiles.Include(x => x.AppUser).AsQueryable();
+            return _appDbContext.UserProfiles.Include(x => x.AppUser).Include(x=>x.Role).AsQueryable();
         }
 
         public async Task<UserProfile> GetById(long id)
@@ -68,7 +68,7 @@ namespace Account.DataAccessLayer
 
         public async Task<UserProfile> GetUserProfileByAppUserId(string appUserId)
         {
-            return await _appDbContext.UserProfiles.SingleOrDefaultAsync(x => x.AppUserId == appUserId);
+            return await _appDbContext.UserProfiles.Include(x=>x.Role).ThenInclude(x=>x.RolePrivileges).SingleOrDefaultAsync(x => x.AppUserId == appUserId);
         }
         public async Task<UserProfile> GetUserProfileByCompanyId(long CompanyId)
         {
