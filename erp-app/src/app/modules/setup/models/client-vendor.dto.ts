@@ -14,6 +14,10 @@ export class ClientVendorDTO {
     idNumber: string;
     imageBase64: string;
     typeId: ClientVendorTypeEnum;
+    
+    constructor() {
+        this.isActive = true;
+    }
 
 }
 

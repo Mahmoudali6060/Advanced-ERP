@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfigService } from 'src/app/shared/services/config.service';
@@ -33,6 +33,7 @@ export class PurchasesBillFormComponent {
 	purchaseHeaderId: any;
 	searchProduct: any;
 	currentBalance: number | null = 0;
+	@Input() searchByNumber: boolean = false;
 
 	constructor(
 		private purchasesBillService: PurchasesBillService,

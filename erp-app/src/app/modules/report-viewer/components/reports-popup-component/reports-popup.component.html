@@ -1,0 +1,27 @@
+<div>
+
+    <kendo-dialog class="n-dialog dialog--md" *ngIf="isOpened">
+
+        <kendo-dialog-titlebar>
+            <div class="n-dialog__header">
+                <div>
+                    <div class="n-dialog__title" translate>{{reportPopupTitle}}</div>
+                </div>
+
+                <div class="n-dialog__close" (click)="close()">
+                    <!-- <svg>
+                        <use xlink:href="/assets/img/svg-icons.svg#icon-close"></use>
+                    </svg> -->
+                </div>
+            </div>
+        </kendo-dialog-titlebar>
+        <div class="container-fluid">
+
+            <app-reports *ngIf="_reportName" [reportName]="_reportName" [parameters]="_reportParameters" [baseURL]="baseURL"
+              > </app-reports>
+
+        </div>
+
+    </kendo-dialog>
+
+</div>

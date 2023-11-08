@@ -6,4 +6,7 @@ export class RoleDTO {
     name: string;
     description: string;
     rolePrivileges: Array<RolePrivilegeDTO>
+    constructor() {
+        this.isActive = true;
+    }
 }

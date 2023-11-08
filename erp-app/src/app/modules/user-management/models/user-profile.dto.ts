@@ -22,5 +22,8 @@ export class UserProfileDTO {
     companyDTO: CompanyDTO;
     isHide: boolean = false;
     roleGroupDTO: RoleDTO;
+    constructor() {
+        this.isActive = true;
+    }
 
 }

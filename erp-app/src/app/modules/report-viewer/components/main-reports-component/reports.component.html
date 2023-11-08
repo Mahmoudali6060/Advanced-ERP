@@ -1,0 +1,21 @@
+<tr-viewer 
+    #viewer1 
+    [containerStyle]="viewerContainerStyle" 
+    [serviceUrl]="serviceUrl" 
+    [enableAccessibility]="false" 
+    [parametersAreaVisible]="false" 
+    [authenticationToken]="authenticationToken" 
+    [viewMode]="'INTERACTIVE'" 
+    [scaleMode]="'FIT_PAGE_WIDTH'" 
+    [pageMode]="'SINGLE_PAGE'"
+    [documentMapVisible]="true" 
+    [templateUrl]="'../../../../../assets/telerikReportViewerTemplate-sass.html'" 
+    [ready]="boundReportEvents"
+    [exportBegin]="boundReportEvents"
+    [exportEnd]="boundReportEvents"
+    [renderingBegin]="boundReportEvents"
+    [renderingEnd]="boundReportEvents"
+    [printBegin]="boundReportEvents"
+    [printEnd]="boundReportEvents"
+>
+</tr-viewer>

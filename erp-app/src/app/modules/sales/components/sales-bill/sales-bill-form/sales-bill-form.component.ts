@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfigService } from 'src/app/shared/services/config.service';
@@ -34,7 +34,14 @@ export class SalesBillFormComponent {
 	clientList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
 	purchaseHeaderId: any;
 	previousBalance: number = 0;
-	searhByCodeMode: any = false;
+	@Input() searchByNumber: boolean = false;
+	//#region 
+	reportName: string;
+	parameters: any;
+	reportPopupTitle: any;
+	isReportOpened: boolean;
+	//#endregion
+
 	constructor(
 		private salesBillService: SalesBillService,
 		private productService: ProductService,
@@ -46,14 +53,14 @@ export class SalesBillFormComponent {
 		private helperService: HelperService,
 		private translate: TranslateService,
 		private dialogService: DialogService,
-		private alertService: AlertService
+		private alertService: AlertService,
 	) {
 	}
 
 	ngOnInit() {
-		this.purchaseHeaderId = this.route.snapshot.paramMap.get('id');
-		this.searhByCodeMode = this.route.snapshot.paramMap.get('searhByCodeMode');
+		this.serverUrl = this._configService.getServerUrl();
 
+		this.purchaseHeaderId = this.route.snapshot.paramMap.get('id');
 
 		if (this.purchaseHeaderId) {
 			this.getSalesBillById(this.purchaseHeaderId);
@@ -89,7 +96,6 @@ export class SalesBillFormComponent {
 
 	getSalesBillById(salesBillId: any) {
 		this.salesBillService.getById(salesBillId).subscribe((res: any) => {
-			debugger;
 			this.salesBillHeaderDTO = res;
 			this.getAllProducts();
 			this.getAllClients();
@@ -120,18 +126,28 @@ export class SalesBillFormComponent {
 
 	}
 
-	save(form: NgForm) {
+	save(isPrint: boolean, form?: NgForm) {
 		if (this.validation(this.salesBillHeaderDTO)) {
 			if (this.salesBillHeaderDTO.id) {
 				this.salesBillService.update(this.salesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
-					this.back();
+					if (isPrint) {
+						this.print();
+					}
+					else {
+						this.back();
+					}
 				})
 			}
 			else {
 				this.salesBillService.add(this.salesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
-					this.back();
+					if (isPrint) {
+						this.print();
+					}
+					else {
+						this.back();
+					}
 				})
 			}
 		}
@@ -167,6 +183,8 @@ export class SalesBillFormComponent {
 			if (!item.discount) item.discount = product.purchasingPricePercentage;
 			item.actualQuantity = product.actualQuantity;
 			item.sellingPrice = (product.price - (product.purchasingPricePercentage / 100) * product.price);
+			item.productName = product.name;
+			item.productCode = product.code;
 			this.updateTotal();
 		}
 	}
@@ -202,4 +220,131 @@ export class SalesBillFormComponent {
 			this.previousBalance = selectedClient?.debit - selectedClient?.credit;
 		}
 	}
+
+	viewReport() {
+		this.reportName = 'Sales/SalesBill';
+		this.parameters = {
+			'SalesHeaderId': this.salesBillHeaderDTO.id,
+			'PrintedBy': 'TTTTT',
+			'PrintingDate': null //new Date().toString()//this.datePipe.transform(this.sharedService.convertDateTimeToString(new Date()), this.sharedService.getPropertyDateTimeFormat()),
+		};
+		this.reportPopupTitle = this.translate.instant('ttt');
+		this.isReportOpened = true;
+	}
+
+	onReportPopupClose() {
+		this.isReportOpened = false;
+	}
+
+
+	saveAndPrint() {
+		this.save(true, undefined)
+	}
+
+	print() {
+
+		let div = document.getElementById('printDiv');
+		let popupWin: any;
+		// printContents = document.getElementById('print-section').innerHTML;
+		popupWin = window.open('', '_blank', 'top=0,left=0,height=100%');
+		popupWin.document.open();
+		var html = `
+		  <html dir="rtl">
+			<head>
+			  <title>فاتورة</title>
+			  <style>
+			  table { 
+				width: 100%; 
+				border-collapse: collapse; 
+				margin:5px auto;
+				margin-top: 0px;
+				overflow-x:auto;
+				margin-bottom: 0px;
+				}
+			  
+			  /* Zebra striping */
+			  tr:nth-of-type(odd) { 
+				background: #eee; 
+				}
+			  
+			  th { 
+				background: #bec5c5; 
+				color: black; 
+				font-weight: bold; 
+				}
+			  
+			  td, th { 
+				padding: 10px; 
+				border: 1px solid #ccc; 
+				text-align: right; 
+				font-size: 18px;
+				}
+			  
+body {
+	background: #ccc;
+	padding: 5px;
+  }
+  
+  .container {
+	width: 21cm;
+	min-height: 29.7cm;
+  }
+  
+  .invoice {
+	background: #fff;
+	width: 100%;
+	padding: 50px;
+  }
+  
+  .logo {
+	width: 3.5cm;
+  }
+  
+  .document-type {
+	text-align: right;
+	color: #444;
+  }
+  
+  .text-center{
+	text-align: center;
+  }
+  
+  .text-left{
+	text-align: left;
+  }
+  
+  .text-bold{
+	font-weight: bold;
+  }
+  .conditions {
+	font-size: 0.7em;
+	color: #666;
+  }
+  
+  .bottom-page {
+	font-size: 0.7em;
+  }
+   
+			  </style>
+	
+			  <meta charset="utf-8">
+			  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+			  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+   
+    <link href="/assets/plugins/bootstrap/bootstrap.min.css" rel="stylesheet" media="all">
+
+
+			</head>
+			<body onload="window.print()">
+			  <div class="wrapper" style="font-family: 'Helvetica Neue', lato, arial, sans-serif;font-size: 12px;">
+				`;
+		html += div?.innerHTML;
+		html += ` 
+			  </div>
+			</body>
+		  </html>`
+		popupWin.document.write(html);
+		popupWin.document.close();
+	}
+
 }

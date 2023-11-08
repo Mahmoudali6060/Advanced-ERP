@@ -12,11 +12,14 @@ import { CategoryService } from '../setup/services/category.service';
 import { ClientVendorService } from '../setup/services/client-vendor.service';
 import { SalesBillService } from './services/sales-bill.service';
 import { SetupSharedModule } from 'src/app/shared/modules/setup-shared/setup-shared.module';
+import { ReportViewerModule } from '../report-viewer/report-viewer.module';
+import { SalesBillSearchComponent } from './components/sales-bill/sales-bill-search/sales-bill-search.component';
 
 @NgModule({
   imports: [
     SalesRoutingModule,
     SharedModule,
+    ReportViewerModule,
     ConfigurationsModule,
     AuthModule,
     InputSwitchModule,
@@ -27,7 +30,8 @@ import { SetupSharedModule } from 'src/app/shared/modules/setup-shared/setup-sha
   ],
   declarations: [
     SalesBillListComponent,
-    SalesBillFormComponent
+    SalesBillFormComponent,
+    SalesBillSearchComponent
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

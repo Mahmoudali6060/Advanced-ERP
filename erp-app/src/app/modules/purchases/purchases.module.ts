@@ -11,6 +11,7 @@ import { ProductService } from '../setup/services/product.service';
 import { CategoryService } from '../setup/services/category.service';
 import { ClientVendorService } from '../setup/services/client-vendor.service';
 import { PurchasesBillService } from './services/purchases-bill.service';
+import { PurchasesBillSearchComponent } from './components/purchases-bill/purchases-bill-search/purchases-bill-search.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { PurchasesBillService } from './services/purchases-bill.service';
   ],
   declarations: [
     PurchasesBillListComponent,
-    PurchasesBillFormComponent
+    PurchasesBillFormComponent,
+    PurchasesBillSearchComponent
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

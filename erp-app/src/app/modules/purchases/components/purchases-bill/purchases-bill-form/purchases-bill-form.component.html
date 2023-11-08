@@ -259,7 +259,7 @@
 
 
             </div>
-            <div class="flex-container p-3">
+            <div class="flex-container p-3" *ngIf="!searchByNumber">
                 <button (click)="save(frm)" type="button" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
                     <i class="fa fa-dot-circle-o"></i>{{'General.Save' |translate}}
                 </button>

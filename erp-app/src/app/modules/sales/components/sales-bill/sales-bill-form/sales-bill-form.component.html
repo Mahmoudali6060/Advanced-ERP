@@ -10,16 +10,16 @@
             </div>
             <div class="card-body card-block">
                 <div class="row">
-                    <div class="col-lg-3" >
+                    <div class="col-lg-3">
                         <div class="form-group">
                             <label for="number" class=" form-control-label">{{'General.BillNumber'
                                 |translate}}</label>
                             <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.number" type="text" id="number"
-                                class="form-control"   name="number" aria-describedby="helpId">
+                                class="form-control" name="number" aria-describedby="helpId">
                         </div>
                     </div>
 
-                    <div class="col-lg-3" *ngIf="!searhByCodeMode">
+                    <div class="col-lg-3" *ngIf="!searchByNumber">
                         <div class="form-group">
                             <label class="form-label" for="clientId">{{'General.Client'|translate}}</label>
                             <select name="clientId" id="clientId" class="form-control"
@@ -30,7 +30,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-3" *ngIf="!searhByCodeMode">
+                    <div class="col-lg-3" *ngIf="!searchByNumber">
                         <div class="form-group">
                             <label for="previousBalance" class=" form-control-label">{{'General.CurrentBalance'
                                 |translate}}</label>
@@ -39,7 +39,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3" *ngIf="!searhByCodeMode">
+                    <div class="col-lg-3" *ngIf="!searchByNumber">
                         <div class="form-group">
                             <label class="form-label" for="date">{{'General.Date'|translate}}</label>
                             <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.date" type="date" id="date"
@@ -50,7 +50,7 @@
                     </div>
                 </div>
 
-                <div class="row" *ngIf="!searhByCodeMode">
+                <div class="row" *ngIf="!searchByNumber">
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="col-lg-12">
@@ -94,7 +94,7 @@
                                                 </td>
                                                 <td>
                                                     {{item.sellingPrice}}
-                                                    
+
                                                 </td>
                                                 <td>
                                                     <input [(ngModel)]="item.quantity" type="number"
@@ -249,9 +249,12 @@
 
 
             </div>
-            <div class="flex-container p-3" *ngIf="!searhByCodeMode">
-                <button (click)="save(frm)" type="button" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
+            <div class="flex-container p-3" *ngIf="!searchByNumber">
+                <button (click)="save(false,frm)" type="button" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
                     <i class="fa fa-dot-circle-o"></i>{{'General.Save' |translate}}
+                </button>
+                <button (click)="saveAndPrint()" type="button" class="btn btn-outline-success mr-1">
+                    <i class="fa fa-dot-circle-o"></i>{{'General.SaveAndPrint' |translate}}
                 </button>
                 <button type="reset" class="btn btn-danger mr-1" (click)="back()">
                     <i class="fa fa-ban"></i>{{'General.Back' |translate}}
@@ -261,3 +264,158 @@
         </div>
     </div>
 </form>
+
+
+<reports-popup *ngIf="isReportOpened" [reportName]="reportName" [parameters]="parameters"
+    [reportPopupTitle]="reportPopupTitle" [isOpened]="isReportOpened" (onClose)="onReportPopupClose()">
+</reports-popup>
+
+
+
+<div class="container" id="printDiv" style="display: none;">
+    <div class="invoice">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <img width="100" src="{{serverUrl}}wwwroot/Images/Company/ElBawabLogo.PNG" class="logo">
+            </div>
+            <div class="col-lg-12">
+                <h1 class="display-4 text-center">El Bawab</h1>
+                <p class="text-center"><strong>Mall Misr</strong></p>
+                <p class="text-center"><strong>Tel:01023236718</strong></p>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-lg-12">
+                <br><br>
+
+                <table style="background-color: white !important" border="0">
+                    <tr>
+                        <td class="text-right">العميل</td>
+                        <td class="text-center text-bold"> علي</td>
+                        <td class="text-left">Client</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">الرصيد</td>
+                        <td class="text-center text-bold">1000</td>
+                        <td class="text-left">Balance</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">العنوان</td>
+                        <td class="text-center text-bold">دار مصر بدر </td>
+                        <td class="text-left">Address</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">رقم الفاتورة</td>
+                        <td class="text-center text-bold">1002</td>
+                        <td class="text-left">Invoice No</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">تاريخ الفاتورة</td>
+                        <td class="text-center text-bold">12/12/2023</td>
+                        <td class="text-left">Invoice Date</td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+        <br>
+        <br>
+        <!-- <h6>Audits et rapports mensuels (1er Novembre 2016 - 30 Novembre 2016)</h6> -->
+        <br>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>
+                        المنتج
+                        <br>
+                        Product
+
+                    </th>
+                    <th>
+                        الكمية
+                        <br>
+                        Quantity
+                    </th>
+                    <th>
+                        السعر
+                        <br>
+                        Price
+                    </th>
+                    <th>
+                        الاجمالي
+                        <br>
+                        Sub Total
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of salesBillHeaderDTO.salesBillDetailList;let i=index; ">
+                    <td>
+                        {{i+1}}
+                    </td>
+                    <td>{{item.productCode}} {{item.productName}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.price}}</td>
+                    <td>{{item.subTotal}}</td>
+                </tr>
+
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-6">
+                <table style="background-color: white !important" border="0">
+                    <tr>
+                        <td class="text-right">الإجمالي </td>
+                        <td class="text-center text-bold">{{salesBillHeaderDTO.total}} </td>
+                        <td class="text-left">Total</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">النقل</td>
+                        <td class="text-center text-bold">{{salesBillHeaderDTO.transfer}}</td>
+                        <td class="text-left">Transfer</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">الخصومات</td>
+                        <td class="text-center text-bold">{{salesBillHeaderDTO.discount}}</td>
+                        <td class="text-left">Discount</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-6">
+                <table style="background-color: white !important" border="0">
+                    <tr>
+                        <td class="text-right">الإجمالي بعد الخصم</td>
+                        <td class="text-center text-bold">{{salesBillHeaderDTO.totalAfterDiscount}}</td>
+                        <td class="text-left">Toal After Discount</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">المدفوع</td>
+                        <td class="text-center text-bold">{{salesBillHeaderDTO.paid}}</td>
+                        <td class="text-left">Paid</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">المتبقي</td>
+                        <td class="text-center text-bold">{{salesBillHeaderDTO.remaining}} </td>
+                        <td class="text-left">Remaining</td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <p class="bottom-page text-right">
+           {{salesBillHeaderDTO.notes}}
+        </p>
+    </div>
+</div>

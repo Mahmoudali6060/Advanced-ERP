@@ -31,6 +31,7 @@ import { ComboBoxComponent } from './components/combo-box/combo-box.component';
 import { UserProfileService } from '../modules/user-management/services/user.service';
 import { AuthService } from '../modules/authentication/services/auth.service';
 import { IfPrivilegeDirective } from './directives/if-privilege.directive';
+import { KendoUIControlsModule } from './modules/kendo-ui-controls.module';
 
 @NgModule({
 
@@ -49,6 +50,7 @@ import { IfPrivilegeDirective } from './directives/if-privilege.directive';
     NgxSpinnerModule,
     CarouselModule,
     TabViewModule,
+    KendoUIControlsModule
     //DropDownsModule
 
   ],
@@ -69,7 +71,7 @@ import { IfPrivilegeDirective } from './directives/if-privilege.directive';
     LoaderComponent,
     ComboBoxComponent,
     IfPrivilegeDirective,
-
+    KendoUIControlsModule
     // ModalBasicComponent
   ],
   schemas: [

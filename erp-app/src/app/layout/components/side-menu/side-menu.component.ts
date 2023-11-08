@@ -66,7 +66,6 @@ export class SideMenuComponent implements OnInit {
   }
 
   goToUrl(url: string, queryParams: string) {
-    debugger;
     this.router.navigate([url], { queryParams: [queryParams], skipLocationChange: true });
   }
   public logOut() {

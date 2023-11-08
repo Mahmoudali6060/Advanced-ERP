@@ -87,7 +87,8 @@
     "CurrentBalance": "Current Balance",
     "Paid": "Paid",
     "Remaining": "Remaining",
-    "SellingPrice": "Selling Price"
+    "SellingPrice": "Selling Price",
+    "SaveAndPrint": "Save and print"
   },
   "Dashboard": {
     "overview": "Overview",
@@ -435,12 +436,14 @@
     "PurchasesBillsTitle": "Purchasas Bills",
     "AddPurchasesBill": "Add purchases bill",
     "EditPurchasesBill": "Edit purchases bill",
-    "ViewPurchasesBill": "View purchases bill"
+    "ViewPurchasesBill": "View purchases bill",
+    "SearchPurehasesBill": "Search Purehases Bill"
   },
   "Sales": {
     "SalesBillsTitle": "Sales Bills",
     "AddSalesBill": "Add sales bill",
     "EditSalesBill": "Edit sales bill",
-    "ViewSalesBill": "View sales bill"
+    "ViewSalesBill": "View sales bill",
+    "SearchSalesBill": "Search Sales Bill"
   }
 }

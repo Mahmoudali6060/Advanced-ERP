@@ -4,4 +4,7 @@ export class CategoryDTO {
     code: string;
     name: string;
     isActive: boolean;
+    constructor() {
+        this.isActive = true;
+    }
 }

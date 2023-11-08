@@ -99,7 +99,8 @@
     "CurrentBalance": "الرصيد الحالي",
     "Paid": "المدفوع",
     "Remaining": "المتبقي",
-    "SellingPrice": "سعر الشراء"
+    "SellingPrice": "سعر الشراء",
+    "SaveAndPrint": "حفظ وطباعة"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -310,8 +311,8 @@
     "YouMustSelectProducts": "يجب اختيار منتجات لعمل الفاتورة",
     "DuplicatedFullName": "هذا الاسم مكرر",
     "DuplicatedSelectedProduct": "لقد اخترت هذا المنتج من قبل",
-    "Error": "خطأ ي شرمووط",
-    "NotFound": "لا يوجد فاتورة بهذا الرقم يا خول"
+    "Error": "خطأ",
+    "NotFound": "لا يوجد فاتورة بهذا الرقم  "
   },
   "Warning": {
     "NoDriversAvialable": "لا يوجد سائق متاح في هذه الفترة"
@@ -431,13 +432,15 @@
     "PurchasesBillsTitle": "فواتير المشتريات",
     "AddPurchasesBill": "إضافة فاتورة مشتريات",
     "EditPurchasesBill": "تعديل فاتورة المشتريات",
-    "ViewPurchasesBill": "عرض فاتورة المشتريات"
+    "ViewPurchasesBill": "عرض فاتورة المشتريات",
+    "SearchPurehasesBill": "بحث عن فاتورة المشتريات"
   },
   "Sales": {
     "SalesBillsTitle": "فواتير المبيعات",
     "AddSalesBill": "إضافة فاتورة المبيعات",
     "EditSalesBill": "تعديل فاتورة المبيعات",
-    "ViewSalesBill": "عرض فاتورة المبيعات"
+    "ViewSalesBill": "عرض فاتورة المبيعات",
+    "SearchSalesBill": "بحث عن فاتورة مبيعات"
   },
   "Privileges": {
     "UserManagement": "اعدادات المستخدمين",

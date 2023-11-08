@@ -195,11 +195,17 @@
                             <i class="fas fa-shopping-basket"></i>
                             <span class="bot-line"></span><span translate>SideMenu.Sales</span></a>
                         <ul class="header3-sub-list list-unstyled">
-                            <li >
+
+                            <li>
+                                <a [routerLink]="['/sales-bill/sales-bill-search']">
+                                    <i class="fas fa-shopping-basket"></i><span
+                                        translate>Sales.SearchSalesBill</span></a>
+                            </li>
+                            <li>
                                 <a [routerLink]="['/sales-bill/sales-bill-form']">
                                     <i class="fas fa-shopping-basket"></i><span translate>Sales.AddSalesBill</span></a>
                             </li>
-                            <li >
+                            <li>
                                 <a [routerLink]="['/sales-bill/sales-bill-list']">
                                     <i class="fas fa-shopping-basket"></i><span translate>SideMenu.SalesBills</span></a>
                             </li>
@@ -211,13 +217,20 @@
                             <i class="zmdi zmdi-shopping-cart"></i>
                             <span class="bot-line"></span><span translate>SideMenu.Purchases</span></a>
                         <ul class="header3-sub-list list-unstyled">
-                            <li >
-                                <a [routerLink]="['/purchases-bill/purchases-bill-form']">
-                                    <i class="zmdi zmdi-shopping-cart"></i><span translate>Purchases.AddPurchasesBill</span></a>
+                            <li>
+                                <a [routerLink]="['/purchases-bill/purchases-bill-search']">
+                                    <i class="fas fa-shopping-basket"></i><span
+                                        translate>Sales.SearchPurehasesBill</span></a>
                             </li>
-                            <li >
+                            <li>
+                                <a [routerLink]="['/purchases-bill/purchases-bill-form']">
+                                    <i class="zmdi zmdi-shopping-cart"></i><span
+                                        translate>Purchases.AddPurchasesBill</span></a>
+                            </li>
+                            <li>
                                 <a [routerLink]="['/purchases-bill/purchases-bill-list']">
-                                    <i class="zmdi zmdi-shopping-cart"></i><span translate>SideMenu.PurchasesBills</span></a>
+                                    <i class="zmdi zmdi-shopping-cart"></i><span
+                                        translate>SideMenu.PurchasesBills</span></a>
                             </li>
 
                         </ul>
