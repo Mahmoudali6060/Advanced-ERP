@@ -30,7 +30,7 @@ export class SalesBillListComponent {
 	total: number;
 	recordsPerPage: number = 5;
 	statusDDL: any;
-
+	//Test
 	constructor(private productService: SalesBillService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
