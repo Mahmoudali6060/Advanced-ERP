@@ -100,12 +100,12 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="role" class=" form-control-label">{{'User.Role' |translate}}</label>
-                                        <select name="role" required id="select" class="form-control"
+                                        <ng-select name="role" required id="select" 
                                             [disabled]="viewMode" [(ngModel)]="userProfileDTO.roleId" #roleId="ngModel">
-                                            <option *ngFor="let role of roleList" [value]="role.id">
+                                            <ng-option *ngFor="let role of roleList" [value]="role.id">
                                                 {{role.name}}
-                                            </option>
-                                        </select>
+                                            </ng-option>
+                                        </ng-select>
                                         <small [hidden]="roleId.valid || roleId.untouched" id="helpId"
                                             class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
                                     </div>

@@ -8,7 +8,8 @@ import { ProductService } from 'src/app/modules/setup/services/product.service';
 
 @Component({
   selector: 'app-product-form-popup',
-  templateUrl: './product-form-popup.component.html'
+  templateUrl: './product-form-popup.component.html',
+  styles:['./product-form-popup.component.css']
 })
 
 export class ProductFormPopupComponent {
