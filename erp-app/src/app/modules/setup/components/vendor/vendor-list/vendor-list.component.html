@@ -26,12 +26,12 @@
                                     <div class="form-group">
                                         <label class="form-label"
                                             for="form3Example3c">{{'General.Status'|translate}}</label>
-                                        <select name="drivers" id="drivers" class="form-control"
+                                        <ng-select name="drivers" id="drivers"
                                             [(ngModel)]="searchCriteriaDTO.isActive">
-                                            <option value=''> {{'General.All' |translate}}</option>
-                                            <option value=true> {{'General.Active' |translate}}</option>
-                                            <option value=false> {{'General.InActive' |translate}}</option>
-                                        </select>
+                                            <ng-option value=''> {{'General.All' |translate}}</ng-option>
+                                            <ng-option value=true> {{'General.Active' |translate}}</ng-option>
+                                            <ng-option value=false> {{'General.InActive' |translate}}</ng-option>
+                                        </ng-select>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">

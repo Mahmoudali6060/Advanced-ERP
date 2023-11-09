@@ -79,18 +79,18 @@
                                                 name="password" placeholder="{{'Authentication.Password' |translate}}">
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <div class="form-group col-md-6">
                                             <label for="role" class=" form-control-label">{{'User.Role'
                                                 |translate}}</label>
-                                            <select name="role" id="select" class="form-control"
+                                            <ng-select name="role" id="select" 
                                                 [(ngModel)]="registerModel.userTypeId">
-                                                <option *ngFor="let usertype of userTypes" [value]="usertype.value">
+                                                <ng-option *ngFor="let usertype of userTypes" [value]="usertype.value">
                                                     {{'userTypeEnum.'+usertype.label |translate}}
-                                                </option>
-                                            </select>
+                                                </ng-option>
+                                            </ng-select>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="row">
                                         <div class="col-md-3"></div>
                                         <div class="login-checkbox col-md-6">

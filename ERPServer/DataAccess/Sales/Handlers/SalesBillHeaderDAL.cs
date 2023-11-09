@@ -50,7 +50,8 @@ namespace Sales.DataAccessLayer
 
         public async Task<long> Update(SalesBillHeader entity)
         {
-            _appDbContext.SalesBillHeaders.Update(entity);
+            _appDbContext.Entry(entity).State = EntityState.Modified;
+            _appDbContext.Entry(entity).Property(x => x.Number).IsModified = false;
             return entity.Id;
         }
 

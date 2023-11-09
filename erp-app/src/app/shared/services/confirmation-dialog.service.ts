@@ -20,8 +20,9 @@ export class DialogService {
         return modalRef.result;
     }
 
-    public show(dialogSize: 'sm' | 'lg' = 'sm', component: any): Promise<any> {
+    public show(dialogSize: 'sm' | 'lg' = 'sm', component: any,obj?:any): Promise<any> {
         const modalRef = this.modalService.open(component, { size: dialogSize });
+        modalRef.componentInstance.obj = obj;
         return modalRef.result;
     }
 

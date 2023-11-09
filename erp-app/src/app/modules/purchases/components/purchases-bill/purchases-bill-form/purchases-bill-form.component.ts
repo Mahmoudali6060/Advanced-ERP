@@ -17,6 +17,7 @@ import { DialogService } from 'src/app/shared/services/confirmation-dialog.servi
 import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 import { ClientVendorDTO, ClientVendorTypeEnum } from 'src/app/modules/setup/models/client-vendor.dto';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { ClientVendorFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/client-vendor-form-popup/client-vendor-form-popup.component';
 @Component({
 	selector: 'app-purchases-bill-form',
 	templateUrl: './purchases-bill-form.component.html',
@@ -209,5 +210,16 @@ export class PurchasesBillFormComponent {
 			let selectedVendor: any = this.vendorList.find(c => c.id == this.purchasesBillHeaderDTO.clientVendorId);
 			this.currentBalance = selectedVendor?.debit - selectedVendor?.credit;
 		}
+	}
+
+	showCleintVendorFormPopUp() {
+		this.dialogService.show("sm", ClientVendorFormPopupComponent, ClientVendorTypeEnum.Vendor)
+			.then((clientVendor) => {
+				if (clientVendor) {
+					this.purchasesBillHeaderDTO.clientVendorId = clientVendor.id
+					this.getAllVendors();
+				}
+			})
+			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
 	}
 }

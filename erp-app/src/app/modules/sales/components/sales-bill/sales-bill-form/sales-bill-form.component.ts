@@ -19,6 +19,7 @@ import { DialogService } from 'src/app/shared/services/confirmation-dialog.servi
 import { PurchasesBillDetailsDTO } from 'src/app/modules/purchases/models/purchases-bill-details.dto';
 import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { ClientVendorFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/client-vendor-form-popup/client-vendor-form-popup.component';
 
 @Component({
 	selector: 'app-sales-bill-form',
@@ -33,7 +34,7 @@ export class SalesBillFormComponent {
 	productList: Array<ProductDTO> = new Array<ProductDTO>();
 	clientList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
 	purchaseHeaderId: any;
-	previousBalance: number = 0;
+	currentBalance: number = 0;
 	@Input() searchByNumber: boolean = false;
 	//#region 
 	reportName: string;
@@ -217,7 +218,7 @@ export class SalesBillFormComponent {
 	onClientChange() {
 		if (this.salesBillHeaderDTO.clientVendorId) {
 			let selectedClient: any = this.clientList.find(c => c.id == this.salesBillHeaderDTO.clientVendorId);
-			this.previousBalance = selectedClient?.debit - selectedClient?.credit;
+			this.currentBalance = selectedClient?.debit - selectedClient?.credit;
 		}
 	}
 
@@ -236,6 +237,31 @@ export class SalesBillFormComponent {
 		this.isReportOpened = false;
 	}
 
+
+	getSalesByNumber() {
+		this.salesBillService.getByNumber(this.salesBillHeaderDTO.number).subscribe((res: any) => {
+			if (!res) {
+				this.salesBillHeaderDTO = new SalesBillHeaderDTO();
+				this.currentBalance = 0;
+				this.alertService.showError(this.translate.instant("Errors.NotFound"), this.translate.instant("Errors.Error"));
+				return;
+			}
+			this.salesBillHeaderDTO = res;
+			this.getAllProducts();
+			this.getAllClients();
+		});
+	}
+
+	showCleintVendorFormPopUp() {
+		this.dialogService.show("sm", ClientVendorFormPopupComponent, ClientVendorTypeEnum.Client)
+			.then((clientVendor) => {
+				if (clientVendor) {
+					this.salesBillHeaderDTO.clientVendorId = clientVendor.id
+					this.getAllClients();
+				}
+			})
+			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+	}
 
 	saveAndPrint() {
 		this.save(true, undefined)

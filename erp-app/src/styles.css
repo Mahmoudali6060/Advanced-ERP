@@ -254,6 +254,9 @@ i:hover {
     width: 25%;
 }
 
+.cell-width-26{
+    width: 26%;
+}
 .cell-width-35{
     width: 35%;
 }
@@ -267,6 +270,10 @@ width: 15%;
 }
 
 .ng-select.ng-select-single .ng-select-container{
-    width: 300px;
+    /* width: 300px; */
     height: 38px !important;
+}
+
+.ng-select-custom{
+     width: 199px;
 }

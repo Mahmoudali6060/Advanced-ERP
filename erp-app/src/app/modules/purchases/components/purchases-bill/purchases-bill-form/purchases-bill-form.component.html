@@ -29,13 +29,13 @@
                     <div class="col-lg-3">
                         <label class="form-label" for="vendorId">{{'General.Vendor'|translate}}</label>
                         <div class="input-group">
-                            <select name="vendorId" id="vendorId" class="form-control"
+                            <ng-select name="vendorId" id="vendorId" class="ng-select-custom"
                                 [(ngModel)]="purchasesBillHeaderDTO.clientVendorId" (change)="onVendorChange()">
-                                <option value=" null" disabled>{{'General.SelectVendor'|translate}}</option>
-                                <option *ngFor="let item of vendorList" [value]="item.id"> {{item.fullName}}
-                                </option>
-                            </select>
-                            <div class="input-group-addon" data-toggle="tooltip" data-placement="top"
+                                <ng-option value=" null" disabled>{{'General.SelectVendor'|translate}}</ng-option>
+                                <ng-option *ngFor="let item of vendorList" [value]="item.id"> {{item.fullName}}
+                                </ng-option>
+                            </ng-select>
+                            <div class="input-group-addon" data-toggle="tooltip" data-placement="top" (click)="showCleintVendorFormPopUp()"
                                 title="Add Vendor">
                                 <i class="fa fa-plus-square"></i>
                             </div>
@@ -86,9 +86,9 @@
                                                 <td>
                                                     {{i+1}}
                                                 </td>
-                                                <td class="cell-width-35">
+                                                <td class="cell-width-26">
                                                     <div class="input-group">
-                                                        <ng-select [(ngModel)]="item.productId"
+                                                        <ng-select [(ngModel)]="item.productId" class="ng-select-custom"
                                                             [ngModelOptions]="{standalone: true}"
                                                             (change)="onProductChange(item,$event)">
                                                             <ng-option *ngFor="let product of productList"
@@ -259,7 +259,7 @@
 
 
             </div>
-            <div class="flex-container p-3" *ngIf="!searchByNumber">
+            <div class="flex-container p-3" >
                 <button (click)="save(frm)" type="button" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
                     <i class="fa fa-dot-circle-o"></i>{{'General.Save' |translate}}
                 </button>
