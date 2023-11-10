@@ -11,7 +11,6 @@ namespace Data.Entities.Purchases
 {
     public class PurchasesBillHeader : BaseEntity
     {
-        public bool IsActive { get; set; }
         public string Number { get; set; }
         public DateTime Date { get; set; }
         public decimal Total { get; set; }

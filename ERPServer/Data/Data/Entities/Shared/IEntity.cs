@@ -7,13 +7,8 @@ using System.Text;
 namespace Data.Entities.Shared
 {
 
-    public class BaseEntity
+    public interface IEntity
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
         public long Id { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime? Modified { get; set; }
-        public bool? IsActive { get; set; }
     }
 }

@@ -26,6 +26,7 @@ namespace UnitOfWork.Contracts
         ICategoryDAL CategoryDAL { get; }
         IProductDAL ProductDAL { get; }
         IClientVendorDAL ClientVendorDAL { get; }
+        ICompanyDAL CompanyDAL { get; }
         #endregion
 
         #region Purchase

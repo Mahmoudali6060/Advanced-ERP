@@ -100,7 +100,11 @@
     "Paid": "المدفوع",
     "Remaining": "المتبقي",
     "SellingPrice": "سعر الشراء",
-    "SaveAndPrint": "حفظ وطباعة"
+    "SaveAndPrint": "حفظ وطباعة",
+    "AddressDetails": "العنوان تفصيلاً",
+    "ContactPerson": "الشخص المسؤول",
+    "ContactTelephone": "هاتف الشخص المسؤول",
+    "WebsiteLink": "رايط الانترنت"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -450,5 +454,11 @@
     "View": "عرض",
     "Edit": "تعديل",
     "Delete": "حذف"
+  },
+  "Company": {
+    "Title": "الشركات",
+    "AddCompany": "أضافة شركة جديدة",
+    "EditCompany": "تعديل الشركة",
+    "ViewCompany": "عرض الشركة "
   }
 }

@@ -5,8 +5,6 @@ import { BaseEntityService } from '../../../shared/services/base-entity.service'
   providedIn: "root"
 })
 export class CompanyService extends BaseEntityService {
-  controllerName = 'ShippingLine';
-  GetAllCompanyTotalDetails(): any{
-    return this.httpHelperService.get(this.controllerName + '/GetAllCompanyTotalDetails');
-  }
+  controllerName = 'Company';
+ 
 }

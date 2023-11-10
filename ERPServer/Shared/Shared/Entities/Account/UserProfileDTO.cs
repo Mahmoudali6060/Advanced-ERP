@@ -17,7 +17,7 @@ namespace Entities.Account
         //[StringLength(50, ErrorMessage = "Errors.InvalidFirstName", MinimumLength = 2)]
         public string FirstName { get; set; }
 
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
         //[Required(ErrorMessage = "Errors.LastNameIsRequired")]
         //[StringLength(50, ErrorMessage = "Errors.InvalidLastName", MinimumLength = 2)]
         public string LastName { get; set; }

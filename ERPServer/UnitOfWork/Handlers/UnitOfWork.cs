@@ -40,6 +40,8 @@ namespace UnitOfWork.Handlers
         public IProductDAL ProductDAL { get; private set; }
         public IClientVendorDAL ClientVendorDAL { get; private set; }
         public IAdvertismentDAL AdvertismentDAL { get; private set; }
+        public ICompanyDAL CompanyDAL { get; private set; }
+
         #endregion
 
         #region Purchases
@@ -79,6 +81,7 @@ namespace UnitOfWork.Handlers
             CategoryDAL = new CategoryDAL(_context);
             ProductDAL = new ProductDAL(_context);
             ClientVendorDAL = new ClientVendorDAL(_context);
+            CompanyDAL = new CompanyDAL(_context);
             #endregion
 
             #region Purchases

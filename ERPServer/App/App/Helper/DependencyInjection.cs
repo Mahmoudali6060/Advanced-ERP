@@ -73,6 +73,9 @@ namespace App.Helper
             services.AddTransient<IClientVendorDAL, ClientVendorDAL>();
             services.AddTransient<IClientVendorDSL, ClientVendorDSL>();
 
+            services.AddTransient<ICompanyDAL, CompanyDAL>();
+            services.AddTransient<ICompanyDSL, CompanyDSL>();
+
             #endregion
 
             #region User Management

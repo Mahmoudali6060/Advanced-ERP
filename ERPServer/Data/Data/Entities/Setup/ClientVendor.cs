@@ -11,7 +11,6 @@ namespace Data.Entities.Setup
 {
     public class ClientVendor : BaseEntity
     {
-        public bool IsActive { get; set; }
         public string Code { get; set; }
         public string FullName { get; set; }
         public string Address { get; set; }

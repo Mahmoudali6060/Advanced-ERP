@@ -10,7 +10,6 @@ namespace Data.Entities.Setup
 {
     public class Product : BaseEntity
     {
-        public bool IsActive { get; set; }
         public string Code { get; set; }
         public string BarCode { get; set; }
         public string Name { get; set; }

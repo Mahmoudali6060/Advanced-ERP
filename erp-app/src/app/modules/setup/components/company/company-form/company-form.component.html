@@ -1,0 +1,141 @@
+<div class="row">
+    <form #frm="ngForm" (ngSubmit)="save(frm)">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong *ngIf="!companyDTO.id">{{'Company.AddCompany' |translate}}</strong>
+                    <strong *ngIf="companyDTO.id && !viewMode">{{'Company.EditCompany' |translate}}</strong>
+                    <strong *ngIf="companyDTO.id  && viewMode ">{{'Company.ViewCompany' |translate}}</strong>
+                </div>
+                <div class="card-body card-block">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="isActive" class=" form-control-label">{{'General.IsActive'
+                                        |translate}}</label>
+
+                                    <p-inputSwitch [disabled]="viewMode" [ngModelOptions]="{standalone: true}"
+                                        name="isActive" class="input-switch"
+                                        [(ngModel)]="companyDTO.isActive"></p-inputSwitch>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="name" class=" form-control-label">{{'General.Name'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="companyDTO.name" type="text" id="name"
+                                            class="form-control" #name="ngModel"
+                                            [class.is-invalid]="name.invalid && name.touched"
+                                            [class.is-valid]="name.valid" required name="name"
+                                            aria-describedby="helpId">
+                                        <small [hidden]="name.valid || name.untouched" id="helpId" class="text-muted"
+                                            [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="addressDetails"
+                                            class=" form-control-label">{{'General.AddressDetails'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="companyDTO.addressDetails" type="text"
+                                            id="addressDetails" class="form-control" #addressDetails="ngModel"
+                                            [class.is-invalid]="addressDetails.invalid && addressDetails.touched"
+                                            [class.is-valid]="addressDetails.valid" required
+                                            name="addressDetails" aria-describedby="helpId">
+                                        <small [hidden]="addressDetails.valid || addressDetails.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="contactPerson"
+                                            class=" form-control-label">{{'General.ContactPerson'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="companyDTO.contactPerson"
+                                            type="text" id="contactPerson" class="form-control"
+                                            #contactPerson="ngModel"
+                                            [class.is-invalid]="contactPerson.invalid && contactPerson.touched"
+                                            [class.is-valid]="contactPerson.valid" 
+                                            name="contactPerson" aria-describedby="helpId">
+                                        <small [hidden]="contactPerson.valid || contactPerson.untouched"
+                                            id="helpId" class="text-muted"
+                                            [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="contactTelephone"
+                                            class=" form-control-label">{{'General.ContactTelephone'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="companyDTO.contactTelephone"
+                                            type="text" id="contactTelephone" class="form-control"
+                                            #contactTelephone="ngModel"
+                                            [class.is-invalid]="contactTelephone.invalid && contactTelephone.touched"
+                                            [class.is-valid]="contactTelephone.valid" 
+                                            name="contactTelephone" aria-describedby="helpId">
+                                        <small [hidden]="contactTelephone.valid || contactTelephone.untouched"
+                                            id="helpId" class="text-muted"
+                                            [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+
+                                 <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="websiteLink"
+                                            class=" form-control-label">{{'General.WebsiteLink'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="companyDTO.websiteLink"
+                                            type="text" id="websiteLink" class="form-control"
+                                            #websiteLink="ngModel"
+                                            [class.is-invalid]="websiteLink.invalid && websiteLink.touched"
+                                            [class.is-valid]="websiteLink.valid" 
+                                            name="websiteLink" aria-describedby="helpId">
+                                       
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-6" [hidden]="viewMode">
+                                    <div class="form-group">
+                                        <label for="image" class=" form-control-label">{{'General.UploadImage'
+                                            |translate}}</label>
+                                        <input type="file" id="image" class="form-control"
+                                            (change)="onFileChange($event)">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div class="col-lg-12 mb-2" *ngIf="imageSrc">{{'General.Image' |translate}}</div>
+                                <div class="col-lg-12">
+                                    <img src="{{imageSrc}}" *ngIf="companyDTO.imageUrl" class="Image">
+                                    <img class="Image" *ngIf="!companyDTO.imageUrl" src="{{imageSrc}}" />
+                                </div>
+                                <div class="col-lg-12"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-container p-3">
+                    <button type="submit" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
+                        <i class="fa fa-dot-circle-o"></i>{{'General.SaveChanges' |translate}}
+                    </button>
+                    <button type="reset" class="btn btn-danger mr-1" (click)="back()">
+                        <i class="fa fa-ban"></i>{{'General.Back' |translate}}
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

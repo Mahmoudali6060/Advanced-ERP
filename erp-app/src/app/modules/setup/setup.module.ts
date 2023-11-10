@@ -17,6 +17,8 @@ import { ClientListComponent } from './components/client/client-list/client-list
 import { VendorFormComponent } from './components/vendor/vendor-form/vendor-form.component';
 import { VendorListComponent } from './components/vendor/vendor-list/vendor-list.component';
 import { ClientVendorService } from './services/client-vendor.service';
+import { CompanyFormComponent } from './components/company/company-form/company-form.component';
+import { CompanyListComponent } from './components/company/company-list/company-list.component';
 
 @NgModule({
   imports: [
@@ -37,7 +39,9 @@ import { ClientVendorService } from './services/client-vendor.service';
     ClientFormComponent,
     ClientListComponent,
     VendorFormComponent,
-    VendorListComponent
+    VendorListComponent,
+    CompanyListComponent,
+    CompanyFormComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

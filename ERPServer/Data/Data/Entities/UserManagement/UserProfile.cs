@@ -6,7 +6,6 @@ namespace Data.Entities.UserManagement
 {
     public class UserProfile : BaseEntity
     {
-        public bool IsActive { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Mobile { get; set; }

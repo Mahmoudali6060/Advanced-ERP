@@ -8,6 +8,8 @@ import { ClientListComponent } from './components/client/client-list/client-list
 import { ClientFormComponent } from './components/client/client-form/client-form.component';
 import { VendorListComponent } from './components/vendor/vendor-list/vendor-list.component';
 import { VendorFormComponent } from './components/vendor/vendor-form/vendor-form.component';
+import { CompanyListComponent } from './components/company/company-list/company-list.component';
+import { CompanyFormComponent } from './components/company/company-form/company-form.component';
 
 const routes: Routes = [
   { path: 'product-list', component: ProductListComponent },
@@ -22,6 +24,9 @@ const routes: Routes = [
   { path: 'vendor-list', component: VendorListComponent },
   { path: 'vendor-form', component: VendorFormComponent },
   { path: 'vendor-form/:id', component: VendorFormComponent },
+  { path: 'company-list', component: CompanyListComponent },
+  { path: 'company-form', component: CompanyFormComponent },
+  { path: 'company-form/:id', component: CompanyFormComponent },
 
 ];
 

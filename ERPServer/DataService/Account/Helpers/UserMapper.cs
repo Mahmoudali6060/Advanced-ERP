@@ -28,20 +28,13 @@ namespace Account.Helpers
                 Email = string.IsNullOrWhiteSpace(model.Email) ? model.UserName : model.Email
             };
         }
-        public static AppUser MapAppUser(CompanyDTO model)
-        {
-            return new AppUser
-            {
-                UserName = model.UserName,
-                Email = model.Email
-            };
-        }
+
         public static Company MapCompany(UserProfileDTO model)
         {
             return new Company
             {
                 Id = (long)model.CompanyId,
-                AddressDetails = model.CompanyDTO.UserName,
+                AddressDetails = model.CompanyDTO.AddressDetails,
                 ContactPerson = model.CompanyDTO.ContactPerson,
                 ContactTelephone = model.CompanyDTO.ContactTelephone,
             };
@@ -61,7 +54,7 @@ namespace Account.Helpers
                 RoleName = userProfile.Role.Name,
                 AppUserId = appUser.Id,
                 ImageUrl = userProfile.ImageUrl,
-              
+
                 IsActive = userProfile.IsActive,
                 IsFirstLogin = userProfile.IsFirstLogin,
                 CompanyId = userProfile?.CompanyId,

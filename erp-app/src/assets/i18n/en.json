@@ -88,7 +88,11 @@
     "Paid": "Paid",
     "Remaining": "Remaining",
     "SellingPrice": "Selling Price",
-    "SaveAndPrint": "Save and print"
+    "SaveAndPrint": "Save and print",
+    "AddressDetails":"Address Details",
+    "ContactPerson":"Contact Person",
+    "ContactTelephone":"Contact Telephone",
+    "WebsiteLink":"Website Link"
   },
   "Dashboard": {
     "overview": "Overview",
