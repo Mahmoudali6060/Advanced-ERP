@@ -13,6 +13,8 @@ namespace Data.Entities.Setup
         public string AddressDetails { get; set; }
         public string ContactPerson { get; set; }
         public string ContactTelephone { get; set; }
+        public string WebsiteLink { get; set; }
+
 
     }
 }
