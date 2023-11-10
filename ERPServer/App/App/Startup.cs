@@ -28,9 +28,9 @@ using Infrastructure.Notifications.Models;
 using Microsoft.OpenApi.Models;
 using Entities.Account;
 using IdentityServer4.Stores;
-using Telerik.Reporting.Cache.File;
-using Telerik.Reporting.Services;
-using Telerik.Reporting.Services.AspNetCore;
+//using Telerik.Reporting.Cache.File;
+//using Telerik.Reporting.Services;
+//using Telerik.Reporting.Services.AspNetCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Newtonsoft.Json;
 
@@ -50,26 +50,26 @@ namespace App
         public void ConfigureServices(IServiceCollection services)
         {
 
-            #region telerik report
+            //#region telerik report
 
-            // Configure dependencies for ReportsController.
-            services.TryAddSingleton<IReportServiceConfiguration>(sp =>
-                new ReportServiceConfiguration
-                {
-                    // The default ReportingEngineConfiguration will be initialized from appsettings.json or appsettings.{EnvironmentName}.json:
-                    ReportingEngineConfiguration = sp.GetService<IConfiguration>(),
-                    // In case the ReportingEngineConfiguration needs to be loaded from a specific configuration file, use the approach below:
-                    // NOTE: Configuration key (ReportingCashPath) must be shanged in appsettings.json from one app to another specially if we have multiple apps hosted on the same server
-                    HostAppId = Configuration.GetSection("ReportingCashPath").Value,
-                    Storage = new FileStorage(Configuration.GetSection("ReportingCashPath").Value),
-                    ReportResolver = new ReportTypeResolver()
-                        .AddFallbackResolver(new ReportFileResolver(Path.Combine(sp.GetService<IHostingEnvironment>().ContentRootPath, "Reports"))),
-                    ClientSessionTimeout = 30,
-                    ReportSharingTimeout = 0
-                });
+            //// Configure dependencies for ReportsController.
+            //services.TryAddSingleton<IReportServiceConfiguration>(sp =>
+            //    new ReportServiceConfiguration
+            //    {
+            //        // The default ReportingEngineConfiguration will be initialized from appsettings.json or appsettings.{EnvironmentName}.json:
+            //        ReportingEngineConfiguration = sp.GetService<IConfiguration>(),
+            //        // In case the ReportingEngineConfiguration needs to be loaded from a specific configuration file, use the approach below:
+            //        // NOTE: Configuration key (ReportingCashPath) must be shanged in appsettings.json from one app to another specially if we have multiple apps hosted on the same server
+            //        HostAppId = Configuration.GetSection("ReportingCashPath").Value,
+            //        Storage = new FileStorage(Configuration.GetSection("ReportingCashPath").Value),
+            //        ReportResolver = new ReportTypeResolver()
+            //            .AddFallbackResolver(new ReportFileResolver(Path.Combine(sp.GetService<IHostingEnvironment>().ContentRootPath, "Reports"))),
+            //        ClientSessionTimeout = 30,
+            //        ReportSharingTimeout = 0
+            //    });
 
 
-            #endregion
+            //#endregion
 
             services.Configure<CookiePolicyOptions>(options =>
             {
