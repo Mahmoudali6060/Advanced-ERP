@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Data.Entities.Setup
 {
-    public class Company :BaseEntity, IEntity
+    public class Company :BaseEntity
     {
         public string ImageUrl { get; set; }
         public string Name { get; set; }
