@@ -14,6 +14,8 @@ namespace Data.Entities.Setup
         public string Name { get; set; }
         public long StateId { get; set; }
         public virtual IList<UserProfile> UserProfile { get; set; }
+        public long? CompanyId { get; set; }
+        public virtual Company Company { get; set; }
 
     }
 }

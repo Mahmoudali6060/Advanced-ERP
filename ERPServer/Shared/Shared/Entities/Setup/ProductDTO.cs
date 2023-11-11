@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Shared.Entities.Setup
 {
-    public class ProductDTO
+    public class ProductDTO :BaseDTO
     {
-        public long Id { get; set; }
         public bool IsActive { get; set; }
         public string Code { get; set; }
         public string BarCode { get; set; }
@@ -22,6 +21,7 @@ namespace Shared.Entities.Setup
         public long CategoryId { get; set; }
         public string CategoryName { get; set; }
         public string ImageBase64 { get; set; }
+        public long? CompanyId { get; set; }
 
     }
 }

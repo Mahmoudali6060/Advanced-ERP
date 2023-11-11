@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Shared.Entities.Purchases
 {
@@ -19,6 +20,7 @@ namespace Shared.Entities.Purchases
         public decimal PriceAfterDiscount { get; set; }
         public decimal SubTotal { get; set; }
         public string Notes { get; set; }
+        public long? CompanyId { get; set; }
 
         [JsonIgnore]
         public virtual PurchasesBillHeaderDTO PurchasesBillHeader { get; set; }

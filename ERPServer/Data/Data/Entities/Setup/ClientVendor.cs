@@ -22,5 +22,7 @@ namespace Data.Entities.Setup
         public string Notes { get; set; }
         public string IdNumber { get; set; }
         public ClientVendorTypeEnum TypeId { get; set; }
+        public long? CompanyId { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

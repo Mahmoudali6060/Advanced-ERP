@@ -24,6 +24,8 @@ namespace Data.Entities.Purchases
         public long ClientVendorId { get; set; }
         public virtual ClientVendor ClientVendor { get; set; }
         public virtual List<PurchasesBillDetail> PurchasesBillDetailList { get; set; }
+        public long? CompanyId { get; set; }
+        public virtual Company Company { get; set; }
 
     }
 }

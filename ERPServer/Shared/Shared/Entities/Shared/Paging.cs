@@ -8,5 +8,8 @@ namespace Shared.Entities.Shared
     {
         public int Page { get; set; } = 1;
         public int PageSize { get; set; } = int.MaxValue;
+        public long? CreatedByProfileId { get; set; }
+        public long? ModifiedProfileId { get; set; }
+        public long? CompanyId { get; set; }
     }
 }

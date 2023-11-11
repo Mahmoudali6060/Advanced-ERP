@@ -19,6 +19,7 @@ namespace Shared.Entities.Sales
         public decimal PriceAfterDiscount { get; set; }
         public decimal SubTotal { get; set; }
         public string Notes { get; set; }
+        public long? CompanyId { get; set; }
 
         [JsonIgnore]
         public virtual SalesBillHeaderDTO SalesBillHeader { get; set; }

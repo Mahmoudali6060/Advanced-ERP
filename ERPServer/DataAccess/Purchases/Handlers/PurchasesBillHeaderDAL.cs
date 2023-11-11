@@ -66,13 +66,13 @@ namespace Purchases.DataAccessLayer
         #region Helper
         private string GenerateSequenceNumber()
         {
-            var lastElement = _appDbContext.ClientVendors.OrderByDescending(p => p.Id)
+            var lastElement = _appDbContext.PurchasesBillHeaders.OrderByDescending(p => p.Id)
                        .FirstOrDefault();
             if (lastElement == null)
             {
                 return "1000";
             }
-            int code = int.Parse(lastElement.Code) + 1;
+            int code = int.Parse(lastElement.Number) + 1;
             return code.ToString();
         }
         #endregion

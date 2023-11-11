@@ -13,9 +13,9 @@ namespace Data.Entities.Shared
         //[Key]
         public long Id { get; set; }
         public DateTime Created { get; set; }
-        public long? CreatedById { get; set; }
+        public long? CreatedByProfileId { get; set; }
         public DateTime? Modified { get; set; }
-        public long? ModifiedById { get; set; }
+        public long? ModifiedProfileId { get; set; }
         public bool? IsActive { get; set; }
     }
 }

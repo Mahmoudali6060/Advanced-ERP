@@ -11,5 +11,6 @@ namespace Shared.Entities.Setup
         public long Id { get; set; }
         public string Media { get; set; }
         public string MediaBase64 { get; set; }
+        public long? CompanyId { get; set; }
     }
 }

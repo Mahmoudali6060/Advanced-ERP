@@ -24,6 +24,7 @@ namespace Shared.Entities.Purchases
         public string Notes { get; set; }
         public long ClientVendorId { get; set; }
         public string ClientVendorName { get; set; }
+        public long? CompanyId { get; set; }
 
         public virtual List<PurchasesBillDetailDTO> PurchasesBillDetailList { get; set; }
 

@@ -21,5 +21,7 @@ namespace Data.Entities.Purchases
         public string Notes { get; set; }
         public virtual Product Product { get; set; }
         public virtual PurchasesBillHeader PurchasesBillHeader { get; set; }
+        public long? CompanyId { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

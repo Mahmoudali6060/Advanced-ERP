@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Shared.Entities.Setup
 {
-    public class CityDTO 
+    public class CityDTO : BaseDTO
     {
-        public long Id { get; set; }
         public string Name { get; set; }
+
     }
 }

@@ -15,6 +15,7 @@ export class PurchasesBillHeaderDTO {
     clientVendorId: number | null;
     clientVendorName: string;
     notes: string;
+    companyId: number;
     purchasesBillDetailList: Array<PurchasesBillDetailsDTO> = Array<PurchasesBillDetailsDTO>();
     constructor() {
         this.discount = 0;

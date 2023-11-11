@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Shared.Entities.Shared;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Data.Entities.Shared
 {
-    public class SettingsDTO
+    public class SettingsDTO :BaseDTO
     {
-        public long Id { get; set; }
         public DateTime ExpiryDate { get; set; }
     }
 }

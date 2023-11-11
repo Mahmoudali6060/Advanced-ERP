@@ -1,6 +1,6 @@
+import { BaseDTO } from "src/app/shared/models/base-dto.model";
 
-export class SalesBillDetailsDTO {
-    id: number;
+export class SalesBillDetailsDTO extends BaseDTO {
     productId: number | null;
     actualQuantity: number;
     quantity: number;
@@ -11,7 +11,8 @@ export class SalesBillDetailsDTO {
     notes: string;
     index: number;
     sellingPrice: number;
-	productName: string;
-	productCode: string;
+    productName: string;
+    productCode: string;
+    companyId: number;
 
 }

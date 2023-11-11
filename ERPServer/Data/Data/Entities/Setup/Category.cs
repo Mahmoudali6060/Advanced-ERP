@@ -6,5 +6,7 @@ namespace Data.Entities.Setup
     {
         public string Code { get; set; }
         public string Name { get; set; }
+        public long? CompanyId { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

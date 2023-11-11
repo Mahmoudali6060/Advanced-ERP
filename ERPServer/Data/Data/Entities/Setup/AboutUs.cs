@@ -19,5 +19,7 @@ namespace Data.Entities.Setup
 
         public string ThirdTitle { get; set; }
         public string ThirdTitleSection { get; set; }
+        public long? CompanyId { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

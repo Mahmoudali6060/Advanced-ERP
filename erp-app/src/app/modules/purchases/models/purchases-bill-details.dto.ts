@@ -10,5 +10,6 @@ export class PurchasesBillDetailsDTO {
     subTotal: number;
     notes: string;
     index: number;
+    companyId: number;
 
 }

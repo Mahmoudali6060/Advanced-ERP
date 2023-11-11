@@ -21,6 +21,7 @@ namespace Shared.Entities.Setup
         public string IdNumber { get; set; }
         public string ImageBase64 { get; set; }
         public ClientVendorTypeEnum TypeId { get; set; }
+        public long? CompanyId { get; set; }
 
     }
 }

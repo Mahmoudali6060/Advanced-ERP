@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Shared.Entities.Setup
 {
-    public class CategoryDTO
+    public class CategoryDTO :BaseDTO
     {
-        public long Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
+        public long? CompanyId { get; set; }
     }
 }

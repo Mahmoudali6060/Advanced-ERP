@@ -20,6 +20,7 @@ import { PurchasesBillDetailsDTO } from 'src/app/modules/purchases/models/purcha
 import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { ClientVendorFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/client-vendor-form-popup/client-vendor-form-popup.component';
+import { AuthService } from 'src/app/modules/authentication/services/auth.service';
 
 @Component({
 	selector: 'app-sales-bill-form',
@@ -55,6 +56,8 @@ export class SalesBillFormComponent {
 		private translate: TranslateService,
 		private dialogService: DialogService,
 		private alertService: AlertService,
+		private authService: AuthService
+
 	) {
 	}
 
@@ -130,6 +133,7 @@ export class SalesBillFormComponent {
 	save(isPrint: boolean, form?: NgForm) {
 		if (this.validation(this.salesBillHeaderDTO)) {
 			if (this.salesBillHeaderDTO.id) {
+				this.salesBillHeaderDTO.modifiedProfileId = this.authService.loggedUserProfile?.id;
 				this.salesBillService.update(this.salesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
 					if (isPrint) {
@@ -141,6 +145,8 @@ export class SalesBillFormComponent {
 				})
 			}
 			else {
+				this.salesBillHeaderDTO.companyId = this.authService.loggedUserProfile?.companyId;
+				this.salesBillHeaderDTO.createdByProfileId = this.authService.loggedUserProfile?.id;
 				this.salesBillService.add(this.salesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
 					if (isPrint) {

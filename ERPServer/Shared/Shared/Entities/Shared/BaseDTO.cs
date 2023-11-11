@@ -10,5 +10,7 @@ namespace Shared.Entities.Shared
     public class BaseDTO
     {
         public long Id { get; set; }
+        public long? CreatedByProfileId { get; set; }
+        public long? ModifiedProfileId { get; set; }
     }
 }

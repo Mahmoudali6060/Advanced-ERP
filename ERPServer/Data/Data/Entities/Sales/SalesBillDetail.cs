@@ -21,5 +21,7 @@ namespace Data.Entities.Sales
         public string Notes { get; set; }
         public virtual Product Product { get; set; }
         public virtual SalesBillHeader SalesBillHeader { get; set; }
+        public long? CompanyId { get; set; }
+        public virtual Company Company { get; set; }
     }
 }
