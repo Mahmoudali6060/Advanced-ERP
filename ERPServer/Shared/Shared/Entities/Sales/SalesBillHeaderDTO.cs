@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Shared.Entities.Sales
 {
-    public class SalesBillHeaderDTO : BaseDTO
+    public class SalesBillHeaderDTO : AuditEntityDTO
     {
         public bool IsActive { get; set; }
         public string Number { get; set; }

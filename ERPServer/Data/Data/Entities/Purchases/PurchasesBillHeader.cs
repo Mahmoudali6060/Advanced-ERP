@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Data.Entities.Purchases
 {
-    public class PurchasesBillHeader : BaseEntity
+    public class PurchasesBillHeader : AuditEntity
     {
         public string Number { get; set; }
         public DateTime Date { get; set; }

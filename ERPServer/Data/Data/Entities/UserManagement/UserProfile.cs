@@ -12,7 +12,7 @@ namespace Data.Entities.UserManagement
         public bool IsFirstLogin { get; set; }
         public bool IsHide { get; set; }
         public string ImageUrl { get; set; }
-        public long RoleId { get; set; }
+        public long? RoleId { get; set; }
         public string DefaultLanguage { get; set; }
         public string AppUserId { get; set; }
         public virtual AppUser AppUser { get; set; }

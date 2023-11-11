@@ -67,7 +67,10 @@ namespace App.Helper
             CreateMap<PurchasesBillHeader, PurchasesBillHeaderDTO>()
                 .ForMember(dest => dest.PurchasesBillDetailList, opt => opt.MapFrom(src => src.PurchasesBillDetailList))
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")))
-                .ForMember(dest => dest.ClientVendorName, opt => opt.MapFrom(src => src.ClientVendor.FullName));
+                .ForMember(dest => dest.ClientVendorName, opt => opt.MapFrom(src => src.ClientVendor.FullName))
+                .ForMember(dest => dest.CreatedByProfileName, opt => opt.MapFrom(src => src.CreatedByProfile.FirstName + " " + src.CreatedByProfile.LastName))
+                .ForMember(dest => dest.ModifiedByProfileName, opt => opt.MapFrom(src => src.ModifiedByProfile.FirstName + " " + src.ModifiedByProfile.LastName));
+
 
             CreateMap<PurchasesBillHeaderDTO, PurchasesBillHeader>()
                 .ForMember(dest => dest.PurchasesBillDetailList, opt => opt.MapFrom(src => src.PurchasesBillDetailList))
@@ -82,7 +85,9 @@ namespace App.Helper
             CreateMap<SalesBillHeader, SalesBillHeaderDTO>()
                 .ForMember(dest => dest.SalesBillDetailList, opt => opt.MapFrom(src => src.SalesBillDetailList))
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")))
-                .ForMember(dest => dest.ClientVendorName, opt => opt.MapFrom(src => src.ClientVendor.FullName));
+                .ForMember(dest => dest.ClientVendorName, opt => opt.MapFrom(src => src.ClientVendor.FullName))
+                .ForMember(dest => dest.CreatedByProfileName, opt => opt.MapFrom(src => src.CreatedByProfile.FirstName + " " + src.CreatedByProfile.LastName))
+                .ForMember(dest => dest.ModifiedByProfileName, opt => opt.MapFrom(src => src.ModifiedByProfile.FirstName + " " + src.ModifiedByProfile.LastName));
 
             CreateMap<SalesBillHeaderDTO, SalesBillHeader>()
                 .ForMember(dest => dest.SalesBillDetailList, opt => opt.MapFrom(src => src.SalesBillDetailList))

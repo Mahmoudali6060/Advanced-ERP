@@ -1,26 +1,22 @@
+import { AuditDTO } from "src/app/shared/models/audit-dto.model";
 import { PurchasesBillDetailsDTO } from "./purchases-bill-details.dto";
 
-export class PurchasesBillHeaderDTO {
+export class PurchasesBillHeaderDTO extends AuditDTO{
     id: number;
     number: string;
     isActive: boolean;
     discount: number | 0;
     transfer: number | 0;
-    total: number;
+    total: number=0;
     totalDiscount: number | 0;
-    totalAfterDiscount: number;
-    paid: number;
-    remaining: number|0;
+    totalAfterDiscount: number=0;
+    paid: number=0;
+    remaining: number | 0;
     date: string | undefined;
     clientVendorId: number | null;
     clientVendorName: string;
     notes: string;
     companyId: number;
     purchasesBillDetailList: Array<PurchasesBillDetailsDTO> = Array<PurchasesBillDetailsDTO>();
-    constructor() {
-        this.discount = 0;
-        this.transfer = 0;
-        this.totalDiscount = 0;
-
-    }
+    
 }

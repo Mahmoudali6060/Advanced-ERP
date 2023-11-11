@@ -104,7 +104,9 @@
     "AddressDetails": "العنوان تفصيلاً",
     "ContactPerson": "الشخص المسؤول",
     "ContactTelephone": "هاتف الشخص المسؤول",
-    "WebsiteLink": "رايط الانترنت"
+    "WebsiteLink": "رايط الانترنت",
+    "CreatedByProfileName":"أٌنشأ بواسطة",
+    "ModifiedByProfileName":"عٌدل بواسطة"
   },
   "Dashboard": {
     "overview": "نظرة عامة",

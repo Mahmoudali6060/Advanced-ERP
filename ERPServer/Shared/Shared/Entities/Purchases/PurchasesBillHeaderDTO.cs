@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Shared.Entities.Purchases
 {
-    public class PurchasesBillHeaderDTO : BaseDTO
+    public class PurchasesBillHeaderDTO : AuditEntityDTO
     {
         public bool IsActive { get; set; }
         public string Number { get; set; }
@@ -27,6 +27,6 @@ namespace Shared.Entities.Purchases
         public long? CompanyId { get; set; }
 
         public virtual List<PurchasesBillDetailDTO> PurchasesBillDetailList { get; set; }
-
+       
     }
 }

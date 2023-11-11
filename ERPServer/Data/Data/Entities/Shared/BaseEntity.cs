@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Entities.UserManagement;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,10 +13,11 @@ namespace Data.Entities.Shared
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //[Key]
         public long Id { get; set; }
-        public DateTime Created { get; set; }
-        public long? CreatedByProfileId { get; set; }
-        public DateTime? Modified { get; set; }
-        public long? ModifiedProfileId { get; set; }
+       
         public bool? IsActive { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime? Modified { get; set; }
+
+
     }
 }

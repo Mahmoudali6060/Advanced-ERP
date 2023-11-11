@@ -1,7 +1,7 @@
-import { BaseDTO } from "src/app/shared/models/base-dto.model";
 import { SalesBillDetailsDTO } from "./sales-bill-details.dto";
+import { AuditDTO } from "src/app/shared/models/audit-dto.model";
 
-export class SalesBillHeaderDTO extends BaseDTO {
+export class SalesBillHeaderDTO extends AuditDTO {
     id: number;
     number: string;
     isActive: boolean;
@@ -17,5 +17,7 @@ export class SalesBillHeaderDTO extends BaseDTO {
     clientVendorName: string;
     notes: string;
     companyId: number;
+    createdByProfileName: string;
+    modifiedByProfileName: string;
     salesBillDetailList: Array<SalesBillDetailsDTO> = Array<SalesBillDetailsDTO>();
 }

@@ -18,6 +18,7 @@ import { ClientVendorService } from 'src/app/modules/setup/services/client-vendo
 import { ClientVendorDTO, ClientVendorTypeEnum } from 'src/app/modules/setup/models/client-vendor.dto';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { ClientVendorFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/client-vendor-form-popup/client-vendor-form-popup.component';
+import { AuthService } from 'src/app/modules/authentication/services/auth.service';
 @Component({
 	selector: 'app-purchases-bill-form',
 	templateUrl: './purchases-bill-form.component.html',
@@ -46,7 +47,8 @@ export class PurchasesBillFormComponent {
 		private helperService: HelperService,
 		private translate: TranslateService,
 		private dialogService: DialogService,
-		private alertService: AlertService) {
+		private alertService: AlertService,
+		private authService: AuthService) {
 	}
 
 	ngOnInit() {
@@ -132,12 +134,15 @@ export class PurchasesBillFormComponent {
 	save(form: NgForm) {
 		if (this.validation(this.purchasesBillHeaderDTO)) {
 			if (this.purchasesBillHeaderDTO.id) {
+				this.purchasesBillHeaderDTO.modifiedByProfileId = this.authService.loggedUserProfile?.id;
 				this.purchasesBillService.update(this.purchasesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
 					this.back();
 				})
 			}
 			else {
+				this.purchasesBillHeaderDTO.companyId = this.authService.loggedUserProfile?.companyId;
+				this.purchasesBillHeaderDTO.createdByProfileId = this.authService.loggedUserProfile?.id;
 				this.purchasesBillService.add(this.purchasesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
 					this.back();

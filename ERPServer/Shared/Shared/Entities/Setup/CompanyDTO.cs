@@ -8,8 +8,9 @@ using System.Diagnostics.Metrics;
 
 namespace Shared.Entities.Setup
 {
-    public class CompanyDTO :BaseDTO
+    public class CompanyDTO 
     {
+        public long Id { get; set; }
         public bool? IsActive { get; set; }
         public string ImageUrl { get; set; }
         public string ImageBase64 { get; set; }

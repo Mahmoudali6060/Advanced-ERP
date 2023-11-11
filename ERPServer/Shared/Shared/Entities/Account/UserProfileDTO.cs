@@ -42,7 +42,7 @@ namespace Entities.Account
         //[Required( ErrorMessage = "Errors.InvalidRole")]
         //[StringLength(50, MinimumLength = 2)]
         public string RoleName { get; set; }
-        public long RoleId { get; set; }
+        public long? RoleId { get; set; }
         public string Token { get; set; }
         public string AppUserId { get; set; }
         public string ImageBase64 { get; set; }

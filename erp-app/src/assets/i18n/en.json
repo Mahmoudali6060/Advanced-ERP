@@ -92,7 +92,9 @@
     "AddressDetails":"Address Details",
     "ContactPerson":"Contact Person",
     "ContactTelephone":"Contact Telephone",
-    "WebsiteLink":"Website Link"
+    "WebsiteLink":"Website Link",
+    "CreatedByProfileName":"Created By",
+    "ModifiedByProfileName":"Modified By"
   },
   "Dashboard": {
     "overview": "Overview",

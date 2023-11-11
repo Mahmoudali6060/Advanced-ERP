@@ -6,8 +6,10 @@ using System.Collections.Generic;
 
 namespace Data.Entities.Setup
 {
-    public class Company :BaseEntity
+    public class Company : IEntity
     {
+        public long Id { get; set; }
+        public bool? IsActive { get; set; }
         public string ImageUrl { get; set; }
         public string Name { get; set; }
         public string AddressDetails { get; set; }

@@ -133,7 +133,7 @@ export class SalesBillFormComponent {
 	save(isPrint: boolean, form?: NgForm) {
 		if (this.validation(this.salesBillHeaderDTO)) {
 			if (this.salesBillHeaderDTO.id) {
-				this.salesBillHeaderDTO.modifiedProfileId = this.authService.loggedUserProfile?.id;
+				this.salesBillHeaderDTO.modifiedByProfileId = this.authService.loggedUserProfile?.id;
 				this.salesBillService.update(this.salesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
 					if (isPrint) {

@@ -17,7 +17,7 @@ namespace Sales.DataAccessLayer
         #region Query
         public async Task<IQueryable<SalesBillHeader>> GetAll()
         {
-            return _appDbContext.SalesBillHeaders.Include(x=>x.ClientVendor).OrderByDescending(x => x.Date).AsQueryable();
+            return _appDbContext.SalesBillHeaders.Include(x=>x.ClientVendor).Include(x => x.CreatedByProfile).Include(x => x.ModifiedByProfile).OrderByDescending(x => x.Date).AsQueryable();
         }
 
         public async Task<IQueryable<SalesBillHeader>> GetAllLite()
