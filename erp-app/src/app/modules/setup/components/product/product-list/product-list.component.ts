@@ -13,6 +13,9 @@ import { StateModel } from 'src/app/modules/configurations/models/state.model';
 import { CityModel } from 'src/app/modules/configurations/models/city.model';
 import { ProductDTO } from '../../../models/product.dto';
 import { ProductSearchCriteriaDTO } from '../../../models/product-search-criteria-dto';
+import { CategoryDTO } from '../../../models/category.dto';
+import { CategoryService } from '../../../services/category.service';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
 	selector: 'app-product-list',
@@ -36,19 +39,21 @@ export class ProductListComponent {
 	cityList: Array<CityModel> = new Array<CityModel>();
 	statusList: Array<string> | Boolean
 	statusDDL: any;
+	categoryList: Array<CategoryDTO> = new Array<CategoryDTO>();
 
 	constructor(private productService: ProductService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
 		private translate: TranslateService,
 		private _configService: ConfigService,
-		private SpinnerService: NgxSpinnerService,
-		private helperService: HelperService) {
+		private categoryService: CategoryService,
+		private alertService:AlertService) {
 
 	}
 
 	ngOnInit() {
 		this.search();
+		this.getAllCategories();
 		this.statusDDL = [
 			{ label: "All", value: '' },
 			{ label: "Active", value: true },
@@ -62,6 +67,13 @@ export class ProductListComponent {
 		this.showFilterControls = !this.showFilterControls;
 	}
 
+	getAllCategories() {
+		this.categoryService.getAllLite().subscribe((res: any) => {
+			this.categoryList = res.list;
+		})
+	}
+
+
 	getAllProducts() {
 		this.productService.getAll(this.searchCriteriaDTO).subscribe((res: any) => {
 			this.productList = res.list;
@@ -74,6 +86,13 @@ export class ProductListComponent {
 		});
 	}
 
+	saveAll() {
+		let changedProducts = this.productList.filter(x => x.isChanged == true);
+		this.productService.updateAll(changedProducts).subscribe(res => {
+			if (res)
+				this.alertService.showSuccess("Success","Success");
+		});
+	}
 	search() {
 		this.getAllProducts();
 	}

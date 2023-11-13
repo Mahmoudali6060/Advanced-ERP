@@ -11,6 +11,7 @@ export class BaseEntityService {
     private urlGetByNumber = "GetByNumber";
     private urlAdd = "Add";
     private urlUpdate = "Update";
+    private urlUpdateAll = "UpdateAll";
     private urlDelete = "Delete";
     private urlGetAllLite = "GetAllLite";
     controllerName: string = "";
@@ -36,6 +37,10 @@ export class BaseEntityService {
     }
     add(entity: any) {
         return this.httpHelperService.post(`${this.controllerName}/${this.urlAdd}/`, entity);
+    }
+
+    updateAll(entityList: any) {
+        return this.httpHelperService.post(`${this.controllerName}/${this.urlUpdateAll}/`, entityList);
     }
 
     update(entity: any) {

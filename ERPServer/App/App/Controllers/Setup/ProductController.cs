@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using DataService.Setup.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Entities.Setup;
@@ -40,6 +41,10 @@ namespace App.Controllers.Setup
         //[Authorize(Roles = Roles.Admin + "," + Roles.Consumer)]
         [HttpPost, Route("Update")]
         public async Task<IActionResult> Update(ProductDTO model) => Ok(await _productDSL.Update(model));
+
+        //[Authorize(Roles = Roles.Admin + "," + Roles.Consumer)]
+        [HttpPost, Route("UpdateAll")]
+        public async Task<IActionResult> UpdateAll(List<ProductDTO> entityList) => Ok(await _productDSL.UpdateAll(entityList));
 
         [HttpDelete, Route("Delete/{id}")]
         //[Authorize(Roles = Roles.Admin)]

@@ -16,6 +16,7 @@ export class ProductDTO {
     categoryName: string;
     imageBase64: string;
     companyId: number;
+    isChanged: boolean = false;
     constructor() {
         this.isActive = true;
     }

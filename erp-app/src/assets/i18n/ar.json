@@ -106,7 +106,8 @@
     "ContactTelephone": "هاتف الشخص المسؤول",
     "WebsiteLink": "رايط الانترنت",
     "CreatedByProfileName":"أٌنشأ بواسطة",
-    "ModifiedByProfileName":"عٌدل بواسطة"
+    "ModifiedByProfileName":"عٌدل بواسطة",
+    "SaveAll":"حفظ الكل"
   },
   "Dashboard": {
     "overview": "نظرة عامة",

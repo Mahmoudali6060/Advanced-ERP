@@ -3,6 +3,7 @@ using Data.Entities.Setup;
 using IdentityModel;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -54,6 +55,12 @@ namespace Setup.DataAccessLayer
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
             return entity.Id;
+        }
+
+        public async Task<bool> UpdateAll(List<Product> entityList)
+        {
+            _appDbContext.Products.UpdateRange(entityList);
+            return true;
         }
 
         public async Task<bool> Delete(Product entity)

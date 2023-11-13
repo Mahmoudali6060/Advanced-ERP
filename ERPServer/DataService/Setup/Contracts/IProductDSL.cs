@@ -1,4 +1,5 @@
 ﻿using Data.Entities.Setup;
+using Data.Entities.Shared;
 using Entities.Account;
 using IdentityModel;
 using Shared.DataServiceLayer;
@@ -14,6 +15,7 @@ namespace DataService.Setup.Contracts
     public interface IProductDSL : ICRUDOperationsDSL<ProductDTO, ProductSearchDTO>
     {
         Task<ResponseEntityList<ProductDTO>> GetAllLiteByCategoryId(long categoryId);
+        Task<bool> UpdateAll(List<ProductDTO> entitylist);
 
     }
 }

@@ -92,6 +92,13 @@ namespace DataService.Setup.Handlers
             return result;
         }
 
+        public async Task<bool> UpdateAll(List<ProductDTO> entityList)
+        {
+            var result = await _unitOfWork.ProductDAL.UpdateAll(_mapper.Map<List<Product>>(entityList));
+            await _unitOfWork.CompleteAsync();
+            return result;
+        }
+
         public async Task<bool> Delete(long id)
         {
             Product entity = await _unitOfWork.ProductDAL.GetById(id);
@@ -107,6 +114,11 @@ namespace DataService.Setup.Handlers
             if (searchCriteriaDTO.IsActive.HasValue)
             {
                 productList = productList.Where(x => x.IsActive == searchCriteriaDTO.IsActive);
+            }
+
+            if (searchCriteriaDTO.CategoryId.HasValue)
+            {
+                productList = productList.Where(x => x.CategoryId == searchCriteriaDTO.CategoryId);
             }
 
             if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.Code))

@@ -94,7 +94,8 @@
     "ContactTelephone":"Contact Telephone",
     "WebsiteLink":"Website Link",
     "CreatedByProfileName":"Created By",
-    "ModifiedByProfileName":"Modified By"
+    "ModifiedByProfileName":"Modified By",
+    "SaveAll":"Save All"
   },
   "Dashboard": {
     "overview": "Overview",

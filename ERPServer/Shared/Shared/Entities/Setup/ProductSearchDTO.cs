@@ -16,6 +16,6 @@ namespace Shared.Entities.Setup
         public int ActualQuantity { get; set; }
         public int LowQuantity { get; set; }
         public int HighQuantity { get; set; }
-        public long CategoryId { get; set; }
+        public long? CategoryId { get; set; }
     }
 }
