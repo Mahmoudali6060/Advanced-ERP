@@ -62,30 +62,35 @@ namespace DataService.Sales.Handlers
             };
         }
 
-        
+
         #endregion
 
         #region Command
         public async Task<long> Add(SalesBillDetailDTO entity)
         {
             var result = await _unitOfWork.SalesBillDetailDAL.Add(_mapper.Map<SalesBillDetail>(entity));
+            await _unitOfWork.CompleteAsync();
             return result;
         }
 
         public async Task<long> Update(SalesBillDetailDTO entity)
         {
-            return await _unitOfWork.SalesBillDetailDAL.Update(_mapper.Map<SalesBillDetail>(entity));
+            var result = await _unitOfWork.SalesBillDetailDAL.Update(_mapper.Map<SalesBillDetail>(entity));
+            await _unitOfWork.CompleteAsync();
+            return result;
         }
 
         public async Task<bool> Delete(long id)
         {
             SalesBillDetail entity = await _unitOfWork.SalesBillDetailDAL.GetById(id);
-            return await _unitOfWork.SalesBillDetailDAL.Delete(entity);
+            var result = await _unitOfWork.SalesBillDetailDAL.Delete(entity);
+            await _unitOfWork.CompleteAsync();
+            return result;
         }
         #endregion
 
         #region Helper Methods
-       
+
 
         #endregion
     }

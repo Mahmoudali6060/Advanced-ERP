@@ -21,14 +21,12 @@ namespace DataAccess.Setup.Handlers
     public async Task<long> Add(AboutUs entity)
     {
         _appDbContext.Entry(entity).State = EntityState.Added;
-        await _appDbContext.SaveChangesAsync();
         return entity.Id;
     }
 
     public async Task<bool> Delete(AboutUs entity)
     {
         _appDbContext.AboutUs.Remove(entity);
-        await _appDbContext.SaveChangesAsync();
         return true;
     }
 
@@ -51,7 +49,6 @@ namespace DataAccess.Setup.Handlers
     public async Task<long> Update(AboutUs entity)
     {
         _appDbContext.Entry(entity).State = EntityState.Modified;
-        await _appDbContext.SaveChangesAsync();
         return entity.Id;
     }
 }

@@ -80,19 +80,24 @@ namespace DataService.Setup.Handlers
         {
             UploadImage(entity);
             var result = await _unitOfWork.ProductDAL.Add(_mapper.Map<Product>(entity));
+            await _unitOfWork.CompleteAsync();
             return result;
         }
 
         public async Task<long> Update(ProductDTO entity)
         {
             UploadImage(entity);
-            return await _unitOfWork.ProductDAL.Update(_mapper.Map<Product>(entity));
+            var result = await _unitOfWork.ProductDAL.Update(_mapper.Map<Product>(entity));
+            await _unitOfWork.CompleteAsync();
+            return result;
         }
 
         public async Task<bool> Delete(long id)
         {
             Product entity = await _unitOfWork.ProductDAL.GetById(id);
-            return await _unitOfWork.ProductDAL.Delete(entity);
+            var result = await _unitOfWork.ProductDAL.Delete(entity);
+            await _unitOfWork.CompleteAsync();
+            return result;
         }
         #endregion
 

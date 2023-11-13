@@ -89,6 +89,7 @@ namespace DataService.Setup.Handlers
             //    var vendorDTO = MapClientVendorToVendor(entity);
             //    await _unitOfWork.VendorDAL.Add(_mapper.Map<Vendor>(vendorDTO));
             //}
+            await _unitOfWork.CompleteAsync();
             return result;
         }
 
@@ -108,6 +109,7 @@ namespace DataService.Setup.Handlers
             //    var deletedVendor = await _unitOfWork.VendorDAL.GetById(entity.VendorId.Value);
             //    await _unitOfWork.VendorDAL.Delete(deletedVendor);
             //}
+            await _unitOfWork.CompleteAsync();
             return result;
         }
 
@@ -115,7 +117,9 @@ namespace DataService.Setup.Handlers
         public async Task<bool> Delete(long id)
         {
             ClientVendor entity = await _unitOfWork.ClientVendorDAL.GetById(id);
-            return await _unitOfWork.ClientVendorDAL.Delete(entity);
+            var result = await _unitOfWork.ClientVendorDAL.Delete(entity);
+            await _unitOfWork.CompleteAsync();
+            return result;
         }
         #endregion
 

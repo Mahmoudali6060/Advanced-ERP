@@ -71,18 +71,24 @@ namespace DataService.Setup.Handlers
         #region Command
         public async Task<long> Add(CategoryDTO entity)
         {
-            return await _unitOfWork.CategoryDAL.Add(_mapper.Map<Category>(entity));
+            var result = await _unitOfWork.CategoryDAL.Add(_mapper.Map<Category>(entity));
+            await _unitOfWork.CompleteAsync();
+            return result;
         }
 
         public async Task<long> Update(CategoryDTO entity)
         {
-            return await _unitOfWork.CategoryDAL.Update(_mapper.Map<Category>(entity));
+            var result = await _unitOfWork.CategoryDAL.Update(_mapper.Map<Category>(entity));
+            await _unitOfWork.CompleteAsync();
+            return result;
         }
 
         public async Task<bool> Delete(long id)
         {
             Category entity = await _unitOfWork.CategoryDAL.GetById(id);
-            return await _unitOfWork.CategoryDAL.Delete(entity);
+            var result = await _unitOfWork.CategoryDAL.Delete(entity);
+            await _unitOfWork.CompleteAsync();
+            return result;
         }
         #endregion
 

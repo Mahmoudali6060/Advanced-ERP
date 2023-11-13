@@ -42,7 +42,6 @@ namespace Sales.DataAccessLayer
         public async Task<long> Add(SalesBillDetail entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Added;
-            await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
 
@@ -55,14 +54,12 @@ namespace Sales.DataAccessLayer
         public async Task<long> Update(SalesBillDetail entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
-            await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
 
         public async Task<bool> Delete(SalesBillDetail entity)
         {
             _appDbContext.SalesBillDetails.Remove(entity);
-            await _appDbContext.SaveChangesAsync();
             return true;
         }
 

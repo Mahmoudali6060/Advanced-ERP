@@ -81,7 +81,7 @@ namespace Accout.DataServiceLayer
 
         public async Task<long> Add(RoleGroupDTO entity)
         {
-            var result= await _unitOfWork.RoleDAL.Add(_mapper.Map<RoleGroup>(entity));
+            var result = await _unitOfWork.RoleDAL.Add(_mapper.Map<RoleGroup>(entity));
             await _unitOfWork.CompleteAsync();
             return result;
 
@@ -89,14 +89,19 @@ namespace Accout.DataServiceLayer
 
         public async Task<long> Update(RoleGroupDTO entity)
         {
-            return await _unitOfWork.RoleDAL.Update(_mapper.Map<RoleGroup>(entity));
+            var result = await _unitOfWork.RoleDAL.Update(_mapper.Map<RoleGroup>(entity));
+            await _unitOfWork.CompleteAsync();
+            return result;
+
         }
 
 
         public async Task<bool> Delete(long id)
         {
             RoleGroup roleGroup = await _unitOfWork.RoleDAL.GetById(id);
-            return await _unitOfWork.RoleDAL.Delete(roleGroup);
+            var result = await _unitOfWork.RoleDAL.Delete(roleGroup);
+            await _unitOfWork.CompleteAsync();
+            return result;
         }
 
     }

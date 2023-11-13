@@ -30,15 +30,17 @@ namespace Account.DataServiceLayer
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEmailSender _emailSender;
+        private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
         private readonly IFileManager _fileManager;
         private readonly IConfiguration _configuration;
-        public AccountDSL(IUnitOfWork unitOfWork, IFileManager fileManager, IMapper mapper, IEmailSender emailSender, IConfiguration configuration)
+        public AccountDSL(IUnitOfWork unitOfWork, IFileManager fileManager, UserManager<AppUser> userManager, IMapper mapper, IEmailSender emailSender, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
             _emailSender = emailSender;
             _fileManager = fileManager;
             _mapper = mapper;
+            _userManager = userManager;
             _configuration = configuration;
         }
 
@@ -150,7 +152,7 @@ namespace Account.DataServiceLayer
                     throw new Exception("Errors.InvalidUsernameOrPassword");
                 UserProfileDTO userDto = UserMapper.MapAppUser(appUser, userProfile);
                 userDto.RoleGroupDTO = _mapper.Map<RoleGroupDTO>(userProfile.Role);
-                userDto.Token = AddToken(appUser, userDto.RoleName);
+                userDto.Token = AddToken(appUser, userDto);
                 userDto.Email = appUser.Email;
                 return userDto;
             }
@@ -201,21 +203,23 @@ namespace Account.DataServiceLayer
         }
 
         #region Helper Methods
-        private string AddToken(AppUser appUser, string role)
+        private string AddToken(AppUser appUser, UserProfileDTO userProfileDTO)
         {
             IdentityOptions _options = new IdentityOptions();
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                            new Claim("UserID",appUser.Id.ToString()),
-                            new Claim(_options.ClaimsIdentity.RoleClaimType,role)
+                            new Claim("AppUserId",appUser.Id.ToString()),
+                            new Claim(ClaimTypes.NameIdentifier,userProfileDTO.Id.ToString()),
+                            new Claim(_options.ClaimsIdentity.RoleClaimType,userProfileDTO.RoleName)
                 }),
                 Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1234567890123456")), SecurityAlgorithms.HmacSha256Signature)
             };
             var tokenHandler = new JwtSecurityTokenHandler();
             var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+            //_userManager.AddClaimAsync(appUser, new Claim("UserProfileId", userProfileDTO.Id.ToString()));
             return tokenHandler.WriteToken(securityToken);
         }
 

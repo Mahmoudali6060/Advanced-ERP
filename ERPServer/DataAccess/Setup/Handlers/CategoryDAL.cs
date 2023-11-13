@@ -39,21 +39,18 @@ namespace Setup.DataAccessLayer
         {
             entity.Code = GenerateSequenceNumber();
             _appDbContext.Entry(entity).State = EntityState.Added;
-            await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
 
         public async Task<long> Update(Category entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
-            await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
 
         public async Task<bool> Delete(Category entity)
         {
             _appDbContext.Categories.Remove(entity);
-            await _appDbContext.SaveChangesAsync();
             return true;
         }
 

@@ -42,7 +42,6 @@ namespace Purchases.DataAccessLayer
         public async Task<long> Add(PurchasesBillDetail entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Added;
-            await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
 
@@ -55,14 +54,12 @@ namespace Purchases.DataAccessLayer
         public async Task<long> Update(PurchasesBillDetail entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
-            await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
 
         public async Task<bool> Delete(PurchasesBillDetail entity)
         {
             _appDbContext.PurchasesBillDetails.Remove(entity);
-            await _appDbContext.SaveChangesAsync();
             return true;
         }
 
@@ -76,7 +73,6 @@ namespace Purchases.DataAccessLayer
         public async Task<IQueryable<PurchasesBillDetail>> GetAllByHeaderId(long headerId)
         {
             return _appDbContext.PurchasesBillDetails.Where(x => x.PurchasesBillHeaderId==headerId).AsQueryable();
-           
         }
 
         #endregion

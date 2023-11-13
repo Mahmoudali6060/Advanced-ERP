@@ -97,7 +97,7 @@ namespace UnitOfWork.Handlers
 
         public async Task CompleteAsync()
         {
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(true);
         }
 
 

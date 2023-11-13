@@ -10,6 +10,7 @@ namespace Data.Entities.Shared
 
     public class AuditEntity :BaseEntity
     {
+
         public long? CreatedByProfileId { get; set; }
         public virtual UserProfile CreatedByProfile { get; set; }
         public long? ModifiedByProfileId { get; set; }

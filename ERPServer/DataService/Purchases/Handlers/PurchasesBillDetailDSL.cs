@@ -69,18 +69,23 @@ namespace DataService.Setup.Handlers
         public async Task<long> Add(PurchasesBillDetailDTO entity)
         {
             var result = await _unitOfWork.PurchasesBillDetailDAL.Add(_mapper.Map<PurchasesBillDetail>(entity));
+            await _unitOfWork.CompleteAsync();
             return result;
         }
 
         public async Task<long> Update(PurchasesBillDetailDTO entity)
         {
-            return await _unitOfWork.PurchasesBillDetailDAL.Update(_mapper.Map<PurchasesBillDetail>(entity));
+            var result= await _unitOfWork.PurchasesBillDetailDAL.Update(_mapper.Map<PurchasesBillDetail>(entity));
+            await _unitOfWork.CompleteAsync();
+            return result;
         }
 
         public async Task<bool> Delete(long id)
         {
             PurchasesBillDetail entity = await _unitOfWork.PurchasesBillDetailDAL.GetById(id);
-            return await _unitOfWork.PurchasesBillDetailDAL.Delete(entity);
+            var result= await _unitOfWork.PurchasesBillDetailDAL.Delete(entity);
+            await _unitOfWork.CompleteAsync();
+            return result;
         }
         #endregion
 

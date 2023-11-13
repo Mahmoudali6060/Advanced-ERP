@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from '../services/alert.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from 'src/app/modules/authentication/services/auth.service';
 
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
@@ -14,14 +15,18 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     constructor(private spinner: NgxSpinnerService,
         private alertService: AlertService,
         private localStorageService: LocalStorageService,
-        private translate: TranslateService) {
+        private translate: TranslateService,
+        private authService: AuthService) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let handled: boolean = false;
         let token = this.localStorageService.getToken();
         const clonedReq = request.clone({
-            headers: request.headers.set('Authorization', 'Bearer ' + token)
+            headers: request.headers
+                .set('Authorization', 'Bearer ' + token)
+                .set('UserProfileId', this.authService.loggedUserProfile?.id.toString())
+
         });
 
         return next.handle(clonedReq)

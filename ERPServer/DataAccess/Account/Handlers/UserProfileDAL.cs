@@ -41,28 +41,24 @@ namespace Account.DataAccessLayer
         public async Task<long> Add(UserProfile entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Added;
-            await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
 
         public async Task<long> Update(UserProfile entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
-            await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
 
         public long UpdateSync(UserProfile entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
-            _appDbContext.SaveChanges();
             return entity.Id;
         }
 
         public async Task<bool> Delete(UserProfile userProfile)
         {
             _appDbContext.UserProfiles.Remove(userProfile);
-            await _appDbContext.SaveChangesAsync();
             return true;
         }
 

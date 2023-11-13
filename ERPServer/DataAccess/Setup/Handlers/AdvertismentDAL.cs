@@ -22,21 +22,18 @@ namespace DataAccess.Setup.Handlers
         public async Task<long> Add(Advertisment entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Added;
-            await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
 
         public async Task<long> AddRang(List<Advertisment> lstAdvertisments)
         {
            _appDbContext.AddRange(lstAdvertisments);
-            await _appDbContext.SaveChangesAsync();
             return lstAdvertisments.Count;
         }
 
         public async Task<bool> Delete(Advertisment entity)
         {
             _appDbContext.Advertisments.Remove(entity);
-            await _appDbContext.SaveChangesAsync();
             return true;
         }
 
@@ -59,7 +56,6 @@ namespace DataAccess.Setup.Handlers
         public async Task<long> Update(Advertisment entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
-            await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
     }

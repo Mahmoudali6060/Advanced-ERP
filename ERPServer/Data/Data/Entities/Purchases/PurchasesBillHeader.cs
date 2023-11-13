@@ -3,12 +3,14 @@ using Data.Entities.Shared;
 using Data.Entities.UserManagement;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Data.Entities.Purchases
 {
+    [Table(nameof(PurchasesBillHeader))]
     public class PurchasesBillHeader : AuditEntity
     {
         public string Number { get; set; }

@@ -54,7 +54,7 @@ namespace Accout.DataServiceLayer
         private IQueryable<UserProfile> ApplyFilert(IQueryable<UserProfile> UserProfileList, UserProfileSearchCriteriaDTO searchCriteriaDTO)
         {
             //Filter
-            
+
             if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.FirstName))
             {
                 UserProfileList = UserProfileList.Where(x => x.FirstName.Contains(searchCriteriaDTO.FirstName));
@@ -86,7 +86,7 @@ namespace Accout.DataServiceLayer
             UserProfileDTO userProfileDTO = new UserProfileDTO();
             var userProfile = await _unitOfWork.UserProfileDAL.GetById(id);
             userProfileDTO = _mapper.Map<UserProfileDTO>(userProfile);
-            if(userProfile.Company!= null)
+            if (userProfile.Company != null)
             {
                 userProfileDTO.CompanyDTO = _mapper.Map<CompanyDTO>(userProfile.Company);
             }
@@ -135,7 +135,7 @@ namespace Accout.DataServiceLayer
             {
                 entity.IsActive = true;
                 entity.IsFirstLogin = true;
-                entity.IsHide= false;
+                entity.IsHide = false;
                 AppUser appUser = UserMapper.MapAppUser(entity);
                 var createUserResult = await _unitOfWork.AccountDAL.CreateUserAsync(appUser, entity.Password);
                 if (createUserResult.Succeeded)
@@ -146,6 +146,7 @@ namespace Accout.DataServiceLayer
                     return await _unitOfWork.UserProfileDAL.Add(_mapper.Map<UserProfile>(entity));
                 }
                 await _unitOfWork.AccountDAL.DeleteUser(appUser.Id);
+                await _unitOfWork.CompleteAsync();
                 throw new Exception(createUserResult.Errors.ToList()[0].Description);
             }
             throw new Exception("Errors.InvalidData");
@@ -165,7 +166,9 @@ namespace Accout.DataServiceLayer
                     {
                         var company = UserMapper.MapCompany(entity);
                     }
-                    return await _unitOfWork.UserProfileDAL.Update(_mapper.Map<UserProfile>(entity));
+                    var result = await _unitOfWork.UserProfileDAL.Update(_mapper.Map<UserProfile>(entity));
+                    await _unitOfWork.CompleteAsync();
+                    return result;
                 }
                 throw new Exception(createUserResult.Errors.ToList()[0].Description);
             }
@@ -180,8 +183,10 @@ namespace Accout.DataServiceLayer
                 UserProfile userProfile = await _unitOfWork.UserProfileDAL.GetById(id);
                 //>>To-Do >> Check this again
                 if (userProfile.AppUserId != null)
-                await _unitOfWork.UserProfileDAL.Delete(userProfile);
-                return await _unitOfWork.AccountDAL.DeleteUser(userProfile.AppUserId);
+                    await _unitOfWork.UserProfileDAL.Delete(userProfile);
+                var result= await _unitOfWork.AccountDAL.DeleteUser(userProfile.AppUserId);
+                await _unitOfWork.CompleteAsync();
+                return result;
             }
             catch (Exception)
             {

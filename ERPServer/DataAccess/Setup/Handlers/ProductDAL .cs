@@ -45,7 +45,6 @@ namespace Setup.DataAccessLayer
         {
             entity.Code = GenerateSequenceNumber();
             _appDbContext.Entry(entity).State = EntityState.Added;
-            await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
 
@@ -54,14 +53,12 @@ namespace Setup.DataAccessLayer
         public async Task<long> Update(Product entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
-            await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
 
         public async Task<bool> Delete(Product entity)
         {
             _appDbContext.Products.Remove(entity);
-            await _appDbContext.SaveChangesAsync();
             return true;
         }
 

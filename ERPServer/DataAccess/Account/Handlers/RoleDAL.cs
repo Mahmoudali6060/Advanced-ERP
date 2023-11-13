@@ -34,9 +34,6 @@ namespace Account.DataAccessLayer
 
         public async Task<long> Add(RoleGroup entity)
         {
-            //_appDbContext.Entry(entity).State = EntityState.Added;
-            //await _appDbContext.SaveChangesAsync();
-            //return entity.Id;
             await _appDbContext.AddAsync(entity);
             return entity.Id;
         }
@@ -47,21 +44,18 @@ namespace Account.DataAccessLayer
             if (privileges != null && privileges.Count()>0) _appDbContext.RolePrivileges.RemoveRange(privileges);
             _appDbContext.RolePrivileges.AddRange(entity.RolePrivileges);
             _appDbContext.RoleGroups.Update(entity);
-            await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
 
         public long UpdateSync(RoleGroup entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
-            _appDbContext.SaveChanges();
             return entity.Id;
         }
 
         public async Task<bool> Delete(RoleGroup roleGroup)
         {
             _appDbContext.RoleGroups.Remove(roleGroup);
-            await _appDbContext.SaveChangesAsync();
             return true;
         }
 

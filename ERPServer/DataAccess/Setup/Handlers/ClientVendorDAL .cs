@@ -46,21 +46,18 @@ namespace Setup.DataAccessLayer
             }
             entity.Code = GenerateSequenceNumber();
             _appDbContext.Entry(entity).State = EntityState.Added;
-            await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
 
         public async Task<long> Update(ClientVendor entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
-            await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
 
         public async Task<bool> Delete(ClientVendor entity)
         {
             _appDbContext.ClientVendors.Remove(entity);
-            await _appDbContext.SaveChangesAsync();
             return true;
         }
 

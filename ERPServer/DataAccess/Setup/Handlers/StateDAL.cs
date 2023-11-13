@@ -43,21 +43,18 @@ namespace Setup.DataAccessLayer
         public async Task<long> Add(State entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Added;
-            await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
 
         public async Task<long> Update(State entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
-            await _appDbContext.SaveChangesAsync();
             return entity.Id;
         }
 
         public async Task<bool> Delete(State state)
         {
             _appDbContext.States.Remove(state);
-            await _appDbContext.SaveChangesAsync();
             return true;
         }
 
