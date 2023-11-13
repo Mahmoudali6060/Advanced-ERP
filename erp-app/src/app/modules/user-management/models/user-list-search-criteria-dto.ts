@@ -1,6 +1,6 @@
-import { DataSourceModel } from "src/app/shared/models/data-source.model";
+import { PagingDTO } from "src/app/shared/models/paging-dto";
 
-export class UserProfileSearchCriteriaDTO extends DataSourceModel {
+export class UserProfileSearchCriteriaDTO extends PagingDTO {
     firstName: string ;
     lastName: string ;
     email: string ;

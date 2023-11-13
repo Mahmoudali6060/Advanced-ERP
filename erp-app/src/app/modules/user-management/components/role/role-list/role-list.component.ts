@@ -6,7 +6,7 @@ import { PaginationComponent } from 'src/app/shared/components/pagination/pagina
 import { LabelValuePair } from 'src/app/shared/enums/label-value-pair';
 import { ConfigService } from 'src/app/shared/services/config.service';
 import { HelperService } from 'src/app/shared/services/helper.service';
-import { DataSourceModel } from '../../../../../shared/models/data-source.model';
+import { PagingDTO } from '../../../../../shared/models/paging-dto';
 import { DialogService } from '../../../../../shared/services/confirmation-dialog.service';
 import { CountryModel } from 'src/app/modules/configurations/models/country.model';
 import { StateModel } from 'src/app/modules/configurations/models/state.model';
@@ -24,7 +24,7 @@ import { RoleSearchDTO } from '../../../models/role-search.dto';
 })
 export class RoleListComponent {
 	@ViewChild(PaginationComponent) paginationComponent: PaginationComponent;
-	dataSource: DataSourceModel = new DataSourceModel();
+	dataSource: PagingDTO = new PagingDTO();
 	roleList: Array<RoleDTO>;
 	showFilterControls: boolean = false;
 	searchCriteriaDTO: RoleSearchDTO = new RoleSearchDTO()

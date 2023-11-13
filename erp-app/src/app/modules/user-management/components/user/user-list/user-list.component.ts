@@ -6,7 +6,7 @@ import { PaginationComponent } from 'src/app/shared/components/pagination/pagina
 import { LabelValuePair } from 'src/app/shared/enums/label-value-pair';
 import { ConfigService } from 'src/app/shared/services/config.service';
 import { HelperService } from 'src/app/shared/services/helper.service';
-import { DataSourceModel } from '../../../../../shared/models/data-source.model';
+import { PagingDTO } from '../../../../../shared/models/paging-dto';
 import { DialogService } from '../../../../../shared/services/confirmation-dialog.service';
 import {  UserProfileSearchCriteriaDTO } from '../../../models/user-list-search-criteria-dto';
 import { UserProfileDTO } from '../../../models/user-profile.dto';
@@ -25,7 +25,7 @@ import { CityModel } from 'src/app/modules/configurations/models/city.model';
 })
 export class UserListComponent {
 	@ViewChild(PaginationComponent) paginationComponent: PaginationComponent;
-	dataSource: DataSourceModel = new DataSourceModel();
+	dataSource: PagingDTO = new PagingDTO();
 	userList: Array<UserProfileDTO> ;
 	serverUrl: string;
 	showFilterControls: boolean = false;

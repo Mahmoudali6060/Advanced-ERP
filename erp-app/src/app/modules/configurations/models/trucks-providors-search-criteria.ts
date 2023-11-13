@@ -1,6 +1,6 @@
-import { DataSourceModel } from "src/app/shared/models/data-source.model";
+import { PagingDTO } from "src/app/shared/models/paging-dto";
 
-export class TrucksProviderSearchDTO extends DataSourceModel{
+export class TrucksProviderSearchDTO extends PagingDTO{
     providerNameEn : string
     providerNameAr : string
     countryId : number

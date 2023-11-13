@@ -1,6 +1,6 @@
-import { DataSourceModel } from "src/app/shared/models/data-source.model";
+import { PagingDTO } from "src/app/shared/models/paging-dto";
 
-export class AdvertismentSearchDTO extends DataSourceModel {
+export class AdvertismentSearchDTO extends PagingDTO {
     media:string;
     mediaBase64:string;
 }

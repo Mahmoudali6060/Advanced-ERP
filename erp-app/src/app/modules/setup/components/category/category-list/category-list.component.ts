@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { PaginationComponent } from 'src/app/shared/components/pagination/pagination.component';
 import { ConfigService } from 'src/app/shared/services/config.service';
 import { HelperService } from 'src/app/shared/services/helper.service';
-import { DataSourceModel } from '../../../../../shared/models/data-source.model';
+import { PagingDTO } from '../../../../../shared/models/paging-dto';
 import { DialogService } from '../../../../../shared/services/confirmation-dialog.service';
 import { CategoryService } from '../../../services/category.service';
 import { CountryModel } from 'src/app/modules/configurations/models/country.model';
@@ -24,7 +24,7 @@ import { CategorySearchCriteriaDTO } from '../../../models/category-search-crite
 export class CategoryListComponent {
 	
 	@ViewChild(PaginationComponent) paginationComponent: PaginationComponent;
-	dataSource: DataSourceModel = new DataSourceModel();
+	dataSource: PagingDTO = new PagingDTO();
 	categoryList: Array<CategoryDTO>;
 	serverUrl: string;
 	showFilterControls: boolean = false;

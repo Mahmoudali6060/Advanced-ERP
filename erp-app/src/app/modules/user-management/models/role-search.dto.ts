@@ -1,6 +1,6 @@
-import { DataSourceModel } from "src/app/shared/models/data-source.model";
+import { PagingDTO } from "src/app/shared/models/paging-dto";
 
-export class RoleSearchDTO extends DataSourceModel {
+export class RoleSearchDTO extends PagingDTO {
     id: number;
     isActive: boolean;
     name: string;

@@ -1,6 +1,6 @@
-import { DataSourceModel } from "src/app/shared/models/data-source.model";
+import { PagingDTO } from "src/app/shared/models/paging-dto";
 
-export class ProductSearchCriteriaDTO extends DataSourceModel {
+export class ProductSearchCriteriaDTO extends PagingDTO {
     code: string;
     isActive: boolean;
     name: string;

@@ -1,6 +1,6 @@
-import { DataSourceModel } from "src/app/shared/models/data-source.model";
+import { PagingDTO } from "src/app/shared/models/paging-dto";
 
-export class CompanySearchCriteria extends DataSourceModel {
+export class CompanySearchCriteria extends PagingDTO {
     companyNameEn: string;
     companyNameAr: string;
     companyCategoryId:number;

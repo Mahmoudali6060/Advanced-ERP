@@ -1,6 +1,6 @@
-import { DataSourceModel } from "src/app/shared/models/data-source.model";
+import { PagingDTO } from "src/app/shared/models/paging-dto";
 
-export class SalesBillSearchCriteriaDTO extends DataSourceModel {
+export class SalesBillSearchCriteriaDTO extends PagingDTO {
     number: string;
     vendorId: string;
     date: string;

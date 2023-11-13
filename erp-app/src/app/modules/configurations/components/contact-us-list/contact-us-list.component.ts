@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PaginationComponent } from 'src/app/shared/components/pagination/pagination.component';
-import { DataSourceModel } from 'src/app/shared/models/data-source.model';
+import { PagingDTO } from 'src/app/shared/models/paging-dto';
 import { ContactUs } from '../../models/contact-us';
 import { ContactUsService } from '../../services/contact-us.service';
 import { ContactUssearch } from '../../models/contact-us-search';
@@ -12,7 +12,7 @@ import { ContactUssearch } from '../../models/contact-us-search';
 })
 export class ContactUsListComponent implements OnInit {
   @ViewChild(PaginationComponent) paginationComponent: PaginationComponent;
-  dataSource: DataSourceModel = new DataSourceModel();
+  dataSource: PagingDTO = new PagingDTO();
   contactUsList: Array<ContactUs>;
   searchCriteriaDTO: ContactUssearch = new ContactUssearch()
   showFilterControls: boolean = false;

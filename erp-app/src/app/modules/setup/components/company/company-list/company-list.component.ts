@@ -2,7 +2,7 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { DataSourceModel } from '../../../../../shared/models/data-source.model';
+import { PagingDTO } from '../../../../../shared/models/paging-dto';
 import { DialogService } from '../../../../../shared/services/confirmation-dialog.service';
 import { CompanyService } from '../../../services/company.service';
 import { ConfigService } from '../../../../../shared/services/config.service';
@@ -18,7 +18,7 @@ import { CompanySearchDTO } from '../../../models/company-search-dto';
 
 export class CompanyListComponent {
 	@ViewChild(PaginationComponent) paginationComponent: PaginationComponent;
-	dataSource: DataSourceModel = new DataSourceModel();
+	dataSource: PagingDTO = new PagingDTO();
 	companyList: Array<CompanyDTO>;
 	serverUrl: string;
 	showFilterControls: boolean = false;
