@@ -88,6 +88,18 @@ namespace DataService.Sales.Handlers
             #endregion
 
             var result = await _unitOfWork.SalesBillHeaderDAL.Add(_mapper.Map<SalesBillHeader>(entity));
+
+            #region Update Balance
+            var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
+            if (clientVendor != null)
+            {
+                clientVendor.Debit += entity.Paid;
+                clientVendor.Credit += entity.TotalAfterDiscount;
+
+                await _unitOfWork.ClientVendorDAL.Update(clientVendor);
+            }
+            #endregion
+
             await _unitOfWork.CompleteAsync();
             return result;
         }
@@ -119,6 +131,17 @@ namespace DataService.Sales.Handlers
             }
             #endregion
 
+            #region Update Balance
+            var exsitedSalesHeader = await _unitOfWork.SalesBillHeaderDAL.GetById(entity.Id);
+            exsitedSalesHeader.ClientVendor = null;
+            var existedClientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
+            if (existedClientVendor != null)
+            {
+                existedClientVendor.Debit += entity.Paid - exsitedSalesHeader.Paid;
+                existedClientVendor.Credit += entity.TotalAfterDiscount - exsitedSalesHeader.TotalAfterDiscount;
+                await _unitOfWork.ClientVendorDAL.Update(existedClientVendor);
+            }
+            #endregion
             await _unitOfWork.CompleteAsync();
             return result;
         }
@@ -126,6 +149,8 @@ namespace DataService.Sales.Handlers
         public async Task<bool> Delete(long id)
         {
             SalesBillHeader entity = await _unitOfWork.SalesBillHeaderDAL.GetById(id);
+            entity.ClientVendor = null;//To remove tracking
+
             #region Update Product
             foreach (var item in entity.SalesBillDetailList)
             {
@@ -137,6 +162,17 @@ namespace DataService.Sales.Handlers
             #endregion
 
             var result = await _unitOfWork.SalesBillHeaderDAL.Delete(entity);
+
+            #region Update Balance
+            var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
+            if (clientVendor != null)
+            {
+                clientVendor.Debit -= entity.TotalAfterDiscount;
+                clientVendor.Credit -= entity.Paid;
+                await _unitOfWork.ClientVendorDAL.Update(clientVendor);
+            }
+            #endregion
+
             await _unitOfWork.CompleteAsync();
             return result;
         }
