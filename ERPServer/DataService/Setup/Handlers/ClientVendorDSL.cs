@@ -78,37 +78,19 @@ namespace DataService.Setup.Handlers
         #endregion
 
         #region Command
-        public async Task<long> Add(ClientVendorDTO entity)
+        public async Task<long> Add(ClientVendorDTO entityDTO)
         {
-
-            //entity.Code = "CL" + DateTime.Now.ToString("ddMMyyHHmmssff");//ddMMyyHHmmssff
-            UploadClientVendorImage(entity);
-            var result = await _unitOfWork.ClientVendorDAL.Add(_mapper.Map<ClientVendor>(entity));
-            //if (entity.IsVendor)//Update Vendor
-            //{
-            //    var vendorDTO = MapClientVendorToVendor(entity);
-            //    await _unitOfWork.VendorDAL.Add(_mapper.Map<Vendor>(vendorDTO));
-            //}
+            UploadClientVendorImage(entityDTO);
+            var entity = _mapper.Map<ClientVendor>(entityDTO);
+            await _unitOfWork.ClientVendorDAL.Add(entity);
             await _unitOfWork.CompleteAsync();
-            return result;
+            return entity.Id;
         }
 
         public async Task<long> Update(ClientVendorDTO entity)
         {
             UploadClientVendorImage(entity);
             var result = await _unitOfWork.ClientVendorDAL.Update(_mapper.Map<ClientVendor>(entity));
-            //if (entity.IsVendor)//Update Vendor
-            //{
-            //    var vendorDTO = MapClientVendorToVendor(entity);
-            //    UploadVendorImage(vendorDTO);
-            //    if (entity.VendorId.HasValue) await _unitOfWork.VendorDAL.Update(_mapper.Map<Vendor>(vendorDTO));
-            //    else await _unitOfWork.VendorDAL.Add(_mapper.Map<Vendor>(vendorDTO));
-            //}
-            //else if (entity.VendorId.HasValue)
-            //{
-            //    var deletedVendor = await _unitOfWork.VendorDAL.GetById(entity.VendorId.Value);
-            //    await _unitOfWork.VendorDAL.Delete(deletedVendor);
-            //}
             await _unitOfWork.CompleteAsync();
             return result;
         }

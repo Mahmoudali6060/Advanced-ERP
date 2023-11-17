@@ -77,24 +77,47 @@ namespace DataService.Sales.Handlers
         #region Command
         public async Task<long> Add(SalesBillHeaderDTO entity)
         {
+            #region Update Product
+            foreach (var item in entity.SalesBillDetailList)
+            {
+                var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
+                product.ActualQuantity = product.ActualQuantity - item.Quantity;
+                product.Price = item.Price;
+                await _unitOfWork.ProductDAL.Update(product);
+            }
+            #endregion
+
             var result = await _unitOfWork.SalesBillHeaderDAL.Add(_mapper.Map<SalesBillHeader>(entity));
             await _unitOfWork.CompleteAsync();
             return result;
         }
 
-    
+
         public async Task<long> Update(SalesBillHeaderDTO entity)
         {
-            var exsitedPurhaseDetails = await _unitOfWork.SalesBillDetailDAL.GetAllByHeaderId(entity.Id);
-           
-            await _unitOfWork.SalesBillDetailDAL.DeleteRange(exsitedPurhaseDetails.ToList());
-            foreach(var item in entity.SalesBillDetailList)
+            var exsitedSalesBillDetailList = await _unitOfWork.SalesBillDetailDAL.GetAllByHeaderId(entity.Id);
+
+            await _unitOfWork.SalesBillDetailDAL.DeleteRange(exsitedSalesBillDetailList.ToList());
+            foreach (var item in entity.SalesBillDetailList)
             {
                 item.SalesBillHeaderId = entity.Id;
             }
             await _unitOfWork.SalesBillDetailDAL.AddRange(_mapper.Map<List<SalesBillDetail>>(entity.SalesBillDetailList));
+            var tempSalesBillDetailList = entity.SalesBillDetailList;
             entity.SalesBillDetailList = null;
             var result = await _unitOfWork.SalesBillHeaderDAL.Update(_mapper.Map<SalesBillHeader>(entity));
+
+            #region Update Product 
+            foreach (var item in tempSalesBillDetailList)
+            {
+                var exsitedSalesBillDetails = exsitedSalesBillDetailList.SingleOrDefault(x => x.Id == item.Id);
+                decimal quantity = exsitedSalesBillDetails != null ? item.Quantity - exsitedSalesBillDetails.Quantity : item.Quantity;
+                var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
+                product.ActualQuantity = product.ActualQuantity - quantity;
+                product.Price = item.Price;
+                await _unitOfWork.ProductDAL.Update(product);
+            }
+            #endregion
 
             await _unitOfWork.CompleteAsync();
             return result;
@@ -103,6 +126,16 @@ namespace DataService.Sales.Handlers
         public async Task<bool> Delete(long id)
         {
             SalesBillHeader entity = await _unitOfWork.SalesBillHeaderDAL.GetById(id);
+            #region Update Product
+            foreach (var item in entity.SalesBillDetailList)
+            {
+                var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
+                product.ActualQuantity = product.ActualQuantity + item.Quantity;
+                product.Price = item.Price;
+                await _unitOfWork.ProductDAL.Update(product);
+            }
+            #endregion
+
             var result = await _unitOfWork.SalesBillHeaderDAL.Delete(entity);
             await _unitOfWork.CompleteAsync();
             return result;

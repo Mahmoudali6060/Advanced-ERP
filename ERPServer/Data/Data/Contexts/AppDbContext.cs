@@ -85,7 +85,7 @@ namespace Data.Contexts
 
         public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-            AddAuitInfo();
+            //AddAuitInfo();
 
             string userProfileId = _httpContextAccessor.HttpContext.Request.Headers["UserProfileId"];
             if (userProfileId != null)
@@ -116,7 +116,7 @@ namespace Data.Contexts
             {
                 if (entry.State == EntityState.Added)
                 {
-                    ((BaseEntity)entry.Entity).Modified = DateTime.UtcNow;
+                    ((BaseEntity)entry.Entity).Created = DateTime.UtcNow;
                 }
             ((BaseEntity)entry.Entity).Modified = DateTime.UtcNow;
             }

@@ -69,11 +69,12 @@ namespace DataService.Setup.Handlers
         #endregion
 
         #region Command
-        public async Task<long> Add(CategoryDTO entity)
+        public async Task<long> Add(CategoryDTO entityDTO)
         {
-            var result = await _unitOfWork.CategoryDAL.Add(_mapper.Map<Category>(entity));
+            var entity = _mapper.Map<Category>(entityDTO);
+            var result = await _unitOfWork.CategoryDAL.Add(entity);
             await _unitOfWork.CompleteAsync();
-            return result;
+            return entity.Id;
         }
 
         public async Task<long> Update(CategoryDTO entity)

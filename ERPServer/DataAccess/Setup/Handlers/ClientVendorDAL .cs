@@ -29,7 +29,7 @@ namespace Setup.DataAccessLayer
 
         public async Task<ClientVendor> GetById(long id)
         {
-            var ClientVendor = _appDbContext.ClientVendors.SingleOrDefaultAsync(x => x.Id == id);
+            var ClientVendor = _appDbContext.ClientVendors.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
             return await ClientVendor;
         }
 
@@ -39,10 +39,10 @@ namespace Setup.DataAccessLayer
 
         public async Task<long> Add(ClientVendor entity)
         {
-            var exsited=_appDbContext.ClientVendors.SingleOrDefault(x=>x.FullName== entity.FullName);
-            if(exsited != null)
+            var exsited = _appDbContext.ClientVendors.SingleOrDefault(x => x.FullName == entity.FullName);
+            if (exsited != null)
             {
-                    throw new Exception("Errors.DuplicatedFullName");
+                throw new Exception("Errors.DuplicatedFullName");
             }
             entity.Code = GenerateSequenceNumber();
             _appDbContext.Entry(entity).State = EntityState.Added;

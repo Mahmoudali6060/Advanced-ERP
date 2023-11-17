@@ -77,24 +77,74 @@ namespace DataService.Setup.Handlers
         #region Command
         public async Task<long> Add(PurchasesBillHeaderDTO entity)
         {
+            #region Update Product
+            foreach (var item in entity.PurchasesBillDetailList)
+            {
+                var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
+                product.ActualQuantity = product.ActualQuantity + item.Quantity;
+                product.Price = item.Price;
+                await _unitOfWork.ProductDAL.Update(product);
+            }
+            #endregion
+
             var result = await _unitOfWork.PurchasesBillHeaderDAL.Add(_mapper.Map<PurchasesBillHeader>(entity));
+
+            #region Update Balance
+            var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
+            if (clientVendor != null)
+            {
+                clientVendor.Debit += entity.TotalAfterDiscount;
+                clientVendor.Credit += entity.Paid;
+
+                await _unitOfWork.ClientVendorDAL.Update(clientVendor);
+            }
+            #endregion
+
             await _unitOfWork.CompleteAsync();
             return result;
         }
 
-    
+
         public async Task<long> Update(PurchasesBillHeaderDTO entity)
         {
-            var exsitedPurhaseDetails = await _unitOfWork.PurchasesBillDetailDAL.GetAllByHeaderId(entity.Id);
-           
-            await _unitOfWork.PurchasesBillDetailDAL.DeleteRange(exsitedPurhaseDetails.ToList());
-            foreach(var item in entity.PurchasesBillDetailList)
+
+            var exsitedPurhaseDetailsList = await _unitOfWork.PurchasesBillDetailDAL.GetAllByHeaderId(entity.Id);
+
+            await _unitOfWork.PurchasesBillDetailDAL.DeleteRange(exsitedPurhaseDetailsList.ToList());
+            foreach (var item in entity.PurchasesBillDetailList)
             {
                 item.PurchasesBillHeaderId = entity.Id;
             }
             await _unitOfWork.PurchasesBillDetailDAL.AddRange(_mapper.Map<List<PurchasesBillDetail>>(entity.PurchasesBillDetailList));
+
+            var tempPurchasesBillDetailList = entity.PurchasesBillDetailList;
             entity.PurchasesBillDetailList = null;
+
             var result = await _unitOfWork.PurchasesBillHeaderDAL.Update(_mapper.Map<PurchasesBillHeader>(entity));
+
+            #region Update Product 
+            foreach (var item in tempPurchasesBillDetailList)
+            {
+                var exsitedPurchaseDetails = exsitedPurhaseDetailsList.SingleOrDefault(x => x.Id == item.Id);
+                decimal quantity = exsitedPurchaseDetails != null ? item.Quantity - exsitedPurchaseDetails.Quantity : item.Quantity;
+                var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
+                product.ActualQuantity = product.ActualQuantity + quantity;
+                product.Price = item.Price;
+                await _unitOfWork.ProductDAL.Update(product);
+            }
+            #endregion
+
+            #region Update Balance
+            var exsitedPurhaseHeader = await _unitOfWork.PurchasesBillHeaderDAL.GetById(entity.Id);
+            exsitedPurhaseHeader.ClientVendor = null;
+            var existedClientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
+            if (existedClientVendor != null)
+            {
+                existedClientVendor.Debit += entity.TotalAfterDiscount - exsitedPurhaseHeader.TotalAfterDiscount;
+                existedClientVendor.Credit += entity.Paid - exsitedPurhaseHeader.Paid;
+                await _unitOfWork.ClientVendorDAL.Update(existedClientVendor);
+            }
+            #endregion
 
             await _unitOfWork.CompleteAsync();
             return result;
@@ -103,7 +153,29 @@ namespace DataService.Setup.Handlers
         public async Task<bool> Delete(long id)
         {
             PurchasesBillHeader entity = await _unitOfWork.PurchasesBillHeaderDAL.GetById(id);
+            entity.ClientVendor = null;//To remove tracking
             var result = await _unitOfWork.PurchasesBillHeaderDAL.Delete(entity);
+
+            #region Update Product
+            foreach (var item in entity.PurchasesBillDetailList)
+            {
+                var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
+                product.ActualQuantity = product.ActualQuantity - item.Quantity;
+                product.Price = item.Price;
+                await _unitOfWork.ProductDAL.Update(product);
+            }
+            #endregion
+
+            #region Update Balance
+            var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
+            if (clientVendor != null)
+            {
+                clientVendor.Debit -= entity.TotalAfterDiscount;
+                clientVendor.Credit -= entity.Paid;
+                await _unitOfWork.ClientVendorDAL.Update(clientVendor);
+            }
+            #endregion
+
             await _unitOfWork.CompleteAsync();
             return result;
         }

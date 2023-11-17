@@ -17,9 +17,9 @@ namespace Data.Entities.Setup
         public decimal Price { get; set; }
         public decimal SellingPricePercentage { get; set; }//سعر البيع
         public decimal PurchasingPricePercentage { get; set; }//سعر الشراء
-        public int ActualQuantity { get; set; }
-        public int LowQuantity { get; set; }
-        public int HighQuantity { get; set; }
+        public decimal ActualQuantity { get; set; }
+        public decimal LowQuantity { get; set; }
+        public decimal HighQuantity { get; set; }
         public long CategoryId { get; set; }
         public virtual Category Category { get; set; }
     }

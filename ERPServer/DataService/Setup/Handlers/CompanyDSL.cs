@@ -70,12 +70,13 @@ namespace DataService.Setup.Handlers
         #endregion
 
         #region Command
-        public async Task<long> Add(CompanyDTO entity)
+        public async Task<long> Add(CompanyDTO entityDTO)
         {
-            UploadImage(entity);
-            var result= await _unitOfWork.CompanyDAL.Add(_mapper.Map<Company>(entity));
+            UploadImage(entityDTO);
+            var entity = _mapper.Map<Company>(entityDTO);
+            await _unitOfWork.CompanyDAL.Add(entity);
             await _unitOfWork.CompleteAsync();
-            return result;
+            return entity.Id;
         }
 
         public async Task<long> Update(CompanyDTO entity)
@@ -89,7 +90,7 @@ namespace DataService.Setup.Handlers
         public async Task<bool> Delete(long id)
         {
             Company entity = await _unitOfWork.CompanyDAL.GetById(id);
-            var result= await _unitOfWork.CompanyDAL.Delete(entity);
+            var result = await _unitOfWork.CompanyDAL.Delete(entity);
             await _unitOfWork.CompleteAsync();
             return result;
         }

@@ -76,12 +76,13 @@ namespace DataService.Setup.Handlers
         #endregion
 
         #region Command
-        public async Task<long> Add(ProductDTO entity)
+        public async Task<long> Add(ProductDTO entityDTO)
         {
-            UploadImage(entity);
-            var result = await _unitOfWork.ProductDAL.Add(_mapper.Map<Product>(entity));
+            UploadImage(entityDTO);
+            var entity = _mapper.Map<Product>(entityDTO);
+            var result = await _unitOfWork.ProductDAL.Add(entity);
             await _unitOfWork.CompleteAsync();
-            return result;
+            return entity.Id;
         }
 
         public async Task<long> Update(ProductDTO entity)

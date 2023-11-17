@@ -1,4 +1,6 @@
-﻿using Data.Entities.Shared;
+﻿using Data.Entities.Purchases;
+using Data.Entities.Sales;
+using Data.Entities.Shared;
 using Data.Entities.UserManagement;
 using Shared.Enums;
 using System;
@@ -24,5 +26,9 @@ namespace Data.Entities.Setup
         public ClientVendorTypeEnum TypeId { get; set; }
         public long? CompanyId { get; set; }
         public virtual Company Company { get; set; }
+        public virtual List<PurchasesBillHeader> PurchasesBillHeaderList { get; set; }
+        public virtual List<SalesBillHeader> SalesBillHeaderList { get; set; }
+
+
     }
 }
