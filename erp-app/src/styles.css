@@ -275,5 +275,9 @@ width: 15%;
 }
 
 .ng-select-custom{
-     width: 199px;
+     width: 80%;
+}
+
+.header3-sub-list{
+    min-width: 300px !important;
 }

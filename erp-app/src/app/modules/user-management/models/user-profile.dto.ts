@@ -1,4 +1,4 @@
-import { CompanyDTO } from "./company-dto";
+import { CompanyDTO } from "../../setup/models/company-dto";
 import { RoleDTO } from "./role.dto";
 import { UserTypeEnum } from "./user-type-enum";
 

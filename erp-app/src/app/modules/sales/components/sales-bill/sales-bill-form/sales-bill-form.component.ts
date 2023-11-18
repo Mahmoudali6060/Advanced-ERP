@@ -21,6 +21,7 @@ import { ClientVendorService } from 'src/app/modules/setup/services/client-vendo
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { ClientVendorFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/client-vendor-form-popup/client-vendor-form-popup.component';
 import { AuthService } from 'src/app/modules/authentication/services/auth.service';
+import { ReportService } from 'src/app/modules/report/services/report.service';
 
 @Component({
 	selector: 'app-sales-bill-form',
@@ -37,6 +38,7 @@ export class SalesBillFormComponent {
 	purchaseHeaderId: any;
 	currentBalance: number = 0;
 	@Input() searchByNumber: boolean = false;
+	selectedClient: ClientVendorDTO = new ClientVendorDTO();
 	//#region 
 	reportName: string;
 	parameters: any;
@@ -56,7 +58,8 @@ export class SalesBillFormComponent {
 		private translate: TranslateService,
 		private dialogService: DialogService,
 		private alertService: AlertService,
-		private authService: AuthService
+		private authService: AuthService,
+		private reportService: ReportService
 
 	) {
 	}
@@ -205,7 +208,7 @@ export class SalesBillFormComponent {
 			this.salesBillHeaderDTO.total += item.subTotal;
 		}
 		this.salesBillHeaderDTO.totalAfterDiscount = parseFloat((this.salesBillHeaderDTO.transfer + this.salesBillHeaderDTO.total - this.salesBillHeaderDTO.totalDiscount).toFixed(2));
-		this.salesBillHeaderDTO.remaining = this.salesBillHeaderDTO.totalAfterDiscount - this.salesBillHeaderDTO.paid;
+		this.salesBillHeaderDTO.remaining = this.salesBillHeaderDTO.paid - this.salesBillHeaderDTO.totalAfterDiscount;
 	}
 
 
@@ -224,7 +227,10 @@ export class SalesBillFormComponent {
 	onClientChange() {
 		if (this.salesBillHeaderDTO.clientVendorId) {
 			let selectedClient: any = this.clientList.find(c => c.id == this.salesBillHeaderDTO.clientVendorId);
-			this.currentBalance = selectedClient?.debit - selectedClient?.credit;
+			if (selectedClient) {
+				this.selectedClient = selectedClient;
+				this.currentBalance = selectedClient?.debit - selectedClient?.credit;
+			}
 		}
 	}
 
@@ -274,109 +280,8 @@ export class SalesBillFormComponent {
 	}
 
 	print() {
-
-		let div = document.getElementById('printDiv');
-		let popupWin: any;
-		// printContents = document.getElementById('print-section').innerHTML;
-		popupWin = window.open('', '_blank', 'top=0,left=0,height=100%');
-		popupWin.document.open();
-		var html = `
-		  <html dir="rtl">
-			<head>
-			  <title>فاتورة</title>
-			  <style>
-			  table { 
-				width: 100%; 
-				border-collapse: collapse; 
-				margin:5px auto;
-				margin-top: 0px;
-				overflow-x:auto;
-				margin-bottom: 0px;
-				}
-			  
-			  /* Zebra striping */
-			  tr:nth-of-type(odd) { 
-				background: #eee; 
-				}
-			  
-			  th { 
-				background: #bec5c5; 
-				color: black; 
-				font-weight: bold; 
-				}
-			  
-			  td, th { 
-				padding: 10px; 
-				border: 1px solid #ccc; 
-				text-align: right; 
-				font-size: 18px;
-				}
-			  
-body {
-	background: #ccc;
-	padding: 5px;
-  }
-  
-  .container {
-	width: 21cm;
-	min-height: 29.7cm;
-  }
-  
-  .invoice {
-	background: #fff;
-	width: 100%;
-	padding: 50px;
-  }
-  
-  .logo {
-	width: 3.5cm;
-  }
-  
-  .document-type {
-	text-align: right;
-	color: #444;
-  }
-  
-  .text-center{
-	text-align: center;
-  }
-  
-  .text-left{
-	text-align: left;
-  }
-  
-  .text-bold{
-	font-weight: bold;
-  }
-  .conditions {
-	font-size: 0.7em;
-	color: #666;
-  }
-  
-  .bottom-page {
-	font-size: 0.7em;
-  }
-   
-			  </style>
-	
-			  <meta charset="utf-8">
-			  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-			  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-   
-    <link href="/assets/plugins/bootstrap/bootstrap.min.css" rel="stylesheet" media="all">
-
-
-			</head>
-			<body onload="window.print()">
-			  <div class="wrapper" style="font-family: 'Helvetica Neue', lato, arial, sans-serif;font-size: 12px;">
-				`;
-		html += div?.innerHTML;
-		html += ` 
-			  </div>
-			</body>
-		  </html>`
-		popupWin.document.write(html);
-		popupWin.document.close();
+		let div: any = document.getElementById('salesBill');
+		this.reportService.print(this.translate.instant("Reports.SalesBill"), div);
 	}
 
 }

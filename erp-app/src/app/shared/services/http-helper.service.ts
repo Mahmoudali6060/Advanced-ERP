@@ -11,7 +11,7 @@ export class HttpHelperService {
         private _http: HttpClient,
         private _configService: ConfigService
     ) {
-        
+
         var config = _configService.getServerUrl();
         this.baseUrl = config + "api/";
     }
@@ -24,7 +24,7 @@ export class HttpHelperService {
         });
     }
 
-    get(url: string) {
+    get(url: string): any {
         return this._http.get(this.baseUrl + url, {
             headers: new HttpHeaders({
                 "Content-Type": "application/json"

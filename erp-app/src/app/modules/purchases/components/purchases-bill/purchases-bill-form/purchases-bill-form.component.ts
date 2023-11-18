@@ -19,6 +19,7 @@ import { ClientVendorDTO, ClientVendorTypeEnum } from 'src/app/modules/setup/mod
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { ClientVendorFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/client-vendor-form-popup/client-vendor-form-popup.component';
 import { AuthService } from 'src/app/modules/authentication/services/auth.service';
+import { ReportService } from 'src/app/modules/report/services/report.service';
 @Component({
 	selector: 'app-purchases-bill-form',
 	templateUrl: './purchases-bill-form.component.html',
@@ -34,8 +35,9 @@ export class PurchasesBillFormComponent {
 	vendorList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
 	purchaseHeaderId: any;
 	searchProduct: any;
-	currentBalance: number | null = 0;
+	currentBalance: number = 0;
 	@Input() searchByNumber: boolean = false;
+	selectedVendor: ClientVendorDTO = new ClientVendorDTO();
 
 	constructor(
 		private purchasesBillService: PurchasesBillService,
@@ -48,7 +50,8 @@ export class PurchasesBillFormComponent {
 		private translate: TranslateService,
 		private dialogService: DialogService,
 		private alertService: AlertService,
-		private authService: AuthService) {
+		private authService: AuthService,
+		private reportService: ReportService) {
 	}
 
 	ngOnInit() {
@@ -97,7 +100,7 @@ export class PurchasesBillFormComponent {
 		this.purchasesBillService.getByNumber(this.purchasesBillHeaderDTO.number).subscribe((res: any) => {
 			if (!res) {
 				this.purchasesBillHeaderDTO = new PurchasesBillHeaderDTO();
-				this.currentBalance = null;
+				this.currentBalance = 0;
 				this.alertService.showError(this.translate.instant("Errors.NotFound"), this.translate.instant("Errors.Error"));
 				return;
 			}
@@ -131,13 +134,18 @@ export class PurchasesBillFormComponent {
 
 	}
 
-	save(form: NgForm) {
+	save(isPrint: boolean, form?: NgForm) {
 		if (this.validation(this.purchasesBillHeaderDTO)) {
 			if (this.purchasesBillHeaderDTO.id) {
 				this.purchasesBillHeaderDTO.modifiedByProfileId = this.authService.loggedUserProfile?.id;
 				this.purchasesBillService.update(this.purchasesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
-					this.back();
+					if (isPrint) {
+						this.print();
+					}
+					else {
+						this.back();
+					}
 				})
 			}
 			else {
@@ -145,7 +153,12 @@ export class PurchasesBillFormComponent {
 				this.purchasesBillHeaderDTO.createdByProfileId = this.authService.loggedUserProfile?.id;
 				this.purchasesBillService.add(this.purchasesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
-					this.back();
+					if (isPrint) {
+						this.print();
+					}
+					else {
+						this.back();
+					}
 				})
 			}
 		}
@@ -182,6 +195,8 @@ export class PurchasesBillFormComponent {
 			if (!item.price) item.price = product.price;
 			if (!item.discount) item.discount = product.purchasingPricePercentage;
 			item.actualQuantity = product.actualQuantity;
+			item.productName = product.name;
+			item.productCode = product.code;
 			this.updateTotal();
 		}
 	}
@@ -196,7 +211,7 @@ export class PurchasesBillFormComponent {
 			this.purchasesBillHeaderDTO.total += item.subTotal;
 		}
 		this.purchasesBillHeaderDTO.totalAfterDiscount = parseFloat((this.purchasesBillHeaderDTO.transfer + this.purchasesBillHeaderDTO.total - this.purchasesBillHeaderDTO.totalDiscount).toFixed(2));
-		this.purchasesBillHeaderDTO.remaining = this.purchasesBillHeaderDTO.totalAfterDiscount - this.purchasesBillHeaderDTO.paid;
+		this.purchasesBillHeaderDTO.remaining = this.purchasesBillHeaderDTO.paid - this.purchasesBillHeaderDTO.totalAfterDiscount;
 	}
 
 	showProductFormPopUp(item: PurchasesBillDetailsDTO) {
@@ -212,8 +227,11 @@ export class PurchasesBillFormComponent {
 
 	onVendorChange() {
 		if (this.purchasesBillHeaderDTO.clientVendorId) {
-			let selectedVendor: any = this.vendorList.find(c => c.id == this.purchasesBillHeaderDTO.clientVendorId);
-			this.currentBalance = selectedVendor?.debit - selectedVendor?.credit;
+			let selectedVendor = this.vendorList.find(c => c.id == this.purchasesBillHeaderDTO.clientVendorId);
+			if (selectedVendor) {
+				this.selectedVendor = selectedVendor;
+				this.currentBalance = this.selectedVendor?.debit - this.selectedVendor?.credit;
+			}
 		}
 	}
 
@@ -227,4 +245,14 @@ export class PurchasesBillFormComponent {
 			})
 			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
 	}
+
+	saveAndPrint() {
+		this.save(true, undefined)
+	}
+
+	print() {
+		let div: any = document.getElementById('purchasesBill');
+		this.reportService.print(this.translate.instant("Reports.PurchasesBill"), div);
+	}
+
 }

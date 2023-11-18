@@ -5,6 +5,7 @@ using Data.Entities.Sales;
 using IdentityModel;
 using Shared.DataAccessLayer.Contracts;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sales.DataAccessLayer
@@ -12,5 +13,6 @@ namespace Sales.DataAccessLayer
     public interface ISalesBillHeaderDAL : ICRUDOperationsDAL<SalesBillHeader>
     {
         Task<SalesBillHeader> GetByNumber(string number);
+        Task<IQueryable<SalesBillHeader>> GetAllByClientId(long clientId);
     }
 }

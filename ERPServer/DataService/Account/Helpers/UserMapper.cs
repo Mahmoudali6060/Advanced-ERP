@@ -39,29 +39,29 @@ namespace Account.Helpers
                 ContactTelephone = model.CompanyDTO.ContactTelephone,
             };
         }
-        public static UserProfileDTO MapAppUser(AppUser appUser, UserProfile userProfile)
-        {
-            return new UserProfileDTO
-            {
-                Id = userProfile.Id,
-                FirstName = userProfile.FirstName,
-                LastName = userProfile.LastName,
-                Mobile = userProfile.Mobile,
-                Email = appUser.Email,
-                UserName = appUser.UserName,
-                DefaultLanguage = userProfile.DefaultLanguage,
-                RoleId = userProfile.RoleId,
-                RoleName = userProfile.Role.Name,
-                AppUserId = appUser.Id,
-                ImageUrl = userProfile.ImageUrl,
+        //public static UserProfileDTO MapAppUser(AppUser appUser, UserProfile userProfile)
+        //{
+        //    return new UserProfileDTO
+        //    {
+        //        Id = userProfile.Id,
+        //        FirstName = userProfile.FirstName,
+        //        LastName = userProfile.LastName,
+        //        Mobile = userProfile.Mobile,
+        //        Email = appUser.Email,
+        //        UserName = appUser.UserName,
+        //        DefaultLanguage = userProfile.DefaultLanguage,
+        //        RoleId = userProfile.RoleId,
+        //        RoleName = userProfile.Role.Name,
+        //        AppUserId = appUser.Id,
+        //        ImageUrl = userProfile.ImageUrl,
 
-                IsActive = userProfile.IsActive,
-                IsFirstLogin = userProfile.IsFirstLogin,
-                CompanyId = userProfile?.CompanyId,
-                IsHide = userProfile.IsHide
+        //        IsActive = userProfile.IsActive,
+        //        IsFirstLogin = userProfile.IsFirstLogin,
+        //        CompanyId = userProfile?.CompanyId,
+        //        IsHide = userProfile.IsHide
 
-            };
-        }
+        //    };
+        //}
 
         public static UserProfileDTO MapRegisterRequestViewModel(RegisterRequestDTO registerRequestViewModel)
         {

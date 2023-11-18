@@ -12,6 +12,7 @@ using System;
 using Entities.Account;
 using Microsoft.EntityFrameworkCore;
 using MimeKit;
+using Shared.Entities.Setup;
 
 namespace DataService.Setup.Handlers
 {
@@ -70,6 +71,40 @@ namespace DataService.Setup.Handlers
                 List = _mapper.Map<IEnumerable<PurchasesBillHeaderDTO>>(_unitOfWork.PurchasesBillHeaderDAL.GetAllLite().Result),
                 Total = _unitOfWork.PurchasesBillHeaderDAL.GetAllLite().Result.Count()
             };
+        }
+
+        public async Task<List<ClientVendorBalanceDTO>> GetAllByVendorId(long vendorId)
+        {
+            List<ClientVendorBalanceDTO> clientVendorBalanceList = new List<ClientVendorBalanceDTO>();
+            var purchasesBillHeaderList = _unitOfWork.PurchasesBillHeaderDAL.GetAllByVendorId(vendorId).Result.ToList();
+            if (purchasesBillHeaderList != null && purchasesBillHeaderList.Count > 0)
+            {
+                var clientVendor = purchasesBillHeaderList[0].ClientVendor;
+                //Set initial Oppening Balance
+                ClientVendorBalanceDTO clientVendorBalanceDTO = new ClientVendorBalanceDTO();
+                clientVendorBalanceDTO.Date = clientVendor.Created.ToString("yyyy-MM-dd");
+                if (clientVendor.OppeningBalance > 0)
+                    clientVendorBalanceDTO.Debit = clientVendor.OppeningBalance;
+                else
+                    clientVendorBalanceDTO.Credit = clientVendor.OppeningBalance;
+                clientVendorBalanceDTO.Details = "General.OppeningBalance";
+                clientVendorBalanceDTO.ClientVendorId = vendorId;
+                clientVendorBalanceList.Add(clientVendorBalanceDTO);
+                foreach (var s in purchasesBillHeaderList)
+                {
+                    clientVendorBalanceList.Add(new ClientVendorBalanceDTO()
+                    {
+                        Date = s.Date.ToString("yyyy-MM-dd"),
+                        Debit =s.TotalAfterDiscount ,
+                        Credit =- s.Paid,
+                        Details = "General.BillNo",
+                        Number = s.Number,
+                        RefId = s.Id,
+                        ClientVendorId = s.ClientVendorId
+                    });
+                }
+            }
+            return clientVendorBalanceList;
         }
 
         #endregion

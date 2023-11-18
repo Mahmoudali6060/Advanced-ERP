@@ -48,7 +48,10 @@ namespace App.Helper
             CreateMap<UserProfile, UserProfileDTO>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.AppUser.UserName))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.AppUser.Email))
-                .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name));
+                .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
+                .ForMember(dest => dest.CompanyDTO, opt => opt.MapFrom(src => src.Company))
+                .ForMember(dest => dest.RoleGroupDTO, opt => opt.MapFrom(src => src.Role));
+
 
 
             CreateMap<UserProfileDTO, UserProfile>();

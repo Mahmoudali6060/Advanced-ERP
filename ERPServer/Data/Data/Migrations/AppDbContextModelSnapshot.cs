@@ -455,6 +455,9 @@ namespace Data.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("OppeningBalance")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("PhoneNumber1")
                         .HasColumnType("nvarchar(max)");
 
@@ -1057,7 +1060,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Purchases.PurchasesBillHeader", b =>
                 {
                     b.HasOne("Data.Entities.Setup.ClientVendor", "ClientVendor")
-                        .WithMany()
+                        .WithMany("PurchasesBillHeaderList")
                         .HasForeignKey("ClientVendorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1111,7 +1114,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Sales.SalesBillHeader", b =>
                 {
                     b.HasOne("Data.Entities.Setup.ClientVendor", "ClientVendor")
-                        .WithMany()
+                        .WithMany("SalesBillHeaderList")
                         .HasForeignKey("ClientVendorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1328,6 +1331,13 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Setup.City", b =>
                 {
                     b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("Data.Entities.Setup.ClientVendor", b =>
+                {
+                    b.Navigation("PurchasesBillHeaderList");
+
+                    b.Navigation("SalesBillHeaderList");
                 });
 
             modelBuilder.Entity("Data.Entities.Setup.Country", b =>

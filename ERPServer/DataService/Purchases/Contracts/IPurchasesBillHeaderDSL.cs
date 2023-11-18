@@ -4,6 +4,7 @@ using IdentityModel;
 using Purchases.DataAccessLayer;
 using Shared.DataServiceLayer;
 using Shared.Entities.Purchases;
+using Shared.Entities.Setup;
 using Shared.Entities.Shared;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace DataService.Purchases.Contracts
     public interface IPurchasesBillHeaderDSL : ICRUDOperationsDSL<PurchasesBillHeaderDTO, PurchasesBillHeaderSearchDTO>
     {
         Task<PurchasesBillHeaderDTO> GetByNumber(string number);
+        Task<List<ClientVendorBalanceDTO>> GetAllByVendorId(long vendorId);
+
 
     }
 }

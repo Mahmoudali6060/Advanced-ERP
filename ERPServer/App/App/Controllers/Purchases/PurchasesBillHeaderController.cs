@@ -40,6 +40,14 @@ namespace App.Controllers.Setup
             var result = await _purchasesBillHeaderDSL.GetByNumber(number);
             return Ok(result);
         }
+
+        [HttpGet, Route("GetAllByVendorId/{vendorId}")]
+        //[Authorize(Roles = Roles.Admin)]
+        public async Task<IActionResult> GetAllByVendorId(long vendorId)
+        {
+            var result = await _purchasesBillHeaderDSL.GetAllByVendorId(vendorId);
+            return Ok(result);
+        }
         [HttpGet, Route("GetAllLite")]
         //[Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> GetAllLite() => Ok(await _purchasesBillHeaderDSL.GetAllLite());

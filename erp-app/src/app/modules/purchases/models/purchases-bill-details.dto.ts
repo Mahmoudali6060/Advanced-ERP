@@ -11,5 +11,7 @@ export class PurchasesBillDetailsDTO {
     notes: string;
     index: number;
     companyId: number;
+	productName: string;
+	productCode: string;
 
 }

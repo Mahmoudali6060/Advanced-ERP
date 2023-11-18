@@ -1,5 +1,6 @@
 ﻿using Data.Contexts;
 using Data.Entities.Purchases;
+using Data.Entities.Sales;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace Purchases.DataAccessLayer
         #region Query
         public async Task<IQueryable<PurchasesBillHeader>> GetAll()
         {
-            return _appDbContext.PurchasesBillHeaders.Include(x=>x.ClientVendor).Include(x=>x.CreatedByProfile).Include(x=>x.ModifiedByProfile).OrderByDescending(x => x.Date).AsQueryable();
+            return _appDbContext.PurchasesBillHeaders.Include(x => x.ClientVendor).Include(x => x.CreatedByProfile).Include(x => x.ModifiedByProfile).OrderByDescending(x => x.Date).AsQueryable();
         }
 
         public async Task<IQueryable<PurchasesBillHeader>> GetAllLite()
@@ -29,6 +30,11 @@ namespace Purchases.DataAccessLayer
         {
             var PurchasesBillHeader = _appDbContext.PurchasesBillHeaders.Include(x => x.ClientVendor).Include(x => x.PurchasesBillDetailList).SingleOrDefaultAsync(x => x.Id == id);
             return await PurchasesBillHeader;
+        }
+
+        public async Task<IQueryable<PurchasesBillHeader>> GetAllByVendorId(long vendorId)
+        {
+            return _appDbContext.PurchasesBillHeaders.Include(x => x.ClientVendor).Where(x => x.ClientVendorId == vendorId).AsQueryable();
         }
 
         public async Task<PurchasesBillHeader> GetByNumber(string number)

@@ -81,6 +81,7 @@ namespace DataService.Setup.Handlers
         public async Task<long> Add(ClientVendorDTO entityDTO)
         {
             UploadClientVendorImage(entityDTO);
+            entityDTO.OppeningBalance = entityDTO.Debit - entityDTO.Credit;
             var entity = _mapper.Map<ClientVendor>(entityDTO);
             await _unitOfWork.ClientVendorDAL.Add(entity);
             await _unitOfWork.CompleteAsync();

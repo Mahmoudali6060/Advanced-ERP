@@ -89,13 +89,17 @@
     "Remaining": "Remaining",
     "SellingPrice": "Selling Price",
     "SaveAndPrint": "Save and print",
-    "AddressDetails":"Address Details",
-    "ContactPerson":"Contact Person",
-    "ContactTelephone":"Contact Telephone",
-    "WebsiteLink":"Website Link",
-    "CreatedByProfileName":"Created By",
-    "ModifiedByProfileName":"Modified By",
-    "SaveAll":"Save All"
+    "AddressDetails": "Address Details",
+    "ContactPerson": "Contact Person",
+    "ContactTelephone": "Contact Telephone",
+    "WebsiteLink": "Website Link",
+    "CreatedByProfileName": "Created By",
+    "ModifiedByProfileName": "Modified By",
+    "SaveAll": "Save All",
+    "Print": "Print",
+    "Details":"Details",
+    "BillNo":"Bill No",
+    "OppeningBalance":"Oppening Balance"
   },
   "Dashboard": {
     "overview": "Overview",
@@ -245,7 +249,8 @@
     "Purchases": "Purchases",
     "PurchasesBills": "Purchases Bills",
     "Sales": "Sales",
-    "SalesBills": "Sales Bills"
+    "SalesBills": "Sales Bills",
+    "Reports": "Reports"
   },
   "Errors": {
     "InvalidUsernameOrPassword": "Invalid Username Or Password",
@@ -452,5 +457,13 @@
     "EditSalesBill": "Edit sales bill",
     "ViewSalesBill": "View sales bill",
     "SearchSalesBill": "Search Sales Bill"
+  },
+  "Reports": {
+    "SalesBill": "Sales Bill",
+    "PurchasesBill": "Purchases Bill",
+    "AccountStatementForAllClients": "Account statement for all clients",
+    "AccountStatementForSingleClient": "Account statement for single client",
+    "AccountStatementForAllVendors": "Account statement for all vendors",
+    "AccountStatementForSingle": "Account statement for single vendor"
   }
 }

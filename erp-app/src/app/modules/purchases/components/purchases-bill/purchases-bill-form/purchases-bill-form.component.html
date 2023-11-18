@@ -16,10 +16,10 @@
                                 |translate}}</label>
                             <div class="input-group">
                                 <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.number" type="text"
-                                    id="number" class="form-control" #number="ngModel"  name="number"
+                                    id="number" class="form-control" #number="ngModel" name="number"
                                     aria-describedby="helpId" (keyup.enter)="getPurchaseByNumber()">
-                                <div class="input-group-addon" data-toggle="tooltip" data-placement="top"
-                                    title="Search" (click)="getPurchaseByNumber()">
+                                <div class="input-group-addon" data-toggle="tooltip" data-placement="top" title="Search"
+                                    (click)="getPurchaseByNumber()">
                                     <i class="fa fa-search"></i>
                                 </div>
                             </div>
@@ -35,8 +35,8 @@
                                 <ng-option *ngFor="let item of vendorList" [value]="item.id"> {{item.fullName}}
                                 </ng-option>
                             </ng-select>
-                            <div class="input-group-addon" data-toggle="tooltip" data-placement="top" (click)="showCleintVendorFormPopUp()"
-                                title="Add Vendor">
+                            <div class="input-group-addon" data-toggle="tooltip" data-placement="top"
+                                (click)="showCleintVendorFormPopUp()" title="Add Vendor">
                                 <i class="fa fa-plus-square"></i>
                             </div>
                         </div>
@@ -44,7 +44,10 @@
                     <div class="col-lg-3">
                         <div class="form-group">
                             <label for="currentBalance" class=" form-control-label">{{'General.CurrentBalance'
-                                |translate}}</label>
+                                |translate}}
+                                <span *ngIf="currentBalance!=0"> -{{(currentBalance>0?'General.Debit':'General.Credit')
+                                    |translate}}</span>
+                            </label>
                             <input [disabled]="viewMode" [value]="currentBalance" type="text" id="currentBalance"
                                 class="form-control" readonly name="currentBalance" aria-describedby="helpId">
                         </div>
@@ -259,9 +262,13 @@
 
 
             </div>
-            <div class="flex-container p-3" >
-                <button (click)="save(frm)" type="button" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
+            <div class="flex-container p-3">
+                <button (click)="save(false,frm)" type="button" class="btn btn-outline-primary mr-1"
+                    [disabled]="frm.invalid">
                     <i class="fa fa-dot-circle-o"></i>{{'General.Save' |translate}}
+                </button>
+                <button (click)="saveAndPrint()" type="button" class="btn btn-outline-success mr-1">
+                    <i class="fa fa-print"></i>{{'General.SaveAndPrint' |translate}}
                 </button>
                 <button type="reset" class="btn btn-danger mr-1" (click)="back()">
                     <i class="fa fa-ban"></i>{{'General.Back' |translate}}
@@ -271,3 +278,141 @@
         </div>
     </div>
 </form>
+
+
+
+<div id="purchasesBill" style="display: none;">
+    <div class="row">
+
+        <div class="col-lg-12">
+            <br><br>
+
+            <table style="background-color: white !important" border="0">
+                <tr>
+                    <td class="text-right">المورد</td>
+                    <td class="text-center text-bold"> {{selectedVendor.fullName}}</td>
+                    <td class="text-left">Vendor</td>
+                </tr>
+                <tr>
+                    <td class="text-right">الرصيد</td>
+                    <td class="text-center text-bold">{{currentBalance}}</td>
+                    <td class="text-left">Balance</td>
+                </tr>
+                <tr>
+                    <td class="text-right">العنوان</td>
+                    <td class="text-center text-bold">{{selectedVendor.address}}</td>
+                    <td class="text-left">Address</td>
+                </tr>
+                <tr>
+                    <td class="text-right">رقم الفاتورة</td>
+                    <td class="text-center text-bold">{{purchasesBillHeaderDTO.number}}</td>
+                    <td class="text-left">Invoice No</td>
+                </tr>
+                <tr>
+                    <td class="text-right">تاريخ الفاتورة</td>
+                    <td class="text-center text-bold">{{purchasesBillHeaderDTO.date}}</td>
+                    <td class="text-left">Invoice Date</td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+    <br>
+    <br>
+    <!-- <h6>Audits et rapports mensuels (1er Novembre 2016 - 30 Novembre 2016)</h6> -->
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>
+                    المنتج
+                    <br>
+                    Product
+
+                </th>
+                <th>
+                    الكمية
+                    <br>
+                    Quantity
+                </th>
+                <th>
+                    السعر
+                    <br>
+                    Price
+                </th>
+                <th>
+                    الاجمالي
+                    <br>
+                    Sub Total
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of purchasesBillHeaderDTO.purchasesBillDetailList;let i=index; ">
+                <td>
+                    {{i+1}}
+                </td>
+                <td>{{item.productCode}} {{item.productName}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.subTotal}}</td>
+            </tr>
+
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-6">
+            <table style="background-color: white !important" border="0">
+                <tr>
+                    <td class="text-right">الإجمالي </td>
+                    <td class="text-center text-bold">{{purchasesBillHeaderDTO.total}} </td>
+                    <td class="text-left">Total</td>
+                </tr>
+                <tr>
+                    <td class="text-right">النقل</td>
+                    <td class="text-center text-bold">{{purchasesBillHeaderDTO.transfer}}</td>
+                    <td class="text-left">Transfer</td>
+                </tr>
+                <tr>
+                    <td class="text-right">الخصومات</td>
+                    <td class="text-center text-bold">{{purchasesBillHeaderDTO.discount}}</td>
+                    <td class="text-left">Discount</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-6">
+            <table style="background-color: white !important" border="0">
+                <tr>
+                    <td class="text-right">الإجمالي بعد الخصم</td>
+                    <td class="text-center text-bold">{{purchasesBillHeaderDTO.totalAfterDiscount}}</td>
+                    <td class="text-left">Toal After Discount</td>
+                </tr>
+                <tr>
+                    <td class="text-right">المدفوع</td>
+                    <td class="text-center text-bold">{{purchasesBillHeaderDTO.paid}}</td>
+                    <td class="text-left">Paid</td>
+                </tr>
+                <tr>
+                    <td class="text-right">المتبقي</td>
+                    <td class="text-center text-bold">{{purchasesBillHeaderDTO.remaining}} </td>
+                    <td class="text-left">Remaining</td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <p class="bottom-page text-right">
+        {{purchasesBillHeaderDTO.notes}}
+    </p>
+</div>

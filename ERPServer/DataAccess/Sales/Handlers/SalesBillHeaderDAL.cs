@@ -31,6 +31,11 @@ namespace Sales.DataAccessLayer
             return await SalesBillHeader;
         }
 
+        public async Task<IQueryable<SalesBillHeader>> GetAllByClientId(long clientId)
+        {
+            return  _appDbContext.SalesBillHeaders.Include(x => x.ClientVendor).Where(x => x.ClientVendorId == clientId).AsQueryable();
+        }
+
         public async Task<SalesBillHeader> GetByNumber(string number)
         {
             var SalesBillHeader = _appDbContext.SalesBillHeaders.Include(x => x.ClientVendor).Include(x => x.SalesBillDetailList).SingleOrDefaultAsync(x => x.Number==number);

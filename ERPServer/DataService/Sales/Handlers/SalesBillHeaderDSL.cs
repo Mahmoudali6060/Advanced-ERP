@@ -13,6 +13,7 @@ using Entities.Account;
 using Microsoft.EntityFrameworkCore;
 using MimeKit;
 using Shared.Entities.Purchases;
+using Shared.Entities.Setup;
 
 namespace DataService.Sales.Handlers
 {
@@ -62,6 +63,41 @@ namespace DataService.Sales.Handlers
             var tt = _mapper.Map<SalesBillHeaderDTO>(await _unitOfWork.SalesBillHeaderDAL.GetById(id));
             return tt;
         }
+
+        public async Task<List<ClientVendorBalanceDTO>> GetAllByClientId(long clientId)
+        {
+            List<ClientVendorBalanceDTO> clientVendorBalanceList = new List<ClientVendorBalanceDTO>();
+            var salesBillHeaderList = _unitOfWork.SalesBillHeaderDAL.GetAllByClientId(clientId).Result.ToList();
+            if (salesBillHeaderList != null && salesBillHeaderList.Count > 0)
+            {
+                var clientVendor = salesBillHeaderList[0].ClientVendor;
+                //Set initial Oppening Balance
+                ClientVendorBalanceDTO clientVendorBalanceDTO = new ClientVendorBalanceDTO();
+                clientVendorBalanceDTO.Date = clientVendor.Created.ToString("yyyy-MM-dd");
+                if (clientVendor.OppeningBalance > 0)
+                    clientVendorBalanceDTO.Debit = clientVendor.OppeningBalance;
+                else
+                    clientVendorBalanceDTO.Credit = clientVendor.OppeningBalance;
+                clientVendorBalanceDTO.Details = "General.OppeningBalance";
+                clientVendorBalanceDTO.ClientVendorId = clientId;
+                clientVendorBalanceList.Add(clientVendorBalanceDTO);
+                foreach (var s in salesBillHeaderList)
+                {
+                    clientVendorBalanceList.Add(new ClientVendorBalanceDTO()
+                    {
+                        Date = s.Date.ToString("yyyy-MM-dd"),
+                        Debit = s.Paid,
+                        Credit = -s.TotalAfterDiscount,
+                        Details = "General.BillNo",
+                        Number = s.Number,
+                        RefId = s.Id,
+                        ClientVendorId = s.ClientVendorId
+                    });
+                }
+            }
+            return clientVendorBalanceList;
+        }
+
 
         public async Task<ResponseEntityList<SalesBillHeaderDTO>> GetAllLite()
         {

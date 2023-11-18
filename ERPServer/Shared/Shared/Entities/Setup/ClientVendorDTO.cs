@@ -17,6 +17,7 @@ namespace Shared.Entities.Setup
         public string ImageUrl { get; set; }
         public decimal Debit { get; set; }
         public decimal Credit { get; set; }
+        public decimal OppeningBalance { get; set; }
         public string Notes { get; set; }
         public string IdNumber { get; set; }
         public string ImageBase64 { get; set; }

@@ -12,6 +12,7 @@ import { CategoryService } from '../setup/services/category.service';
 import { ClientVendorService } from '../setup/services/client-vendor.service';
 import { PurchasesBillService } from './services/purchases-bill.service';
 import { PurchasesBillSearchComponent } from './components/purchases-bill/purchases-bill-search/purchases-bill-search.component';
+import { ReportService } from '../report/services/report.service';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { PurchasesBillSearchComponent } from './components/purchases-bill/purcha
     ProductService,
     CategoryService,
     ClientVendorService,
-    PurchasesBillService
+    PurchasesBillService,
+    ReportService
   ]
 })
 export class PurchasesBillModule {

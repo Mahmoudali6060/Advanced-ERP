@@ -41,6 +41,14 @@ namespace App.Controllers.Setup
             return Ok(result);
         }
 
+        [HttpGet, Route("GetAllByClientId/{clientId}")]
+        //[Authorize(Roles = Roles.Admin)]
+        public async Task<IActionResult> GetAllByClientId(long clientId)
+        {
+            var result = await _salesBillHeaderDSL.GetAllByClientId(clientId);
+            return Ok(result);
+        }
+
         [HttpGet, Route("GetAllLite")]
         //[Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> GetAllLite() => Ok(await _salesBillHeaderDSL.GetAllLite());

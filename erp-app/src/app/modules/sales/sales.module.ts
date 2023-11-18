@@ -14,6 +14,7 @@ import { SalesBillService } from './services/sales-bill.service';
 import { SetupSharedModule } from 'src/app/shared/modules/setup-shared/setup-shared.module';
 import { ReportViewerModule } from '../report-viewer/report-viewer.module';
 import { SalesBillSearchComponent } from './components/sales-bill/sales-bill-search/sales-bill-search.component';
+import { ReportService } from '../report/services/report.service';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { SalesBillSearchComponent } from './components/sales-bill/sales-bill-sea
     ProductService,
     CategoryService,
     ClientVendorService,
-    SalesBillService
+    SalesBillService,
+    ReportService
   ]
 })
 export class SalesModule {

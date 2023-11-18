@@ -1,0 +1,100 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- DATA TABLE -->
+        <h3 class="title-5 m-b-35">{{'Reports.AccountStatementForSingleClient' |translate}}</h3>
+
+        <!--Filters-->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">{{'General.Filters'|translate}}</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <label class="form-label" for="clientId">{{'General.Client'|translate}}</label>
+                                        <ng-select name="clientId" id="clientId" class="ng-select-custom"
+                                            [(ngModel)]="selectedClientId" (change)="onClientChange()">
+                                            <ng-option value=" null"
+                                                disabled>{{'General.SelectClient'|translate}}</ng-option>
+                                            <ng-option *ngFor="let item of clientList" [value]="item.id">
+                                                {{item.fullName}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <button (click)="getAllByClientId()"
+                                            class="au-btn au-btn-icon au-btn--blue au-btn--small btn-search mt-4">
+                                            <i class="zmdi zmdi-search"></i>{{'General.Search'|translate}}
+                                        </button>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <button (click)="searchAndPrint()" type="button"
+                                            class="au-btn au-btn-icon btn btn-outline-success au-btn--small btn-search mt-4">
+                                            <i class="fa fa-print"></i>{{'General.Print' |translate}}
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Filters-->
+
+        <div class="table-responsive table-responsive-data2" id="accountStatementSingleClient">
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table">
+                        <tr>
+                            <td class="text-right">العميل</td>
+                            <td class="text-center text-bold"> {{selectedClient.fullName}}</td>
+                            <td class="text-left">Client</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">الرصيد</td>
+                            <td class="text-center text-bold">{{currentBalance}}</td>
+                            <td class="text-left">Balance</td>
+                        </tr>
+                    </table>
+                </div>
+
+
+            </div>
+            <br>
+            <table class="table table-data2">
+                <thead class="table-header-bc">
+                    <tr>
+                        <th>#</th>
+                        <th class="table-header-fc">{{'General.Date' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Debit' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Credit' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Details' |translate}}</th>
+                        <!-- <th></th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tr-shadow" *ngFor="let item of clientVendorBalanceList;let i=index;">
+                        <td>{{i+1}}</td>
+                        <td>{{item.date}}</td>
+                        <td>{{item.debit}}</td>
+                        <td>{{item.credit}}</td>
+                        <td>
+                            <a *ngIf="item.details=='General.BillNo';else oppeningBalance" [routerLink]="['/sales-bill/sales-bill-form/'+item.refId]" class="btn btn-link">
+                                {{(item.details)|translate}}:
+                                {{item.number}}</a>
+                                <ng-template #oppeningBalance>{{(item.details)|translate}}</ng-template>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+        <!-- END DATA TABLE -->
+    </div>
+</div>

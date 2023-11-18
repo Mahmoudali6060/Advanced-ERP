@@ -105,9 +105,13 @@
     "ContactPerson": "الشخص المسؤول",
     "ContactTelephone": "هاتف الشخص المسؤول",
     "WebsiteLink": "رايط الانترنت",
-    "CreatedByProfileName":"أٌنشأ بواسطة",
-    "ModifiedByProfileName":"عٌدل بواسطة",
-    "SaveAll":"حفظ الكل"
+    "CreatedByProfileName": "أٌنشأ بواسطة",
+    "ModifiedByProfileName": "عٌدل بواسطة",
+    "SaveAll": "حفظ الكل",
+    "Print": "طباعة",
+    "Details": "التفاصيل",
+    "BillNo": "رقم الفاتورة",
+    "OppeningBalance":"رصيد افتتاحي"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -259,7 +263,8 @@
     "Purchases": "المشتريات",
     "PurchasesBills": "فواتير المشتريات",
     "Sales": "المبيعات",
-    "SalesBills": "فواتير المبيعات"
+    "SalesBills": "فواتير المبيعات",
+    "Reports": "التقارير"
   },
   "Errors": {
     "InvalidUsernameOrPassword": "من فضلك تأكد من اسم المستخدم او كلمة المرور",
@@ -463,5 +468,13 @@
     "AddCompany": "أضافة شركة جديدة",
     "EditCompany": "تعديل الشركة",
     "ViewCompany": "عرض الشركة "
+  },
+  "Reports": {
+    "SalesBill": "فاتورة مبيعات",
+    "PurchasesBill": "فاتورة مشتريات",
+    "AccountStatementForAllClients": "كشف حسابات العملاء(مُجمَل)",
+    "AccountStatementForSingleClient": "كشف حساب العميل(مُفَصَّل)",
+    "AccountStatementForAllVendors": "كشف حسابات الموردين(مُجمَل)",
+    "AccountStatementForSingleVendor": "كشف حساب المورد  (مُفَصَّل)"
   }
 }

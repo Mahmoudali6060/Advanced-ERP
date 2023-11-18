@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { TelerikReportViewerComponent } from '@progress/telerik-angular-report-viewer';
-import { ReportService } from '../../services/report.service';
+import { ReportViewerService } from '../../services/report-viewer.service';
 import { UserProfileService } from 'src/app/modules/user-management/services/user.service';
 import { ConfigService } from 'src/app/shared/services/config.service';
 import { AuthService } from 'src/app/modules/authentication/services/auth.service';
@@ -14,7 +14,7 @@ import { AuthGuardService } from 'src/app/shared/guards/auth-guard.service';
 export class ReportsComponent implements OnInit, AfterViewInit {
 
     constructor(private _userInfoService: UserProfileService,
-        private reportService: ReportService,
+        private reportService: ReportViewerService,
         private configService: ConfigService,
         private authGuardService: AuthGuardService,
         private authService: AuthService

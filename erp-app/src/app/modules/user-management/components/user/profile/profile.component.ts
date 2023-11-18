@@ -12,7 +12,6 @@ import { HelperService } from 'src/app/shared/services/helper.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { SubjectService } from 'src/app/shared/services/subject.service';
 import { isNullOrUndefined } from 'util';
-import { CompanyDTO } from '../../../models/company-dto';
 import { ShippingLineProductDTO } from '../../../models/shipping-line-product-dto';
 import { UserProfileDTO } from '../../../models/user-profile.dto';
 import { UserTypeEnum } from '../../../models/user-type-enum';
@@ -78,7 +77,7 @@ export class ProfileComponent implements OnInit {
     this.loggedProfile = this.localStorageService.getItem(LocalStorageItems.userProfile);
     console.log("loggedProfile", this.loggedProfile)
     this.getProfileById(this.loggedProfile.id);
-    this.getAllCountryList();
+    //this.getAllCountryList();
 
   }
   getProfileById(profileId: any) {
@@ -91,10 +90,10 @@ export class ProfileComponent implements OnInit {
       if (!this.profile.imageUrl) {
         this.imageSrc = "assets/images/icon/avatar-big-01.jpg";
       }
-      if (this.profile && this.profile.companyDTO != null) {
-        this.getAllStateListByCountryId(this.profile.companyDTO.countryId);
-        this.getAllCityListByStateId(this.profile.companyDTO.stateId);
-      }
+      // if (this.profile && this.profile.companyDTO != null) {
+      //   this.getAllStateListByCountryId(this.profile.companyDTO.countryId);
+      //   this.getAllCityListByStateId(this.profile.companyDTO.stateId);
+      // }
     })
 
   }
@@ -145,26 +144,7 @@ export class ProfileComponent implements OnInit {
       return false;
     }
 
-    if (!profile.companyDTO.companyNameEn || isNullOrUndefined(profile.companyDTO.companyNameEn)) {
-      this.toasterService.error(this.translate.instant("Errors.companyNameEnIsRequired"));
-      return false;
-    }
-    if (!profile.companyDTO.companyNameAr || isNullOrUndefined(profile.companyDTO.companyNameAr)) {
-      this.toasterService.error(this.translate.instant("Errors.companyNameArIsRequired"));
-      return false;
-    }
-    if (!profile.companyDTO.countryId) {
-      this.toasterService.error(this.translate.instant("Errors.CountryIsRequired"));
-      return false;
-    }
-    if (!profile.companyDTO.stateId) {
-      this.toasterService.error(this.translate.instant("Errors.StateIsRequired"));
-      return false;
-    }
-    if (!profile.companyDTO.cityId) {
-      this.toasterService.error(this.translate.instant("Errors.CityIsRequired"));
-      return false;
-    }
+   
     if (!profile.companyDTO.contactPerson || isNullOrUndefined(profile.companyDTO.contactPerson)) {
       this.toasterService.error(this.translate.instant("Errors.InvalidcontactPerson"));
       return false;
@@ -177,14 +157,7 @@ export class ProfileComponent implements OnInit {
       this.toasterService.error(this.translate.instant("Errors.AddressDetailsIsRequired"));
       return false;
     }
-    if (!profile.companyDTO.companyTypeId) {
-      this.toasterService.error(this.translate.instant("Errors.companyTypeIsRequired"));
-      return false;
-    }
-    if (profile.companyDTO.lstShippingLineProduct.length === 0) {
-      this.toasterService.error(this.translate.instant("Errors.PleaseSelectAtLeastOneProduct"));
-      return false;
-    }
+  
     return true;
   }
 
@@ -224,31 +197,31 @@ export class ProfileComponent implements OnInit {
   }
 
   //#region DropdownLists
-  getAllCountryList() {
-    this.countryService.getAllLite().subscribe((response: any) => {
-      this.countryList = response.list;
-    });
-  }
+  // getAllCountryList() {
+  //   this.countryService.getAllLite().subscribe((response: any) => {
+  //     this.countryList = response.list;
+  //   });
+  // }
 
-  getAllStateListByCountryId(countryId: number) {
-    this.stateService.getAllLiteByCountryId(countryId).subscribe((response: any) => {
-      this.stateList = response.list;
-    });
-  }
+  // getAllStateListByCountryId(countryId: number) {
+  //   this.stateService.getAllLiteByCountryId(countryId).subscribe((response: any) => {
+  //     this.stateList = response.list;
+  //   });
+  // }
 
-  getAllCityListByStateId(stateId: number) {
-    this.cityService.getAllLiteByStateId(stateId).subscribe((response: any) => {
-      this.cityList = response.list;
-    });
-  }
+  // getAllCityListByStateId(stateId: number) {
+  //   this.cityService.getAllLiteByStateId(stateId).subscribe((response: any) => {
+  //     this.cityList = response.list;
+  //   });
+  // }
 
-  onCountrySelected(countryId: any) {
-    this.getAllStateListByCountryId(this.profile.companyDTO.countryId);
-  }
+  // onCountrySelected(countryId: any) {
+  //   this.getAllStateListByCountryId(this.profile.companyDTO.countryId);
+  // }
 
-  onStateSelected(stateId: any) {
-    this.getAllCityListByStateId(this.profile.companyDTO.stateId);
-  }
+  // onStateSelected(stateId: any) {
+  //   this.getAllCityListByStateId(this.profile.companyDTO.stateId);
+  // }
   //#endregion
 
 

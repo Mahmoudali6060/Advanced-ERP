@@ -85,7 +85,7 @@ namespace Data.Contexts
 
         public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-            //AddAuitInfo();
+            AddAuitInfo();
 
             string userProfileId = _httpContextAccessor.HttpContext.Request.Headers["UserProfileId"];
             if (userProfileId != null)
@@ -138,7 +138,7 @@ namespace Data.Contexts
                     ActionType = entry.State == EntityState.Added ? "INSERT" : entry.State == EntityState.Deleted ? "DELETE" : "UPDATE",
                     EntityId = entry.Properties.Single(p => p.Metadata.IsPrimaryKey()).CurrentValue.ToString(),
                     EntityName = entry.Metadata.ClrType.Name,
-                    UserProfileId=UserProfileId,
+                    UserProfileId = UserProfileId,
                     Username = null,//LoggedUserProfile.FirstName,
                     TimeStamp = DateTime.UtcNow,
                     Changes = entry.Properties.Select(p => new { p.Metadata.Name, p.CurrentValue }).ToDictionary(i => i.Name, i => i.CurrentValue),

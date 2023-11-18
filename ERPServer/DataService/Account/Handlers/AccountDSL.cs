@@ -150,10 +150,12 @@ namespace Account.DataServiceLayer
                 }
                 if (userProfile == null)
                     throw new Exception("Errors.InvalidUsernameOrPassword");
-                UserProfileDTO userDto = UserMapper.MapAppUser(appUser, userProfile);
-                userDto.RoleGroupDTO = _mapper.Map<RoleGroupDTO>(userProfile.Role);
+                UserProfileDTO userDto=_mapper.Map<UserProfileDTO>(userProfile);
                 userDto.Token = AddToken(appUser, userDto);
                 userDto.Email = appUser.Email;
+                userDto.UserName = appUser.UserName;
+                userDto.AppUserId = appUser.Id;
+
                 return userDto;
             }
             throw new Exception("Errors.InvalidUsernameOrPassword");

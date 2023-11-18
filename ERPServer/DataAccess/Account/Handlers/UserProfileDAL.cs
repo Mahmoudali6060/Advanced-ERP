@@ -64,7 +64,7 @@ namespace Account.DataAccessLayer
 
         public async Task<UserProfile> GetUserProfileByAppUserId(string appUserId)
         {
-            return await _appDbContext.UserProfiles.Include(x=>x.Role).ThenInclude(x=>x.RolePrivileges).SingleOrDefaultAsync(x => x.AppUserId == appUserId);
+            return await _appDbContext.UserProfiles.Include(x=>x.Company).Include(x=>x.Role).ThenInclude(x=>x.RolePrivileges).SingleOrDefaultAsync(x => x.AppUserId == appUserId);
         }
         public async Task<UserProfile> GetUserProfileByCompanyId(long CompanyId)
         {
