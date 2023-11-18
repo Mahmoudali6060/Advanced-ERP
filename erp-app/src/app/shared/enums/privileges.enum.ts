@@ -8,5 +8,12 @@ export module Privileges {
             Edit = 5,
             Delete = 6
         }
+
+        export enum Roles { // id = 7
+            View = 8,
+            Add = 9,
+            Edit = 10,
+            Delete = 11
+        }
     }
 }

@@ -10,9 +10,9 @@ import { HelperService } from 'src/app/shared/services/helper.service';
 import { SubjectService } from 'src/app/shared/services/subject.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { RoleDTO } from '../../../models/role.dto';
-import { DATA } from '../../../mock-data/data-mock';
 import { RolePrivilegeDTO } from '../../../models/privilege-dto';
 import { Node } from '../../../models/node-dto';
+import { PrivilegeDATA } from '../../../mock-data/privilege-data';
 
 @Component({
 	selector: 'app-role-form',
@@ -41,7 +41,7 @@ export class RoleFormComponent {
 	}
 
 	ngOnInit() {
-		this.privileges = JSON.parse(JSON.stringify(DATA));
+		this.privileges = JSON.parse(JSON.stringify(PrivilegeDATA));
 		this.roleDTO = new RoleDTO();
 		const id = this.route.snapshot.paramMap.get('id');
 		if (id) {
