@@ -1,4 +1,5 @@
 ﻿using Data.Entities.Shared;
+using System.Collections.Generic;
 
 namespace Data.Entities.Setup
 {
@@ -8,5 +9,6 @@ namespace Data.Entities.Setup
         public string Name { get; set; }
         public long? CompanyId { get; set; }
         public virtual Company Company { get; set; }
+        public virtual List<Product> Products { get; set; }
     }
 }

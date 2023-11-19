@@ -71,8 +71,13 @@ namespace Data.Contexts
 
 
             modelBuilder.Entity<AuditEntry>().Property(ae => ae.Changes).HasConversion(
-        value => JsonConvert.SerializeObject(value),
-        serializedValue => JsonConvert.DeserializeObject<Dictionary<string, object>>(serializedValue));
+            value => JsonConvert.SerializeObject(value),
+            serializedValue => JsonConvert.DeserializeObject<Dictionary<string, object>>(serializedValue));
+
+            //modelBuilder.Entity<Product>()
+            //         .HasOne(e => e.Category)
+            //         .WithMany(e => e.Products)
+            //         .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
         }
