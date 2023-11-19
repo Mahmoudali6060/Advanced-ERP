@@ -593,6 +593,9 @@ namespace Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("HighQuantity")
                         .HasColumnType("decimal(18,2)");
 
@@ -619,6 +622,9 @@ namespace Data.Migrations
 
                     b.Property<decimal>("SellingPricePercentage")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UnitOfMeasurement")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1197,7 +1203,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Setup.Product", b =>
                 {
                     b.HasOne("Data.Entities.Setup.Category", "Category")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1326,6 +1332,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Sales.SalesBillHeader", b =>
                 {
                     b.Navigation("SalesBillDetailList");
+                });
+
+            modelBuilder.Entity("Data.Entities.Setup.Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Data.Entities.Setup.City", b =>

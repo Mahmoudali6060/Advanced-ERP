@@ -125,11 +125,23 @@ export class PurchasesBillFormComponent {
 		this.router.navigateByUrl('purchases-bill/purchases-bill-list');
 	}
 	validation(purchasesBillDTO: PurchasesBillHeaderDTO): boolean {
+		if (!purchasesBillDTO.clientVendorId) {
+			this.toasterService.error(this.translate.instant("Errors.YouMustSelectVendor"));
+			return false;
+		}
 		if (!purchasesBillDTO.purchasesBillDetailList || this.purchasesBillHeaderDTO.purchasesBillDetailList.length == 0) {
 			this.toasterService.error(this.translate.instant("Errors.YouMustSelectProducts"));
 			return false;
 		}
 
+		if (purchasesBillDTO.purchasesBillDetailList?.length > 0) {
+			for (let item of this.purchasesBillHeaderDTO.purchasesBillDetailList) {
+				if (!item.productId) {
+					this.toasterService.error(this.translate.instant("Errors.YouMustSelectProducts"));
+					return false;
+				}
+			}
+		}
 		return true;
 
 	}

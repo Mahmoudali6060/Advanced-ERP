@@ -16,6 +16,8 @@ export class ProductDTO {
     categoryName: string;
     imageBase64: string;
     companyId: number;
+    description: string;
+    unitOfMeasurement: string;
     isChanged: boolean = false;
     constructor() {
         this.isActive = true;

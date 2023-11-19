@@ -19,6 +19,9 @@ import { VendorListComponent } from './components/vendor/vendor-list/vendor-list
 import { ClientVendorService } from './services/client-vendor.service';
 import { CompanyFormComponent } from './components/company/company-form/company-form.component';
 import { CompanyListComponent } from './components/company/company-list/company-list.component';
+import { ProductListViewComponent } from './components/product/product-list-view/product-list-view.component';
+import { ProductListChangePriceComponent } from './components/product/product-list-change-price/product-list-change-price.component';
+import { ProductListChangeQuantityComponent } from './components/product/product-list-change-quantity/product-list-change-quantity.component';
 
 @NgModule({
   imports: [
@@ -33,6 +36,9 @@ import { CompanyListComponent } from './components/company/company-list/company-
   ],
   declarations: [
     ProductListComponent,
+    ProductListViewComponent,
+    ProductListChangePriceComponent,
+    ProductListChangeQuantityComponent,
     ProductFormComponent,
     CategoryListComponent,
     CategoryFormComponent,

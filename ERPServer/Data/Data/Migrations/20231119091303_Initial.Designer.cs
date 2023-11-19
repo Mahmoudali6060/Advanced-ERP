@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231113132310_changeAuditEntryV2")]
-    partial class changeAuditEntryV2
+    [Migration("20231119091303_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -457,6 +457,9 @@ namespace Data.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("OppeningBalance")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("PhoneNumber1")
                         .HasColumnType("nvarchar(max)");
 
@@ -577,8 +580,8 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<int>("ActualQuantity")
-                        .HasColumnType("int");
+                    b.Property<decimal>("ActualQuantity")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("BarCode")
                         .HasColumnType("nvarchar(max)");
@@ -592,8 +595,8 @@ namespace Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("HighQuantity")
-                        .HasColumnType("int");
+                    b.Property<decimal>("HighQuantity")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
@@ -601,8 +604,8 @@ namespace Data.Migrations
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LowQuantity")
-                        .HasColumnType("int");
+                    b.Property<decimal>("LowQuantity")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("Modified")
                         .HasColumnType("datetime2");
@@ -1059,7 +1062,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Purchases.PurchasesBillHeader", b =>
                 {
                     b.HasOne("Data.Entities.Setup.ClientVendor", "ClientVendor")
-                        .WithMany()
+                        .WithMany("PurchasesBillHeaderList")
                         .HasForeignKey("ClientVendorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1113,7 +1116,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Sales.SalesBillHeader", b =>
                 {
                     b.HasOne("Data.Entities.Setup.ClientVendor", "ClientVendor")
-                        .WithMany()
+                        .WithMany("SalesBillHeaderList")
                         .HasForeignKey("ClientVendorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1196,7 +1199,7 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Setup.Product", b =>
                 {
                     b.HasOne("Data.Entities.Setup.Category", "Category")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1327,9 +1330,21 @@ namespace Data.Migrations
                     b.Navigation("SalesBillDetailList");
                 });
 
+            modelBuilder.Entity("Data.Entities.Setup.Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("Data.Entities.Setup.City", b =>
                 {
                     b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("Data.Entities.Setup.ClientVendor", b =>
+                {
+                    b.Navigation("PurchasesBillHeaderList");
+
+                    b.Navigation("SalesBillHeaderList");
                 });
 
             modelBuilder.Entity("Data.Entities.Setup.Country", b =>

@@ -16,7 +16,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/product-form-popup/product-form-popup.component';
 import { DialogService } from 'src/app/shared/services/confirmation-dialog.service';
-import { PurchasesBillDetailsDTO } from 'src/app/modules/purchases/models/purchases-bill-details.dto';
 import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { ClientVendorFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/client-vendor-form-popup/client-vendor-form-popup.component';
@@ -124,11 +123,23 @@ export class SalesBillFormComponent {
 		this.router.navigateByUrl('sales-bill/sales-bill-list');
 	}
 	validation(salesBillDTO: SalesBillHeaderDTO): boolean {
+		if (!salesBillDTO.clientVendorId) {
+			this.toasterService.error(this.translate.instant("Errors.YouMustSelectClient"));
+			return false;
+		}
 		if (!salesBillDTO.salesBillDetailList || this.salesBillHeaderDTO.salesBillDetailList.length == 0) {
 			this.toasterService.error(this.translate.instant("Errors.YouMustSelectProducts"));
 			return false;
 		}
 
+		if (salesBillDTO.salesBillDetailList?.length > 0) {
+			for (let item of this.salesBillHeaderDTO.salesBillDetailList) {
+				if (!item.productId) {
+					this.toasterService.error(this.translate.instant("Errors.YouMustSelectProducts"));
+					return false;
+				}
+			}
+		}
 		return true;
 
 	}
@@ -212,17 +223,6 @@ export class SalesBillFormComponent {
 	}
 
 
-
-	showProductFormPopUp(item: PurchasesBillDetailsDTO) {
-		this.dialogService.show("sm", ProductFormPopupComponent)
-			.then((product) => {
-				if (product) {
-					item.productId = product.id;
-					this.getAllProducts();
-				}
-			})
-			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
-	}
 
 	onClientChange() {
 		if (this.salesBillHeaderDTO.clientVendorId) {

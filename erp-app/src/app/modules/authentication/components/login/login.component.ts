@@ -59,11 +59,11 @@ export class LoginComponent {
           this.router.navigate(["/resetPassword", response.email]);
         }
         else {
-          if (response.userTypeId === UserTypeEnum.Admin  ) {
-            this.router.navigate(["/dashboard"]);
-          } else {
-            this.router.navigate(["user/profile"]);
-          }
+          //if (response.userTypeId === UserTypeEnum.Admin  ) {
+          this.router.navigate(["/dashboard"]);
+          //} else {
+          //this.router.navigate(["user/profile"]);
+          //  }
         }
       }
       else {

@@ -5,47 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "AboutUs",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MainTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstMainSection = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecondMainSection = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ThirdMainSection = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecondTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecondTitleSection = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ThirdTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ThirdTitleSection = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AboutUs", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Advertisments",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Media = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Advertisments", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -86,59 +49,22 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Categories",
+                name: "AuditEntry",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    EntityName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ActionType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserProfileId = table.Column<long>(type: "bigint", nullable: false),
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EntityId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Changes = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Cities",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StateId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cities", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ClientVendors",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FullName = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Debit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Credit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TypeId = table.Column<int>(type: "int", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ClientVendors", x => x.Id);
+                    table.PrimaryKey("PK_AuditEntry", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -147,34 +73,17 @@ namespace Data.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LogoURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddressDetails = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ContactPerson = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ContactTelephone = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ContactTelephone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WebsiteLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Companies", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ContactUs",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Mobile = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ContactUs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -191,22 +100,6 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RoleGroups",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoleGroups", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Settings",
                 columns: table => new
                 {
@@ -217,19 +110,6 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Settings", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "States",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CountryId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_States", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -339,12 +219,205 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AboutUs",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MainTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstMainSection = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecondMainSection = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ThirdMainSection = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecondTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecondTitleSection = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ThirdTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ThirdTitleSection = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyId = table.Column<long>(type: "bigint", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AboutUs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AboutUs_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Advertisments",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Media = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyId = table.Column<long>(type: "bigint", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Advertisments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Advertisments_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyId = table.Column<long>(type: "bigint", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Categories_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cities",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StateId = table.Column<long>(type: "bigint", nullable: false),
+                    CompanyId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cities_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ClientVendors",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FullName = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Debit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Credit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    OppeningBalance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IdNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TypeId = table.Column<int>(type: "int", nullable: false),
+                    CompanyId = table.Column<long>(type: "bigint", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClientVendors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ClientVendors_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContactUs",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Mobile = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyId = table.Column<long>(type: "bigint", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContactUs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ContactUs_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoleGroups",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyId = table.Column<long>(type: "bigint", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleGroups", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RoleGroups_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "States",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CountryId = table.Column<long>(type: "bigint", nullable: false),
+                    CompanyId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_States", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_States_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BarCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -352,10 +425,11 @@ namespace Data.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     SellingPricePercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     PurchasingPricePercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ActualQuantity = table.Column<int>(type: "int", nullable: false),
-                    LowQuantity = table.Column<int>(type: "int", nullable: false),
-                    HighQuantity = table.Column<int>(type: "int", nullable: false),
+                    ActualQuantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    LowQuantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    HighQuantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CategoryId = table.Column<long>(type: "bigint", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -371,79 +445,20 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PurchasesBillHeaders",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Transfer = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalAfterDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Paid = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Remaining = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClientVendorId = table.Column<long>(type: "bigint", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PurchasesBillHeaders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PurchasesBillHeaders_ClientVendors_ClientVendorId",
-                        column: x => x.ClientVendorId,
-                        principalTable: "ClientVendors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SalesBillHeaders",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Transfer = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalAfterDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Paid = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Remaining = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClientVendorId = table.Column<long>(type: "bigint", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SalesBillHeaders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SalesBillHeaders_ClientVendors_ClientVendorId",
-                        column: x => x.ClientVendorId,
-                        principalTable: "ClientVendors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RolePrivileges",
                 columns: table => new
                 {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     PrivilegeId = table.Column<long>(type: "bigint", nullable: false),
-                    RoleGroupId = table.Column<long>(type: "bigint", nullable: false)
+                    RoleGroupId = table.Column<long>(type: "bigint", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RolePrivileges", x => x.PrivilegeId);
+                    table.PrimaryKey("PK_RolePrivileges", x => x.Id);
                     table.ForeignKey(
                         name: "FK_RolePrivileges_RoleGroups_RoleGroupId",
                         column: x => x.RoleGroupId,
@@ -458,21 +473,20 @@ namespace Data.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mobile = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsFirstLogin = table.Column<bool>(type: "bit", nullable: false),
                     IsHide = table.Column<bool>(type: "bit", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserTypeId = table.Column<int>(type: "int", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RoleId = table.Column<long>(type: "bigint", nullable: true),
                     DefaultLanguage = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CompanyId = table.Column<long>(type: "bigint", nullable: true),
                     CityId = table.Column<long>(type: "bigint", nullable: true),
                     CountryId = table.Column<long>(type: "bigint", nullable: true),
                     StateId = table.Column<long>(type: "bigint", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -500,9 +514,114 @@ namespace Data.Migrations
                         principalTable: "Countries",
                         principalColumn: "Id");
                     table.ForeignKey(
+                        name: "FK_UserProfiles_RoleGroups_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "RoleGroups",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_UserProfiles_States_StateId",
                         column: x => x.StateId,
                         principalTable: "States",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PurchasesBillHeader",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Transfer = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalAfterDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Paid = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Remaining = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClientVendorId = table.Column<long>(type: "bigint", nullable: false),
+                    CompanyId = table.Column<long>(type: "bigint", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedByProfileId = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedByProfileId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PurchasesBillHeader", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PurchasesBillHeader_ClientVendors_ClientVendorId",
+                        column: x => x.ClientVendorId,
+                        principalTable: "ClientVendors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PurchasesBillHeader_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PurchasesBillHeader_UserProfiles_CreatedByProfileId",
+                        column: x => x.CreatedByProfileId,
+                        principalTable: "UserProfiles",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PurchasesBillHeader_UserProfiles_ModifiedByProfileId",
+                        column: x => x.ModifiedByProfileId,
+                        principalTable: "UserProfiles",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SalesBillHeaders",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Transfer = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalAfterDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Paid = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Remaining = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClientVendorId = table.Column<long>(type: "bigint", nullable: false),
+                    CompanyId = table.Column<long>(type: "bigint", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedByProfileId = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedByProfileId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SalesBillHeaders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SalesBillHeaders_ClientVendors_ClientVendorId",
+                        column: x => x.ClientVendorId,
+                        principalTable: "ClientVendors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SalesBillHeaders_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_SalesBillHeaders_UserProfiles_CreatedByProfileId",
+                        column: x => x.CreatedByProfileId,
+                        principalTable: "UserProfiles",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_SalesBillHeaders_UserProfiles_ModifiedByProfileId",
+                        column: x => x.ModifiedByProfileId,
+                        principalTable: "UserProfiles",
                         principalColumn: "Id");
                 });
 
@@ -520,6 +639,8 @@ namespace Data.Migrations
                     PriceAfterDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     SubTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyId = table.Column<long>(type: "bigint", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -527,15 +648,20 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_PurchasesBillDetails", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_PurchasesBillDetails_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_PurchasesBillDetails_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PurchasesBillDetails_PurchasesBillHeaders_PurchasesBillHeaderId",
+                        name: "FK_PurchasesBillDetails_PurchasesBillHeader_PurchasesBillHeaderId",
                         column: x => x.PurchasesBillHeaderId,
-                        principalTable: "PurchasesBillHeaders",
+                        principalTable: "PurchasesBillHeader",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -554,12 +680,19 @@ namespace Data.Migrations
                     PriceAfterDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     SubTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyId = table.Column<long>(type: "bigint", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SalesBillDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SalesBillDetails_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_SalesBillDetails_Products_ProductId",
                         column: x => x.ProductId,
@@ -573,6 +706,16 @@ namespace Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AboutUs_CompanyId",
+                table: "AboutUs",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Advertisments_CompanyId",
+                table: "Advertisments",
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -614,6 +757,21 @@ namespace Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Categories_CompanyId",
+                table: "Categories",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cities_CompanyId",
+                table: "Cities",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClientVendors_CompanyId",
+                table: "ClientVendors",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ClientVendors_FullName",
                 table: "ClientVendors",
                 column: "FullName",
@@ -621,9 +779,19 @@ namespace Data.Migrations
                 filter: "[FullName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ContactUs_CompanyId",
+                table: "ContactUs",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchasesBillDetails_CompanyId",
+                table: "PurchasesBillDetails",
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PurchasesBillDetails_ProductId",
@@ -636,14 +804,39 @@ namespace Data.Migrations
                 column: "PurchasesBillHeaderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PurchasesBillHeaders_ClientVendorId",
-                table: "PurchasesBillHeaders",
+                name: "IX_PurchasesBillHeader_ClientVendorId",
+                table: "PurchasesBillHeader",
                 column: "ClientVendorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchasesBillHeader_CompanyId",
+                table: "PurchasesBillHeader",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchasesBillHeader_CreatedByProfileId",
+                table: "PurchasesBillHeader",
+                column: "CreatedByProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PurchasesBillHeader_ModifiedByProfileId",
+                table: "PurchasesBillHeader",
+                column: "ModifiedByProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoleGroups_CompanyId",
+                table: "RoleGroups",
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RolePrivileges_RoleGroupId",
                 table: "RolePrivileges",
                 column: "RoleGroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SalesBillDetails_CompanyId",
+                table: "SalesBillDetails",
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SalesBillDetails_ProductId",
@@ -659,6 +852,26 @@ namespace Data.Migrations
                 name: "IX_SalesBillHeaders_ClientVendorId",
                 table: "SalesBillHeaders",
                 column: "ClientVendorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SalesBillHeaders_CompanyId",
+                table: "SalesBillHeaders",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SalesBillHeaders_CreatedByProfileId",
+                table: "SalesBillHeaders",
+                column: "CreatedByProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SalesBillHeaders_ModifiedByProfileId",
+                table: "SalesBillHeaders",
+                column: "ModifiedByProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_States_CompanyId",
+                table: "States",
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProfiles_AppUserId",
@@ -679,6 +892,11 @@ namespace Data.Migrations
                 name: "IX_UserProfiles_CountryId",
                 table: "UserProfiles",
                 column: "CountryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserProfiles_RoleId",
+                table: "UserProfiles",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProfiles_StateId",
@@ -710,6 +928,9 @@ namespace Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AuditEntry");
+
+            migrationBuilder.DropTable(
                 name: "ContactUs");
 
             migrationBuilder.DropTable(
@@ -725,16 +946,10 @@ namespace Data.Migrations
                 name: "Settings");
 
             migrationBuilder.DropTable(
-                name: "UserProfiles");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "PurchasesBillHeaders");
-
-            migrationBuilder.DropTable(
-                name: "RoleGroups");
+                name: "PurchasesBillHeader");
 
             migrationBuilder.DropTable(
                 name: "Products");
@@ -743,25 +958,31 @@ namespace Data.Migrations
                 name: "SalesBillHeaders");
 
             migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "ClientVendors");
+
+            migrationBuilder.DropTable(
+                name: "UserProfiles");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Cities");
 
             migrationBuilder.DropTable(
-                name: "Companies");
+                name: "Countries");
 
             migrationBuilder.DropTable(
-                name: "Countries");
+                name: "RoleGroups");
 
             migrationBuilder.DropTable(
                 name: "States");
 
             migrationBuilder.DropTable(
-                name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "ClientVendors");
+                name: "Companies");
         }
     }
 }

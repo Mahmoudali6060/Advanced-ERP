@@ -11,7 +11,8 @@
                 <button [routerLink]="['/setup/product-form']" class="au-btn au-btn-icon au-btn--black au-btn--small">
                     <i class="zmdi zmdi-plus"></i>{{'Product.AddProduct' |translate}}
                 </button>
-                <button (click)="saveAll()" class="au-btn au-btn-icon au-btn--blue au-btn--small">
+                <button *ngIf="changePrice || changeQuantity" (click)="saveAll()"
+                    class="au-btn au-btn-icon au-btn--blue au-btn--small">
                     <i class="zmdi zmdi-file"></i>{{'General.SaveAll' |translate}}
                 </button>
             </div>
@@ -120,22 +121,30 @@
                         <td>{{item.code}}</td>
                         <td class="cell-width-26">{{item.name}}</td>
                         <td>
-                            <input [(ngModel)]="item.price" type="number" class="form-control"
-                                [ngModelOptions]="{standalone: true}" (change)="item.isChanged=true">
+                            <input *ngIf="changePrice;else readOnlyPrice" [(ngModel)]="item.price" type="number"
+                                class="form-control" [ngModelOptions]="{standalone: true}"
+                                (change)="item.isChanged=true">
+                            <ng-template #readOnlyPrice>{{item.price}}</ng-template>
                         </td>
                         <td>
-                            <input [(ngModel)]="item.sellingPricePercentage" type="number" class="form-control"
-                                [ngModelOptions]="{standalone: true}" (change)="item.isChanged=true">
+                            <input *ngIf="changePrice;else readOnlyPrice" [(ngModel)]="item.sellingPricePercentage"
+                                type="number" class="form-control" [ngModelOptions]="{standalone: true}"
+                                (change)="item.isChanged=true">
+                            <ng-template #readOnlyPrice>{{item.sellingPricePercentage}}</ng-template>
                         </td>
                         <td>
-                            <input [(ngModel)]="item.purchasingPricePercentage" type="number" class="form-control"
-                                [ngModelOptions]="{standalone: true}" (change)="item.isChanged=true">
+                            <input *ngIf="changePrice;else readOnlyPrice" [(ngModel)]="item.purchasingPricePercentage"
+                                type="number" class="form-control" [ngModelOptions]="{standalone: true}"
+                                (change)="item.isChanged=true">
+                            <ng-template #readOnlyPrice>{{item.purchasingPricePercentage}}</ng-template>
                         </td>
                         <td>
-                            <input [(ngModel)]="item.actualQuantity" type="number" class="form-control"
-                                [ngModelOptions]="{standalone: true}" (change)="item.isChanged=true">
+                            <input *ngIf="changeQuantity;else readOnlyQuantity" [(ngModel)]="item.actualQuantity"
+                                type="number" class="form-control" [ngModelOptions]="{standalone: true}"
+                                (change)="item.isChanged=true">
+                            <ng-template #readOnlyQuantity>{{item.actualQuantity}}</ng-template>
                         </td>
-                        <td>
+                        <td *ngIf="viewMode">
                             <div class="table-data-feature">
                                 <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Edit" [routerLink]="['/setup/product-form/'+item.id]">

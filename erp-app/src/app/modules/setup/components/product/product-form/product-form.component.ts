@@ -71,7 +71,7 @@ export class ProductFormComponent {
 	}
 
 	back() {
-		this.router.navigateByUrl('setup/product-list');
+		this.router.navigateByUrl('setup/product-list-view');
 	}
 	validattion(productDTO: ProductDTO): boolean {
 		// if (!productDTO.firstName || isNullOrUndefined(productDTO.firstName)) {

@@ -97,9 +97,9 @@
     "ModifiedByProfileName": "Modified By",
     "SaveAll": "Save All",
     "Print": "Print",
-    "Details":"Details",
-    "BillNo":"Bill No",
-    "OppeningBalance":"Oppening Balance"
+    "Details": "Details",
+    "BillNo": "Bill No",
+    "OppeningBalance": "Oppening Balance"
   },
   "Dashboard": {
     "overview": "Overview",
@@ -238,6 +238,9 @@
     "UserList": "User List",
     "RoleList": "Role List",
     "Products": "Products",
+    "ProductList": "Product List",
+    "ChangePrice": "Change Price",
+    "ChangeQuantity": "Change Quantity",
     "Categories": "Categories",
     "Setup": "Setup",
     "TrucksProviders": "Trucks Providers",
@@ -317,7 +320,10 @@
     "DuplicatedFullName": "Duplicated FullName",
     "DuplicatedSelectedProduct": "You have already select this product before",
     "Error": "Error",
-    "NotFound": "Not Found"
+    "NotFound": "Not Found",
+    "HasRelatedData": "This record has related data",
+    "YouMustSelectVendor": "You must select vendor",
+    "YouMustSelectClient": "You must select client"
   },
   "Warning": {
     "NoDriversAvialable": "There is no any driver available in this period"
@@ -430,7 +436,9 @@
     "ViewProduct": "View Product",
     "BarCode": "BarCode",
     "PurchasingPricePercentage": "Purchasing Discount Percentage",
-    "SellingPricePercentage": "Selling Discount Percentage"
+    "SellingPricePercentage": "Selling Discount Percentage",
+    "UnitOfMeasurement": "Unit of measurement",
+    "Description": "Description"
   },
   "Client": {
     "Title": "Clients",

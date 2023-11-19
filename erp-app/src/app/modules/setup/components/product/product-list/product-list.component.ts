@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -40,6 +40,9 @@ export class ProductListComponent {
 	statusList: Array<string> | Boolean
 	statusDDL: any;
 	categoryList: Array<CategoryDTO> = new Array<CategoryDTO>();
+	@Input() viewMode: boolean = false;
+	@Input() changePrice: boolean = false;
+	@Input() changeQuantity: boolean = false;
 
 	constructor(private productService: ProductService,
 		private confirmationDialogService: DialogService,
@@ -47,7 +50,7 @@ export class ProductListComponent {
 		private translate: TranslateService,
 		private _configService: ConfigService,
 		private categoryService: CategoryService,
-		private alertService:AlertService) {
+		private alertService: AlertService) {
 
 	}
 
@@ -90,7 +93,7 @@ export class ProductListComponent {
 		let changedProducts = this.productList.filter(x => x.isChanged == true);
 		this.productService.updateAll(changedProducts).subscribe(res => {
 			if (res)
-				this.alertService.showSuccess("Success","Success");
+				this.alertService.showSuccess("Success", "Success");
 		});
 	}
 	search() {

@@ -111,7 +111,7 @@
     "Print": "طباعة",
     "Details": "التفاصيل",
     "BillNo": "رقم الفاتورة",
-    "OppeningBalance":"رصيد افتتاحي"
+    "OppeningBalance": "رصيد افتتاحي"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -248,6 +248,9 @@
     "Configurations": "الاعدادات العامة",
     "UserManagement": "اعدادات المستخدمين",
     "Products": "المنتجات",
+    "ProductList": "قائمة المنتجات",
+    "ChangePrice": "تغيير الأسعار",
+    "ChangeQuantity": "جرد المخزن",
     "Categories": "التصنيفات الرئيسية",
     "UserList": " المستخدمين",
     "RoleList": "الأدوار",
@@ -324,7 +327,10 @@
     "DuplicatedFullName": "هذا الاسم مكرر",
     "DuplicatedSelectedProduct": "لقد اخترت هذا المنتج من قبل",
     "Error": "خطأ",
-    "NotFound": "لا يوجد فاتورة بهذا الرقم  "
+    "NotFound": "لا يوجد فاتورة بهذا الرقم  ",
+    "HasRelatedData:": "هذا السجل مرتبط بسجلات أخرى",
+    "YouMustSelectVendor": "يجب اختيار مورد",
+    "YouMustSelectClient": "يجب اختيار عميل"
   },
   "Warning": {
     "NoDriversAvialable": "لا يوجد سائق متاح في هذه الفترة"
@@ -426,7 +432,9 @@
     "ViewProduct": "عرض المنتج",
     "BarCode": "باركود",
     "PurchasingPricePercentage": "نسبة الخصم من سعر الشراء",
-    "SellingPricePercentage": "نسبة الخصم من سعر البيع"
+    "SellingPricePercentage": "نسبة الخصم من سعر البيع",
+    "UnitOfMeasurement": "وحدة القياس",
+    "Description": "الوصف"
   },
   "Client": {
     "Title": "العملاء",

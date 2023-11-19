@@ -33,7 +33,10 @@ namespace Infrastructure.ExceptionHandling.ExceptionMiddlewareExtensions
 
         public static void ConfigureCustomExceptionMiddleware(this IApplicationBuilder app)
         {
+            app.UseMiddleware<DBExceptionMiddleware>();
             app.UseMiddleware<ExceptionMiddleware>();
+
+
         }
     }
 }
