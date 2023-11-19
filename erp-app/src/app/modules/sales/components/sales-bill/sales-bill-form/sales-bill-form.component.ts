@@ -201,9 +201,9 @@ export class SalesBillFormComponent {
 		let product = this.productList.find(x => x.id == item.productId);
 		if (product) {
 			if (!item.price) item.price = product.price;
-			if (!item.discount) item.discount = product.purchasingPricePercentage;
+			if (!item.discount) item.discount = product.sellingPricePercentage;
 			item.actualQuantity = product.actualQuantity;
-			item.sellingPrice = (product.price - (product.purchasingPricePercentage / 100) * product.price);
+			item.sellingPrice = (product.price - (product.sellingPricePercentage / 100) * product.price);
 			item.productName = product.name;
 			item.productCode = product.code;
 			this.updateTotal();

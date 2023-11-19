@@ -431,8 +431,8 @@
     "EditProduct": "تعديل المنتج",
     "ViewProduct": "عرض المنتج",
     "BarCode": "باركود",
-    "PurchasingPricePercentage": "نسبة الخصم من سعر الشراء",
-    "SellingPricePercentage": "نسبة الخصم من سعر البيع",
+    "PurchasingPricePercentage": "نسبة الخصم لسعر الشراء",
+    "SellingPricePercentage": "نسبة الخصم لسعر البيع",
     "UnitOfMeasurement": "وحدة القياس",
     "Description": "الوصف"
   },
