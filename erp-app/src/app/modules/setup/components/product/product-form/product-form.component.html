@@ -170,11 +170,13 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="description" class=" form-control-label">{{'Product.UnitOfMeasurement'
+                                        <label for="unitOfMeasurementId" class=" form-control-label">{{'Product.UnitOfMeasurement'
                                             |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="productDTO.unitOfMeasurement" type="text"
-                                            id="unitOfMeasurement" class="form-control" #unitOfMeasurement="ngModel" name="unitOfMeasurement"
-                                            aria-describedby="helpId">
+                                            <ng-select name="unitOfMeasurementId" id="unitOfMeasurementId" [(ngModel)]="productDTO.unitOfMeasurementId">
+                                                <ng-option value="">{{'General.SelectUnitOfMeasurement'|translate}}</ng-option>
+                                                <ng-option *ngFor="let item of unitOfMeasurementList" [value]="item.id">
+                                                    {{item.name}}</ng-option>
+                                            </ng-select>
                                     </div>
                                 </div>
 

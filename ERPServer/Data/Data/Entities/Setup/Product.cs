@@ -21,7 +21,7 @@ namespace Data.Entities.Setup
         public decimal LowQuantity { get; set; }
         public decimal HighQuantity { get; set; }
         public string Description { get; set; }
-        public string UnitOfMeasurement { get; set; }
+        public long? UnitOfMeasurementId { get; set; }
         public long CategoryId { get; set; }
         public virtual Category Category { get; set; }
     }

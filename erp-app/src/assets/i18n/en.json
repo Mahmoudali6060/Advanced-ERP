@@ -99,7 +99,14 @@
     "Print": "Print",
     "Details": "Details",
     "BillNo": "Bill No",
-    "OppeningBalance": "Oppening Balance"
+    "OppeningBalance": "Oppening Balance",
+    "CommercialNo": "Commercial No",
+    "VATNo": "VAT No",
+    "Sales": "Sales",
+    "Purchases": "Purchases",
+    "RepresentiveType": "Representive Type",
+    "Description":"Description",
+    "SelectUnitOfMeasurement":"Select Unit Of Measurement"
   },
   "Dashboard": {
     "overview": "Overview",
@@ -253,7 +260,9 @@
     "PurchasesBills": "Purchases Bills",
     "Sales": "Sales",
     "SalesBills": "Sales Bills",
-    "Reports": "Reports"
+    "Reports": "Reports",
+    "Representives": "Representives",
+    "UnitOfMeasurements": "Unit Of Measurements"
   },
   "Errors": {
     "InvalidUsernameOrPassword": "Invalid Username Or Password",
@@ -440,6 +449,22 @@
     "UnitOfMeasurement": "Unit of measurement",
     "Description": "Description"
   },
+  "Representive": {
+    "Title": "Representives",
+    "AddRepresentive": "Add Representive",
+    "EditRepresentive": "Edit Representive",
+    "ViewRepresentive": "View Representive",
+    "Description": "Description",
+    "FullName": "Full Name"
+  },
+  "UnitOfMeasurement": {
+    "Title": "UnitOfMeasurements",
+    "AddUnitOfMeasurement": "Add Unit Of Measurement",
+    "EditUnitOfMeasurement": "Edit Unit Of Measurement",
+    "ViewUnitOfMeasurement": "View Unit Of Measurement",
+    "Description": "Description",
+    "Name": "Name"
+  },
   "Client": {
     "Title": "Clients",
     "AddClient": "Add Client",
@@ -473,5 +498,9 @@
     "AccountStatementForSingleClient": "Account statement for single client",
     "AccountStatementForAllVendors": "Account statement for all vendors",
     "AccountStatementForSingle": "Account statement for single vendor"
+  },
+  "RepresentiveTypeEnum": {
+    "Sales": "Sales",
+    "Purchases": "Purchases"
   }
 }

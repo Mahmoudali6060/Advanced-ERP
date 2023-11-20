@@ -1,0 +1,62 @@
+<form #frm="ngForm" (ngSubmit)="save(frm)">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <strong *ngIf="!unitOfMeasurementDTO.id">{{'UnitOfMeasurement.AddUnitOfMeasurement'
+                    |translate}}</strong>
+                <strong *ngIf="unitOfMeasurementDTO.id && !viewMode">{{'UnitOfMeasurement.EditUnitOfMeasurement'
+                    |translate}}</strong>
+                <strong *ngIf="unitOfMeasurementDTO.id  && viewMode ">{{'UnitOfMeasurement.ViewUnitOfMeasurement'
+                    |translate}}</strong>
+            </div>
+            <div class="card-body card-block">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="isActive" class=" form-control-label">{{'General.IsActive'
+                                        |translate}}</label>
+                                    <p-inputSwitch [disabled]="viewMode" [ngModelOptions]="{standalone: true}"
+                                        name="isActive" class="input-switch"
+                                        [(ngModel)]="unitOfMeasurementDTO.isActive"></p-inputSwitch>
+                                </div>
+                            </div> -->
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="name" class=" form-control-label">{{'General.Name'
+                                        |translate}}</label>
+                                    <input [disabled]="viewMode" [(ngModel)]="unitOfMeasurementDTO.name" type="text"
+                                        id="name" class="form-control" #name="ngModel"
+                                        [class.is-invalid]="name.invalid && name.touched" [class.is-valid]="name.valid"
+                                        required name="name" aria-describedby="helpId">
+                                    <small [hidden]="name.valid || name.untouched" id="helpId" class="text-muted"
+                                        [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="description" class=" form-control-label">{{'General.Description'
+                                        |translate}}</label>
+                                    <input [disabled]="viewMode" [(ngModel)]="unitOfMeasurementDTO.description"
+                                        type="text" id="description" class="form-control" name="description"
+                                        aria-describedby="helpId">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-container p-3">
+                <button type="submit" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
+                    <i class="fa fa-dot-circle-o"></i>{{'General.SaveChanges' |translate}}
+                </button>
+                <button type="reset" class="btn btn-danger mr-1" (click)="back()">
+                    <i class="fa fa-ban"></i>{{'General.Back' |translate}}
+                </button>
+
+            </div>
+        </div>
+    </div>
+</form>

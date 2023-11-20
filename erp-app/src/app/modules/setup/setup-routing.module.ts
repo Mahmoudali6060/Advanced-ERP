@@ -13,6 +13,10 @@ import { CompanyFormComponent } from './components/company/company-form/company-
 import { ProductListViewComponent } from './components/product/product-list-view/product-list-view.component';
 import { ProductListChangePriceComponent } from './components/product/product-list-change-price/product-list-change-price.component';
 import { ProductListChangeQuantityComponent } from './components/product/product-list-change-quantity/product-list-change-quantity.component';
+import { RepresentiveFormComponent } from './components/representive/representive-form/representive-form.component';
+import { RepresentiveListComponent } from './components/representive/representive-list/representive-list.component';
+import { UnitOfMeasurementListComponent } from './components/unit-of-measurement/unit-of-measurement-list/unit-of-measurement-list.component';
+import { UnitOfMeasurementFormComponent } from './components/unit-of-measurement/unit-of-measurement-form/unit-of-measurement-form.component';
 
 const routes: Routes = [
   { path: 'product-list-view', component: ProductListViewComponent },
@@ -32,6 +36,12 @@ const routes: Routes = [
   { path: 'company-list', component: CompanyListComponent },
   { path: 'company-form', component: CompanyFormComponent },
   { path: 'company-form/:id', component: CompanyFormComponent },
+  { path: 'representive-list', component: RepresentiveListComponent },
+  { path: 'representive-form', component: RepresentiveFormComponent },
+  { path: 'representive-form/:id', component: RepresentiveFormComponent },
+  { path: 'unit-of-measurement-list', component: UnitOfMeasurementListComponent },
+  { path: 'unit-of-measurement-form', component: UnitOfMeasurementFormComponent },
+  { path: 'unit-of-measurement-form/:id', component: UnitOfMeasurementFormComponent },
 
 ];
 

@@ -425,6 +425,9 @@ namespace Data.Migrations
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CommercialNo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long?>("CompanyId")
                         .HasColumnType("bigint");
 
@@ -466,6 +469,9 @@ namespace Data.Migrations
 
                     b.Property<int>("TypeId")
                         .HasColumnType("int");
+
+                    b.Property<string>("VATNo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -623,14 +629,51 @@ namespace Data.Migrations
                     b.Property<decimal>("SellingPricePercentage")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("UnitOfMeasurement")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("UnitOfMeasurementId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Data.Entities.Setup.Representive", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("AddressDetails")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Mobile")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RepresentiveTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Representives");
                 });
 
             modelBuilder.Entity("Data.Entities.Setup.State", b =>
@@ -652,6 +695,34 @@ namespace Data.Migrations
                     b.HasIndex("CompanyId");
 
                     b.ToTable("States");
+                });
+
+            modelBuilder.Entity("Data.Entities.Setup.UnitOfMeasurement", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UnitOfMeasurements");
                 });
 
             modelBuilder.Entity("Data.Entities.Shared.AuditEntry", b =>

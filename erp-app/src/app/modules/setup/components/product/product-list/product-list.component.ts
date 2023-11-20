@@ -12,7 +12,7 @@ import { CountryModel } from 'src/app/modules/configurations/models/country.mode
 import { StateModel } from 'src/app/modules/configurations/models/state.model';
 import { CityModel } from 'src/app/modules/configurations/models/city.model';
 import { ProductDTO } from '../../../models/product.dto';
-import { ProductSearchCriteriaDTO } from '../../../models/product-search-criteria-dto';
+import { ProductSearchCriteriaDTO } from '../../../models/product-search-criteria.dto';
 import { CategoryDTO } from '../../../models/category.dto';
 import { CategoryService } from '../../../services/category.service';
 import { AlertService } from 'src/app/shared/services/alert.service';

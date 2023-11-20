@@ -84,6 +84,26 @@
 
                                 <div class="col-lg-6">
                                     <div class="form-group">
+                                        <label for="vatNo" class=" form-control-label">{{'General.VATNo'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="vendorDTO.vatNo" type="text"
+                                            id="vatNo" class="form-control" #phoneNumber2="ngModel" name="vatNo"
+                                            aria-describedby="helpId">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="commercialNo" class=" form-control-label">{{'General.CommercialNo'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="vendorDTO.commercialNo" type="text"
+                                            id="commercialNo" #phoneNumber2="ngModel" name="commercialNo"
+                                            class="form-control" aria-describedby="helpId">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
                                         <label for="address" class=" form-control-label">{{'General.Address'
                                             |translate}}</label>
                                         <input [disabled]="viewMode" [(ngModel)]="vendorDTO.address" type="text"

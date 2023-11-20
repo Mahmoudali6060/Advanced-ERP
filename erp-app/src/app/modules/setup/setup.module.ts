@@ -22,6 +22,10 @@ import { CompanyListComponent } from './components/company/company-list/company-
 import { ProductListViewComponent } from './components/product/product-list-view/product-list-view.component';
 import { ProductListChangePriceComponent } from './components/product/product-list-change-price/product-list-change-price.component';
 import { ProductListChangeQuantityComponent } from './components/product/product-list-change-quantity/product-list-change-quantity.component';
+import { RepresentiveFormComponent } from './components/representive/representive-form/representive-form.component';
+import { RepresentiveListComponent } from './components/representive/representive-list/representive-list.component';
+import { UnitOfMeasurementFormComponent } from './components/unit-of-measurement/unit-of-measurement-form/unit-of-measurement-form.component';
+import { UnitOfMeasurementListComponent } from './components/unit-of-measurement/unit-of-measurement-list/unit-of-measurement-list.component';
 
 @NgModule({
   imports: [
@@ -47,7 +51,11 @@ import { ProductListChangeQuantityComponent } from './components/product/product
     VendorFormComponent,
     VendorListComponent,
     CompanyListComponent,
-    CompanyFormComponent
+    CompanyFormComponent,
+    RepresentiveFormComponent,
+    RepresentiveListComponent,
+    UnitOfMeasurementFormComponent,
+    UnitOfMeasurementListComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

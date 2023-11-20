@@ -1,0 +1,122 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- DATA TABLE -->
+        <h3 class="title-5 m-b-35">{{'UnitOfMeasurement.Title' |translate}}</h3>
+        <div class="table-data__tool">
+            <div class="table-data__tool-left">
+                <button class="au-btn-filter" (click)="toggleFilter()">
+                    <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
+            </div>
+            <div class="table-data__tool-right">
+                <button [routerLink]="['/setup/unit-of-measurement-form']"
+                    class="au-btn au-btn-icon au-btn--black au-btn--small">
+                    <i class="zmdi zmdi-plus"></i>{{'UnitOfMeasurement.AddUnitOfMeasurement' |translate}}
+                </button>
+            </div>
+        </div>
+
+        <!--Filters-->
+        <div class="row" *ngIf="showFilterControls">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">{{'General.Filters'|translate}}</div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <!-- <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="form3Example3c">{{'General.Status'|translate}}</label>
+                                        <ng-select name="drivers" id="drivers" [(ngModel)]="searchCriteriaDTO.isActive">
+                                            <ng-option value=''> {{'General.All' |translate}}</ng-option>
+                                            <ng-option value=true> {{'General.Active' |translate}}</ng-option>
+                                            <ng-option value=false> {{'General.InActive' |translate}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div> -->
+
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="name" class=" form-control-label">{{'General.Name'
+                                            |translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.name" type="text" id="name"
+                                            class="form-control" #name="ngModel" name="name">
+                                    </div>
+                                </div>
+
+                                
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="description" class=" form-control-label">{{'General.Description'
+                                            |translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.description" type="text" id="description"
+                                            class="form-control" #description="ngModel" name="description">
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-lg-9">
+                                    <button (click)="search()"
+                                        class="au-btn au-btn-icon au-btn--blue au-btn--small btn-search mt-4">
+                                        <i class="zmdi zmdi-search"></i>{{'General.Search'|translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Filters-->
+
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2">
+                <thead class="table-header-bc">
+                    <tr>
+                        <!-- <th class="table-header-fc">{{'General.Status' |translate}}</th> -->
+                        <th class="table-header-fc">{{'General.Name' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Description' |translate}}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tr-shadow" *ngFor="let item of unitOfMeasurementList">
+                        <!-- <td>
+                            <span class="status active-status" *ngIf="item.isActive">
+                                {{'General.Active' |translate}}
+                            </span>
+                            <span class="status in-active-status" *ngIf="!item.isActive">
+                                {{'General.InActive' |translate}}
+                            </span>
+                        </td> -->
+
+                        <td>{{item.name}}</td>
+                        <td>{{item.description}}</td>
+                        <td>
+                            <div class="table-data-feature">
+                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="Edit" [routerLink]="['/setup/unit-of-measurement-form/'+item.id]">
+                                    <i class="zmdi zmdi-edit"></i>
+                                </button>
+                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="Delete" (click)="openConfirmationDialog(item)">
+                                    <i class="zmdi zmdi-delete"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <app-pagination (pageChange)="onPageChange($event)" [totalRecordsCount]="total"
+                [recordsPerPage]="searchCriteriaDTO.pageSize" *ngIf="unitOfMeasurementList">
+            </app-pagination>
+        </div>
+        <!-- END DATA TABLE -->
+    </div>
+</div>

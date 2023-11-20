@@ -85,7 +85,7 @@
     "ProductName": "المنتج",
     "SubTotal": "الاجمالي",
     "SelectProduct": "اختر التصنيف",
-    "Transfer": "النقل",
+    "Transfer": "مصاريف أخرى",
     "TotalDiscount": "اجمالي الخصومات",
     "PriceBeforeDiscount": "السعر قبل الخصم",
     "PriceAfterDiscount": "السعر بعد الخصم",
@@ -111,7 +111,14 @@
     "Print": "طباعة",
     "Details": "التفاصيل",
     "BillNo": "رقم الفاتورة",
-    "OppeningBalance": "رصيد افتتاحي"
+    "OppeningBalance": "رصيد افتتاحي",
+    "VATNo": "الرقم الضريبي",
+    "CommercialNo": "السجل التجاري",
+    "Sales": "المبيعات",
+    "Purchases": "المشتريات",
+    "RepresentiveType": "نوع المندوب",
+    "Description": "الوصف",
+    "SelectUnitOfMeasurement":"اختر وحدة القياس"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -267,7 +274,9 @@
     "PurchasesBills": "فواتير المشتريات",
     "Sales": "المبيعات",
     "SalesBills": "فواتير المبيعات",
-    "Reports": "التقارير"
+    "Reports": "التقارير",
+    "Representives": "المناديب",
+    "UnitOfMeasurements": "وحدات القياس"
   },
   "Errors": {
     "InvalidUsernameOrPassword": "من فضلك تأكد من اسم المستخدم او كلمة المرور",
@@ -436,6 +445,22 @@
     "UnitOfMeasurement": "وحدة القياس",
     "Description": "الوصف"
   },
+  "Representive": {
+    "Title": "المناديب",
+    "AddRepresentive": "إضافة مندوب",
+    "EditRepresentive": "تعديل المندوب",
+    "ViewRepresentive": "عرض المندوب",
+    "Description": "الوصف",
+    "FullName": "الإسم بالكامل"
+  },
+  "UnitOfMeasurement": {
+    "Title": "وحدات القياس",
+    "AddUnitOfMeasurement": "إضافة وحدة قياس",
+    "EditUnitOfMeasurement": "تعديل قياس",
+    "ViewUnitOfMeasurement": "عرض قياس",
+    "Description": "الوصف",
+    "FullName": "الإسم "
+  },
   "Client": {
     "Title": "العملاء",
     "AddClient": "إضافة عميل",
@@ -484,5 +509,9 @@
     "AccountStatementForSingleClient": "كشف حساب العميل(مُفَصَّل)",
     "AccountStatementForAllVendors": "كشف حسابات الموردين(مُجمَل)",
     "AccountStatementForSingleVendor": "كشف حساب المورد  (مُفَصَّل)"
+  },
+  "RepresentiveTypeEnum": {
+    "Sales": "المبيعات",
+    "Purchases": "المشتريات"
   }
 }

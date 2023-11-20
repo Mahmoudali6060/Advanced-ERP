@@ -42,6 +42,12 @@ namespace App.Helper
             CreateMap<Company, CompanyDTO>();
             CreateMap<CompanyDTO, Company>();
 
+            CreateMap<Representive, RepresentiveDTO>();
+            CreateMap<RepresentiveDTO, Representive>();
+
+            CreateMap<UnitOfMeasurement, UnitOfMeasurementDTO>();
+            CreateMap<UnitOfMeasurementDTO, UnitOfMeasurement>();
+
             #endregion
 
             #region Users Management

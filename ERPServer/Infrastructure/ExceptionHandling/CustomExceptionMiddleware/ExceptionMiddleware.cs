@@ -43,11 +43,11 @@ namespace Infrastructure.ExceptionHandling
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             var message = exception.Message;
-            //To-Do
-            if (exception.InnerException.Message.Contains("DELETE"))
-            {
-                message = "Errors.HasRelatedData";
-            }
+            ////To-Do
+            //if (exception.InnerException.Message.Contains("DELETE"))
+            //{
+            //    message = "Errors.HasRelatedData";
+            //}
             await context.Response.WriteAsync(new ErrorDetails()
             {
                 StatusCode = context.Response.StatusCode,

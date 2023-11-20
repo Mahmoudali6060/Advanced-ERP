@@ -24,8 +24,7 @@
                                         |translate}}</label>
 
                                     <p-inputSwitch [disabled]="viewMode" [ngModelOptions]="{standalone: true}"
-                                        name="isVendor" class="input-switch"
-                                        [(ngModel)]="isVendor"></p-inputSwitch>
+                                        name="isVendor" class="input-switch" [(ngModel)]="isVendor"></p-inputSwitch>
                                 </div>
                             </div>
 
@@ -54,7 +53,7 @@
                                 </div>
 
 
-                              
+
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="phoneNumber1" class=" form-control-label">{{'General.PhoneNumber1'
@@ -62,8 +61,8 @@
                                         <input [disabled]="viewMode" [(ngModel)]="clientDTO.phoneNumber1" type="text"
                                             id="phoneNumber1" class="form-control" #phoneNumber1="ngModel"
                                             [class.is-invalid]="phoneNumber1.invalid && phoneNumber1.touched"
-                                            [class.is-valid]="phoneNumber1.valid"  name="phoneNumber1"
-                                            id="phoneNumber1" class="form-control" aria-describedby="helpId">
+                                            [class.is-valid]="phoneNumber1.valid" name="phoneNumber1" id="phoneNumber1"
+                                            class="form-control" aria-describedby="helpId">
                                         <small [hidden]="phoneNumber1.valid || phoneNumber1.untouched" id="helpId"
                                             class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
                                     </div>
@@ -75,10 +74,30 @@
                                         <input [disabled]="viewMode" [(ngModel)]="clientDTO.phoneNumber2" type="text"
                                             id="phoneNumber2" class="form-control" #phoneNumber2="ngModel"
                                             [class.is-invalid]="phoneNumber2.invalid && phoneNumber2.touched"
-                                            [class.is-valid]="phoneNumber2.valid"  name="phoneNumber2"
-                                            id="phoneNumber2" class="form-control" aria-describedby="helpId">
+                                            [class.is-valid]="phoneNumber2.valid" name="phoneNumber2" id="phoneNumber2"
+                                            class="form-control" aria-describedby="helpId">
                                         <small [hidden]="phoneNumber2.valid || phoneNumber2.untouched" id="helpId"
                                             class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="vatNo" class=" form-control-label">{{'General.VATNo'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="clientDTO.vatNo" type="text"
+                                            id="vatNo" class="form-control" #phoneNumber2="ngModel" name="vatNo"
+                                            aria-describedby="helpId">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="commercialNo" class=" form-control-label">{{'General.CommercialNo'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="clientDTO.commercialNo" type="text"
+                                            id="commercialNo" #phoneNumber2="ngModel" name="commercialNo"
+                                            class="form-control" aria-describedby="helpId">
                                     </div>
                                 </div>
 
@@ -94,7 +113,7 @@
                                             class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="debit" class=" form-control-label">{{'General.Debit'
@@ -102,10 +121,10 @@
                                         <input [disabled]="viewMode" [(ngModel)]="clientDTO.debit" type="number"
                                             id="debit" class="form-control" #debit="ngModel"
                                             [class.is-invalid]="debit.invalid && debit.touched"
-                                            [class.is-valid]="debit.valid" name="debit" id="debit"
-                                            class="form-control" aria-describedby="helpId">
-                                        <small [hidden]="debit.valid || debit.untouched" id="helpId"
-                                            class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                            [class.is-valid]="debit.valid" name="debit" id="debit" class="form-control"
+                                            aria-describedby="helpId">
+                                        <small [hidden]="debit.valid || debit.untouched" id="helpId" class="text-muted"
+                                            [translate]="'Errors.ThisFieldIsRequired'"></small>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -142,7 +161,7 @@
                                         <input [disabled]="viewMode" [(ngModel)]="clientDTO.idNumber" type="text"
                                             id="idNumber" class="form-control" #idNumber="ngModel"
                                             [class.is-invalid]="idNumber.invalid && idNumber.touched"
-                                            [class.is-valid]="idNumber.valid"  name="idNumber" id="idNumber"
+                                            [class.is-valid]="idNumber.valid" name="idNumber" id="idNumber"
                                             class="form-control" aria-describedby="helpId">
                                         <small [hidden]="idNumber.valid || idNumber.untouched" id="helpId"
                                             class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>

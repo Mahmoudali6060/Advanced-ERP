@@ -12,6 +12,8 @@ import { ProductDTO } from '../../../models/product.dto';
 import { ProductService } from '../../../services/product.service';
 import { CategoryDTO } from '../../../models/category.dto';
 import { CategoryService } from '../../../services/category.service';
+import { UnitOfMeasurementDTO } from '../../../models/unit-of-measurement.dto';
+import { UnitOfMeasurementService } from '../../../services/unit-of-measurement.service';
 
 @Component({
 	selector: 'app-product-form',
@@ -25,9 +27,13 @@ export class ProductFormComponent {
 	serverUrl: string;
 	viewMode: boolean;
 	categoryList: Array<CategoryDTO> = new Array<CategoryDTO>();
+	unitOfMeasurementList: Array<UnitOfMeasurementDTO> = new Array<UnitOfMeasurementDTO>();
+
+
 	constructor(
 		private productService: ProductService,
 		private categoryService: CategoryService,
+		private unitOfMeasurementService: UnitOfMeasurementService,
 		private route: ActivatedRoute,
 		private toasterService: ToastrService,
 		private _configService: ConfigService,
@@ -48,11 +54,18 @@ export class ProductFormComponent {
 			this.productDTO.actualQuantity = 0;
 		}
 		this.getAllCategories();
+		this.getAllUnitOfMeasurements();
 	}
 
 	getAllCategories() {
 		this.categoryService.getAllLite().subscribe((res: any) => {
 			this.categoryList = res.list;
+		})
+	}
+
+	getAllUnitOfMeasurements() {
+		this.unitOfMeasurementService.getAllLite().subscribe((res: any) => {
+			this.unitOfMeasurementList = res.list;
 		})
 	}
 

@@ -27,6 +27,8 @@ namespace UnitOfWork.Contracts
         IProductDAL ProductDAL { get; }
         IClientVendorDAL ClientVendorDAL { get; }
         ICompanyDAL CompanyDAL { get; }
+        IRepresentiveDAL RepresentiveDAL { get; }
+        IUnitOfMeasurementDAL UnitOfMeasurementDAL { get; }
         #endregion
 
         #region Purchase

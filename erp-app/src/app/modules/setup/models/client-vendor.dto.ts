@@ -8,6 +8,8 @@ export class ClientVendorDTO {
     imageUrl: string;
     phoneNumber1: string;
     phoneNumber2: string;
+    vatNo: string;
+    commercialNo: string;
     debit: number//سعر 
     credit: number//سعر 
     notes: string;
@@ -15,6 +17,7 @@ export class ClientVendorDTO {
     imageBase64: string;
     typeId: ClientVendorTypeEnum;
     companyId: number;
+
     constructor() {
         this.isActive = true;
     }

@@ -1,0 +1,99 @@
+<div class="row">
+    <form #frm="ngForm" (ngSubmit)="save(frm)">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong *ngIf="!representiveDTO.id">{{'Representive.AddRepresentive' |translate}}</strong>
+                    <strong *ngIf="representiveDTO.id && !viewMode">{{'Representive.EditRepresentive'
+                        |translate}}</strong>
+                    <strong *ngIf="representiveDTO.id  && viewMode ">{{'Representive.ViewRepresentive'
+                        |translate}}</strong>
+                </div>
+                <div class="card-body card-block">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!-- <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="isActive" class=" form-control-label">{{'General.IsActive'
+                                        |translate}}</label>
+                                    <p-inputSwitch [disabled]="viewMode" [ngModelOptions]="{standalone: true}"
+                                        name="isActive" class="input-switch"
+                                        [(ngModel)]="representiveDTO.isActive"></p-inputSwitch>
+                                </div>
+                            </div> -->
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="fullName" class=" form-control-label">{{'General.FullName'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="representiveDTO.fullName" type="text"
+                                            id="fullName" class="form-control" #fullName="ngModel"
+                                            [class.is-invalid]="fullName.invalid && fullName.touched"
+                                            [class.is-valid]="fullName.valid" required name="fullName"
+                                            aria-describedby="helpId">
+                                        <small [hidden]="fullName.valid || fullName.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="addressDetails"
+                                            class=" form-control-label">{{'General.AddressDetails'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="representiveDTO.addressDetails"
+                                            type="text" id="addressDetails" class="form-control"
+                                            #addressDetails="ngModel"
+                                            [class.is-invalid]="addressDetails.invalid && addressDetails.touched"
+                                            [class.is-valid]="addressDetails.valid" required name="addressDetails"
+                                            aria-describedby="helpId">
+                                        <small [hidden]="addressDetails.valid || addressDetails.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="mobile" class=" form-control-label">{{'General.Mobile'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="representiveDTO.mobile" type="text"
+                                            id="mobile" class="form-control" name="mobile" aria-describedby="helpId">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="form3Example3c">{{'General.RepresentiveType'|translate}}</label>
+                                        <ng-select name="role" id="representiveTypeId"
+                                            [(ngModel)]="representiveDTO.representiveTypeId">
+                                            <ng-option *ngFor="let item of representiveTypelist" [value]="item.value">
+                                                {{'RepresentiveTypeEnum.'+item.label |translate}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="notes" class=" form-control-label">{{'General.Notes'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="representiveDTO.notes" type="text"
+                                            id="notes" class="form-control" name="notes" aria-describedby="helpId">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-container p-3">
+                    <button type="submit" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
+                        <i class="fa fa-dot-circle-o"></i>{{'General.SaveChanges' |translate}}
+                    </button>
+                    <button type="reset" class="btn btn-danger mr-1" (click)="back()">
+                        <i class="fa fa-ban"></i>{{'General.Back' |translate}}
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

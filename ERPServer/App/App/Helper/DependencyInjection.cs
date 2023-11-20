@@ -76,6 +76,12 @@ namespace App.Helper
             services.AddTransient<ICompanyDAL, CompanyDAL>();
             services.AddTransient<ICompanyDSL, CompanyDSL>();
 
+            services.AddTransient<IRepresentiveDAL, RepresentiveDAL>();
+            services.AddTransient<IRepresentiveDSL, RepresentiveDSL>();
+
+            services.AddTransient<IUnitOfMeasurementDAL, UnitOfMeasurementDAL>();
+            services.AddTransient<IUnitOfMeasurementDSL, UnitOfMeasurementDSL>();
+
             #endregion
 
             #region User Management
@@ -87,7 +93,7 @@ namespace App.Helper
 
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddTransient<IRoleDAL,RoleDAL>();
+            services.AddTransient<IRoleDAL, RoleDAL>();
             services.AddTransient<IRoleDSL, RoleDSL>();
 
             #endregion

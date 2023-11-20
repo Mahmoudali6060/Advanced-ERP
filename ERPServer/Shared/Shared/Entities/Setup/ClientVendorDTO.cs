@@ -14,6 +14,8 @@ namespace Shared.Entities.Setup
         public string Address { get; set; }
         public string PhoneNumber1 { get; set; }
         public string PhoneNumber2 { get; set; }
+        public string VATNo { get; set; }
+        public string CommercialNo { get; set; }
         public string ImageUrl { get; set; }
         public decimal Debit { get; set; }
         public decimal Credit { get; set; }

@@ -46,6 +46,10 @@ namespace Data.Contexts
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ClientVendor> ClientVendors { get; set; }
+        public DbSet<Representive> Representives { get; set; }
+        public DbSet<UnitOfMeasurement> UnitOfMeasurements { get; set; }
+
+
         #endregion
 
         #region User Management
