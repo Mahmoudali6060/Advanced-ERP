@@ -21,6 +21,10 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { ClientVendorFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/client-vendor-form-popup/client-vendor-form-popup.component';
 import { AuthService } from 'src/app/modules/authentication/services/auth.service';
 import { ReportService } from 'src/app/modules/report/services/report.service';
+import { RepresentiveDTO } from 'src/app/modules/setup/models/representive.dto';
+import { RepresentiveService } from 'src/app/modules/setup/services/representive.service';
+import { RepresentiveTypeEnum } from 'src/app/shared/enums/representive-type.enum';
+import { RepresentiveFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/representive-form-popup/representive-form-popup.component';
 
 @Component({
 	selector: 'app-sales-bill-form',
@@ -38,6 +42,7 @@ export class SalesBillFormComponent {
 	currentBalance: number = 0;
 	@Input() searchByNumber: boolean = false;
 	selectedClient: ClientVendorDTO = new ClientVendorDTO();
+	representiveList: Array<RepresentiveDTO> = new Array<RepresentiveDTO>();
 	//#region 
 	reportName: string;
 	parameters: any;
@@ -58,7 +63,8 @@ export class SalesBillFormComponent {
 		private dialogService: DialogService,
 		private alertService: AlertService,
 		private authService: AuthService,
-		private reportService: ReportService
+		private reportService: ReportService,
+		private representiveService: RepresentiveService
 
 	) {
 	}
@@ -81,6 +87,7 @@ export class SalesBillFormComponent {
 			this.salesBillHeaderDTO.date = this.helperService.conveertDateToString(new Date());
 			this.getAllProducts();
 			this.getAllClients();
+			this.getAllRepresentives();
 		}
 
 	}
@@ -100,11 +107,19 @@ export class SalesBillFormComponent {
 		})
 	}
 
+	getAllRepresentives() {
+		this.representiveService.getAllLite().subscribe((res: any) => {
+			this.representiveList = res.list;
+			this.representiveList = this.representiveList.filter(x => x.representiveTypeId == RepresentiveTypeEnum.Sales);
+		})
+	}
+
 	getSalesBillById(salesBillId: any) {
 		this.salesBillService.getById(salesBillId).subscribe((res: any) => {
 			this.salesBillHeaderDTO = res;
 			this.getAllProducts();
 			this.getAllClients();
+			this.getAllRepresentives();
 		});
 	}
 
@@ -274,6 +289,18 @@ export class SalesBillFormComponent {
 			})
 			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
 	}
+
+	showRepresentiveFormPopUp() {
+		this.dialogService.show("sm", RepresentiveFormPopupComponent, RepresentiveTypeEnum.Sales)
+			.then((representive) => {
+				if (representive) {
+					this.salesBillHeaderDTO.representiveId = representive.id
+					this.getAllRepresentives();
+				}
+			})
+			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+	}
+
 
 	saveAndPrint() {
 		this.save(true, undefined)

@@ -117,8 +117,10 @@
     "Sales": "المبيعات",
     "Purchases": "المشتريات",
     "RepresentiveType": "نوع المندوب",
+    "Representive": "المندوب",
     "Description": "الوصف",
-    "SelectUnitOfMeasurement":"اختر وحدة القياس"
+    "SelectUnitOfMeasurement": "اختر وحدة القياس",
+    "SelectRepresentive": "اختر المندوب"
   },
   "Dashboard": {
     "overview": "نظرة عامة",

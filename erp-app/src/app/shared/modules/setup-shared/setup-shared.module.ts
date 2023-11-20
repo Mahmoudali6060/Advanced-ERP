@@ -5,6 +5,8 @@ import { ProductFormPopupComponent } from './components/product-form-popup/produ
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 import { ClientVendorFormPopupComponent } from './components/client-vendor-form-popup/client-vendor-form-popup.component';
+import { RepresentiveFormPopupComponent } from './components/representive-form-popup/representive-form-popup.component';
+import { RepresentiveService } from 'src/app/modules/setup/services/representive.service';
 
 @NgModule({
   imports: [
@@ -12,16 +14,19 @@ import { ClientVendorFormPopupComponent } from './components/client-vendor-form-
   ],
   exports: [
     ProductFormPopupComponent,
-    ClientVendorFormPopupComponent
+    ClientVendorFormPopupComponent,
+    RepresentiveFormPopupComponent
   ],
   declarations: [
     ProductFormPopupComponent,
-    ClientVendorFormPopupComponent
+    ClientVendorFormPopupComponent,
+    RepresentiveFormPopupComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     ProductService,
     ClientVendorService,
+    RepresentiveService,
     NgbActiveModal
   ]
 })

@@ -23,6 +23,7 @@ namespace Shared.Entities.Purchases
         public decimal Remaining { get; set; }
         public string Notes { get; set; }
         public long ClientVendorId { get; set; }
+        public long RepresentiveId { get; set; }
         public string ClientVendorName { get; set; }
         public long? CompanyId { get; set; }
 

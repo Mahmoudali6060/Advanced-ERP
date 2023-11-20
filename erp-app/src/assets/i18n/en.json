@@ -105,6 +105,7 @@
     "Sales": "Sales",
     "Purchases": "Purchases",
     "RepresentiveType": "Representive Type",
+    "Representive":"Representive",
     "Description":"Description",
     "SelectUnitOfMeasurement":"Select Unit Of Measurement"
   },

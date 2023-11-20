@@ -10,7 +10,7 @@
             </div>
             <div class="card-body card-block">
                 <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                         <div class="form-group">
                             <label for="number" class=" form-control-label">{{'General.BillNumber'
                                 |translate}}</label>
@@ -42,7 +42,7 @@
                         </div>
 
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                         <div class="form-group">
                             <label for="currentBalance" class=" form-control-label">{{'General.CurrentBalance'
                                 |translate}}
@@ -54,13 +54,29 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                         <div class="form-group">
                             <label class="form-label" for="date">{{'General.Date'|translate}}</label>
                             <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.date" type="date" id="date"
                                 class="form-control" #date="ngModel" name="date" [value]="salesBillHeaderDTO.date"
                                 aria-describedby="helpId">
 
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <label class="form-label" for="representiveId">{{'General.Representive'|translate}}</label>
+                        <div class="input-group">
+                            <ng-select name="representiveId" id="representiveId" class="ng-select-custom"
+                                [(ngModel)]="salesBillHeaderDTO.representiveId">
+                                <ng-option value=" null" disabled>{{'General.SelectRepresentive'|translate}}</ng-option>
+                                <ng-option *ngFor="let item of representiveList" [value]="item.id"> {{item.fullName}}
+                                </ng-option>
+                            </ng-select>
+                            <div class="input-group-addon" data-toggle="tooltip" data-placement="top"
+                                (click)="showRepresentiveFormPopUp()" title="Add Representive">
+                                <i class="fa fa-plus-square"></i>
+                            </div>
                         </div>
                     </div>
                 </div>

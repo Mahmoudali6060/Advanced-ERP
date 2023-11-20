@@ -22,6 +22,8 @@ namespace Data.Entities.Sales
         public decimal Remaining { get; set; }
         public string Notes { get; set; }
         public long ClientVendorId { get; set; }
+        public long RepresentiveId { get; set; }
+
         public virtual ClientVendor ClientVendor { get; set; }
         public virtual List<SalesBillDetail> SalesBillDetailList { get; set; }
         public long? CompanyId { get; set; }

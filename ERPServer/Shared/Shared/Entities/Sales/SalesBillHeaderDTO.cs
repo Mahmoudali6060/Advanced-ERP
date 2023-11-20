@@ -22,6 +22,7 @@ namespace Shared.Entities.Sales
         public decimal Paid { get; set; }
         public decimal Remaining { get; set; }
         public string Notes { get; set; }
+        public long RepresentiveId { get; set; }
         public long ClientVendorId { get; set; }
         public string ClientVendorName { get; set; }
         public long? CompanyId { get; set; }

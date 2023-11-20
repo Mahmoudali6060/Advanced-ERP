@@ -20,6 +20,10 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { ClientVendorFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/client-vendor-form-popup/client-vendor-form-popup.component';
 import { AuthService } from 'src/app/modules/authentication/services/auth.service';
 import { ReportService } from 'src/app/modules/report/services/report.service';
+import { RepresentiveDTO } from 'src/app/modules/setup/models/representive.dto';
+import { RepresentiveService } from 'src/app/modules/setup/services/representive.service';
+import { RepresentiveFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/representive-form-popup/representive-form-popup.component';
+import { RepresentiveTypeEnum } from 'src/app/shared/enums/representive-type.enum';
 @Component({
 	selector: 'app-purchases-bill-form',
 	templateUrl: './purchases-bill-form.component.html',
@@ -33,6 +37,7 @@ export class PurchasesBillFormComponent {
 	viewMode: boolean;
 	productList: Array<ProductDTO> = new Array<ProductDTO>();
 	vendorList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
+	representiveList: Array<RepresentiveDTO> = new Array<RepresentiveDTO>();
 	purchaseHeaderId: any;
 	searchProduct: any;
 	currentBalance: number = 0;
@@ -51,7 +56,8 @@ export class PurchasesBillFormComponent {
 		private dialogService: DialogService,
 		private alertService: AlertService,
 		private authService: AuthService,
-		private reportService: ReportService) {
+		private reportService: ReportService,
+		private representiveService: RepresentiveService) {
 	}
 
 	ngOnInit() {
@@ -70,6 +76,7 @@ export class PurchasesBillFormComponent {
 			this.purchasesBillHeaderDTO.date = this.helperService.conveertDateToString(new Date());
 			this.getAllProducts();
 			this.getAllVendors();
+			this.getAllRepresentives();
 		}
 
 	}
@@ -88,11 +95,19 @@ export class PurchasesBillFormComponent {
 		})
 	}
 
+	getAllRepresentives() {
+		this.representiveService.getAllLite().subscribe((res: any) => {
+			this.representiveList = res.list;
+			this.representiveList = this.representiveList.filter(x => x.representiveTypeId == RepresentiveTypeEnum.Purchases);
+		})
+	}
+
 	getPurchasesBillById(purchasesBillId: any) {
 		this.purchasesBillService.getById(purchasesBillId).subscribe((res: any) => {
 			this.purchasesBillHeaderDTO = res;
 			this.getAllProducts();
 			this.getAllVendors();
+			this.getAllRepresentives();
 		});
 	}
 
@@ -257,6 +272,18 @@ export class PurchasesBillFormComponent {
 			})
 			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
 	}
+
+	showRepresentiveFormPopUp() {
+		this.dialogService.show("sm", RepresentiveFormPopupComponent, RepresentiveTypeEnum.Purchases)
+			.then((representive) => {
+				if (representive) {
+					this.purchasesBillHeaderDTO.representiveId = representive.id
+					this.getAllRepresentives();
+				}
+			})
+			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+	}
+
 
 	saveAndPrint() {
 		this.save(true, undefined)
