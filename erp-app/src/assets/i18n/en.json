@@ -105,9 +105,13 @@
     "Sales": "Sales",
     "Purchases": "Purchases",
     "RepresentiveType": "Representive Type",
-    "Representive":"Representive",
-    "Description":"Description",
-    "SelectUnitOfMeasurement":"Select Unit Of Measurement"
+    "Representive": "Representive",
+    "Description": "Description",
+    "SelectUnitOfMeasurement": "Select Unit Of Measurement",
+    "ProcessType": "Process Type",
+    "OldData": "Old Data",
+    "NewData": "New Data",
+    "Usernmae": "Usernmae"
   },
   "Dashboard": {
     "overview": "Overview",
@@ -263,7 +267,8 @@
     "SalesBills": "Sales Bills",
     "Reports": "Reports",
     "Representives": "Representives",
-    "UnitOfMeasurements": "Unit Of Measurements"
+    "UnitOfMeasurements": "Unit Of Measurements",
+    "ProductTrackingTitle":"Product Tracking"
   },
   "Errors": {
     "InvalidUsernameOrPassword": "Invalid Username Or Password",
@@ -448,7 +453,8 @@
     "PurchasingPricePercentage": "Purchasing Discount Percentage",
     "SellingPricePercentage": "Selling Discount Percentage",
     "UnitOfMeasurement": "Unit of measurement",
-    "Description": "Description"
+    "Description": "Description",
+    "ProductTrackingTitle": "Product Tracking"
   },
   "Representive": {
     "Title": "Representives",
@@ -503,5 +509,13 @@
   "RepresentiveTypeEnum": {
     "Sales": "Sales",
     "Purchases": "Purchases"
+  },
+  "ProductProcessTypeEnum": {
+    "Create": "Create",
+    "ChangePrice": "Change Price",
+    "ChangeQuantity": "Change Quantity",
+    "AddedToSalesBill": "Added To SalesBill",
+    "AddedToPurchases": "Added To Purchases",
+    "Delete": "Delete"
   }
 }

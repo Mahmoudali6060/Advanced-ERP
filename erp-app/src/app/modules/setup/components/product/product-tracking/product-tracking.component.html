@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- DATA TABLE -->
+        <h3 class="title-5 m-b-35">{{'Product.ProductTrackingTitle' |translate}}</h3>
+        <div class="table-data__tool">
+            <div class="table-data__tool-left">
+                <button class="au-btn-filter" (click)="toggleFilter()">
+                    <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
+            </div>
+        </div>
+
+        <!--Filters-->
+        <div class="row" *ngIf="showFilterControls">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">{{'General.Filters'|translate}}</div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="form3Example3c">{{'General.Product'|translate}}</label>
+                                        <ng-select name="product" id="product"
+                                            [(ngModel)]="searchCriteriaDTO.productId">
+                                            <ng-option *ngFor="let item of productList" [value]="item.id">
+                                                {{item.name}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="form3Example3c">{{'General.ProcessType'|translate}}</label>
+                                        <ng-select name="role" id="productProcessTypeId"
+                                            [(ngModel)]="searchCriteriaDTO.productProcessTypeId">
+                                            <ng-option *ngFor="let item of productProcessTypelist" [value]="item.value">
+                                                {{'ProductProcessTypeEnum.'+item.label |translate}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="date">{{'General.Date'|translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.date" type="date" id="date"
+                                            class="form-control" #date="ngModel" name="date"
+                                            [value]="searchCriteriaDTO.date" aria-describedby="helpId">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-lg-9">
+                                    <button (click)="search()"
+                                        class="au-btn au-btn-icon au-btn--blue au-btn--small btn-search mt-4">
+                                        <i class="zmdi zmdi-search"></i>{{'General.Search'|translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Filters-->
+
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2">
+                <thead class="table-header-bc">
+                    <tr>
+                        <th class="table-header-fc">{{'General.Date' |translate}}</th>
+                        <th class="table-header-fc">{{'General.ProcessType' |translate}}</th>
+                        <th class="table-header-fc">{{'General.OldData' |translate}}</th>
+                        <th class="table-header-fc">{{'General.NewData' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Username' |translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tr-shadow" *ngFor="let item of productTrackingList">
+                        <td>{{item.date}}</td>
+                        <td>{{'ProductProcessTypeEnum.'+productProcessTypeEnum[item.productProcessTypeId] | translate}}
+                        </td>
+                        <td>{{item.oldData}}</td>
+                        <td>{{item.newData}}</td>
+                        <td>{{item.createdByUsername}}</td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <app-pagination (pageChange)="onPageChange($event)" [totalRecordsCount]="total"
+                [recordsPerPage]="searchCriteriaDTO.pageSize" *ngIf="productTrackingList">
+            </app-pagination>
+        </div>
+        <!-- END DATA TABLE -->
+    </div>
+</div>

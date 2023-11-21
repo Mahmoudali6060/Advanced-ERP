@@ -21,13 +21,14 @@ namespace Data.Contexts
 {
     public class AppDbContext : IdentityDbContext<AppUser, AppRole, string>
     {
-        private UserProfile LoggedUserProfile;
+        string LoggedUserName;
         long UserProfileId;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public AppDbContext(DbContextOptions<AppDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
         {
             _httpContextAccessor = httpContextAccessor;
+
 
         }
 
@@ -45,6 +46,7 @@ namespace Data.Contexts
         public DbSet<AboutUs> AboutUs { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductTracking> ProductTrackings { get; set; }
         public DbSet<ClientVendor> ClientVendors { get; set; }
         public DbSet<Representive> Representives { get; set; }
         public DbSet<UnitOfMeasurement> UnitOfMeasurements { get; set; }
@@ -74,7 +76,11 @@ namespace Data.Contexts
            .IsUnique(true);
 
 
-            modelBuilder.Entity<AuditEntry>().Property(ae => ae.Changes).HasConversion(
+            modelBuilder.Entity<AuditEntry>().Property(ae => ae.OldData).HasConversion(
+            value => JsonConvert.SerializeObject(value),
+            serializedValue => JsonConvert.DeserializeObject<Dictionary<string, object>>(serializedValue));
+
+            modelBuilder.Entity<AuditEntry>().Property(ae => ae.NewData).HasConversion(
             value => JsonConvert.SerializeObject(value),
             serializedValue => JsonConvert.DeserializeObject<Dictionary<string, object>>(serializedValue));
 
@@ -94,14 +100,11 @@ namespace Data.Contexts
 
         public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
+            SetLoggedUserData();
+
+
             AddAuitInfo();
 
-            string userProfileId = _httpContextAccessor.HttpContext.Request.Headers["UserProfileId"];
-            if (userProfileId != null)
-            {
-                UserProfileId = long.Parse(userProfileId);
-                //LoggedUserProfile = UserProfiles.SingleOrDefault(x => x.Id == long.Parse(userProfileId));
-            }
 
             // Get audit entries
             var auditEntries = OnBeforeSaveChanges();
@@ -111,6 +114,15 @@ namespace Data.Contexts
             await OnAfterSaveChangesAsync(auditEntries);
             return result;
         }
+
+        private void SetLoggedUserData()
+        {
+            string userProfileId = _httpContextAccessor.HttpContext.Request.Headers["UserProfileId"];
+            if (userProfileId != null)
+                UserProfileId = long.Parse(userProfileId);
+            LoggedUserName = _httpContextAccessor.HttpContext.Request.Headers["Username"];
+        }
+
         public async Task<int> SaveChangesAsync()
         {
             AddAuitInfo();
@@ -120,14 +132,21 @@ namespace Data.Contexts
         #region Audit Helpers
         private void AddAuitInfo()
         {
-            var entries = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
+            var entries = ChangeTracker.Entries().Where(x => x.Entity is AuditEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
             foreach (var entry in entries)
             {
                 if (entry.State == EntityState.Added)
                 {
-                    ((BaseEntity)entry.Entity).Created = DateTime.UtcNow;
+                    ((AuditEntity)entry.Entity).Created = DateTime.UtcNow;
+                    ((AuditEntity)entry.Entity).CreatedByProfileId = UserProfileId;
+                    ((AuditEntity)entry.Entity).CreatedByUsername = LoggedUserName;
                 }
-            ((BaseEntity)entry.Entity).Modified = DateTime.UtcNow;
+                else
+                {
+                    ((BaseEntity)entry.Entity).Modified = DateTime.UtcNow;
+                    ((AuditEntity)entry.Entity).ModifiedByProfileId = UserProfileId;
+                    ((AuditEntity)entry.Entity).ModifiedByUsername = LoggedUserName;
+                }
             }
         }
 
@@ -138,7 +157,8 @@ namespace Data.Contexts
 
             foreach (var entry in ChangeTracker.Entries())
             {
-                // Dot not audit entities that are not tracked, not changed, or not of type IAuditable
+
+                //// Dot not audit entities that are not tracked, not changed, or not of type IAuditable
                 if (entry.State == EntityState.Detached || entry.State == EntityState.Unchanged || !(entry.Entity is IEntity))
                     continue;
 
@@ -150,7 +170,8 @@ namespace Data.Contexts
                     UserProfileId = UserProfileId,
                     Username = null,//LoggedUserProfile.FirstName,
                     TimeStamp = DateTime.UtcNow,
-                    Changes = entry.Properties.Select(p => new { p.Metadata.Name, p.CurrentValue }).ToDictionary(i => i.Name, i => i.CurrentValue),
+                    OldData = entry.Properties.Select(p => new { p.Metadata.Name, p.OriginalValue }).ToDictionary(i => i.Name, i => i.OriginalValue),
+                    NewData = entry.Properties.Select(p => new { p.Metadata.Name, p.CurrentValue }).ToDictionary(i => i.Name, i => i.CurrentValue),
 
                     // TempProperties are properties that are only generated on save, e.g. ID's
                     // These properties will be set correctly after the audited entity has been saved
@@ -176,11 +197,15 @@ namespace Data.Contexts
                     if (prop.Metadata.IsPrimaryKey())
                     {
                         entry.EntityId = prop.CurrentValue.ToString();
-                        entry.Changes[prop.Metadata.Name] = prop.CurrentValue;
+                        entry.OldData[prop.Metadata.Name] = prop.OriginalValue;
+                        entry.NewData[prop.Metadata.Name] = prop.CurrentValue;
+
                     }
                     else
                     {
-                        entry.Changes[prop.Metadata.Name] = prop.CurrentValue;
+                        entry.OldData[prop.Metadata.Name] = prop.OriginalValue;
+                        entry.NewData[prop.Metadata.Name] = prop.CurrentValue;
+
                     }
                 }
             }

@@ -4,6 +4,7 @@ using Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231120211840_AddProductTrackingTable")]
+    partial class AddProductTrackingTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,9 +99,6 @@ namespace Data.Migrations
                     b.Property<long?>("CreatedByProfileId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("CreatedByUsername")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -114,9 +113,6 @@ namespace Data.Migrations
 
                     b.Property<long?>("ModifiedByProfileId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("ModifiedByUsername")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
@@ -233,9 +229,6 @@ namespace Data.Migrations
                     b.Property<long?>("CreatedByProfileId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("CreatedByUsername")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -250,9 +243,6 @@ namespace Data.Migrations
 
                     b.Property<long?>("ModifiedByProfileId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("ModifiedByUsername")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
@@ -665,28 +655,19 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
                     b.Property<long?>("CreatedByProfileId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("CreatedByUsername")
+                    b.Property<string>("CreatedByProfileName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("Modified")
-                        .HasColumnType("datetime2");
-
                     b.Property<long?>("ModifiedByProfileId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("ModifiedByUsername")
+                    b.Property<string>("ModifiedByProfileName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NewData")
@@ -701,11 +682,13 @@ namespace Data.Migrations
                     b.Property<int>("ProductProcessTypeId")
                         .HasColumnType("int");
 
+                    b.Property<long>("UserProfileId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
-
-                    b.HasIndex("CreatedByProfileId");
-
-                    b.HasIndex("ModifiedByProfileId");
 
                     b.HasIndex("ProductId");
 
@@ -1360,23 +1343,11 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.Setup.ProductTracking", b =>
                 {
-                    b.HasOne("Data.Entities.UserManagement.UserProfile", "CreatedByProfile")
-                        .WithMany()
-                        .HasForeignKey("CreatedByProfileId");
-
-                    b.HasOne("Data.Entities.UserManagement.UserProfile", "ModifiedByProfile")
-                        .WithMany()
-                        .HasForeignKey("ModifiedByProfileId");
-
                     b.HasOne("Data.Entities.Setup.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("CreatedByProfile");
-
-                    b.Navigation("ModifiedByProfile");
 
                     b.Navigation("Product");
                 });

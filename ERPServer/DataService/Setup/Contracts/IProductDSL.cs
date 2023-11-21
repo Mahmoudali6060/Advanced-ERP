@@ -16,6 +16,7 @@ namespace DataService.Setup.Contracts
     {
         Task<ResponseEntityList<ProductDTO>> GetAllLiteByCategoryId(long categoryId);
         Task<bool> UpdateAll(List<ProductDTO> entitylist);
+        Task<ResponseEntityList<ProductTrackingDTO>> GetProductTrackingByProductId(ProductTrackingSearchDTO searchCriteriaDTO);
 
     }
 }

@@ -33,6 +33,12 @@ namespace App.Helper
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name));
             CreateMap<ProductDTO, Product>();
 
+
+            CreateMap<ProductTracking, ProductTrackingDTO>()
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd hh:mm tt")));
+            CreateMap<ProductTrackingDTO, ProductTracking>();
+
+
             CreateMap<Category, CategoryDTO>();
             CreateMap<CategoryDTO, Category>();
 
@@ -77,8 +83,8 @@ namespace App.Helper
                 .ForMember(dest => dest.PurchasesBillDetailList, opt => opt.MapFrom(src => src.PurchasesBillDetailList))
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")))
                 .ForMember(dest => dest.ClientVendorName, opt => opt.MapFrom(src => src.ClientVendor.FullName))
-                .ForMember(dest => dest.CreatedByProfileName, opt => opt.MapFrom(src => src.CreatedByProfile.FirstName + " " + src.CreatedByProfile.LastName))
-                .ForMember(dest => dest.ModifiedByProfileName, opt => opt.MapFrom(src => src.ModifiedByProfile.FirstName + " " + src.ModifiedByProfile.LastName));
+                .ForMember(dest => dest.CreatedByUsername, opt => opt.MapFrom(src => src.CreatedByUsername))
+                .ForMember(dest => dest.ModifiedByUsername, opt => opt.MapFrom(src => src.ModifiedByUsername));
 
 
             CreateMap<PurchasesBillHeaderDTO, PurchasesBillHeader>()
@@ -95,8 +101,8 @@ namespace App.Helper
                 .ForMember(dest => dest.SalesBillDetailList, opt => opt.MapFrom(src => src.SalesBillDetailList))
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")))
                 .ForMember(dest => dest.ClientVendorName, opt => opt.MapFrom(src => src.ClientVendor.FullName))
-                .ForMember(dest => dest.CreatedByProfileName, opt => opt.MapFrom(src => src.CreatedByProfile.FirstName + " " + src.CreatedByProfile.LastName))
-                .ForMember(dest => dest.ModifiedByProfileName, opt => opt.MapFrom(src => src.ModifiedByProfile.FirstName + " " + src.ModifiedByProfile.LastName));
+                .ForMember(dest => dest.CreatedByUsername, opt => opt.MapFrom(src => src.CreatedByUsername))
+                .ForMember(dest => dest.ModifiedByUsername, opt => opt.MapFrom(src => src.ModifiedByUsername));
 
             CreateMap<SalesBillHeaderDTO, SalesBillHeader>()
                 .ForMember(dest => dest.SalesBillDetailList, opt => opt.MapFrom(src => src.SalesBillDetailList))

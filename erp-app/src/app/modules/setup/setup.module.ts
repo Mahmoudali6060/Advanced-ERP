@@ -26,6 +26,7 @@ import { RepresentiveFormComponent } from './components/representive/representiv
 import { RepresentiveListComponent } from './components/representive/representive-list/representive-list.component';
 import { UnitOfMeasurementFormComponent } from './components/unit-of-measurement/unit-of-measurement-form/unit-of-measurement-form.component';
 import { UnitOfMeasurementListComponent } from './components/unit-of-measurement/unit-of-measurement-list/unit-of-measurement-list.component';
+import { ProductTrackingComponent } from './components/product/product-tracking/product-tracking.component';
 
 @NgModule({
   imports: [
@@ -55,7 +56,8 @@ import { UnitOfMeasurementListComponent } from './components/unit-of-measurement
     RepresentiveFormComponent,
     RepresentiveListComponent,
     UnitOfMeasurementFormComponent,
-    UnitOfMeasurementListComponent
+    UnitOfMeasurementListComponent,
+    ProductTrackingComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

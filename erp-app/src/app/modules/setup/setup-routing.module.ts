@@ -17,6 +17,7 @@ import { RepresentiveFormComponent } from './components/representive/representiv
 import { RepresentiveListComponent } from './components/representive/representive-list/representive-list.component';
 import { UnitOfMeasurementListComponent } from './components/unit-of-measurement/unit-of-measurement-list/unit-of-measurement-list.component';
 import { UnitOfMeasurementFormComponent } from './components/unit-of-measurement/unit-of-measurement-form/unit-of-measurement-form.component';
+import { ProductTrackingComponent } from './components/product/product-tracking/product-tracking.component';
 
 const routes: Routes = [
   { path: 'product-list-view', component: ProductListViewComponent },
@@ -42,6 +43,8 @@ const routes: Routes = [
   { path: 'unit-of-measurement-list', component: UnitOfMeasurementListComponent },
   { path: 'unit-of-measurement-form', component: UnitOfMeasurementFormComponent },
   { path: 'unit-of-measurement-form/:id', component: UnitOfMeasurementFormComponent },
+  { path: 'product-tracking/:productId', component: ProductTrackingComponent },
+  { path: 'product-tracking', component: ProductTrackingComponent },
 
 ];
 

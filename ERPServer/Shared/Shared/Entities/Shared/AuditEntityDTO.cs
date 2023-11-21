@@ -11,7 +11,7 @@ namespace Shared.Entities.Shared
     {
         public long? CreatedByProfileId { get; set; }
         public long? ModifiedByProfileId { get; set; }
-        public string CreatedByProfileName { get; set; }
-        public string ModifiedByProfileName { get; set; }
+        public string CreatedByUsername { get; set; }
+        public string ModifiedByUsername { get; set; }
     }
 }

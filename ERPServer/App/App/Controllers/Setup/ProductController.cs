@@ -26,6 +26,10 @@ namespace App.Controllers.Setup
         //[Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> GetById(long id) => Ok(await _productDSL.GetById(id));
 
+        [HttpPost, Route("GetProductTrackingByProductId")]
+        //[Authorize(Roles = Roles.Admin)]
+        public async Task<IActionResult> GetProductTrackingByProductId([FromBody] ProductTrackingSearchDTO productTrackingSearchDTO) => Ok(await _productDSL.GetProductTrackingByProductId(productTrackingSearchDTO));
+
         [HttpGet, Route("GetAllLite")]
         //[Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> GetAllLite() => Ok(await _productDSL.GetAllLite());

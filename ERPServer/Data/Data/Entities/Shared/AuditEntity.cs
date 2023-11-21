@@ -12,8 +12,10 @@ namespace Data.Entities.Shared
     {
 
         public long? CreatedByProfileId { get; set; }
+        public string CreatedByUsername { get; set; }
         public virtual UserProfile CreatedByProfile { get; set; }
         public long? ModifiedByProfileId { get; set; }
+        public string ModifiedByUsername { get; set; }
         public virtual UserProfile ModifiedByProfile { get; set; }
     }
 }

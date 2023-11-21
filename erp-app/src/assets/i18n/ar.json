@@ -120,7 +120,11 @@
     "Representive": "المندوب",
     "Description": "الوصف",
     "SelectUnitOfMeasurement": "اختر وحدة القياس",
-    "SelectRepresentive": "اختر المندوب"
+    "SelectRepresentive": "اختر المندوب",
+    "ProcessType": "نوع العملية",
+    "OldData": "القيمة القديمة",
+    "NewData": "القيمة الجديدة",
+    "Username": "اسم المستخدم"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -278,7 +282,8 @@
     "SalesBills": "فواتير المبيعات",
     "Reports": "التقارير",
     "Representives": "المناديب",
-    "UnitOfMeasurements": "وحدات القياس"
+    "UnitOfMeasurements": "وحدات القياس",
+    "ProductTrackingTitle":"حركة المنتج"
   },
   "Errors": {
     "InvalidUsernameOrPassword": "من فضلك تأكد من اسم المستخدم او كلمة المرور",
@@ -445,7 +450,8 @@
     "PurchasingPricePercentage": "نسبة الخصم لسعر الشراء",
     "SellingPricePercentage": "نسبة الخصم لسعر البيع",
     "UnitOfMeasurement": "وحدة القياس",
-    "Description": "الوصف"
+    "Description": "الوصف",
+    "ProductTrackingTitle": "حركة المنتج"
   },
   "Representive": {
     "Title": "المناديب",
@@ -515,5 +521,13 @@
   "RepresentiveTypeEnum": {
     "Sales": "المبيعات",
     "Purchases": "المشتريات"
+  },
+  "ProductProcessTypeEnum": {
+    "Create": "إنشاء",
+    "ChangePrice": "تغيير السعر",
+    "ChangeQuantity": "تغيير الكمية",
+    "AddedToSalesBill": "إضافة الى فاتورة مبيعات",
+    "AddedToPurchases": "إضافة إلى فاتورة مشتريات",
+    "Delete": "حذف"
   }
 }

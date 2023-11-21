@@ -25,6 +25,8 @@ namespace UnitOfWork.Contracts
         IAdvertismentDAL AdvertismentDAL { get; }
         ICategoryDAL CategoryDAL { get; }
         IProductDAL ProductDAL { get; }
+        IProductTrackingDAL ProductTrackingDAL { get; }
+
         IClientVendorDAL ClientVendorDAL { get; }
         ICompanyDAL CompanyDAL { get; }
         IRepresentiveDAL RepresentiveDAL { get; }

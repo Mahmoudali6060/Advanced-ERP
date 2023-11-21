@@ -9,7 +9,7 @@ using Shared.Entities.Setup;
 using Data.Entities.Setup;
 using DataService.Setup.Contracts;
 using System;
-using Entities.Account;
+using Shared.Enums;
 
 namespace DataService.Setup.Handlers
 {
@@ -50,6 +50,37 @@ namespace DataService.Setup.Handlers
 
         }
 
+        public async Task<ResponseEntityList<ProductTrackingDTO>> GetProductTrackingByProductId(ProductTrackingSearchDTO searchCriteriaDTO)
+        {
+            var productTrackingList = await _unitOfWork.ProductTrackingDAL.GetProductTrackingByProductId(searchCriteriaDTO.ProductId);
+
+            int total = productTrackingList.Count();
+
+            if (searchCriteriaDTO.ProductProcessTypeId.HasValue)
+            {
+                productTrackingList = productTrackingList.Where(x => x.ProductProcessTypeId == searchCriteriaDTO.ProductProcessTypeId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.Date))
+            {
+                productTrackingList = productTrackingList.Where(x => x.Date.Date == DateTime.Parse(searchCriteriaDTO.Date).Date);
+            }
+
+            #region Apply Pagination
+            productTrackingList = productTrackingList.Skip((searchCriteriaDTO.Page - 1) * searchCriteriaDTO.PageSize).Take(searchCriteriaDTO.PageSize);
+            #endregion
+
+            #region Mapping and Return List
+            var productTrackingDTOList = _mapper.Map<IEnumerable<ProductTrackingDTO>>(productTrackingList);
+            return new ResponseEntityList<ProductTrackingDTO>
+            {
+                List = productTrackingDTOList,
+                Total = total
+            };
+            #endregion
+
+        }
+
         public async Task<ProductDTO> GetById(long id)
         {
             var test = _mapper.Map<ProductDTO>(await _unitOfWork.ProductDAL.GetById(id));
@@ -80,21 +111,84 @@ namespace DataService.Setup.Handlers
         {
             UploadImage(entityDTO);
             var entity = _mapper.Map<Product>(entityDTO);
+            entity.ProductTrackings.Add(GenerateProductTrackingList(entityDTO));
             var result = await _unitOfWork.ProductDAL.Add(entity);
             await _unitOfWork.CompleteAsync();
             return entity.Id;
         }
 
+        private ProductTracking GenerateProductTrackingList(ProductDTO entityDTO)
+        {
+            return new ProductTracking()
+            {
+                Date = DateTime.Now,
+                OldData = "",
+                NewData = entityDTO.Code + " " + entityDTO.Name,
+                ProductProcessTypeId = ProductProcessTypeEnum.Created
+            };
+        }
+
         public async Task<long> Update(ProductDTO entity)
         {
             UploadImage(entity);
+            SetProductTracking(entity);
             var result = await _unitOfWork.ProductDAL.Update(_mapper.Map<Product>(entity));
             await _unitOfWork.CompleteAsync();
             return result;
         }
 
+        private void SetProductTracking(ProductDTO newProduct)
+        {
+            var oldProduct = _unitOfWork.ProductDAL.GetById(newProduct.Id).Result;
+            if (oldProduct == null)
+            {
+                ProductTracking productTracking = new ProductTracking()
+                {
+                    ProductId = oldProduct.Id,
+                    Date = DateTime.Now,
+                    OldData = oldProduct.Price.ToString(),
+                    NewData = newProduct.Price.ToString(),
+                    ProductProcessTypeId = ProductProcessTypeEnum.ChangePrice
+                };
+                _unitOfWork.ProductTrackingDAL.Add(productTracking);
+            }
+
+            if (oldProduct != null)
+            {
+                if (oldProduct.Price != newProduct.Price)
+                {
+                    ProductTracking productTracking = new ProductTracking()
+                    {
+                        ProductId = oldProduct.Id,
+                        Date = DateTime.Now,
+                        OldData = oldProduct.Price.ToString(),
+                        NewData = newProduct.Price.ToString(),
+                        ProductProcessTypeId = ProductProcessTypeEnum.ChangePrice
+                    };
+                    _unitOfWork.ProductTrackingDAL.Add(productTracking);
+                }
+
+                if (oldProduct.ActualQuantity != newProduct.ActualQuantity)
+                {
+                    ProductTracking productTracking = new ProductTracking()
+                    {
+                        ProductId = oldProduct.Id,
+                        Date = DateTime.Now,
+                        OldData = oldProduct.ActualQuantity.ToString(),
+                        NewData = newProduct.ActualQuantity.ToString(),
+                        ProductProcessTypeId = ProductProcessTypeEnum.ChangeQuantity
+                    };
+                    _unitOfWork.ProductTrackingDAL.Add(productTracking);
+                }
+            }
+        }
+
         public async Task<bool> UpdateAll(List<ProductDTO> entityList)
         {
+            foreach (var entity in entityList)
+            {
+                SetProductTracking(entity);
+            }
             var result = await _unitOfWork.ProductDAL.UpdateAll(_mapper.Map<List<Product>>(entityList));
             await _unitOfWork.CompleteAsync();
             return result;

@@ -127,16 +127,17 @@
                             <ng-template #readOnlyPrice>{{item.price}}</ng-template>
                         </td>
                         <td>
-                            <input *ngIf="changePrice;else readOnlySellingPricePercentage" [(ngModel)]="item.sellingPricePercentage"
-                                type="number" class="form-control" [ngModelOptions]="{standalone: true}"
-                                (change)="item.isChanged=true">
+                            <input *ngIf="changePrice;else readOnlySellingPricePercentage"
+                                [(ngModel)]="item.sellingPricePercentage" type="number" class="form-control"
+                                [ngModelOptions]="{standalone: true}" (change)="item.isChanged=true">
                             <ng-template #readOnlySellingPricePercentage>{{item.sellingPricePercentage}}</ng-template>
                         </td>
                         <td>
-                            <input *ngIf="changePrice;else readOnlyPurchasingPricePercentage" [(ngModel)]="item.purchasingPricePercentage"
-                                type="number" class="form-control" [ngModelOptions]="{standalone: true}"
-                                (change)="item.isChanged=true">
-                            <ng-template #readOnlyPurchasingPricePercentage>{{item.purchasingPricePercentage}}</ng-template>
+                            <input *ngIf="changePrice;else readOnlyPurchasingPricePercentage"
+                                [(ngModel)]="item.purchasingPricePercentage" type="number" class="form-control"
+                                [ngModelOptions]="{standalone: true}" (change)="item.isChanged=true">
+                            <ng-template
+                                #readOnlyPurchasingPricePercentage>{{item.purchasingPricePercentage}}</ng-template>
                         </td>
                         <td>
                             <input *ngIf="changeQuantity;else readOnlyQuantity" [(ngModel)]="item.actualQuantity"
@@ -151,9 +152,15 @@
                                     <i class="zmdi zmdi-edit"></i>
                                 </button>
                                 <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="Product History"
+                                    [routerLink]="['/setup/product-tracking/'+item.id]">
+                                    <i class="fa fa-list"></i>
+                                </button>
+                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Delete" (click)="openConfirmationDialog(item)">
                                     <i class="zmdi zmdi-delete"></i>
                                 </button>
+
                             </div>
                         </td>
                     </tr>

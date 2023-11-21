@@ -164,7 +164,6 @@ export class PurchasesBillFormComponent {
 	save(isPrint: boolean, form?: NgForm) {
 		if (this.validation(this.purchasesBillHeaderDTO)) {
 			if (this.purchasesBillHeaderDTO.id) {
-				this.purchasesBillHeaderDTO.modifiedByProfileId = this.authService.loggedUserProfile?.id;
 				this.purchasesBillService.update(this.purchasesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
 					if (isPrint) {
@@ -177,11 +176,11 @@ export class PurchasesBillFormComponent {
 			}
 			else {
 				this.purchasesBillHeaderDTO.companyId = this.authService.loggedUserProfile?.companyId;
-				this.purchasesBillHeaderDTO.createdByProfileId = this.authService.loggedUserProfile?.id;
 				this.purchasesBillService.add(this.purchasesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
 					if (isPrint) {
 						this.print();
+						this.back();
 					}
 					else {
 						this.back();

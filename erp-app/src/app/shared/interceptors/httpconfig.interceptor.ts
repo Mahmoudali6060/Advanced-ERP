@@ -26,6 +26,8 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             headers: request.headers
                 .set('Authorization', 'Bearer ' + token)
                 .set('UserProfileId', this.authService.loggedUserProfile?.id.toString())
+                .set('Username', this.authService.loggedUserProfile.userName)
+
 
         });
 

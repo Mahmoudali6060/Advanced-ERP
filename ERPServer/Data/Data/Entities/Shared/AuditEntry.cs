@@ -21,7 +21,8 @@ namespace Data.Entities.Shared
         public long UserProfileId { get; set; }
         public DateTime TimeStamp { get; set; }
         public string EntityId { get; set; }
-        public Dictionary<string, object> Changes { get; set; }
+        public Dictionary<string, object> OldData { get; set; }
+        public Dictionary<string, object> NewData { get; set; }
 
         [NotMapped]
         // TempProperties are used for properties that are only generated on save, e.g. ID's

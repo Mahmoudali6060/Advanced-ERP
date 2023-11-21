@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Shared.Entities.Setup
 {
-    public class ProductDTO : BaseDTO
+    public class ProductDTO : AuditEntityDTO
     {
         public bool IsActive { get; set; }
         public string Code { get; set; }
