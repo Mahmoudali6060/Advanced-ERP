@@ -234,6 +234,10 @@ export class SalesBillFormComponent {
 		}
 		this.salesBillHeaderDTO.totalAfterDiscount = parseFloat((this.salesBillHeaderDTO.transfer + this.salesBillHeaderDTO.total - this.salesBillHeaderDTO.totalDiscount).toFixed(2));
 		this.salesBillHeaderDTO.remaining = this.salesBillHeaderDTO.paid - this.salesBillHeaderDTO.totalAfterDiscount;
+		this.salesBillHeaderDTO.vatAmount = parseFloat((0.14 * this.salesBillHeaderDTO.total).toFixed(2))
+		this.salesBillHeaderDTO.totalAfterVAT = this.salesBillHeaderDTO.total + this.salesBillHeaderDTO.vatAmount;
+		this.salesBillHeaderDTO.totalAfterTax = this.salesBillHeaderDTO.totalAfterDiscount + parseFloat(((this.salesBillHeaderDTO.taxPercentage / 100) * this.salesBillHeaderDTO.totalAfterDiscount).toFixed(2))
+
 	}
 
 

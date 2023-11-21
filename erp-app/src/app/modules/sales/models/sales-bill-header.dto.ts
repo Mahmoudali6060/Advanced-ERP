@@ -19,6 +19,12 @@ export class SalesBillHeaderDTO extends AuditDTO {
     companyId: number;
     createdByProfileName: string;
     modifiedByProfileName: string;
-    representiveId:number;
+    representiveId: number;
+    vatAmount: number;
+    totalAfterVAT: number;
+    taxPercentage: number;
+    totalAfterTax: number=0;
     salesBillDetailList: Array<SalesBillDetailsDTO> = Array<SalesBillDetailsDTO>();
+
+
 }

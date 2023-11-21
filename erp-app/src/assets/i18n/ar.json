@@ -124,7 +124,11 @@
     "ProcessType": "نوع العملية",
     "OldData": "القيمة القديمة",
     "NewData": "القيمة الجديدة",
-    "Username": "اسم المستخدم"
+    "Username": "اسم المستخدم",
+    "VATAmount": "ضريبة القيمة المضافة",
+    "TotalAfterVAT": "الاجمالي شامل الضريبة",
+    "TaxPercentage": "ضريبة الأرباح التجاري ",
+    "TotalAfterTax": "الاجمالي بعد الضريبة"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -283,7 +287,7 @@
     "Reports": "التقارير",
     "Representives": "المناديب",
     "UnitOfMeasurements": "وحدات القياس",
-    "ProductTrackingTitle":"حركة المنتج"
+    "ProductTrackingTitle": "حركة المنتج"
   },
   "Errors": {
     "InvalidUsernameOrPassword": "من فضلك تأكد من اسم المستخدم او كلمة المرور",

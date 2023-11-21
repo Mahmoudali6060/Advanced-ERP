@@ -3,8 +3,8 @@ import { BaseDTO } from "src/app/shared/models/base-dto.model";
 export class SalesBillDetailsDTO extends BaseDTO {
     productId: number | null;
     actualQuantity: number;
-    quantity: number;
-    price: number;
+    quantity: number = 0;
+    price: number = 0;
     discount: number;
     priceAfterDiscount: number;
     subTotal: number;

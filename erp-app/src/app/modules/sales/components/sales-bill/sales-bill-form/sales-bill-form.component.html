@@ -202,6 +202,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                             <div class="col-lg-2">
 
@@ -259,14 +260,67 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-2">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label for="vatAmount" class=" form-control-label">{{'General.VATAmount'
+                                                |translate}}</label>
+                                            <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.vatAmount"
+                                                type="text" id="vatAmount" class="form-control" #vatAmount="ngModel"
+                                                readonly name="vatAmount" aria-describedby="helpId">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label for="totalAfterVAT"
+                                                class=" form-control-label">{{'General.TotalAfterVAT'
+                                                |translate}}</label>
+                                            <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.totalAfterVAT"
+                                                type="text" id="totalAfterVAT" class="form-control"
+                                                #totalAfterVAT="ngModel" readonly name="totalAfterVAT"
+                                                aria-describedby="helpId">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label for="taxPercentage"
+                                                class=" form-control-label">{{'General.TaxPercentage'
+                                                |translate}}</label>
+                                            <input [(ngModel)]="salesBillHeaderDTO.taxPercentage" type="text" (change)="updateTotal()"
+                                                id="taxPercentage" class="form-control" #taxPercentage="ngModel"
+                                                name="taxPercentage" aria-describedby="helpId" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label for="totalAfterTax"
+                                                class=" form-control-label">{{'General.TotalAfterTax'
+                                                |translate}}</label>
+                                            <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.totalAfterTax"
+                                                type="text" id="totalAfterTax" class="form-control"
+                                                #totalAfterTax="ngModel" readonly name="totalAfterTax"
+                                                aria-describedby="helpId">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label for="notes" class=" form-control-label">{{'General.Notes'
                                                 |translate}}</label>
                                             <textarea [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.notes"
-                                                id="notes" class="form-control" #notes="ngModel" name="notes"
+                                                id="notes" class="form-control" #notes="ngModel" name="notes" rows="5"
                                                 aria-describedby="helpId"></textarea>
                                         </div>
                                     </div>

@@ -111,7 +111,11 @@
     "ProcessType": "Process Type",
     "OldData": "Old Data",
     "NewData": "New Data",
-    "Usernmae": "Usernmae"
+    "Username": "Username",
+    "VATAmount": "VAT Amount",
+    "TotalAfterVAT": "Total after VAT",
+    "TaxPercentage": "Tax Percentage",
+    "TotalAfterTax": "TotalAfterTax"
   },
   "Dashboard": {
     "overview": "Overview",
@@ -268,7 +272,7 @@
     "Reports": "Reports",
     "Representives": "Representives",
     "UnitOfMeasurements": "Unit Of Measurements",
-    "ProductTrackingTitle":"Product Tracking"
+    "ProductTrackingTitle": "Product Tracking"
   },
   "Errors": {
     "InvalidUsernameOrPassword": "Invalid Username Or Password",
