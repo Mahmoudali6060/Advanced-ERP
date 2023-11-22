@@ -2,9 +2,13 @@
 using Account.DataServiceLayer;
 using Account.DataServiceLayer.Contracts;
 using Account.DataServiceLayer.Handlers;
+using Accounting.DataAccessLayer;
 using Accout.DataServiceLayer;
+using DataAccess.Accounting.Contracts;
 using DataAccess.Setup.Contracts;
 using DataAccess.Setup.Handlers;
+using DataService.Accounting.Contracts;
+using DataService.Accounting.Handlers;
 using DataService.Purchases.Contracts;
 using DataService.Sales.Contracts;
 using DataService.Sales.Handlers;
@@ -112,6 +116,11 @@ namespace App.Helper
 
             services.AddTransient<ISalesBillDetailDAL, SalesBillDetailDAL>();
             services.AddTransient<ISalesBillDetailDSL, SalesBillDetailDSL>();
+            #endregion
+
+            #region Accouting
+            services.AddTransient<ITreasuryDAL, TreasuryDAL>();
+            services.AddTransient<ITreasuryDSL, TreasuryDSL>();
             #endregion
 
         }

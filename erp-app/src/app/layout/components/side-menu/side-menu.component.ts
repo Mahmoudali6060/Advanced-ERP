@@ -2,7 +2,6 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LocalStorageItems } from 'src/app/shared/constants/local-storage-items';
-import { RequestTypeEnum } from 'src/app/shared/enums/request-type.enum';
 import { HelperService } from 'src/app/shared/services/helper.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { SubjectService } from 'src/app/shared/services/subject.service';
@@ -25,7 +24,6 @@ export class SideMenuComponent implements OnInit {
   imageUrl: string;
   imageSrc: string;
   userTypeEnum = UserTypeEnum;
-  requestTypeEnum = RequestTypeEnum;
   constructor(
     public authService: AuthService,
     private _configService: ConfigService,

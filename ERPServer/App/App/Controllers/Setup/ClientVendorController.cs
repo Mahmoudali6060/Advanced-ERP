@@ -29,6 +29,10 @@ namespace App.Controllers.Setup
         //[Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> GetAllLiteByTypeId(ClientVendorTypeEnum typeId) => Ok(await _clientDSL.GetAllLiteByTypeId(typeId));
 
+        [HttpGet, Route("GetAllLite")]
+        //[Authorize(Roles = Roles.Admin)]
+        public async Task<IActionResult> GetAllLite() => Ok(await _clientDSL.GetAllLite());
+
         [HttpPost, Route("Add")]
         //[Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> Add([FromBody] ClientVendorDTO model) => Ok(await _clientDSL.Add(model));

@@ -1,5 +1,6 @@
 ﻿using Account.DataAccessLayer;
 using Data.Entities.Setup;
+using DataAccess.Accounting.Contracts;
 using DataAccess.Setup.Contracts;
 using Purchases.DataAccessLayer;
 using Sales.DataAccessLayer;
@@ -41,6 +42,10 @@ namespace UnitOfWork.Contracts
         #region Sales
         ISalesBillHeaderDAL SalesBillHeaderDAL { get; }
         ISalesBillDetailDAL SalesBillDetailDAL { get; }
+        #endregion
+
+        #region Accounting
+        ITreasuryDAL TreasuryDAL { get; }
         #endregion
         Task CompleteAsync();
     }

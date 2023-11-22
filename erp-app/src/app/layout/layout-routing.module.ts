@@ -15,6 +15,7 @@ export const routes: Routes = [
       { path: 'purchases-bill', canActivate: [AuthGuard], loadChildren: () => import('../modules/purchases/purchases.module').then(m => m.PurchasesBillModule) },
       { path: 'sales-bill', canActivate: [AuthGuard], loadChildren: () => import('../modules/sales/sales.module').then(m => m.SalesModule) },
       { path: 'report', canActivate: [AuthGuard], loadChildren: () => import('../modules/report/report.module').then(m => m.ReportModule) },
+      { path: 'accounting', canActivate: [AuthGuard], loadChildren: () => import('../modules/accounting/accounting.module').then(m => m.AccountingModule) },
 
     ]
   }

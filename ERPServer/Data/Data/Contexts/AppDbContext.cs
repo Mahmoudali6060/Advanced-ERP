@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using System.Net;
 using Org.BouncyCastle.Asn1.Ocsp;
+using Data.Entities.Accouting;
 
 namespace Data.Contexts
 {
@@ -68,6 +69,10 @@ namespace Data.Contexts
         #region Sales
         public DbSet<SalesBillHeader> SalesBillHeaders { get; set; }
         public DbSet<SalesBillDetail> SalesBillDetails { get; set; }
+        #endregion
+
+        #region Accounting
+        public DbSet<Treasury> Treasuries { get; set; }
         #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

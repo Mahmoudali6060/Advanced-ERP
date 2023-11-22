@@ -30,13 +30,28 @@
                             </li>
                             <li>
                                 <a [routerLink]="['/setup/product-list-change-quantity']">
-                                    <i class="fa fa-question-circle"></i><span translate>SideMenu.ChangeQuantity</span></a>
+                                    <i class="fa fa-question-circle"></i><span
+                                        translate>SideMenu.ChangeQuantity</span></a>
                             </li>
                             <li>
                                 <a [routerLink]="['/setup/product-tracking']">
-                                    <i class="fa fa-list-alt"></i><span translate>SideMenu.ProductTrackingTitle</span></a>
+                                    <i class="fa fa-list-alt"></i><span
+                                        translate>SideMenu.ProductTrackingTitle</span></a>
                             </li>
 
+                        </ul>
+                    </li>
+                    
+                    <li class="has-sub">
+                        <a href="#">
+                            <i class="fa fa-file"></i>
+                            <span class="bot-line"></span><span translate>SideMenu.Accounting</span></a>
+                        <ul class="header3-sub-list list-unstyled">
+                            <li>
+                                <a [routerLink]="['/accounting/treasury-list']">
+                                    <i class="fa fa-question-circle"></i><span
+                                        translate>SideMenu.Treasury</span></a>
+                            </li>
                         </ul>
                     </li>
                     <li class="has-sub">

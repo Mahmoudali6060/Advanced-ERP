@@ -1,0 +1,145 @@
+<div class="row">
+    <form #frm="ngForm" (ngSubmit)="save(frm)">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong *ngIf="!treasuryDTO.id">{{'Treasury.AddTreasury' |translate}}</strong>
+                    <strong *ngIf="treasuryDTO.id && !viewMode">{{'Treasury.EditTreasury' |translate}}</strong>
+                    <strong *ngIf="treasuryDTO.id  && viewMode ">{{'Treasury.ViewTreasury' |translate}}</strong>
+                </div>
+                <div class="card-body card-block">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="date">{{'General.Date'|translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="treasuryDTO.date" type="date"
+                                            id="date" class="form-control" #date="ngModel" name="date"
+                                            [value]="treasuryDTO.date" aria-describedby="helpId">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="accountTypeId">{{'General.AccountType'|translate}}</label>
+                                        <ng-select name="accountTypeId" id="accountTypeId"
+                                            [(ngModel)]="treasuryDTO.accountTypeId">
+                                            <ng-option *ngFor="let item of accountTypeList" [value]="item.value">
+                                                {{'AccountTypeEnum.'+item.label |translate}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" *ngIf="treasuryDTO.accountTypeId!=accountTypeEnum.Other">
+                                    <label class="form-label" for="accountId">{{'General.Vendor'|translate}}</label>
+                                    <ng-select name="accountId" id="accountId" [(ngModel)]="treasuryDTO.accountId">
+                                        <ng-option value=" null"
+                                            disabled>{{'General.SelectVendor'|translate}}</ng-option>
+                                        <ng-option *ngFor="let item of clientVendorList" [value]="item.id">
+                                            {{item.fullName}}
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+                                <div class="col-md-4" *ngIf="treasuryDTO.accountTypeId==accountTypeEnum.Other">
+                                    <div class="form-group">
+                                        <label for="beneficiaryName"
+                                            class=" form-control-label">{{'General.BeneficiaryName'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="treasuryDTO.beneficiaryName"
+                                            type="text" id="beneficiaryName" class="form-control"
+                                            #beneficiaryName="ngModel" name="beneficiaryName" id="beneficiaryName"
+                                            class="form-control" aria-describedby="helpId">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="paymentMethodId">{{'General.PaymentMethod'|translate}}</label>
+                                        <ng-select name="paymentMethodId" id="paymentMethodId"
+                                            [(ngModel)]="treasuryDTO.paymentMethodId">
+                                            <ng-option *ngFor="let item of paymentMethodList" [value]="item.value">
+                                                {{'PaymentMethodEnum.'+item.label |translate}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="transactionTypeId">{{'General.TransactionType'|translate}}</label>
+                                        <ng-select name="transactionTypeId" id="transactionTypeId"
+                                            [(ngModel)]="treasuryDTO.transactionTypeId">
+                                            <ng-option *ngFor="let item of transactionTypeList" [value]="item.value">
+                                                {{'TransactionTypeEnum.'+item.label |translate}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="amount" class=" form-control-label">{{'General.Amount'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="treasuryDTO.amount" type="number"
+                                            id="amount" class="form-control" #amount="ngModel"
+                                            [class.is-invalid]="amount.invalid && amount.touched"
+                                            [class.is-valid]="amount.valid" required name="amount" id="amount"
+                                            class="form-control" aria-describedby="helpId">
+                                        <small [hidden]="amount.valid || amount.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="refNo" class=" form-control-label">{{'General.RefNo'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="treasuryDTO.refNo" type="text"
+                                            id="refNo" class="form-control" #refNo="ngModel" name="refNo" id="refNo"
+                                            class="form-control" aria-describedby="helpId">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="bankAccountNo" class=" form-control-label">{{'General.BankAccountNo'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="treasuryDTO.bankAccountNo" type="text"
+                                            id="bankAccountNo" class="form-control" #bankAccountNo="ngModel"
+                                            name="bankAccountNo" id="bankAccountNo" class="form-control"
+                                            aria-describedby="helpId">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="checkNo" class=" form-control-label">{{'General.CheckNo'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="treasuryDTO.checkNo" type="text"
+                                            id="checkNo" class="form-control" #checkNo="ngModel" name="checkNo"
+                                            id="checkNo" class="form-control" aria-describedby="helpId">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="notes" class=" form-control-label">{{'General.Notes'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="treasuryDTO.notes" type="text"
+                                            id="notes" class="form-control" #notes="ngModel" name="notes" id="notes"
+                                            class="form-control" aria-describedby="helpId">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-container p-3">
+                    <button type="submit" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
+                        <i class="fa fa-dot-circle-o"></i>{{'General.SaveChanges' |translate}}
+                    </button>
+                    <button type="reset" class="btn btn-danger mr-1" (click)="back()">
+                        <i class="fa fa-ban"></i>{{'General.Back' |translate}}
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

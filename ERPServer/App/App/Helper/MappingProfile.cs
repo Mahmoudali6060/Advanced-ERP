@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Data.Entities.Accouting;
 using Data.Entities.Purchases;
 using Data.Entities.Sales;
 using Data.Entities.Setup;
 using Data.Entities.UserManagement;
 using Entities.Account;
+using Shared.Entities.Accouting;
 using Shared.Entities.Purchases;
 using Shared.Entities.Sales;
 using Shared.Entities.Setup;
@@ -110,6 +112,13 @@ namespace App.Helper
 
             CreateMap<SalesBillDetail, SalesBillDetailDTO>();
             CreateMap<SalesBillDetailDTO, SalesBillDetail>();
+            #endregion
+
+            #region Accounting
+            CreateMap<Treasury, TreasuryDTO>();
+
+            CreateMap<TreasuryDTO, Treasury>();
+
             #endregion
         }
     }

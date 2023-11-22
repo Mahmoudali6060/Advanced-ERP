@@ -111,6 +111,7 @@ namespace DataService.Setup.Handlers
         {
             UploadImage(entityDTO);
             var entity = _mapper.Map<Product>(entityDTO);
+            entity.ProductTrackings = new List<ProductTracking>();
             entity.ProductTrackings.Add(GenerateProductTrackingList(entityDTO));
             var result = await _unitOfWork.ProductDAL.Add(entity);
             await _unitOfWork.CompleteAsync();

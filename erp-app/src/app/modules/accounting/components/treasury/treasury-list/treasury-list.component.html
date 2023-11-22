@@ -1,0 +1,180 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- DATA TABLE -->
+        <h3 class="title-5 m-b-35">{{'Treasury.Treasury' |translate}}</h3>
+        <div class="table-data__tool">
+            <div class="table-data__tool-left">
+                <button class="au-btn-filter" (click)="toggleFilter()">
+                    <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
+            </div>
+            <div class="table-data__tool-right">
+                <button [routerLink]="['/accounting/treasury-form']"
+                    class="au-btn au-btn-icon au-btn--black au-btn--small">
+                    <i class="zmdi zmdi-plus"></i>{{'Treasury.AddTreasury' |translate}}
+                </button>
+            </div>
+
+        </div>
+
+        <!--Filters-->
+        <div class="row" *ngIf="showFilterControls">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">{{'General.Filters'|translate}}</div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="date">{{'General.Date'|translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="searchCriteriaDTO.date" type="date"
+                                            id="date" class="form-control" #date="ngModel" name="date"
+                                            aria-describedby="helpId">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="accountTypeId">{{'General.AccountType'|translate}}</label>
+                                        <ng-select name="accountTypeId" id="accountTypeId"
+                                            [(ngModel)]="searchCriteriaDTO.accountTypeId">
+                                            <ng-option *ngFor="let item of accountTypeList" [value]="item.value">
+                                                {{'AccountTypeEnum.'+item.label |translate}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="form-label" for="accountId">{{'General.Vendor'|translate}}</label>
+                                    <ng-select name="accountId" id="accountId"
+                                        [(ngModel)]="searchCriteriaDTO.accountId">
+                                        <ng-option value=" null"
+                                            disabled>{{'General.SelectVendor'|translate}}</ng-option>
+                                        <ng-option *ngFor="let item of clientVendorList" [value]="item.id">
+                                            {{item.fullName}}
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="paymentMethodId">{{'General.PaymentMethod'|translate}}</label>
+                                        <ng-select name="paymentMethodId" id="paymentMethodId"
+                                            [(ngModel)]="searchCriteriaDTO.paymentMethodId">
+                                            <ng-option *ngFor="let item of paymentMethodList" [value]="item.value">
+                                                {{'PaymentMethodEnum.'+item.label |translate}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="transactionTypeId">{{'General.TransactionType'|translate}}</label>
+                                        <ng-select name="transactionTypeId" id="transactionTypeId"
+                                            [(ngModel)]="searchCriteriaDTO.transactionTypeId">
+                                            <ng-option *ngFor="let item of transactionTypeList" [value]="item.value">
+                                                {{'TransactionTypeEnum.'+item.label |translate}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="refNo" class=" form-control-label">{{'General.RefNo'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="searchCriteriaDTO.refNo" type="text"
+                                            id="refNo" class="form-control" #refNo="ngModel" name="refNo" id="refNo"
+                                            class="form-control" aria-describedby="helpId">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="bankAccountNo" class=" form-control-label">{{'General.BankAccountNo'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="searchCriteriaDTO.bankAccountNo"
+                                            type="text" id="bankAccountNo" class="form-control" #bankAccountNo="ngModel"
+                                            name="bankAccountNo" id="bankAccountNo" class="form-control"
+                                            aria-describedby="helpId">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="checkNo" class=" form-control-label">{{'General.CheckNo'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="searchCriteriaDTO.checkNo" type="text"
+                                            id="checkNo" class="form-control" #checkNo="ngModel" name="checkNo"
+                                            id="checkNo" class="form-control" aria-describedby="helpId">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-lg-9">
+                                    <button (click)="search()"
+                                        class="au-btn au-btn-icon au-btn--blue au-btn--small btn-search mt-4">
+                                        <i class="zmdi zmdi-search"></i>{{'General.Search'|translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Filters-->
+
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2">
+                <thead class="table-header-bc">
+                    <tr>
+                        <th class="table-header-fc">{{'General.Date' |translate}}</th>
+                        <th class="table-header-fc">{{'General.AccountType' |translate}}</th>
+                        <th class="table-header-fc">{{'General.BeneficiaryName' |translate}}</th>
+                        <th class="table-header-fc">{{'General.TransactionType' |translate}}</th>
+                        <th class="table-header-fc">{{'General.PaymentMethod' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Amount' |translate}}</th>
+                        <th class="table-header-fc">{{'General.RefNo' |translate}}</th>
+                        <th class="table-header-fc">{{'General.BankAccountNo' |translate}}</th>
+                        <th class="table-header-fc">{{'General.CheckNo' |translate}}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tr-shadow" *ngFor="let item of treasuryList">
+                        <td>{{item.date}}</td>
+                        <td>{{item.accountTypeId}}</td>
+                        <td >{{item.beneficiaryName}}</td>
+                        <td>{{item.transactionTypeId}}</td>
+                        <td>{{item.paymentMethodId}}</td>
+                        <td>{{item.amount}}</td>
+                        <td>{{item.refNo}}</td>
+                        <td>{{item.bankAccountNo}}</td>
+                        <td>{{item.checkNo}}</td>
+                        <td >
+                            <div class="table-data-feature">
+                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="Edit" [routerLink]="['/accounting/treasury-form/'+item.id]">
+                                    <i class="zmdi zmdi-edit"></i>
+                                </button>
+                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="Delete" (click)="openConfirmationDialog(item)">
+                                    <i class="zmdi zmdi-delete"></i>
+                                </button>
+
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <app-pagination (pageChange)="onPageChange($event)" [totalRecordsCount]="total"
+                [recordsPerPage]="searchCriteriaDTO.pageSize" *ngIf="treasuryList">
+            </app-pagination>
+        </div>
+        <!-- END DATA TABLE -->
+    </div>
+</div>

@@ -1,6 +1,8 @@
 ﻿using Account.DataAccessLayer;
+using Accounting.DataAccessLayer;
 using Data.Contexts;
 using Data.Entities.UserManagement;
+using DataAccess.Accounting.Contracts;
 using DataAccess.Setup.Contracts;
 using DataAccess.Setup.Handlers;
 using Microsoft.AspNetCore.Identity;
@@ -57,6 +59,10 @@ namespace UnitOfWork.Handlers
         public ISalesBillDetailDAL SalesBillDetailDAL { get; set; }
         #endregion
 
+        #region Accounting
+        public ITreasuryDAL TreasuryDAL { get; private set; }
+        #endregion
+
         public UnitofWork(AppDbContext context,
             SignInManager<AppUser> signInManager,
             UserManager<AppUser> userManager,
@@ -98,6 +104,10 @@ namespace UnitOfWork.Handlers
             #region Sales
             SalesBillHeaderDAL = new SalesBillHeaderDAL(_context);
             SalesBillDetailDAL = new SalesBillDetailDAL(_context);
+            #endregion
+
+            #region Accounting 
+            TreasuryDAL = new TreasuryDAL(_context);
             #endregion
         }
 

@@ -9,7 +9,6 @@ import { ContactUs } from 'src/app/modules/configurations/models/contact-us';
 import { AboutUsService } from 'src/app/modules/configurations/services/about-us.service';
 import { AdvertismentService } from 'src/app/modules/configurations/services/advertisment.service';
 import { ContactUsService } from 'src/app/modules/configurations/services/contact-us.service';
-import { CompanyCategoryEnum } from 'src/app/shared/enums/company-category.enum';
 import { ConfigService } from 'src/app/shared/services/config.service';
 import { isNullOrUndefined } from 'util';
 
@@ -29,7 +28,6 @@ export class LandingPageComponent implements OnInit {
   responsiveOptions: any;
   ads: AdvertismentDTO
   serverUrl: any;
-  companyCategory = CompanyCategoryEnum;
   constructor(
     private _configService: ConfigService,
     private advertismentService: AdvertismentService,

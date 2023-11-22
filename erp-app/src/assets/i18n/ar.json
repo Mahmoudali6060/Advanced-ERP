@@ -131,7 +131,16 @@
     "TotalAfterTax": "الاجمالي بعد الضريبة",
     "TaxAmount": "قيمة ضريبة الأرباح التجارية",
     "TotalAmount": "المبلغ المطلوب دفعه",
-    "IsTax": "فاتورة ضريبية"
+    "IsTax": "فاتورة ضريبية",
+    "AccountType": "نوع الحساب",
+    "PersonName": "اسم الشخص المستفيد",
+    "TransactionType": "نوع العملية",
+    "PaymentMethod": "طريقة الدفع",
+    "Amount": "المبلغ",
+    "RefNo": "الرقم المرجعي",
+    "BankAccountNo": "رقم الحساب البنكي",
+    "CheckNo": "رقم الشيك",
+    "BeneficiaryName": "اسم الشخص المستفيد"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -290,7 +299,9 @@
     "Reports": "التقارير",
     "Representives": "المناديب",
     "UnitOfMeasurements": "وحدات القياس",
-    "ProductTrackingTitle": "حركة المنتج"
+    "ProductTrackingTitle": "حركة المنتج",
+    "Accounting": "الحسابات",
+    "Treasury": "الخزينة"
   },
   "Errors": {
     "InvalidUsernameOrPassword": "من فضلك تأكد من اسم المستخدم او كلمة المرور",
@@ -536,5 +547,26 @@
     "AddedToSalesBill": "إضافة الى فاتورة مبيعات",
     "AddedToPurchases": "إضافة إلى فاتورة مشتريات",
     "Delete": "حذف"
+  },
+  "Treasury": {
+    "Treasury": "الخزينة",
+    "TreasuryAccount": "حساب الخزينة",
+    "AddTreasury": "إضافة قيد خزينة",
+    "EditTreasury": "تعديل قيد الخزينة",
+    "ViewTreasury": "عرض قيد الخزينة"
+  },
+  "AccountTypeEnum": {
+    "Clients": "العملاء",
+    "Vendors": "الموردين",
+    "Other": "حسابات أخرى"
+  },
+  "PaymentMethodEnum": {
+    "Cash": "نقدي",
+    "Bank": "بنك",
+    "Cheque": "شيك"
+  },
+  "TransactionTypeEnum": {
+    "Incoming": "وارد",
+    "Outcoming": "صادر"
   }
 }

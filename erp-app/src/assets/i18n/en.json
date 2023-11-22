@@ -117,8 +117,17 @@
     "TaxPercentage": "Tax Percentage",
     "TotalAfterTax": "Total After Tax",
     "TaxAmount": "Tax Amount",
-    "TotalAmount":"Total Amount",
-    "IsTax":"Is Tax"
+    "TotalAmount": "Total Amount",
+    "IsTax": "Is Tax",
+    "AccountType": "Account Type",
+    "PersonName": "Person Name",
+    "TransactionType": "Transaction Type",
+    "PaymentMethod": "Payment Method",
+    "Amount": "Amount",
+    "RefNo": "Ref No",
+    "BankAccountNo": "Bank Account No",
+    "CheckNo": "Check No",
+    "BeneficiaryName":"Beneficiary Name"
   },
   "Dashboard": {
     "overview": "Overview",
@@ -275,7 +284,9 @@
     "Reports": "Reports",
     "Representives": "Representives",
     "UnitOfMeasurements": "Unit Of Measurements",
-    "ProductTrackingTitle": "Product Tracking"
+    "ProductTrackingTitle": "Product Tracking",
+    "Accounting": "Accounting",
+    "Treasury": "Treasury"
   },
   "Errors": {
     "InvalidUsernameOrPassword": "Invalid Username Or Password",
@@ -524,5 +535,26 @@
     "AddedToSalesBill": "Added To SalesBill",
     "AddedToPurchases": "Added To Purchases",
     "Delete": "Delete"
+  },
+  "Treasury": {
+    "Treasury": "Treasury",
+    "TreasuryAccount": "Treasury Account",
+    "AddTreasury": "Add Treasury Transaction",
+    "EditTreasury": "Edit Treasury Transaction",
+    "ViewTreasury": "View Treasury Transaction"
+  },
+  "AccountTypeEnum": {
+    "Clients": "Clients",
+    "Vendors": "Vendors",
+    "Other": "Other"
+  },
+  "PaymentMethodEnum": {
+    "Cash": "Cash",
+    "Bank": "Bank",
+    "Cheque": "Check"
+  },
+  "TransactionTypeEnum": {
+    "Incoming": "Incoming",
+    "Outcoming": "Outcoming"
   }
 }
