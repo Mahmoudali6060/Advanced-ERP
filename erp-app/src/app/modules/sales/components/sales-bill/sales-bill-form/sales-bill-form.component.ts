@@ -38,7 +38,7 @@ export class SalesBillFormComponent {
 	viewMode: boolean;
 	productList: Array<ProductDTO> = new Array<ProductDTO>();
 	clientList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
-	purchaseHeaderId: any;
+	salesHeaderId: any;
 	currentBalance: number = 0;
 	@Input() searchByNumber: boolean = false;
 	selectedClient: ClientVendorDTO = new ClientVendorDTO();
@@ -49,7 +49,7 @@ export class SalesBillFormComponent {
 	reportPopupTitle: any;
 	isReportOpened: boolean;
 	//#endregion
-
+	vatPercentage: number = 0;
 	constructor(
 		private salesBillService: SalesBillService,
 		private productService: ProductService,
@@ -72,10 +72,10 @@ export class SalesBillFormComponent {
 	ngOnInit() {
 		this.serverUrl = this._configService.getServerUrl();
 
-		this.purchaseHeaderId = this.route.snapshot.paramMap.get('id');
+		this.salesHeaderId = this.route.snapshot.paramMap.get('id');
 
-		if (this.purchaseHeaderId) {
-			this.getSalesBillById(this.purchaseHeaderId);
+		if (this.salesHeaderId) {
+			this.getSalesBillById(this.salesHeaderId);
 			if (this.router.url.includes('/view/')) {
 				this.viewMode = true;
 			}
@@ -120,6 +120,7 @@ export class SalesBillFormComponent {
 			this.getAllProducts();
 			this.getAllClients();
 			this.getAllRepresentives();
+			this.isTaxChange();
 		});
 	}
 
@@ -129,7 +130,7 @@ export class SalesBillFormComponent {
 			for (let item of this.salesBillHeaderDTO.salesBillDetailList) {
 				item.index = index;
 				index++;
-				this.setProductToSales(item);
+				this.setProductToSales(item,false);
 			}
 		}
 	}
@@ -201,6 +202,7 @@ export class SalesBillFormComponent {
 	}
 
 	onProductChange(item: SalesBillDetailsDTO, event: any) {
+
 		let exsitedProduct = this.salesBillHeaderDTO.salesBillDetailList.filter(x => x.productId == item.productId);
 		if (exsitedProduct != null && exsitedProduct.length > 1) {
 			item.productId = null;
@@ -208,20 +210,31 @@ export class SalesBillFormComponent {
 			this.alertService.showError(this.translate.instant("Errors.DuplicatedSelectedProduct"), this.translate.instant("Errors.Error"));
 			return;
 		}
-		this.setProductToSales(item);
+		this.setProductToSales(item, true);
 	}
 
-	setProductToSales(item: SalesBillDetailsDTO) {
+	setProductToSales(item: SalesBillDetailsDTO, overrideOldData: boolean) {
 		let product = this.productList.find(x => x.id == item.productId);
 		if (product) {
-			if (!item.price) item.price = product.price;
-			if (!item.discount) item.discount = product.sellingPricePercentage;
+			item.price = overrideOldData ? product.price : item.price
+			item.discount = overrideOldData ? product.sellingPricePercentage : item.discount;
 			item.actualQuantity = product.actualQuantity;
 			item.sellingPrice = (product.price - (product.sellingPricePercentage / 100) * product.price);
 			item.productName = product.name;
 			item.productCode = product.code;
 			this.updateTotal();
 		}
+	}
+
+	isTaxChange() {
+		if (!this.salesBillHeaderDTO.isTax) {
+			this.salesBillHeaderDTO.taxPercentage = 0;
+			this.vatPercentage = 0;
+		}
+		else {
+			this.vatPercentage = this.helperService.VATPercentage;
+		}
+		this.updateTotal();
 	}
 
 
@@ -232,12 +245,12 @@ export class SalesBillFormComponent {
 			item.subTotal = item.priceAfterDiscount * item.quantity;
 			this.salesBillHeaderDTO.total += item.subTotal;
 		}
-		this.salesBillHeaderDTO.totalAfterDiscount = parseFloat((this.salesBillHeaderDTO.transfer + this.salesBillHeaderDTO.total - this.salesBillHeaderDTO.totalDiscount).toFixed(2));
-		this.salesBillHeaderDTO.remaining = this.salesBillHeaderDTO.paid - this.salesBillHeaderDTO.totalAfterDiscount;
-		this.salesBillHeaderDTO.vatAmount = parseFloat((0.14 * this.salesBillHeaderDTO.total).toFixed(2))
-		this.salesBillHeaderDTO.totalAfterVAT = this.salesBillHeaderDTO.total + this.salesBillHeaderDTO.vatAmount;
-		this.salesBillHeaderDTO.totalAfterTax = this.salesBillHeaderDTO.totalAfterDiscount + parseFloat(((this.salesBillHeaderDTO.taxPercentage / 100) * this.salesBillHeaderDTO.totalAfterDiscount).toFixed(2))
-
+		this.salesBillHeaderDTO.totalAfterDiscount = parseFloat((this.salesBillHeaderDTO.total - this.salesBillHeaderDTO.discount).toFixed(2));
+		this.salesBillHeaderDTO.vatAmount = parseFloat((this.vatPercentage * this.salesBillHeaderDTO.totalAfterDiscount).toFixed(2))
+		this.salesBillHeaderDTO.taxAmount = parseFloat(((this.salesBillHeaderDTO.taxPercentage / 100) * this.salesBillHeaderDTO.totalAfterDiscount).toFixed(2))
+		this.salesBillHeaderDTO.totalAfterVAT = this.salesBillHeaderDTO.totalAfterDiscount + this.salesBillHeaderDTO.vatAmount + this.salesBillHeaderDTO.taxAmount;
+		this.salesBillHeaderDTO.totalAmount = this.salesBillHeaderDTO.totalAfterVAT + this.salesBillHeaderDTO.otherExpenses;
+		this.salesBillHeaderDTO.remaining = parseFloat((this.salesBillHeaderDTO.paid - this.salesBillHeaderDTO.totalAmount).toFixed(2));
 	}
 
 

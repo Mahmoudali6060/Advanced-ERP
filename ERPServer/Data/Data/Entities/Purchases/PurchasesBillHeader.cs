@@ -17,11 +17,17 @@ namespace Data.Entities.Purchases
         public DateTime Date { get; set; }
         public decimal Total { get; set; }
         public decimal Discount { get; set; }
-        public decimal Transfer { get; set; }
+        public decimal OtherExpenses { get; set; }
         public decimal TotalAfterDiscount { get; set; }
         public decimal TotalDiscount { get; set; }
+        public decimal VatAmount { get; set; }
+        public decimal TotalAfterVAT { get; set; }
+        public decimal TaxPercentage { get; set; }
+        public decimal TaxAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public decimal Paid { get; set; }
         public decimal Remaining { get; set; }
+        public bool IsTax { get; set; }
         public string Notes { get; set; }
         public long ClientVendorId { get; set; }
         public long RepresentiveId { get; set; }

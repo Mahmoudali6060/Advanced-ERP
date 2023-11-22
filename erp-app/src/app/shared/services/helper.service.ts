@@ -10,7 +10,7 @@ import { Privileges } from '../enums/privileges.enum';
 export class HelperService {
 
     privileges = Privileges;
-
+    VATPercentage: number = 0.14;
     constructor(private _datePipe: DatePipe, public translate: TranslateService, private localStorageService: LocalStorageService) {
 
     }

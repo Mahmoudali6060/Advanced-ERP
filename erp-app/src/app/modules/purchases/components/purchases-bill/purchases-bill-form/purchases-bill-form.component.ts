@@ -43,6 +43,7 @@ export class PurchasesBillFormComponent {
 	currentBalance: number = 0;
 	@Input() searchByNumber: boolean = false;
 	selectedVendor: ClientVendorDTO = new ClientVendorDTO();
+	vatPercentage: number = 0;
 
 	constructor(
 		private purchasesBillService: PurchasesBillService,
@@ -108,6 +109,7 @@ export class PurchasesBillFormComponent {
 			this.getAllProducts();
 			this.getAllVendors();
 			this.getAllRepresentives();
+			this.isTaxChange();
 		});
 	}
 
@@ -131,7 +133,7 @@ export class PurchasesBillFormComponent {
 			for (let item of this.purchasesBillHeaderDTO.purchasesBillDetailList) {
 				item.index = index;
 				index++;
-				this.setProductToPurchase(item);
+				this.setProductToPurchase(item, false);
 			}
 		}
 	}
@@ -211,15 +213,16 @@ export class PurchasesBillFormComponent {
 			this.alertService.showError(this.translate.instant("Errors.DuplicatedSelectedProduct"), this.translate.instant("Errors.Error"));
 			return;
 		}
-		this.setProductToPurchase(item);
+		this.setProductToPurchase(item, true);
 	}
 
 
-	setProductToPurchase(item: PurchasesBillDetailsDTO) {
+	setProductToPurchase(item: PurchasesBillDetailsDTO, overrideOldData: boolean) {
+		debugger;
 		let product = this.productList.find(x => x.id == item.productId);
 		if (product) {
-			if (!item.price) item.price = product.price;
-			if (!item.discount) item.discount = product.purchasingPricePercentage;
+			item.price = overrideOldData ? product.price : item.price
+			item.discount = overrideOldData ? product.purchasingPricePercentage : item.discount;
 			item.actualQuantity = product.actualQuantity;
 			item.productName = product.name;
 			item.productCode = product.code;
@@ -229,6 +232,18 @@ export class PurchasesBillFormComponent {
 
 
 
+	isTaxChange() {
+		if (!this.purchasesBillHeaderDTO.isTax) {
+			this.purchasesBillHeaderDTO.taxPercentage = 0;
+			this.vatPercentage = 0;
+		}
+		else {
+			this.vatPercentage = this.helperService.VATPercentage;
+		}
+		this.updateTotal();
+	}
+
+
 	updateTotal() {
 		this.purchasesBillHeaderDTO.total = 0;
 		for (let item of this.purchasesBillHeaderDTO.purchasesBillDetailList) {
@@ -236,9 +251,16 @@ export class PurchasesBillFormComponent {
 			item.subTotal = item.priceAfterDiscount * item.quantity;
 			this.purchasesBillHeaderDTO.total += item.subTotal;
 		}
-		this.purchasesBillHeaderDTO.totalAfterDiscount = parseFloat((this.purchasesBillHeaderDTO.transfer + this.purchasesBillHeaderDTO.total - this.purchasesBillHeaderDTO.totalDiscount).toFixed(2));
-		this.purchasesBillHeaderDTO.remaining = this.purchasesBillHeaderDTO.paid - this.purchasesBillHeaderDTO.totalAfterDiscount;
+		this.purchasesBillHeaderDTO.totalAfterDiscount = parseFloat((this.purchasesBillHeaderDTO.total - this.purchasesBillHeaderDTO.discount).toFixed(2));
+		this.purchasesBillHeaderDTO.vatAmount = parseFloat((this.vatPercentage * this.purchasesBillHeaderDTO.totalAfterDiscount).toFixed(2))
+		this.purchasesBillHeaderDTO.taxAmount = parseFloat(((this.purchasesBillHeaderDTO.taxPercentage / 100) * this.purchasesBillHeaderDTO.totalAfterDiscount).toFixed(2))
+		this.purchasesBillHeaderDTO.totalAfterVAT = this.purchasesBillHeaderDTO.totalAfterDiscount + this.purchasesBillHeaderDTO.vatAmount + this.purchasesBillHeaderDTO.taxAmount;
+		this.purchasesBillHeaderDTO.totalAmount = this.purchasesBillHeaderDTO.totalAfterVAT + this.purchasesBillHeaderDTO.otherExpenses;
+		this.purchasesBillHeaderDTO.remaining = parseFloat((this.purchasesBillHeaderDTO.paid - this.purchasesBillHeaderDTO.totalAmount).toFixed(2));
+
 	}
+
+
 
 	showProductFormPopUp(item: PurchasesBillDetailsDTO) {
 		this.dialogService.show("sm", ProductFormPopupComponent)

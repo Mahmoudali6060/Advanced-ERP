@@ -75,7 +75,7 @@
     "ProductName": "Product",
     "SubTotal": "Sub Total",
     "SelectProduct": "Select product",
-    "Transfer": "Transfer",
+    "OtherExpenses": "OtherExpenses",
     "TotalDiscount": "Total Discount",
     "PriceBeforeDiscount": "Price Before Discount",
     "PriceAfterDiscount": "Price After Discount",
@@ -115,7 +115,10 @@
     "VATAmount": "VAT Amount",
     "TotalAfterVAT": "Total after VAT",
     "TaxPercentage": "Tax Percentage",
-    "TotalAfterTax": "TotalAfterTax"
+    "TotalAfterTax": "Total After Tax",
+    "TaxAmount": "Tax Amount",
+    "TotalAmount":"Total Amount",
+    "IsTax":"Is Tax"
   },
   "Dashboard": {
     "overview": "Overview",

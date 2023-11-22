@@ -85,7 +85,7 @@
     "ProductName": "المنتج",
     "SubTotal": "الاجمالي",
     "SelectProduct": "اختر التصنيف",
-    "Transfer": "مصاريف أخرى",
+    "OtherExpenses": "مصاريف أخرى",
     "TotalDiscount": "اجمالي الخصومات",
     "PriceBeforeDiscount": "السعر قبل الخصم",
     "PriceAfterDiscount": "السعر بعد الخصم",
@@ -125,10 +125,13 @@
     "OldData": "القيمة القديمة",
     "NewData": "القيمة الجديدة",
     "Username": "اسم المستخدم",
-    "VATAmount": "ضريبة القيمة المضافة",
+    "VATAmount": "ضريبة القيمة المضافة(14%)",
     "TotalAfterVAT": "الاجمالي شامل الضريبة",
-    "TaxPercentage": "ضريبة الأرباح التجاري ",
-    "TotalAfterTax": "الاجمالي بعد الضريبة"
+    "TaxPercentage": "ضريبة الأرباح التجارية(%)",
+    "TotalAfterTax": "الاجمالي بعد الضريبة",
+    "TaxAmount": "قيمة ضريبة الأرباح التجارية",
+    "TotalAmount": "المبلغ المطلوب دفعه",
+    "IsTax": "فاتورة ضريبية"
   },
   "Dashboard": {
     "overview": "نظرة عامة",

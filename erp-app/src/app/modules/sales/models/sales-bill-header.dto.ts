@@ -5,13 +5,6 @@ export class SalesBillHeaderDTO extends AuditDTO {
     id: number;
     number: string;
     isActive: boolean;
-    discount: number | 0 = 0;
-    transfer: number | 0 = 0;
-    total: number;
-    totalDiscount: number | 0 = 0;
-    totalAfterDiscount: number = 0;
-    paid: number = 0;
-    remaining: number | 0;
     date: string | undefined;
     clientVendorId: number | null;
     clientVendorName: string;
@@ -20,10 +13,18 @@ export class SalesBillHeaderDTO extends AuditDTO {
     createdByProfileName: string;
     modifiedByProfileName: string;
     representiveId: number;
-    vatAmount: number;
-    totalAfterVAT: number;
-    taxPercentage: number;
-    totalAfterTax: number=0;
+    discount: number = 0 | 0;
+    otherExpenses: number = 0 | 0;
+    total: number = 0 | 0;
+    totalAfterDiscount: number = 0 | 0;
+    vatAmount: number = 0 | 0;
+    totalAfterVAT: number = 0 | 0;
+    taxPercentage: number = 0 | 0;
+    taxAmount: number = 0 | 0;
+    totalAmount: number = 0 | 0;
+    paid: number = 0 | 0;
+    remaining: number = 0 | 0;
+    isTax: boolean = false;
     salesBillDetailList: Array<SalesBillDetailsDTO> = Array<SalesBillDetailsDTO>();
 
 
