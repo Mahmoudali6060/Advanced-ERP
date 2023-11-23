@@ -25,7 +25,7 @@
                         <div class="col-lg-12">
 
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label" for="date">{{'General.Date'|translate}}</label>
                                         <input [disabled]="viewMode" [(ngModel)]="searchCriteriaDTO.date" type="date"
@@ -33,30 +33,34 @@
                                             aria-describedby="helpId">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label"
                                             for="accountTypeId">{{'General.AccountType'|translate}}</label>
                                         <ng-select name="accountTypeId" id="accountTypeId"
-                                            [(ngModel)]="searchCriteriaDTO.accountTypeId">
+                                            [(ngModel)]="searchCriteriaDTO.accountTypeId"
+                                            (change)="onAccountTypeChange()">
                                             <ng-option *ngFor="let item of accountTypeList" [value]="item.value">
                                                 {{'AccountTypeEnum.'+item.label |translate}}
                                             </ng-option>
                                         </ng-select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <label class="form-label" for="accountId">{{'General.Vendor'|translate}}</label>
-                                    <ng-select name="accountId" id="accountId"
-                                        [(ngModel)]="searchCriteriaDTO.accountId">
+                                <div class="col-md-4"
+                                    *ngIf="searchCriteriaDTO.accountTypeId && searchCriteriaDTO.accountTypeId!=accountTypeEnum.Other">
+                                    <label class="form-label"
+                                        for="clientVendorId">{{(searchCriteriaDTO.accountTypeId==accountTypeEnum.Clients?"General.Client":"General.Vendor")|translate}}</label>
+                                    <ng-select name="clientVendorId" id="clientVendorId"
+                                        [(ngModel)]="searchCriteriaDTO.clientVendorId">
                                         <ng-option value=" null"
-                                            disabled>{{'General.SelectVendor'|translate}}</ng-option>
+                                            disabled>{{searchCriteriaDTO.accountTypeId==accountTypeEnum.Clients?"General.SelectClient":"General.SelectVendor"|translate}}</ng-option>
                                         <ng-option *ngFor="let item of clientVendorList" [value]="item.id">
                                             {{item.fullName}}
                                         </ng-option>
                                     </ng-select>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label"
                                             for="paymentMethodId">{{'General.PaymentMethod'|translate}}</label>
@@ -68,7 +72,7 @@
                                         </ng-select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label"
                                             for="transactionTypeId">{{'General.TransactionType'|translate}}</label>
@@ -81,7 +85,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="refNo" class=" form-control-label">{{'General.RefNo'
                                             |translate}}</label>
@@ -90,7 +94,7 @@
                                             class="form-control" aria-describedby="helpId">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="bankAccountNo" class=" form-control-label">{{'General.BankAccountNo'
                                             |translate}}</label>
@@ -100,15 +104,7 @@
                                             aria-describedby="helpId">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="checkNo" class=" form-control-label">{{'General.CheckNo'
-                                            |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="searchCriteriaDTO.checkNo" type="text"
-                                            id="checkNo" class="form-control" #checkNo="ngModel" name="checkNo"
-                                            id="checkNo" class="form-control" aria-describedby="helpId">
-                                    </div>
-                                </div>
+                                
                             </div>
 
                             <div class="row">
@@ -146,15 +142,21 @@
                 <tbody>
                     <tr class="tr-shadow" *ngFor="let item of treasuryList">
                         <td>{{item.date}}</td>
-                        <td>{{item.accountTypeId}}</td>
-                        <td >{{item.beneficiaryName}}</td>
-                        <td>{{item.transactionTypeId}}</td>
-                        <td>{{item.paymentMethodId}}</td>
+                        <td>
+                            {{'AccountTypeEnum.'+accountTypeEnum[item.accountTypeId] |translate}}
+                        </td>
+                        <td>{{item.beneficiaryName}}</td>
+                        <td>
+                            {{'TransactionTypeEnum.'+transactionTypeEnum[item.transactionTypeId] |translate}}
+                        </td>
+                        <td>
+                            {{'PaymentMethodEnum.'+paymentMethodEnum[item.paymentMethodId] |translate}}
+                        </td>
                         <td>{{item.amount}}</td>
                         <td>{{item.refNo}}</td>
                         <td>{{item.bankAccountNo}}</td>
                         <td>{{item.checkNo}}</td>
-                        <td >
+                        <td>
                             <div class="table-data-feature">
                                 <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Edit" [routerLink]="['/accounting/treasury-form/'+item.id]">

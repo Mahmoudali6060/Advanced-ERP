@@ -130,7 +130,7 @@ export class SalesBillFormComponent {
 			for (let item of this.salesBillHeaderDTO.salesBillDetailList) {
 				item.index = index;
 				index++;
-				this.setProductToSales(item,false);
+				this.setProductToSales(item, false);
 			}
 		}
 	}

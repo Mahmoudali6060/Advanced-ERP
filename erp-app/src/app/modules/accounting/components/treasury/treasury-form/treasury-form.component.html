@@ -24,24 +24,27 @@
                                         <label class="form-label"
                                             for="accountTypeId">{{'General.AccountType'|translate}}</label>
                                         <ng-select name="accountTypeId" id="accountTypeId"
-                                            [(ngModel)]="treasuryDTO.accountTypeId">
+                                            [(ngModel)]="treasuryDTO.accountTypeId" (change)="onAccountTypeChange()">
                                             <ng-option *ngFor="let item of accountTypeList" [value]="item.value">
                                                 {{'AccountTypeEnum.'+item.label |translate}}
                                             </ng-option>
                                         </ng-select>
                                     </div>
                                 </div>
-                                <div class="col-md-4" *ngIf="treasuryDTO.accountTypeId!=accountTypeEnum.Other">
-                                    <label class="form-label" for="accountId">{{'General.Vendor'|translate}}</label>
-                                    <ng-select name="accountId" id="accountId" [(ngModel)]="treasuryDTO.accountId">
+                                <div class="col-md-4"
+                                    *ngIf="treasuryDTO.accountTypeId && treasuryDTO.accountTypeId!=accountTypeEnum.Other">
+                                    <label class="form-label"
+                                        for="clientVendorId">{{(treasuryDTO.accountTypeId==accountTypeEnum.Clients?"General.Client":"General.Vendor")|translate}}</label>
+                                    <ng-select name="clientVendorId" id="clientVendorId" [(ngModel)]="treasuryDTO.clientVendorId" (change)="onClientVendorChange()">
                                         <ng-option value=" null"
-                                            disabled>{{'General.SelectVendor'|translate}}</ng-option>
+                                            disabled>{{treasuryDTO.accountTypeId==accountTypeEnum.Clients?"General.SelectClient":"General.SelectVendor"|translate}}</ng-option>
                                         <ng-option *ngFor="let item of clientVendorList" [value]="item.id">
                                             {{item.fullName}}
                                         </ng-option>
                                     </ng-select>
                                 </div>
-                                <div class="col-md-4" *ngIf="treasuryDTO.accountTypeId==accountTypeEnum.Other">
+                                <div class="col-md-4"
+                                    *ngIf="treasuryDTO.accountTypeId && treasuryDTO.accountTypeId==accountTypeEnum.Other">
                                     <div class="form-group">
                                         <label for="beneficiaryName"
                                             class=" form-control-label">{{'General.BeneficiaryName'

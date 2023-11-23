@@ -15,7 +15,7 @@ import { LabelValuePair } from 'src/app/shared/enums/label-value-pair';
 import { AccountTypeEnum } from 'src/app/shared/enums/account-type.enum';
 import { PaymentMethodEnum } from 'src/app/shared/enums/payment-method.enum';
 import { TransactionTypeEnum } from 'src/app/shared/enums/transaction-type.enum';
-import { ClientVendorDTO } from 'src/app/modules/setup/models/client-vendor.dto';
+import { ClientVendorDTO, ClientVendorTypeEnum } from 'src/app/modules/setup/models/client-vendor.dto';
 
 @Component({
 	selector: 'app-treasury-form',
@@ -46,6 +46,7 @@ export class TreasuryFormComponent {
 		this.paymentMethodList = this.helperService.enumSelector(PaymentMethodEnum);
 		this.transactionTypeList = this.helperService.enumSelector(TransactionTypeEnum);
 		this.treasuryDTO = new TreasuryDTO();
+		this.treasuryDTO.date = this.helperService.conveertDateToString(new Date());
 
 		const id = this.route.snapshot.paramMap.get('id');
 		if (id) {
@@ -54,18 +55,28 @@ export class TreasuryFormComponent {
 				this.viewMode = true;
 			}
 		}
-		//this.getAllClientVendors();
+
 	}
 
 	getAllClientVendors() {
 		this.clientVendorService.getAllLite().subscribe((res: any) => {
 			this.clientVendorList = res.list;
+			if (this.treasuryDTO.accountTypeId == AccountTypeEnum.Clients) {
+				this.clientVendorList = this.clientVendorList.filter(x => x.typeId == ClientVendorTypeEnum.All || x.typeId == ClientVendorTypeEnum.Client)
+			}
+			else if (this.treasuryDTO.accountTypeId == AccountTypeEnum.Vendors) {
+				this.clientVendorList = this.clientVendorList.filter(x => x.typeId == ClientVendorTypeEnum.All || x.typeId == ClientVendorTypeEnum.Vendor)
+			}
+			this.treasuryDTO.beneficiaryName = this.clientVendorList.find(x => x.id == this.treasuryDTO.clientVendorId)?.fullName;
+
 		})
 	}
 
 	getTreasuryById(treasuryId: any) {
 		this.treasuryService.getById(treasuryId).subscribe((res: any) => {
 			this.treasuryDTO = res;
+			if (this.treasuryDTO.accountTypeId != AccountTypeEnum.Other)
+				this.getAllClientVendors();
 		})
 	}
 
@@ -118,6 +129,16 @@ export class TreasuryFormComponent {
 		}
 	}
 
+	onAccountTypeChange() {
+		this.treasuryDTO.clientVendorId = null;
+		this.getAllClientVendors();
+	}
+
+	onClientVendorChange() {
+		if (this.treasuryDTO.clientVendorId) {
+			this.treasuryDTO.beneficiaryName = this.clientVendorList.find(x => x.id == this.treasuryDTO.clientVendorId)?.fullName;
+		}
+	}
 
 
 }

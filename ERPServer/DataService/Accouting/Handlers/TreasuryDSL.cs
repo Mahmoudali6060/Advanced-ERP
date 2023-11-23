@@ -101,10 +101,40 @@ namespace DataService.Accounting.Handlers
         private IQueryable<Treasury> ApplyFilert(IQueryable<Treasury> TreasuryList, TreasurySearchDTO searchCriteriaDTO)
         {
             //Filter
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.Date))
+            {
+                TreasuryList = TreasuryList.Where(x => x.Date.Date == DateTime.Parse(searchCriteriaDTO.Date));
+            }
+
+            if (searchCriteriaDTO.AccountTypeId.HasValue)
+            {
+                TreasuryList = TreasuryList.Where(x => x.AccountTypeId == searchCriteriaDTO.AccountTypeId);
+            }
+
+            if (searchCriteriaDTO.ClientVendorId.HasValue)
+            {
+                TreasuryList = TreasuryList.Where(x => x.ClientVendorId == searchCriteriaDTO.ClientVendorId);
+            }
+
+            if (searchCriteriaDTO.TransactionTypeId.HasValue)
+            {
+                TreasuryList = TreasuryList.Where(x => x.TransactionTypeId == searchCriteriaDTO.TransactionTypeId);
+            }
+
+            if (searchCriteriaDTO.PaymentMethodId.HasValue)
+            {
+                TreasuryList = TreasuryList.Where(x => x.PaymentMethodId == searchCriteriaDTO.PaymentMethodId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.RefNo))
+            {
+                TreasuryList = TreasuryList.Where(x => x.RefNo == searchCriteriaDTO.RefNo);
+            }
+
             return TreasuryList;
         }
 
-      
+
 
         #endregion
     }

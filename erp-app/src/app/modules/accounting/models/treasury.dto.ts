@@ -5,10 +5,10 @@ import { BaseDTO } from "src/app/shared/models/base-dto.model";
 
 export class TreasuryDTO extends BaseDTO {
 
-    date: string;
+    date: string | undefined;
     accountTypeId: AccountTypeEnum;
-    accountId: string;
-    beneficiaryName: string;
+    clientVendorId: number | null;
+    beneficiaryName: string | undefined;
     transactionTypeId: TransactionTypeEnum;
     paymentMethodId: PaymentMethodEnum;
     amount: number;

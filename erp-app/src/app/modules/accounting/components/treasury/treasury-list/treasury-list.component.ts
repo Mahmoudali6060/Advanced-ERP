@@ -9,11 +9,12 @@ import { TreasuryDTO } from '../../../models/treasury.dto';
 import { TreasurySearchDTO } from '../../../models/treasury-search.dto';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { LabelValuePair } from 'src/app/shared/enums/label-value-pair';
-import { ClientVendorDTO } from 'src/app/modules/setup/models/client-vendor.dto';
+import { ClientVendorDTO, ClientVendorTypeEnum } from 'src/app/modules/setup/models/client-vendor.dto';
 import { AccountTypeEnum } from 'src/app/shared/enums/account-type.enum';
 import { PaymentMethodEnum } from 'src/app/shared/enums/payment-method.enum';
 import { TransactionTypeEnum } from 'src/app/shared/enums/transaction-type.enum';
 import { HelperService } from 'src/app/shared/services/helper.service';
+import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 
 @Component({
 	selector: 'app-treasury-list',
@@ -33,12 +34,15 @@ export class TreasuryListComponent {
 	paymentMethodList: LabelValuePair[];
 	transactionTypeList: LabelValuePair[];
 	clientVendorList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
-
+	accountTypeEnum = AccountTypeEnum;
+	transactionTypeEnum = TransactionTypeEnum;
+	paymentMethodEnum = PaymentMethodEnum;
 	constructor(private treasuryService: TreasuryService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
 		private translate: TranslateService,
-		private helperService: HelperService) {
+		private helperService: HelperService,
+		private clientVendorService: ClientVendorService) {
 
 	}
 
@@ -53,6 +57,20 @@ export class TreasuryListComponent {
 	toggleFilter() {
 		this.searchCriteriaDTO = new TreasurySearchDTO();
 		this.showFilterControls = !this.showFilterControls;
+	}
+
+
+	getAllClientVendors() {
+		this.clientVendorService.getAllLite().subscribe((res: any) => {
+			this.clientVendorList = res.list;
+			if (this.searchCriteriaDTO.accountTypeId == AccountTypeEnum.Clients) {
+				this.clientVendorList = this.clientVendorList.filter(x => x.typeId == ClientVendorTypeEnum.All || x.typeId == ClientVendorTypeEnum.Client)
+			}
+			else if (this.searchCriteriaDTO.accountTypeId == AccountTypeEnum.Vendors) {
+				this.clientVendorList = this.clientVendorList.filter(x => x.typeId == ClientVendorTypeEnum.All || x.typeId == ClientVendorTypeEnum.Vendor)
+			}
+
+		})
 	}
 
 
@@ -95,4 +113,12 @@ export class TreasuryListComponent {
 		this.searchCriteriaDTO.page = event;
 		this.getAllTreasuries();
 	}
+
+	onAccountTypeChange() {
+		if (this.searchCriteriaDTO.accountTypeId != AccountTypeEnum.Other) {
+			this.getAllClientVendors();
+		}
+
+	}
+
 }
