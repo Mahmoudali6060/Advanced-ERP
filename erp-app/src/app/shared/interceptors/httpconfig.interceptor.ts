@@ -22,13 +22,14 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let handled: boolean = false;
         let token = this.localStorageService.getToken();
+        request.headers.set('Authorization', 'Bearer ' + token);
+        if (this.authService.loggedUserProfile) {
+            request.headers.set('UserProfileId', this.authService.loggedUserProfile?.id.toString())
+            request.headers.set('Username', this.authService.loggedUserProfile?.userName)
+        }
+
         const clonedReq = request.clone({
             headers: request.headers
-                .set('Authorization', 'Bearer ' + token)
-                .set('UserProfileId', this.authService.loggedUserProfile?.id.toString())
-                .set('Username', this.authService.loggedUserProfile?.userName)
-
-
         });
 
         return next.handle(clonedReq)
