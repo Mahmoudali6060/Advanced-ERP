@@ -34,6 +34,7 @@ import { RepresentiveFormPopupComponent } from 'src/app/shared/modules/setup-sha
 export class SalesBillFormComponent {
 
 	salesBillHeaderDTO: SalesBillHeaderDTO = new SalesBillHeaderDTO();
+	originalSalesBillDetailsList: Array<SalesBillDetailsDTO> = new Array<SalesBillDetailsDTO>();
 	serverUrl: string;
 	viewMode: boolean;
 	productList: Array<ProductDTO> = new Array<ProductDTO>();
@@ -117,6 +118,8 @@ export class SalesBillFormComponent {
 	getSalesBillById(salesBillId: any) {
 		this.salesBillService.getById(salesBillId).subscribe((res: any) => {
 			this.salesBillHeaderDTO = res;
+			//To prevent change after cloning
+			this.originalSalesBillDetailsList = res.salesBillDetailList.map((el: any) => Object.assign({}, el));
 			this.getAllProducts();
 			this.getAllClients();
 			this.getAllRepresentives();
@@ -167,6 +170,7 @@ export class SalesBillFormComponent {
 					this.toasterService.success("success");
 					if (isPrint) {
 						this.print();
+						window.location.reload();
 					}
 					else {
 						this.back();
@@ -213,13 +217,29 @@ export class SalesBillFormComponent {
 		this.setProductToSales(item, true);
 	}
 
+	onQuantityChange(item: SalesBillDetailsDTO) {
+		let quantity = 0;
+		if (this.originalSalesBillDetailsList && this.originalSalesBillDetailsList.length > 0) {
+			let exsitedSalesBillDetails = this.originalSalesBillDetailsList.find(x => x.id == item.id && x.productId == item.productId);
+			if (exsitedSalesBillDetails) {
+				quantity = exsitedSalesBillDetails.quantity;
+			}
+		}
+		if (item.quantity > item.actualQuantity + quantity) {
+			this.alertService.showWarning(this.translate.instant("Errors.QuantityIsGreaterThanActualQuantity"), this.translate.instant("Errors.Warning"));
+			//item.quantity = item.actualQuantity;
+			//return;
+		}
+		this.updateTotal();
+	}
 	setProductToSales(item: SalesBillDetailsDTO, overrideOldData: boolean) {
 		let product = this.productList.find(x => x.id == item.productId);
 		if (product) {
-			item.price = overrideOldData ? product.price : item.price
+			item.price = overrideOldData ? product.price : item.price;
+			item.lastPurchasingPrice = product.lastPurchasingPrice;
 			item.discount = overrideOldData ? product.sellingPricePercentage : item.discount;
 			item.actualQuantity = product.actualQuantity;
-			item.sellingPrice = (product.price - (product.sellingPricePercentage / 100) * product.price);
+			item.sellingPrice = (product.lastPurchasingPrice - (product.sellingPricePercentage / 100) * product.lastPurchasingPrice);
 			item.productName = product.name;
 			item.productCode = product.code;
 			this.updateTotal();
@@ -241,7 +261,7 @@ export class SalesBillFormComponent {
 	updateTotal() {
 		this.salesBillHeaderDTO.total = 0;
 		for (let item of this.salesBillHeaderDTO.salesBillDetailList) {
-			item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
+			item.priceAfterDiscount = parseFloat((item.lastPurchasingPrice - (item.discount / 100) * item.lastPurchasingPrice).toFixed(2));
 			item.subTotal = item.priceAfterDiscount * item.quantity;
 			this.salesBillHeaderDTO.total += item.subTotal;
 		}

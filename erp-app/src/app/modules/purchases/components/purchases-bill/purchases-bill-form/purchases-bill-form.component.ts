@@ -218,11 +218,12 @@ export class PurchasesBillFormComponent {
 
 
 	setProductToPurchase(item: PurchasesBillDetailsDTO, overrideOldData: boolean) {
-		debugger;
 		let product = this.productList.find(x => x.id == item.productId);
 		if (product) {
-			item.price = overrideOldData ? product.price : item.price
+			item.price = overrideOldData ? product.price : item.price;
+			item.lastPurchasingPrice =product.lastPurchasingPrice;
 			item.discount = overrideOldData ? product.purchasingPricePercentage : item.discount;
+
 			item.actualQuantity = product.actualQuantity;
 			item.productName = product.name;
 			item.productCode = product.code;

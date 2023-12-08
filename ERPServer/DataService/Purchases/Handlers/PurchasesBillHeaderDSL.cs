@@ -95,8 +95,8 @@ namespace DataService.Setup.Handlers
                     clientVendorBalanceList.Add(new ClientVendorBalanceDTO()
                     {
                         Date = s.Date.ToString("yyyy-MM-dd"),
-                        Debit =s.TotalAfterDiscount ,
-                        Credit =- s.Paid,
+                        Debit = s.TotalAfterDiscount,
+                        Credit = -s.Paid,
                         Details = "General.BillNo",
                         Number = s.Number,
                         RefId = s.Id,
@@ -117,7 +117,7 @@ namespace DataService.Setup.Handlers
             {
                 var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
                 product.ActualQuantity = product.ActualQuantity + item.Quantity;
-                product.Price = item.Price;
+                product.LastPurchasingPrice = item.PriceAfterDiscount;
                 await _unitOfWork.ProductDAL.Update(product);
             }
             #endregion
@@ -164,7 +164,7 @@ namespace DataService.Setup.Handlers
                 decimal quantity = exsitedPurchaseDetails != null ? item.Quantity - exsitedPurchaseDetails.Quantity : item.Quantity;
                 var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
                 product.ActualQuantity = product.ActualQuantity + quantity;
-                product.Price = item.Price;
+                product.LastPurchasingPrice = item.PriceAfterDiscount;
                 await _unitOfWork.ProductDAL.Update(product);
             }
             #endregion

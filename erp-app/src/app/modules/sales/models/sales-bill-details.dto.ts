@@ -5,6 +5,8 @@ export class SalesBillDetailsDTO extends BaseDTO {
     actualQuantity: number;
     quantity: number | 0 = 0;
     price: number | 0 = 0;
+    lastSellingPrice: number | 0 = 0;
+    lastPurchasingPrice: number | 0 = 0;
     discount: number;
     priceAfterDiscount: number;
     subTotal: number;

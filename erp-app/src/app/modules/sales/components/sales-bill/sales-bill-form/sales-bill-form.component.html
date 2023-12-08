@@ -96,9 +96,10 @@
                                                 <th class="table-header-fc">#</th>
                                                 <th class="table-header-fc">{{'General.Product' |translate}}</th>
                                                 <th class="table-header-fc">{{'General.ActualQuantity' |translate}}</th>
-                                                <th class="table-header-fc">{{'General.SellingPrice' |translate}}</th>
+                                                <!-- <th class="table-header-fc">{{'General.SellingPrice' |translate}}</th> -->
                                                 <th class="table-header-fc">{{'General.Quantity' |translate}}</th>
                                                 <th class="table-header-fc">{{'General.Price' |translate}}</th>
+                                                <th class="table-header-fc">{{'General.LastPurchasingPrice' |translate}}
                                                 <th class="table-header-fc">{{'General.Discount' |translate}} %</th>
                                                 <th class="table-header-fc">{{'General.PriceAfterDiscount' |translate}}
                                                 </th>
@@ -114,7 +115,8 @@
                                                 </td>
                                                 <td class="cell-width-26">
                                                     <div class="input-group">
-                                                        <ng-select [(ngModel)]="item.productId" class="ng-select-custom"
+                                                        <ng-select [(ngModel)]="item.productId"
+                                                            class="ng-select-custom text-font-size-md"
                                                             [ngModelOptions]="{standalone: true}"
                                                             (change)="onProductChange(item,$event)">
                                                             <ng-option *ngFor="let product of productList"
@@ -125,20 +127,28 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    {{item.actualQuantity}}
+                                                    <input [(ngModel)]="item.actualQuantity" type="number"
+                                                        class="form-control" readonly
+                                                        [ngModelOptions]="{standalone: true}">
                                                 </td>
-                                                <td>
-                                                    {{item.sellingPrice}}
-
-                                                </td>
+                                                <!-- <td>
+                                                    <input [(ngModel)]="item.sellingPrice" type="number"
+                                                        class="form-control" readonly
+                                                        [ngModelOptions]="{standalone: true}">
+                                                </td> -->
                                                 <td>
                                                     <input [(ngModel)]="item.quantity" type="number"
-                                                        class="form-control" (change)="updateTotal()"
+                                                        class="form-control" (change)="onQuantityChange(item)"
                                                         [ngModelOptions]="{standalone: true}">
                                                 </td>
                                                 <td class="cell-width-10">
                                                     <input [(ngModel)]="item.price" type="number" class="form-control"
                                                         (change)="updateTotal()" [ngModelOptions]="{standalone: true}">
+                                                </td>
+                                                <td>
+                                                    <input [(ngModel)]="item.lastPurchasingPrice" type="number"
+                                                        class="form-control" readonly
+                                                        [ngModelOptions]="{standalone: true}">
                                                 </td>
                                                 <td>
                                                     <input [(ngModel)]="item.discount" type="number"
@@ -203,9 +213,9 @@
                                 <div class="form-group">
                                     <label for="discount" class=" form-control-label">{{'General.Discount'
                                         |translate}}</label>
-                                    <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.discount"
-                                        type="text" id="discount" class="form-control" (change)="updateTotal()"
-                                        #discount="ngModel" name="discount">
+                                    <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.discount" type="text"
+                                        id="discount" class="form-control" (change)="updateTotal()" #discount="ngModel"
+                                        name="discount">
                                 </div>
                             </div>
                             <div class="col-lg-2">
@@ -220,7 +230,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-2">
+                            <div class="col-lg-2" *ngIf="salesBillHeaderDTO.isTax">
                                 <div class="form-group">
                                     <label for="vatAmount" class=" form-control-label">{{'General.VATAmount'
                                         |translate}}</label>
@@ -229,7 +239,7 @@
                                         name="vatAmount" aria-describedby="helpId">
                                 </div>
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-2" *ngIf="salesBillHeaderDTO.isTax">
                                 <div class="form-group">
                                     <label for="taxPercentage" class=" form-control-label">{{'General.TaxPercentage'
                                         |translate}}</label>
@@ -239,7 +249,7 @@
                                         #taxPercentage="ngModel" name="taxPercentage" aria-describedby="helpId">
                                 </div>
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-2" *ngIf="salesBillHeaderDTO.isTax">
                                 <div class="form-group">
                                     <label for="taxAmount" class=" form-control-label">{{'General.TaxAmount'
                                         |translate}}</label>
@@ -250,7 +260,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-2">
+                            <div class="col-lg-2" *ngIf="salesBillHeaderDTO.isTax">
                                 <div class="form-group">
                                     <label for="totalAfterVAT" class=" form-control-label">{{'General.TotalAfterVAT'
                                         |translate}}</label>
@@ -263,9 +273,9 @@
                                 <div class="form-group">
                                     <label for="otherExpenses" class=" form-control-label">{{'General.OtherExpenses'
                                         |translate}}</label>
-                                    <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.otherExpenses" type="number"
-                                        id="otherExpenses" (change)="updateTotal()" class="form-control" #otherExpenses="ngModel"
-                                        name="otherExpenses" aria-describedby="helpId">
+                                    <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.otherExpenses"
+                                        type="number" id="otherExpenses" (change)="updateTotal()" class="form-control"
+                                        #otherExpenses="ngModel" name="otherExpenses" aria-describedby="helpId">
                                 </div>
                             </div>
                             <div class="col-lg-2">
@@ -302,7 +312,7 @@
                                     <label for="notes" class=" form-control-label">{{'General.Notes'
                                         |translate}}</label>
                                     <textarea [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.notes" id="notes"
-                                        class="form-control" #notes="ngModel" name="notes" rows="5"
+                                        class="form-control" #notes="ngModel" name="notes" rows="1"
                                         aria-describedby="helpId"></textarea>
                                 </div>
                             </div>

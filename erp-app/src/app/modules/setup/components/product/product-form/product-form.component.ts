@@ -122,7 +122,10 @@ export class ProductFormComponent {
 			else {
 				this.productService.add(this.productDTO).subscribe(res => {
 					this.toasterService.success("success");
-					this.back();
+					if (res) {
+						this.productDTO = new ProductDTO();
+					}
+					//this.back();
 				})
 			}
 		}

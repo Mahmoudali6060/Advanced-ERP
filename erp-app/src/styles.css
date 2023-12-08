@@ -277,7 +277,7 @@ i:hover {
 }
 
 .ng-select-custom {
-    width: 80%;
+    width: 100%;
 }
 
 .header3-sub-list {
@@ -287,4 +287,24 @@ i:hover {
 .form-control-label {
     font-size: 13px;
     font-weight: bold;
+}
+
+.text-font-size-sm {
+    font-size: 10px;
+}
+
+.text-font-size-md {
+    font-size: 17px;
+}
+
+.text-font-size-lg {
+    font-size: 20px;
+}
+
+.input-group{
+    flex-wrap: nowrap !important;
+}
+
+.table td, .table th{
+    padding: 0.20rem !important;
 }

@@ -54,6 +54,7 @@ namespace Setup.DataAccessLayer
         public async Task<long> Update(Product entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
+            _appDbContext.Entry(entity).Property(x => x.Code).IsModified = false;
             return entity.Id;
         }
 

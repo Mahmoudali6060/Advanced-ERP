@@ -8,7 +8,9 @@ export class ProductDTO {
     imageUrl: string;
     price: number;
     sellingPricePercentage: number//سعر البيع
+    lastSellingPrice: number;
     purchasingPricePercentage: number;//سعر الشراء
+    lastPurchasingPrice: number;
     actualQuantity: number;
     lowQuantity: number;
     highQuantity: number;
@@ -17,8 +19,8 @@ export class ProductDTO {
     imageBase64: string;
     companyId: number;
     description: string;
-    unitOfMeasurementId:number;
-    unitOfMeasurementName:string;
+    unitOfMeasurementId: number;
+    unitOfMeasurementName: string;
     isChanged: boolean = false;
     constructor() {
         this.isActive = true;

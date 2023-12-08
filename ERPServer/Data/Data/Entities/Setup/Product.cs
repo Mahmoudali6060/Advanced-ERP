@@ -11,7 +11,9 @@ namespace Data.Entities.Setup
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
         public decimal SellingPricePercentage { get; set; }//سعر البيع
+        public decimal? LastSellingPrice { get; set; }//اخر سعر البيع 
         public decimal PurchasingPricePercentage { get; set; }//سعر الشراء
+        public decimal? LastPurchasingPrice { get; set; }// أخر سعر الشراء
         public decimal ActualQuantity { get; set; }
         public decimal LowQuantity { get; set; }
         public decimal HighQuantity { get; set; }

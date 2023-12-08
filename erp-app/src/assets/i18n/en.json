@@ -26,6 +26,8 @@
     "Export": "Export",
     "Date": "Date",
     "Price": "Price",
+    "LastPurchasingPrice":"Last Purchasing Price",
+    "LastSellingPrice":"Last Selling Price",
     "Debit": "Debit",
     "Credit": "Credit",
     "Total": "Total",
@@ -127,7 +129,7 @@
     "RefNo": "Ref No",
     "BankAccountNo": "Bank Account No",
     "CheckNo": "Check No",
-    "BeneficiaryName":"Beneficiary Name"
+    "BeneficiaryName": "Beneficiary Name"
   },
   "Dashboard": {
     "overview": "Overview",
@@ -353,10 +355,12 @@
     "DuplicatedFullName": "Duplicated FullName",
     "DuplicatedSelectedProduct": "You have already select this product before",
     "Error": "Error",
+    "Warning":"Warning",
     "NotFound": "Not Found",
     "HasRelatedData": "This record has related data",
     "YouMustSelectVendor": "You must select vendor",
-    "YouMustSelectClient": "You must select client"
+    "YouMustSelectClient": "You must select client",
+    "QuantityIsGreaterThanActualQuantity": "Quantity is greater than actual quantity"
   },
   "Warning": {
     "NoDriversAvialable": "There is no any driver available in this period"

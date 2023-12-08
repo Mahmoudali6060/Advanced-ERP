@@ -22,7 +22,9 @@
     "Name": "الاسم",
     "Date": "التاريخ",
     "Weight": "الوزن",
-    "Price": "السعر",
+    "Price": "سعر (الليستة)",
+    "LastPurchasingPrice":"أخر سعر شراء",
+    "LastSellingPrice":"أخر سعر بيع",
     "Total": "الاجمالي",
     "Notes": "ملاحظات",
     "Quantity": "الكمية",
@@ -361,10 +363,12 @@
     "DuplicatedFullName": "هذا الاسم مكرر",
     "DuplicatedSelectedProduct": "لقد اخترت هذا المنتج من قبل",
     "Error": "خطأ",
+    "Warning": "تحذير",
     "NotFound": "لا يوجد فاتورة بهذا الرقم  ",
     "HasRelatedData:": "هذا السجل مرتبط بسجلات أخرى",
     "YouMustSelectVendor": "يجب اختيار مورد",
-    "YouMustSelectClient": "يجب اختيار عميل"
+    "YouMustSelectClient": "يجب اختيار عميل",
+    "QuantityIsGreaterThanActualQuantity": "الكمية المطلوبة أكبر من الكمية المتاحة"
   },
   "Warning": {
     "NoDriversAvialable": "لا يوجد سائق متاح في هذه الفترة"
