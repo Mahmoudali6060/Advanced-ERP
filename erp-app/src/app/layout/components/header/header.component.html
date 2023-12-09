@@ -41,7 +41,7 @@
 
                         </ul>
                     </li>
-                    
+
                     <li class="has-sub">
                         <a href="#">
                             <i class="fa fa-file"></i>
@@ -49,8 +49,7 @@
                         <ul class="header3-sub-list list-unstyled">
                             <li>
                                 <a [routerLink]="['/accounting/treasury-list']">
-                                    <i class="fa fa-question-circle"></i><span
-                                        translate>SideMenu.Treasury</span></a>
+                                    <i class="fa fa-question-circle"></i><span translate>SideMenu.Treasury</span></a>
                             </li>
                         </ul>
                     </li>
@@ -73,7 +72,16 @@
                                 <a [routerLink]="['/sales-bill/sales-bill-list']">
                                     <i class="fas fa-shopping-basket"></i><span translate>SideMenu.SalesBills</span></a>
                             </li>
-
+                            <li>
+                                <a [routerLink]="['/sales-bill/sales-bill-temp-form']">
+                                    <i class="fas fa-shopping-basket"></i><span
+                                        translate>Sales.AddSalesBillTemp</span></a>
+                            </li>
+                            <li>
+                                <a [routerLink]="['/sales-bill/sales-bill-temp-list']">
+                                    <i class="fas fa-shopping-basket"></i><span
+                                        translate>Sales.SalesBillsTempTitle</span></a>
+                            </li>
                         </ul>
                     </li>
                     <li class="has-sub">
@@ -95,6 +103,16 @@
                                 <a [routerLink]="['/purchases-bill/purchases-bill-list']">
                                     <i class="zmdi zmdi-shopping-cart"></i><span
                                         translate>SideMenu.PurchasesBills</span></a>
+                            </li>
+                            <li>
+                                <a [routerLink]="['/purchases-bill/purchases-bill-temp-form']">
+                                    <i class="zmdi zmdi-shopping-cart"></i><span
+                                        translate>Purchases.AddPurchasesBillTemp</span></a>
+                            </li>
+                            <li>
+                                <a [routerLink]="['/purchases-bill/purchases-bill-temp-list']">
+                                    <i class="zmdi zmdi-shopping-cart"></i><span
+                                        translate>Purchases.PurchasesBillsTempTitle</span></a>
                             </li>
 
                         </ul>

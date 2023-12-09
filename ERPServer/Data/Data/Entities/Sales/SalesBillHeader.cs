@@ -30,6 +30,7 @@ namespace Data.Entities.Sales
         public decimal Paid { get; set; }
         public decimal Remaining { get; set; }
         public bool IsTax { get; set; }
+        public bool IsTemp { get; set; }
         public virtual ClientVendor ClientVendor { get; set; }
         public virtual List<SalesBillDetail> SalesBillDetailList { get; set; }
         public long? CompanyId { get; set; }

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -30,6 +30,7 @@ export class PurchasesBillListComponent {
 	total: number;
 	recordsPerPage: number = 5;
 	statusDDL: any;
+	@Input() isTemp: boolean = false;
 
 	constructor(private productService: PurchasesBillService,
 		private confirmationDialogService: DialogService,
@@ -39,6 +40,7 @@ export class PurchasesBillListComponent {
 	}
 
 	ngOnInit() {
+		this.searchCriteriaDTO.isTemp = this.isTemp;
 		this.search();
 		this.statusDDL = [
 			{ label: "All", value: '' },

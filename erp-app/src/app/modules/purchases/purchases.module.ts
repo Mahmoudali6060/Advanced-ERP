@@ -14,6 +14,8 @@ import { PurchasesBillService } from './services/purchases-bill.service';
 import { PurchasesBillSearchComponent } from './components/purchases-bill/purchases-bill-search/purchases-bill-search.component';
 import { ReportService } from '../report/services/report.service';
 import { RepresentiveService } from '../setup/services/representive.service';
+import { PurchasesBillTempFormComponent } from './components/purchases-bill-temp-form/purchases-bill-temp-form.component';
+import { PurchasesBillTempListComponent } from './components/purchases-bill-temp-list/purchases-bill-temp-list.component';
 
 @NgModule({
   imports: [
@@ -29,7 +31,11 @@ import { RepresentiveService } from '../setup/services/representive.service';
   declarations: [
     PurchasesBillListComponent,
     PurchasesBillFormComponent,
-    PurchasesBillSearchComponent
+    PurchasesBillSearchComponent,
+    PurchasesBillTempFormComponent,
+    PurchasesBillTempListComponent,
+
+
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -25,6 +25,7 @@ import { RepresentiveDTO } from 'src/app/modules/setup/models/representive.dto';
 import { RepresentiveService } from 'src/app/modules/setup/services/representive.service';
 import { RepresentiveTypeEnum } from 'src/app/shared/enums/representive-type.enum';
 import { RepresentiveFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/representive-form-popup/representive-form-popup.component';
+import { Location } from '@angular/common';
 
 @Component({
 	selector: 'app-sales-bill-form',
@@ -52,6 +53,8 @@ export class SalesBillFormComponent {
 	//#endregion
 	vatPercentage: number = 0;
 	numberOfProducts: number = 1;
+	@Input() isTemp: boolean = false;
+	isTransfereToBill: boolean = false;
 	constructor(
 		private salesBillService: SalesBillService,
 		private productService: ProductService,
@@ -66,12 +69,14 @@ export class SalesBillFormComponent {
 		private alertService: AlertService,
 		private authService: AuthService,
 		private reportService: ReportService,
-		private representiveService: RepresentiveService
+		private representiveService: RepresentiveService,
+		private location: Location
 
 	) {
 	}
 
 	ngOnInit() {
+		this.salesBillHeaderDTO.isTemp = this.isTemp;
 		this.serverUrl = this._configService.getServerUrl();
 
 		this.salesHeaderId = this.route.snapshot.paramMap.get('id');
@@ -140,7 +145,8 @@ export class SalesBillFormComponent {
 	}
 
 	back() {
-		this.router.navigateByUrl('sales-bill/sales-bill-list');
+		this.location.back();
+		// this.router.navigateByUrl('sales-bill/sales-bill-list');
 	}
 	validation(salesBillDTO: SalesBillHeaderDTO): boolean {
 		if (!salesBillDTO.clientVendorId) {
@@ -165,6 +171,8 @@ export class SalesBillFormComponent {
 	}
 
 	save(isPrint: boolean, form?: NgForm) {
+		if (this.isTransfereToBill == true)
+			this.salesBillHeaderDTO.isTemp = false;
 		if (this.validation(this.salesBillHeaderDTO)) {
 			if (this.salesBillHeaderDTO.id) {
 				this.salesBillService.update(this.salesBillHeaderDTO).subscribe(res => {
@@ -268,7 +276,7 @@ export class SalesBillFormComponent {
 			item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
 			item.subTotal = item.priceAfterDiscount * item.quantity;
 			this.salesBillHeaderDTO.total += item.subTotal;
-			this.salesBillHeaderDTO.profit += (item.subTotal - (item.lastPurchasingPrice* item.quantity));
+			this.salesBillHeaderDTO.profit += (item.subTotal - (item.lastPurchasingPrice * item.quantity));
 		}
 		this.salesBillHeaderDTO.totalAfterDiscount = parseFloat((this.salesBillHeaderDTO.total - this.salesBillHeaderDTO.discount).toFixed(2));
 		this.salesBillHeaderDTO.vatAmount = parseFloat((this.vatPercentage * this.salesBillHeaderDTO.totalAfterDiscount).toFixed(2))

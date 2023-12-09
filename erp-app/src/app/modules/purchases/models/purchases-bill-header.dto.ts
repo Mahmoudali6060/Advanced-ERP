@@ -24,5 +24,6 @@ export class PurchasesBillHeaderDTO extends AuditDTO {
     remaining: number = 0 | 0;
     isTax: boolean = false;
     purchasesBillDetailList: Array<PurchasesBillDetailsDTO> = Array<PurchasesBillDetailsDTO>();
+    isTemp: boolean = false;
 
 }

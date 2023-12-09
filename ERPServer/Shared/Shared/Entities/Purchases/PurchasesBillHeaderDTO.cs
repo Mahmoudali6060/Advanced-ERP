@@ -27,6 +27,7 @@ namespace Shared.Entities.Purchases
         public decimal Paid { get; set; }
         public decimal Remaining { get; set; }
         public bool IsTax { get; set; }
+        public bool IsTemp { get; set; }
         public string Notes { get; set; }
         public long ClientVendorId { get; set; }
         public long RepresentiveId { get; set; }
@@ -34,6 +35,6 @@ namespace Shared.Entities.Purchases
         public long? CompanyId { get; set; }
 
         public virtual List<PurchasesBillDetailDTO> PurchasesBillDetailList { get; set; }
-       
+
     }
 }

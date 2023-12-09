@@ -16,6 +16,8 @@ import { ReportViewerModule } from '../report-viewer/report-viewer.module';
 import { SalesBillSearchComponent } from './components/sales-bill/sales-bill-search/sales-bill-search.component';
 import { ReportService } from '../report/services/report.service';
 import { RepresentiveService } from '../setup/services/representive.service';
+import { SalesBillTempFormComponent } from './components/sales-bill/sales-bill-temp-form/sales-bill-temp-form.component';
+import { SalesBillTempListComponent } from './components/sales-bill/sales-bill-temp-list/sales-bill-temp-list.component';
 
 @NgModule({
   imports: [
@@ -33,7 +35,9 @@ import { RepresentiveService } from '../setup/services/representive.service';
   declarations: [
     SalesBillListComponent,
     SalesBillFormComponent,
-    SalesBillSearchComponent
+    SalesBillSearchComponent,
+    SalesBillTempFormComponent,
+    SalesBillTempListComponent
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

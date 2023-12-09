@@ -45,7 +45,8 @@ export class PurchasesBillFormComponent {
 	selectedVendor: ClientVendorDTO = new ClientVendorDTO();
 	vatPercentage: number = 0;
 	numberOfProducts: number = 1;
-
+	@Input() isTemp: boolean = false;
+	isTransfereToBill: boolean = false;
 	constructor(
 		private purchasesBillService: PurchasesBillService,
 		private productService: ProductService,
@@ -63,6 +64,7 @@ export class PurchasesBillFormComponent {
 	}
 
 	ngOnInit() {
+		this.purchasesBillHeaderDTO.isTemp = this.isTemp;
 		this.imageSrc = "assets/images/icon/avatar-big-01.jpg";
 		this.purchaseHeaderId = this.route.snapshot.paramMap.get('id');
 		if (this.purchaseHeaderId) {
@@ -165,6 +167,8 @@ export class PurchasesBillFormComponent {
 	}
 
 	save(isPrint: boolean, form?: NgForm) {
+		if (this.isTransfereToBill == true)
+			this.purchasesBillHeaderDTO.isTemp = false;
 		if (this.validation(this.purchasesBillHeaderDTO)) {
 			if (this.purchasesBillHeaderDTO.id) {
 				this.purchasesBillService.update(this.purchasesBillHeaderDTO).subscribe(res => {
