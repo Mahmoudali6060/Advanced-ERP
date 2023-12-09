@@ -173,10 +173,19 @@
 
                                     </table>
                                 </div>
-                                <button class="element-floating item ml-2" data-toggle="tooltip" data-placement="top"
-                                    title="Add new row" type="button" (click)="addNewRow()">
-                                    <i class="fa fa-plus-square"></i>
-                                </button>
+                                <div class="element-floating item ml-2">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input [disabled]="viewMode" [(ngModel)]="numberOfProducts"  type="number" id="numberOfProducts"
+                                                class="form-control text-sm" name="numberOfProducts" aria-describedby="helpId"
+                                                (keyup.enter)="addNewRow()">
+                                            <div class="input-group-addon" data-toggle="tooltip" data-placement="top"
+                                                title="Add new row" (click)="addNewRow()">
+                                                <i class="fa fa-plus-square"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>

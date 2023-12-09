@@ -308,3 +308,7 @@ i:hover {
 .table td, .table th{
     padding: 0.20rem !important;
 }
+
+.text-sm{
+    width: 70px !important;
+}

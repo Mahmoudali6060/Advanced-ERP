@@ -44,6 +44,7 @@ export class PurchasesBillFormComponent {
 	@Input() searchByNumber: boolean = false;
 	selectedVendor: ClientVendorDTO = new ClientVendorDTO();
 	vatPercentage: number = 0;
+	numberOfProducts: number = 1;
 
 	constructor(
 		private purchasesBillService: PurchasesBillService,
@@ -198,10 +199,12 @@ export class PurchasesBillFormComponent {
 	}
 
 	addNewRow() {
-		let lastElement = this.purchasesBillHeaderDTO.purchasesBillDetailList[this.purchasesBillHeaderDTO.purchasesBillDetailList.length - 1];
-		let purchasesBillDetails: PurchasesBillDetailsDTO = new PurchasesBillDetailsDTO();
-		purchasesBillDetails.index = lastElement ? lastElement.index + 1 : 0;
-		this.purchasesBillHeaderDTO.purchasesBillDetailList.push(purchasesBillDetails);
+		for (let i = 0; i < this.numberOfProducts; i++) {
+			let lastElement = this.purchasesBillHeaderDTO.purchasesBillDetailList[this.purchasesBillHeaderDTO.purchasesBillDetailList.length - 1];
+			let purchasesBillDetails: PurchasesBillDetailsDTO = new PurchasesBillDetailsDTO();
+			purchasesBillDetails.index = lastElement ? lastElement.index + 1 : 0;
+			this.purchasesBillHeaderDTO.purchasesBillDetailList.push(purchasesBillDetails);
+		}
 	}
 
 
@@ -221,7 +224,7 @@ export class PurchasesBillFormComponent {
 		let product = this.productList.find(x => x.id == item.productId);
 		if (product) {
 			item.price = overrideOldData ? product.price : item.price;
-			item.lastPurchasingPrice =product.lastPurchasingPrice;
+			item.lastPurchasingPrice = product.lastPurchasingPrice;
 			item.discount = overrideOldData ? product.purchasingPricePercentage : item.discount;
 
 			item.actualQuantity = product.actualQuantity;

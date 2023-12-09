@@ -15,6 +15,7 @@ namespace Shared.Entities.Sales
         public string Number { get; set; }
         public string Date { get; set; }
         public decimal Total { get; set; }
+        public decimal? Profit { get; set; }
         public decimal Discount { get; set; }
         public decimal OtherExpenses { get; set; }
         public decimal TotalAfterDiscount { get; set; }

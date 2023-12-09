@@ -24,6 +24,7 @@ export class SalesBillHeaderDTO extends AuditDTO {
     totalAmount: number = 0 | 0;
     paid: number = 0 | 0;
     remaining: number = 0 | 0;
+    profit: number = 0 | 0;
     isTax: boolean = false;
     salesBillDetailList: Array<SalesBillDetailsDTO> = Array<SalesBillDetailsDTO>();
 

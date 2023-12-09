@@ -51,6 +51,7 @@ export class SalesBillFormComponent {
 	isReportOpened: boolean;
 	//#endregion
 	vatPercentage: number = 0;
+	numberOfProducts: number = 1;
 	constructor(
 		private salesBillService: SalesBillService,
 		private productService: ProductService,
@@ -199,10 +200,12 @@ export class SalesBillFormComponent {
 	}
 
 	addNewRow() {
-		let lastElement = this.salesBillHeaderDTO.salesBillDetailList[this.salesBillHeaderDTO.salesBillDetailList.length - 1];
-		let salesBillDetails: SalesBillDetailsDTO = new SalesBillDetailsDTO();
-		salesBillDetails.index = lastElement ? lastElement.index + 1 : 0;
-		this.salesBillHeaderDTO.salesBillDetailList.push(salesBillDetails);
+		for (let i = 0; i < this.numberOfProducts; i++) {
+			let lastElement = this.salesBillHeaderDTO.salesBillDetailList[this.salesBillHeaderDTO.salesBillDetailList.length - 1];
+			let salesBillDetails: SalesBillDetailsDTO = new SalesBillDetailsDTO();
+			salesBillDetails.index = lastElement ? lastElement.index + 1 : 0;
+			this.salesBillHeaderDTO.salesBillDetailList.push(salesBillDetails);
+		}
 	}
 
 	onProductChange(item: SalesBillDetailsDTO, event: any) {
@@ -260,10 +263,12 @@ export class SalesBillFormComponent {
 
 	updateTotal() {
 		this.salesBillHeaderDTO.total = 0;
+		this.salesBillHeaderDTO.profit = 0;
 		for (let item of this.salesBillHeaderDTO.salesBillDetailList) {
-			item.priceAfterDiscount = parseFloat((item.lastPurchasingPrice - (item.discount / 100) * item.lastPurchasingPrice).toFixed(2));
+			item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
 			item.subTotal = item.priceAfterDiscount * item.quantity;
 			this.salesBillHeaderDTO.total += item.subTotal;
+			this.salesBillHeaderDTO.profit += (item.subTotal - (item.lastPurchasingPrice* item.quantity));
 		}
 		this.salesBillHeaderDTO.totalAfterDiscount = parseFloat((this.salesBillHeaderDTO.total - this.salesBillHeaderDTO.discount).toFixed(2));
 		this.salesBillHeaderDTO.vatAmount = parseFloat((this.vatPercentage * this.salesBillHeaderDTO.totalAfterDiscount).toFixed(2))
