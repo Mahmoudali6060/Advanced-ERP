@@ -553,6 +553,8 @@
   "AccountTypeEnum": {
     "Clients": "Clients",
     "Vendors": "Vendors",
+    "Loans": "Loans",
+    "Guarantee":"Guarantee",
     "Other": "Other"
   },
   "PaymentMethodEnum": {

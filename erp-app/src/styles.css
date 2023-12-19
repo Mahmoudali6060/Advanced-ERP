@@ -312,3 +312,7 @@ i:hover {
 .text-sm{
     width: 70px !important;
 }
+
+.text-center{
+    text-align: center;
+}

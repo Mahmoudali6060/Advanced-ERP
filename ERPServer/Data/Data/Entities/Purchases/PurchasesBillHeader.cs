@@ -1,4 +1,5 @@
-﻿using Data.Entities.Setup;
+﻿using Data.Entities.Accouting;
+using Data.Entities.Setup;
 using Data.Entities.Shared;
 using Data.Entities.UserManagement;
 using System;
@@ -29,6 +30,7 @@ namespace Data.Entities.Purchases
         public decimal Remaining { get; set; }
         public bool IsTax { get; set; }
         public bool IsTemp { get; set; }
+        public bool IsCancel { get; set; }
         public string Notes { get; set; }
         public long ClientVendorId { get; set; }
         public long RepresentiveId { get; set; }
@@ -36,6 +38,7 @@ namespace Data.Entities.Purchases
         public virtual List<PurchasesBillDetail> PurchasesBillDetailList { get; set; }
         public long? CompanyId { get; set; }
         public virtual Company Company { get; set; }
-
+        public long? TreasuryId { get; set; }
+        public virtual Treasury Treasury { get; set; }
     }
 }

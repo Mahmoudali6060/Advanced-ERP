@@ -1,4 +1,5 @@
-﻿using Data.Entities.Setup;
+﻿using Data.Entities.Accouting;
+using Data.Entities.Setup;
 using Data.Entities.Shared;
 using Data.Entities.UserManagement;
 using System;
@@ -31,10 +32,14 @@ namespace Data.Entities.Sales
         public decimal Remaining { get; set; }
         public bool IsTax { get; set; }
         public bool IsTemp { get; set; }
+        public bool IsCancel { get; set; }
+
         public virtual ClientVendor ClientVendor { get; set; }
         public virtual List<SalesBillDetail> SalesBillDetailList { get; set; }
         public long? CompanyId { get; set; }
         public virtual Company Company { get; set; }
 
+        public long? TreasuryId { get; set; }
+        public virtual Treasury Treasury { get; set; }
     }
 }

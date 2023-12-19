@@ -13,6 +13,10 @@ using Entities.Account;
 using Microsoft.EntityFrameworkCore;
 using MimeKit;
 using Shared.Entities.Setup;
+using Data.Entities.Accouting;
+using Shared.Entities.Sales;
+using Shared.Enums;
+using Data.Entities.Sales;
 
 namespace DataService.Setup.Handlers
 {
@@ -112,9 +116,16 @@ namespace DataService.Setup.Handlers
         #region Command
         public async Task<long> Add(PurchasesBillHeaderDTO entity)
         {
-            #region Update Product
+            #region Add PurchasesBillHeader
+            var purchasesBillHeader = _mapper.Map<PurchasesBillHeader>(entity);
+            purchasesBillHeader.Treasury = MapTreasury(entity);
+            var result = await _unitOfWork.PurchasesBillHeaderDAL.Add(purchasesBillHeader);
+            #endregion
+
             if (entity.IsTemp == false)
             {
+                #region Update Product
+
                 foreach (var item in entity.PurchasesBillDetailList)
                 {
                     var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
@@ -122,14 +133,10 @@ namespace DataService.Setup.Handlers
                     product.LastPurchasingPrice = item.PriceAfterDiscount;
                     await _unitOfWork.ProductDAL.Update(product);
                 }
-            }
-            #endregion
+                #endregion
 
-            var result = await _unitOfWork.PurchasesBillHeaderDAL.Add(_mapper.Map<PurchasesBillHeader>(entity));
+                #region Update Balance
 
-            #region Update Balance
-            if (entity.IsTemp == false)
-            {
                 var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
                 if (clientVendor != null)
                 {
@@ -138,8 +145,8 @@ namespace DataService.Setup.Handlers
 
                     await _unitOfWork.ClientVendorDAL.Update(clientVendor);
                 }
+                #endregion
             }
-            #endregion
 
             await _unitOfWork.CompleteAsync();
             return result;
@@ -148,7 +155,7 @@ namespace DataService.Setup.Handlers
 
         public async Task<long> Update(PurchasesBillHeaderDTO entity)
         {
-
+            #region Update PurchasesBillHeader
             var exsitedPurhaseDetailsList = await _unitOfWork.PurchasesBillDetailDAL.GetAllByHeaderId(entity.Id);
 
             await _unitOfWork.PurchasesBillDetailDAL.DeleteRange(exsitedPurhaseDetailsList.ToList());
@@ -162,25 +169,25 @@ namespace DataService.Setup.Handlers
             entity.PurchasesBillDetailList = null;
 
             var result = await _unitOfWork.PurchasesBillHeaderDAL.Update(_mapper.Map<PurchasesBillHeader>(entity));
+            #endregion
 
-            #region Update Product 
             if (entity.IsTemp == false)
             {
+                #region Update Product 
+
                 foreach (var item in tempPurchasesBillDetailList)
                 {
                     var exsitedPurchaseDetails = exsitedPurhaseDetailsList.SingleOrDefault(x => x.Id == item.Id);
-                    decimal quantity = exsitedPurchaseDetails != null ?  exsitedPurchaseDetails.Quantity : item.Quantity;
+                    decimal quantity = exsitedPurchaseDetails != null ? exsitedPurchaseDetails.Quantity : item.Quantity;
                     var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
                     product.ActualQuantity = product.ActualQuantity + quantity;
                     product.LastPurchasingPrice = item.PriceAfterDiscount;
                     await _unitOfWork.ProductDAL.Update(product);
                 }
-            }
-            #endregion
+                #endregion
 
-            #region Update Balance
-            if (entity.IsTemp == false)
-            {
+                #region Update Balance
+
                 var exsitedPurhaseHeader = await _unitOfWork.PurchasesBillHeaderDAL.GetById(entity.Id);
                 exsitedPurhaseHeader.ClientVendor = null;
                 var existedClientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
@@ -190,9 +197,15 @@ namespace DataService.Setup.Handlers
                     existedClientVendor.Credit += entity.Paid - exsitedPurhaseHeader.Paid;
                     await _unitOfWork.ClientVendorDAL.Update(existedClientVendor);
                 }
-            }
-            #endregion
+                #endregion
 
+                #region Update Treasury
+                var treasury = await _unitOfWork.TreasuryDAL.GetById(entity.TreasuryId.Value);
+                treasury.Credit = entity.TotalAfterDiscount;
+                treasury.Debit = entity.Paid;
+                await _unitOfWork.TreasuryDAL.Update(treasury);
+                #endregion
+            }
             await _unitOfWork.CompleteAsync();
             return result;
         }
@@ -201,11 +214,10 @@ namespace DataService.Setup.Handlers
         {
             PurchasesBillHeader entity = await _unitOfWork.PurchasesBillHeaderDAL.GetById(id);
             entity.ClientVendor = null;//To remove tracking
-            var result = await _unitOfWork.PurchasesBillHeaderDAL.Delete(entity);
 
-            #region Update Product
             if (entity.IsTemp == false)
             {
+                #region Update Product
                 foreach (var item in entity.PurchasesBillDetailList)
                 {
                     var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
@@ -213,12 +225,9 @@ namespace DataService.Setup.Handlers
                     product.Price = item.Price;
                     await _unitOfWork.ProductDAL.Update(product);
                 }
-            }
-            #endregion
+                #endregion
 
-            #region Update Balance
-            if (entity.IsTemp == false)
-            {
+                #region Update Balance
                 var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
                 if (clientVendor != null)
                 {
@@ -226,11 +235,19 @@ namespace DataService.Setup.Handlers
                     clientVendor.Credit -= entity.Paid;
                     await _unitOfWork.ClientVendorDAL.Update(clientVendor);
                 }
-            }
-            #endregion
+                #endregion
 
+                #region Update Treasury
+                var treasury = await _unitOfWork.TreasuryDAL.GetById(entity.TreasuryId.Value);
+                treasury.IsCancel = true;
+                await _unitOfWork.TreasuryDAL.Update(treasury);
+                #endregion
+
+            }
+            entity.IsCancel = true;
+            var result = await _unitOfWork.PurchasesBillHeaderDAL.Update(entity);
             await _unitOfWork.CompleteAsync();
-            return result;
+            return result > 0;
         }
         #endregion
 
@@ -254,6 +271,24 @@ namespace DataService.Setup.Handlers
             }
 
             return purchasesBillHeaderList;
+        }
+
+
+        private Treasury MapTreasury(PurchasesBillHeaderDTO entity)
+        {
+            return new Treasury()
+            {
+                Date = DateTime.Parse(entity.Date),
+                AccountTypeId = AccountTypeEnum.Vendors,
+                ClientVendorId = entity.ClientVendorId,
+                BeneficiaryName = entity.ClientVendorName,
+                //TransactionTypeId = TransactionTypeEnum.Incoming,
+                PaymentMethodId = PaymentMethodEnum.Cash,
+                Debit = entity.Paid,
+                Credit = entity.TotalAfterDiscount,
+                RefNo = entity.Number,
+                Notes = entity.Notes
+            };
         }
 
         #endregion

@@ -9,11 +9,10 @@ export class TreasuryDTO extends BaseDTO {
     accountTypeId: AccountTypeEnum;
     clientVendorId: number | null;
     beneficiaryName: string | undefined;
-    transactionTypeId: TransactionTypeEnum;
+    //transactionTypeId: TransactionTypeEnum;
     paymentMethodId: PaymentMethodEnum;
-    amount: number;
+    debit: number;
+    credit: number;
     refNo: string;
-    bankAccountNo: string;
-    checkNo: string;
     notes: string;
 }

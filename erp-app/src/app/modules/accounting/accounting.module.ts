@@ -8,6 +8,7 @@ import { AccountingRoutingModule } from './accounting-routing.module';
 import { TreasuryFormComponent } from './components/treasury/treasury-form/treasury-form.component';
 import { TreasuryListComponent } from './components/treasury/treasury-list/treasury-list.component';
 import { ClientVendorService } from '../setup/services/client-vendor.service';
+import { ReportService } from '../report/services/report.service';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { ClientVendorService } from '../setup/services/client-vendor.service';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     TreasuryService,
-    ClientVendorService
+    ClientVendorService,
+    ReportService
   ]
 })
 export class AccountingModule {

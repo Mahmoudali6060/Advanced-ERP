@@ -4,6 +4,7 @@ using Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231219144348_UpdateTreasuryV2")]
+    partial class UpdateTreasuryV2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,9 +60,6 @@ namespace Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<bool?>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsCancel")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("Modified")
@@ -179,9 +178,6 @@ namespace Data.Migrations
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsCancel")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsTax")
                         .HasColumnType("bit");
 
@@ -236,9 +232,6 @@ namespace Data.Migrations
                     b.Property<decimal>("TotalDiscount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<long?>("TreasuryId")
-                        .HasColumnType("bigint");
-
                     b.Property<decimal>("VatAmount")
                         .HasColumnType("decimal(18,2)");
 
@@ -251,8 +244,6 @@ namespace Data.Migrations
                     b.HasIndex("CreatedByProfileId");
 
                     b.HasIndex("ModifiedByProfileId");
-
-                    b.HasIndex("TreasuryId");
 
                     b.ToTable("PurchasesBillHeader");
                 });
@@ -342,9 +333,6 @@ namespace Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<bool?>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsCancel")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsTax")
@@ -1388,10 +1376,6 @@ namespace Data.Migrations
                         .WithMany()
                         .HasForeignKey("ModifiedByProfileId");
 
-                    b.HasOne("Data.Entities.Accouting.Treasury", "Treasury")
-                        .WithMany()
-                        .HasForeignKey("TreasuryId");
-
                     b.Navigation("ClientVendor");
 
                     b.Navigation("Company");
@@ -1399,8 +1383,6 @@ namespace Data.Migrations
                     b.Navigation("CreatedByProfile");
 
                     b.Navigation("ModifiedByProfile");
-
-                    b.Navigation("Treasury");
                 });
 
             modelBuilder.Entity("Data.Entities.Sales.SalesBillDetail", b =>

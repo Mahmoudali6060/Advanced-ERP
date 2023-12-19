@@ -15,6 +15,7 @@ import { PaymentMethodEnum } from 'src/app/shared/enums/payment-method.enum';
 import { TransactionTypeEnum } from 'src/app/shared/enums/transaction-type.enum';
 import { HelperService } from 'src/app/shared/services/helper.service';
 import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
+import { ReportService } from 'src/app/modules/report/services/report.service';
 
 @Component({
 	selector: 'app-treasury-list',
@@ -37,12 +38,16 @@ export class TreasuryListComponent {
 	accountTypeEnum = AccountTypeEnum;
 	transactionTypeEnum = TransactionTypeEnum;
 	paymentMethodEnum = PaymentMethodEnum;
+	incomingTotal: number = 0;
+	outcomingTotal: number = 0;
+
 	constructor(private treasuryService: TreasuryService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
 		private translate: TranslateService,
 		private helperService: HelperService,
-		private clientVendorService: ClientVendorService) {
+		private clientVendorService: ClientVendorService,
+		private reportService: ReportService) {
 
 	}
 
@@ -121,4 +126,25 @@ export class TreasuryListComponent {
 
 	}
 
+	print() {
+		this.incomingTotal = 0;
+		this.outcomingTotal = 0;
+
+		this.searchCriteriaDTO.pageSize = 1000000;
+		this.treasuryService.getAll(this.searchCriteriaDTO).subscribe((res: any) => {
+			this.treasuryList = res.list;
+			for (let item of this.treasuryList) {
+				this.incomingTotal += item.debit;
+				this.outcomingTotal += item.credit;
+			}
+
+			setTimeout(() => {
+				let div: any = document.getElementById('treasury-list');
+				this.reportService.print(this.translate.instant("Reports.Treasury"), div);
+				this.searchCriteriaDTO.pageSize = 20;
+			}, 50);
+
+		});
+
+	}
 }

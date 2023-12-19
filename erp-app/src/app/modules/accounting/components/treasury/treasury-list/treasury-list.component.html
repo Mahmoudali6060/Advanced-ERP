@@ -12,6 +12,9 @@
                     class="au-btn au-btn-icon au-btn--black au-btn--small">
                     <i class="zmdi zmdi-plus"></i>{{'Treasury.AddTreasury' |translate}}
                 </button>
+                <button (click)="print()" type="button" class="btn btn-outline-success mr-1">
+                    <i class="fa fa-print"></i>{{'General.Print' |translate}}
+                </button>
             </div>
 
         </div>
@@ -72,7 +75,7 @@
                                         </ng-select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <!-- <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label"
                                             for="transactionTypeId">{{'General.TransactionType'|translate}}</label>
@@ -83,7 +86,7 @@
                                             </ng-option>
                                         </ng-select>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -104,7 +107,7 @@
                                             aria-describedby="helpId">
                                     </div>
                                 </div>
-                                
+
                             </div>
 
                             <div class="row">
@@ -130,12 +133,12 @@
                         <th class="table-header-fc">{{'General.Date' |translate}}</th>
                         <th class="table-header-fc">{{'General.AccountType' |translate}}</th>
                         <th class="table-header-fc">{{'General.BeneficiaryName' |translate}}</th>
-                        <th class="table-header-fc">{{'General.TransactionType' |translate}}</th>
                         <th class="table-header-fc">{{'General.PaymentMethod' |translate}}</th>
-                        <th class="table-header-fc">{{'General.Amount' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Debit' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Credit' |translate}}</th>
                         <th class="table-header-fc">{{'General.RefNo' |translate}}</th>
-                        <th class="table-header-fc">{{'General.BankAccountNo' |translate}}</th>
-                        <th class="table-header-fc">{{'General.CheckNo' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Notes' |translate}}</th>
+
                         <th></th>
                     </tr>
                 </thead>
@@ -146,16 +149,17 @@
                             {{'AccountTypeEnum.'+accountTypeEnum[item.accountTypeId] |translate}}
                         </td>
                         <td>{{item.beneficiaryName}}</td>
-                        <td>
+                        <!-- <td>
                             {{'TransactionTypeEnum.'+transactionTypeEnum[item.transactionTypeId] |translate}}
-                        </td>
+                        </td> -->
                         <td>
                             {{'PaymentMethodEnum.'+paymentMethodEnum[item.paymentMethodId] |translate}}
                         </td>
-                        <td>{{item.amount}}</td>
+                        <td>{{item.debit}}</td>
+                        <td>{{item.credit}}</td>
                         <td>{{item.refNo}}</td>
-                        <td>{{item.bankAccountNo}}</td>
-                        <td>{{item.checkNo}}</td>
+                        <td>{{item.notes}}</td>
+
                         <td>
                             <div class="table-data-feature">
                                 <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
@@ -179,4 +183,71 @@
         </div>
         <!-- END DATA TABLE -->
     </div>
+</div>
+
+
+
+
+<div id="treasury-list" style="display: none;">
+    <br>
+    <br>
+    <br>
+    <h2 class="text-center">تقرير الخزينة</h2>
+    <table>
+        <thead>
+            <tr>
+                <th class="table-header-fc">{{'General.Date' |translate}}</th>
+                <th class="table-header-fc">{{'General.AccountType' |translate}}</th>
+                <th class="table-header-fc">{{'General.BeneficiaryName' |translate}}</th>
+                <th class="table-header-fc">{{'General.PaymentMethod' |translate}}</th>
+                <th class="table-header-fc">{{'General.Debit' |translate}}</th>
+                <th class="table-header-fc">{{'General.Credit' |translate}}</th>
+                <th class="table-header-fc">{{'General.RefNo' |translate}}</th>
+                <th class="table-header-fc">{{'General.Notes' |translate}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="tr-shadow" *ngFor="let item of treasuryList">
+                <td>{{item.date}}</td>
+                <td>
+                    {{'AccountTypeEnum.'+accountTypeEnum[item.accountTypeId] |translate}}
+                </td>
+                <td>{{item.beneficiaryName}}</td>
+
+                <td>
+                    {{'PaymentMethodEnum.'+paymentMethodEnum[item.paymentMethodId] |translate}}
+                </td>
+                <td>{{item.debit}}</td>
+                <td>{{item.credit}}</td>
+                <td>{{item.refNo}}</td>
+                <td>{{item.notes}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-6">
+            <table style="background-color: white !important" border="0">
+                <tr>
+                    <td class="text-right">إجمالي الواردات </td>
+                    <td class="text-center text-bold">{{incomingTotal}} </td>
+                    <!-- <td class="text-left">Total</td> -->
+                </tr>
+                <tr>
+                    <td class="text-right">إجمالي الصادرات</td>
+                    <td class="text-center text-bold">{{outcomingTotal}}</td>
+                    <!-- <td class="text-left">OtherExpenses</td> -->
+                </tr>
+                <tr>
+                    <td class="text-right">رصيد الخزينة</td>
+                    <td class="text-center text-bold">{{incomingTotal-outcomingTotal}}</td>
+                    <!-- <td class="text-left">Discount</td> -->
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
 </div>

@@ -144,7 +144,7 @@
     "BankAccountNo": "رقم الحساب البنكي",
     "CheckNo": "رقم الشيك",
     "BeneficiaryName": "اسم الشخص المستفيد",
-    "TransfereToBill":"تحويل الى فاتورة"
+    "TransfereToBill": "تحويل الى فاتورة"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -570,7 +570,10 @@
   "AccountTypeEnum": {
     "Clients": "العملاء",
     "Vendors": "الموردين",
+    "Loans": "سلف",
+    "Guarantee":"عهدة",
     "Other": "حسابات أخرى"
+    
   },
   "PaymentMethodEnum": {
     "Cash": "نقدي",

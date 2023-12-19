@@ -8,6 +8,8 @@ namespace Shared.Enums
     {
         Clients = 1,
         Vendors = 2,
-        Others = 3
+        Loans = 3,
+        Guarantee = 4,
+        Others = 5
     }
 }
