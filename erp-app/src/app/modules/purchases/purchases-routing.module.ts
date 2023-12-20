@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'purchases-bill-list', component: PurchasesBillListComponent },
   { path: 'purchases-bill-form', component: PurchasesBillFormComponent },
   { path: 'purchases-bill-form/:id', component: PurchasesBillFormComponent },
+  { path: 'purchases-bill-form-view/:id', component: PurchasesBillFormComponent },
   { path: 'purchases-bill-search', component: PurchasesBillSearchComponent },
   { path: 'purchases-bill-temp-form', component: PurchasesBillTempFormComponent },
   { path: 'purchases-bill-temp-form/:id', component: PurchasesBillTempFormComponent },

@@ -8,14 +8,15 @@
                     <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
             </div>
             <div class="table-data__tool-right">
-                <button [routerLink]="['/sales-bill/sales-bill-form']"  class="au-btn au-btn-icon au-btn--black au-btn--small">
+                <button [routerLink]="['/sales-bill/sales-bill-form']"
+                    class="au-btn au-btn-icon au-btn--black au-btn--small">
                     <i class="zmdi zmdi-plus"></i>{{'Sales.AddSalesBill' |translate}}
                 </button>
             </div>
         </div>
-     
-         <!--Filters-->
-         <div class="row" *ngIf="showFilterControls">
+
+        <!--Filters-->
+        <div class="row" *ngIf="showFilterControls">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">{{'General.Filters'|translate}}</div>
@@ -26,8 +27,7 @@
                                     <div class="form-group">
                                         <label class="form-label"
                                             for="form3Example3c">{{'General.Status'|translate}}</label>
-                                        <ng-select name="drivers" id="drivers"
-                                            [(ngModel)]="searchCriteriaDTO.isActive">
+                                        <ng-select name="drivers" id="drivers" [(ngModel)]="searchCriteriaDTO.isActive">
                                             <ng-option value=''> {{'General.All' |translate}}</ng-option>
                                             <ng-option value=true> {{'General.Active' |translate}}</ng-option>
                                             <ng-option value=false> {{'General.InActive' |translate}}</ng-option>
@@ -88,20 +88,27 @@
                         <td>
                             <div class="table-data-feature">
                                 <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="View"
+                                    [routerLink]="['/sales-bill/sales-bill-form-view/'+item.id]">
+                                    <i class="zmdi zmdi-eye"></i>
+                                </button>
+
+                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Edit" [routerLink]="['/sales-bill/sales-bill-form/'+item.id]">
                                     <i class="zmdi zmdi-edit"></i>
                                 </button>
                                 <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Delete" (click)="openConfirmationDialog(item)">
                                     <i class="zmdi zmdi-delete"></i>
-                                </button> 
+                                </button>
                             </div>
                         </td>
                     </tr>
                 </tbody>
-       
+
             </table>
-            <app-pagination (pageChange)="onPageChange($event)" [totalRecordsCount]="total" [recordsPerPage]="searchCriteriaDTO.pageSize" *ngIf="salesBillHeaderList">
+            <app-pagination (pageChange)="onPageChange($event)" [totalRecordsCount]="total"
+                [recordsPerPage]="searchCriteriaDTO.pageSize" *ngIf="salesBillHeaderList">
             </app-pagination>
         </div>
         <!-- END DATA TABLE -->

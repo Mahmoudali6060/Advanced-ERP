@@ -69,7 +69,7 @@ export class PurchasesBillFormComponent {
 		this.purchaseHeaderId = this.route.snapshot.paramMap.get('id');
 		if (this.purchaseHeaderId) {
 			this.getPurchasesBillById(this.purchaseHeaderId);
-			if (this.router.url.includes('/view/')) {
+			if (this.router.url.includes('view')) {
 				this.viewMode = true;
 			}
 		}

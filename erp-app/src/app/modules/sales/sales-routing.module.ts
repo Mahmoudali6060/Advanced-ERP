@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'sales-bill-list', component: SalesBillListComponent },
   { path: 'sales-bill-form', component: SalesBillFormComponent },
   { path: 'sales-bill-form/:id', component: SalesBillFormComponent },
+  { path: 'sales-bill-form-view/:id', component: SalesBillFormComponent },
   { path: 'sales-bill-search', component: SalesBillSearchComponent },
   { path: 'sales-bill-temp-form', component: SalesBillTempFormComponent },
   { path: 'sales-bill-temp-form/:id', component: SalesBillTempFormComponent },

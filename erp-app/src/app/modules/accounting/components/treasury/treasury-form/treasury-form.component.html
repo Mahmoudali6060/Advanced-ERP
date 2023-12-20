@@ -68,7 +68,7 @@
                                         </ng-select>
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="debit" class=" form-control-label">{{'General.Debit'
@@ -119,6 +119,9 @@
                     </div>
                 </div>
                 <div class="flex-container p-3">
+                    <button (click)="print()" type="button" class="btn btn-outline-success mr-1">
+                        <i class="fa fa-print"></i>{{'General.Print' |translate}}
+                    </button>
                     <button type="submit" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
                         <i class="fa fa-dot-circle-o"></i>{{'General.SaveChanges' |translate}}
                     </button>
@@ -130,4 +133,83 @@
             </div>
         </div>
     </form>
+</div>
+
+
+<div id="treasury-form" style="display: none;">
+    <br>
+    <br>
+    <br>
+    <h2 class="text-center"> إيصال إستلام نقدية</h2>
+    <!-- <h5 class="text-center">رقم:{{treasuryDTO.number}}</h5> -->
+    <h6 class="text-center">التاريخ:{{treasuryDTO.date}}</h6>
+    <br>
+    <br>
+    <div class="row">
+
+        <div class="col-12">
+            <table class="table-report" style="background-color: white !important;border: none !important" border="0">
+
+                <tr *ngIf="treasuryDTO.debit>0">
+                    <td class="text-right"> استلمنا من السيد </td>
+                    <td class="text-center text-bold"> {{treasuryDTO.beneficiaryName}} </td>
+                    <td class="text-left">We received from</td>
+                </tr>
+                <tr *ngIf="treasuryDTO.credit>0">
+                    <td class="text-right"> اصرفوا الى السيد </td>
+                    <td class="text-center text-bold"> {{treasuryDTO.beneficiaryName}} </td>
+                    <td class="text-left">Pay for</td>
+                </tr>
+                <tr>
+                    <td class="text-right">مبلغ </td>
+                    <td class="text-center text-bold">{{ treasuryDTO.debit>0 ?treasuryDTO.debit:treasuryDTO.credit}}
+                        جنيه مصري </td>
+                    <td class="text-left">Amount</td>
+                </tr>
+                <tr>
+                    <td class="text-right">وذلك مقابل </td>
+                    <td class="text-center text-bold">{{treasuryDTO.notes}} </td>
+                    <td class="text-left">Payment Against</td>
+                </tr>
+                <tr>
+                    <td class="text-right"> طريقة الدفع </td>
+                    <td class="text-center text-bold">{{treasuryDTO.notes}} </td>
+                    <td class="text-left">Payment Method</td>
+                </tr>
+                <tr>
+                    <td class="text-right"> الرقم المرجعي </td>
+                    <td class="text-center text-bold">{{treasuryDTO.refNo}} </td>
+                    <td class="text-left">Reference No </td>
+                </tr>
+
+            </table>
+        </div>
+
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+
+        <div class="col-12">
+            <table style="background-color: white !important;border: none !important" border="0">
+
+                <tr>
+                    <td> المستلم</td>
+                    <td>أمين الصندوق</td>
+                </tr>
+                <tr>
+                    <td>...................</td>
+                    <td>..................</td>
+                </tr>
+
+
+            </table>
+        </div>
+
+    </div>
+
 </div>

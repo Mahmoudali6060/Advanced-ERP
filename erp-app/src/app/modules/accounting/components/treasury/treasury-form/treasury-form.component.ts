@@ -16,6 +16,7 @@ import { AccountTypeEnum } from 'src/app/shared/enums/account-type.enum';
 import { PaymentMethodEnum } from 'src/app/shared/enums/payment-method.enum';
 import { TransactionTypeEnum } from 'src/app/shared/enums/transaction-type.enum';
 import { ClientVendorDTO, ClientVendorTypeEnum } from 'src/app/modules/setup/models/client-vendor.dto';
+import { ReportService } from 'src/app/modules/report/services/report.service';
 
 @Component({
 	selector: 'app-treasury-form',
@@ -38,6 +39,8 @@ export class TreasuryFormComponent {
 		private toasterService: ToastrService,
 		private _configService: ConfigService,
 		private helperService: HelperService,
+		private reportService: ReportService,
+		private translate: TranslateService,
 		private router: Router) {
 	}
 
@@ -140,5 +143,9 @@ export class TreasuryFormComponent {
 		}
 	}
 
+	print() {
+		let div: any = document.getElementById('treasury-form');
+		this.reportService.print(this.translate.instant("Reports.TreasuryForm"), div);
+	}
 
 }

@@ -9,18 +9,18 @@ table {
 
 
 /* Zebra striping */
-tr:nth-of-type(odd) {
+.table-report  tr:nth-of-type(odd) {
     background: #eee !important;
 }
 
-th {
+.table-report th {
     background: #bec5c5 !important;
     color: black;
     font-weight: bold;
 }
 
-td,
-th {
+.table-report td,
+.table-report th {
     padding: 10px;
     border: 1px solid #ccc;
     text-align: right;

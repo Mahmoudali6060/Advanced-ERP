@@ -88,6 +88,10 @@
                         <td>
                             <div class="table-data-feature">
                                 <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="View" [routerLink]="['/purchases-bill/purchases-bill-form-view/'+item.id]">
+                                    <i class="zmdi zmdi-eye"></i>
+                                </button> 
+                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Edit" [routerLink]="['/purchases-bill/purchases-bill-form/'+item.id]">
                                     <i class="zmdi zmdi-edit"></i>
                                 </button>

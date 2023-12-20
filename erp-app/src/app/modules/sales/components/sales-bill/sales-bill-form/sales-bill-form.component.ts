@@ -83,7 +83,7 @@ export class SalesBillFormComponent {
 
 		if (this.salesHeaderId) {
 			this.getSalesBillById(this.salesHeaderId);
-			if (this.router.url.includes('/view/')) {
+			if (this.router.url.includes('view')) {
 				this.viewMode = true;
 			}
 		}
