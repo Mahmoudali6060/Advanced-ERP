@@ -8,6 +8,8 @@ namespace Shared.Entities.Setup
     public class ProductSearchDTO : Paging
     {
         public bool? IsActive { get; set; }
+        public bool? IsMinusQuantity { get; set; }
+        public bool? IsLowQuantity { get; set; }
         public string Code { get; set; }
         public string BarCode { get; set; }
         public string Name { get; set; }
@@ -17,5 +19,6 @@ namespace Shared.Entities.Setup
         public int LowQuantity { get; set; }
         public int HighQuantity { get; set; }
         public long? CategoryId { get; set; }
+
     }
 }

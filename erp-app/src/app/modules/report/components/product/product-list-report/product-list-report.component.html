@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- DATA TABLE -->
+        <h3 class="title-5 m-b-35">{{'Product.Title' |translate}}</h3>
+        <div class="table-data__tool">
+            <button (click)="print()" type="button" class="btn btn-outline-success mr-1">
+                <i class="fa fa-print"></i>{{'General.Print' |translate}}
+            </button>
+        </div>
+
+        <div class="table-report" id="product-list">
+            <table class="table table-data2">
+                <thead class="table-header-bc">
+                    <tr>
+                        <th class="table-header-fc">{{'General.Status' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Category' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Code' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Name' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Price' |translate}}</th>
+                        <th class="table-header-fc">{{'Product.SellingPricePercentage' |translate}}</th>
+                        <th class="table-header-fc">{{'Product.PurchasingPricePercentage' |translate}}</th>
+                        <th class="table-header-fc">{{'General.ActualQuantity' |translate}}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tr-shadow" *ngFor="let item of productList">
+                        <td>
+                            <span class="status active-status" *ngIf="item.isActive">
+                                {{'General.Active' |translate}}
+                            </span>
+                            <span class="status in-active-status" *ngIf="!item.isActive">
+                                {{'General.InActive' |translate}}
+                            </span>
+                        </td>
+                        <!-- <td>
+                            <img *ngIf="item.imageUrl" src="{{serverUrl}}wwwroot/Images/Products/{{item.imageUrl}}"
+                                class="image img-cir img-40 img-fluid">
+                            <img class="image img-cir img-40 img-fluid" *ngIf="!item.imageUrl"
+                                src="assets/images/icon/avatar-big-01.jpg" />
+                        </td> -->
+                        <td>{{item.categoryName}}</td>
+                        <td>{{item.code}}</td>
+                        <td class="cell-width-26">{{item.name}}</td>
+                        <td>
+                            {{item.price}}
+                        </td>
+                        <td>
+                            {{item.sellingPricePercentage}}
+                        </td>
+                        <td>
+                            {{item.purchasingPricePercentage}}
+                        </td>
+                        <td>
+                            {{item.actualQuantity}}
+                        </td>
+
+                    </tr>
+                </tbody>
+
+            </table>
+          
+        </div>
+        <!-- END DATA TABLE -->
+    </div>
+</div>

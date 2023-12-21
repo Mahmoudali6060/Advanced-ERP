@@ -226,6 +226,17 @@ namespace DataService.Setup.Handlers
             {
                 productList = productList.Where(x => x.Name.Contains(searchCriteriaDTO.Name));
             }
+
+            if (searchCriteriaDTO.IsMinusQuantity.HasValue)
+            {
+                productList = productList.Where(x => x.ActualQuantity < 0);
+            }
+
+            if (searchCriteriaDTO.IsLowQuantity.HasValue)
+            {
+                productList = productList.Where(x => x.ActualQuantity <= x.LowQuantity);
+            }
+
             return productList;
         }
 

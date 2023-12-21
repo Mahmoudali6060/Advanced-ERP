@@ -546,7 +546,9 @@
     "AccountStatementForAllClients": "كشف حسابات العملاء(مُجمَل)",
     "AccountStatementForSingleClient": "كشف حساب العميل(مُفَصَّل)",
     "AccountStatementForAllVendors": "كشف حسابات الموردين(مُجمَل)",
-    "AccountStatementForSingleVendor": "كشف حساب المورد  (مُفَصَّل)"
+    "AccountStatementForSingleVendor": "كشف حساب المورد  (مُفَصَّل)",
+    "MinusProducts": "المنتجات السالبة",
+    "LowQuantityProducts": "المنتجات النواقص"
   },
   "RepresentiveTypeEnum": {
     "Sales": "المبيعات",
@@ -571,9 +573,8 @@
     "Clients": "العملاء",
     "Vendors": "الموردين",
     "Loans": "سلف",
-    "Guarantee":"عهدة",
+    "Guarantee": "عهدة",
     "Other": "حسابات أخرى"
-    
   },
   "PaymentMethodEnum": {
     "Cash": "نقدي",

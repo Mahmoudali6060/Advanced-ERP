@@ -12,4 +12,6 @@ export class ProductSearchCriteriaDTO extends PagingDTO {
     lowQuantity: number;
     highQuantity: number;
     categoryId: number;
+    isMinusQuantity: boolean;
+    isLowQuantity: boolean;
 }

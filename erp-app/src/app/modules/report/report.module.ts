@@ -10,6 +10,10 @@ import { AccountStatementSingleClientComponent } from './components/client/accou
 import { SalesBillService } from '../sales/services/sales-bill.service';
 import { AccountStatementSingleVendorComponent } from './components/vendor/account-statement-single-vendor/account-statement-single-vendor.component';
 import { PurchasesBillService } from '../purchases/services/purchases-bill.service';
+import { ProductListMinusReportComponent } from './components/product/product-list-minus-report/product-list-minus-report.component';
+import { ProductListReportComponent } from './components/product/product-list-report/product-list-report.component';
+import { ProductService } from '../setup/services/product.service';
+import { ProductListLowQuantityReportComponent } from './components/product/product-list-low-quantity-report/product-list-low-quantity-report.component';
 
 @NgModule({
   imports: [
@@ -21,13 +25,17 @@ import { PurchasesBillService } from '../purchases/services/purchases-bill.servi
     AccountStatementAllClientsComponent,
     AccountStatementSingleClientComponent,
     AccountStatementAllVendorsComponent,
-    AccountStatementSingleVendorComponent
+    AccountStatementSingleVendorComponent,
+    ProductListReportComponent,
+    ProductListMinusReportComponent,
+    ProductListLowQuantityReportComponent
   ],
   providers: [
     ReportService,
     ClientVendorService,
     SalesBillService,
-    PurchasesBillService
+    PurchasesBillService,
+    ProductService
   ]
 })
 

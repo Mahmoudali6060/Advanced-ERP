@@ -76,14 +76,10 @@ export class AccountStatementAllClientsComponent {
 	search() {
 		this.getAllClients();
 	}
-
-	delete(id: any) {
-		this.clientVendorService.delete(id).subscribe((res: any) => {
-			if (res) {
-				this.toastrService.success(this.translate.instant("Message.DeletedSuccessfully"));
-				this.getAllClients();
-			}
-		});
+	
+	onPageChange(event: any) {
+		this.searchCriteriaDTO.page = event;
+		this.getAllClients();
 	}
 
 	print() {
@@ -91,18 +87,6 @@ export class AccountStatementAllClientsComponent {
 		this.reportService.print(this.translate.instant("Reports.AccountStatementForAllClients"), div);
 	}
 
-	public openConfirmationDialog(item: ClientVendorDTO) {
-		this.confirmationDialogService.confirm(this.translate.instant("ConfirmaionDialog.Title"), this.translate.instant("ConfirmaionDialog.Description"))
-			.then((confirmed) => {
-				if (confirmed) {
-					this.delete(item.id);
-				}
-			})
-			.catch(() => console.log('Client dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
-	}
 
-	onPageChange(event: any) {
-		this.searchCriteriaDTO.page = event;
-		this.getAllClients();
-	}
+
 }
