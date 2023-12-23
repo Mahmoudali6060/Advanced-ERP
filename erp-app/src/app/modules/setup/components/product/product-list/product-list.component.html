@@ -15,6 +15,9 @@
                     class="au-btn au-btn-icon au-btn--blue au-btn--small">
                     <i class="zmdi zmdi-file"></i>{{'General.SaveAll' |translate}}
                 </button>
+                <button *ngIf="changePrice || changeQuantity" type="reset" class="btn btn-danger mr-1" (click)="reset()">
+                    <i class="fa fa-ban"></i>{{'General.Cancel' |translate}}
+                </button>
             </div>
 
         </div>

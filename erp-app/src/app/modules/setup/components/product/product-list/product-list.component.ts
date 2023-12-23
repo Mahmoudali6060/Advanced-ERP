@@ -65,6 +65,7 @@ export class ProductListComponent {
 		console.table("status", this.statusDDL);
 	}
 
+	
 	toggleFilter() {
 		this.searchCriteriaDTO = new ProductSearchCriteriaDTO();
 		this.showFilterControls = !this.showFilterControls;
@@ -122,5 +123,9 @@ export class ProductListComponent {
 	onPageChange(event: any) {
 		this.searchCriteriaDTO.page = event;
 		this.getAllProducts();
+	}
+
+	reset() {
+		this.search();
 	}
 }

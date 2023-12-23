@@ -32,6 +32,7 @@ import { UserProfileService } from '../modules/user-management/services/user.ser
 import { AuthService } from '../modules/authentication/services/auth.service';
 import { IfPrivilegeDirective } from './directives/if-privilege.directive';
 import { KendoUIControlsModule } from './modules/kendo-ui-controls.module';
+import { PendingChangesGuard } from './guards/pending-changes-guard.service';
 
 @NgModule({
 
@@ -102,7 +103,8 @@ import { KendoUIControlsModule } from './modules/kendo-ui-controls.module';
     CountryService,
     StateService,
     CityService,
-    PortService
+    PortService,
+    PendingChangesGuard
 
   ],
 })

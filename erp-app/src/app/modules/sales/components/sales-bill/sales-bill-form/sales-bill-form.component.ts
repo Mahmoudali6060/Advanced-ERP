@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, HostListener, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfigService } from 'src/app/shared/services/config.service';
@@ -26,14 +26,21 @@ import { RepresentiveService } from 'src/app/modules/setup/services/representive
 import { RepresentiveTypeEnum } from 'src/app/shared/enums/representive-type.enum';
 import { RepresentiveFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/representive-form-popup/representive-form-popup.component';
 import { Location } from '@angular/common';
+import { ComponentCanDeactivate } from 'src/app/shared/guards/pending-changes-guard.service';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-sales-bill-form',
 	templateUrl: './sales-bill-form.component.html',
 	styleUrls: ['./sales-bill-form.component.css']
 })
-export class SalesBillFormComponent {
-
+export class SalesBillFormComponent implements ComponentCanDeactivate {
+	// @HostListener allows us to also guard against browser refresh, close, etc.
+	@HostListener('window:beforeunload')
+	canDeactivate(): Observable<any> | any {
+		return this.salesBillHeaderDTO.salesBillDetailList.length > 0
+		
+	}
 	salesBillHeaderDTO: SalesBillHeaderDTO = new SalesBillHeaderDTO();
 	originalSalesBillDetailsList: Array<SalesBillDetailsDTO> = new Array<SalesBillDetailsDTO>();
 	serverUrl: string;

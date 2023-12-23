@@ -5,12 +5,13 @@ import { SalesBillFormComponent } from './components/sales-bill/sales-bill-form/
 import { SalesBillSearchComponent } from './components/sales-bill/sales-bill-search/sales-bill-search.component';
 import { SalesBillTempFormComponent } from './components/sales-bill/sales-bill-temp-form/sales-bill-temp-form.component';
 import { SalesBillTempListComponent } from './components/sales-bill/sales-bill-temp-list/sales-bill-temp-list.component';
+import { PendingChangesGuard } from 'src/app/shared/guards/pending-changes-guard.service';
 
 const routes: Routes = [
   { path: 'sales-bill-list', component: SalesBillListComponent },
-  { path: 'sales-bill-form', component: SalesBillFormComponent },
-  { path: 'sales-bill-form/:id', component: SalesBillFormComponent },
-  { path: 'sales-bill-form-view/:id', component: SalesBillFormComponent },
+  { path: 'sales-bill-form', component: SalesBillFormComponent, canDeactivate: [PendingChangesGuard] },
+  { path: 'sales-bill-form/:id', component: SalesBillFormComponent, canDeactivate: [PendingChangesGuard] },
+  { path: 'sales-bill-form-view/:id', component: SalesBillFormComponent, canDeactivate: [PendingChangesGuard] },
   { path: 'sales-bill-search', component: SalesBillSearchComponent },
   { path: 'sales-bill-temp-form', component: SalesBillTempFormComponent },
   { path: 'sales-bill-temp-form/:id', component: SalesBillTempFormComponent },
