@@ -6,6 +6,8 @@ import { SalesBillSearchComponent } from './components/sales-bill/sales-bill-sea
 import { SalesBillTempFormComponent } from './components/sales-bill/sales-bill-temp-form/sales-bill-temp-form.component';
 import { SalesBillTempListComponent } from './components/sales-bill/sales-bill-temp-list/sales-bill-temp-list.component';
 import { PendingChangesGuard } from 'src/app/shared/guards/pending-changes-guard.service';
+import { SalesBillReturnedFormComponent } from './components/sales-bill/sales-bill-returned-form/sales-bill-returned-form.component';
+import { SalesBillReturnedListComponent } from './components/sales-bill/sales-bill-returned-list/sales-bill-returned-list.component';
 
 const routes: Routes = [
   { path: 'sales-bill-list', component: SalesBillListComponent },
@@ -16,7 +18,9 @@ const routes: Routes = [
   { path: 'sales-bill-temp-form', component: SalesBillTempFormComponent },
   { path: 'sales-bill-temp-form/:id', component: SalesBillTempFormComponent },
   { path: 'sales-bill-temp-list', component: SalesBillTempListComponent },
-
+  { path: 'sales-bill-returned-form', component: SalesBillReturnedFormComponent },
+  { path: 'sales-bill-returned-form/:id', component: SalesBillReturnedFormComponent },
+  { path: 'sales-bill-returned-list', component: SalesBillReturnedListComponent },
 
 
 

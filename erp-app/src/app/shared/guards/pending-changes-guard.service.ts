@@ -18,7 +18,6 @@ export class PendingChangesGuard implements CanDeactivate<ComponentCanDeactivate
         this.confirmed = null
     };
     canDeactivate(component: ComponentCanDeactivate): any {
-        debugger;
         if (component.canDeactivate()) {
             // this.dialogService.confirm(this.translate.instant("ConfirmaionDialog.Title"), this.translate.instant("ConfirmaionDialog.Description"))
             //     .then((confirmed: boolean) => {
@@ -57,6 +56,7 @@ export class PendingChangesGuard implements CanDeactivate<ComponentCanDeactivate
             // }
 
         }
+        return true;
     }
     private openConfirmDialog(component: ComponentCanDeactivate): any {
         this.dialogService.confirm(this.translate.instant("ConfirmaionDialog.Title"), this.translate.instant("ConfirmaionDialog.Description"))

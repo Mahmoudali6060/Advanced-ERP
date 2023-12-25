@@ -9,6 +9,7 @@ namespace Data.Entities.Sales
         public DateTime Date { get; set; }
         public string Notes { get; set; }
         public bool? IsTemp { get; set; }
+        public bool? IsReturned { get; set; }
         public long? ClientVendorId { get; set; }
 
     }

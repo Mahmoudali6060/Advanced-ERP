@@ -1,15 +1,9 @@
 import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { PaginationComponent } from 'src/app/shared/components/pagination/pagination.component';
-import { ConfigService } from 'src/app/shared/services/config.service';
-import { HelperService } from 'src/app/shared/services/helper.service';
 import { PagingDTO } from '../../../../../shared/models/paging-dto';
 import { DialogService } from '../../../../../shared/services/confirmation-dialog.service';
-import { CountryModel } from 'src/app/modules/configurations/models/country.model';
-import { StateModel } from 'src/app/modules/configurations/models/state.model';
-import { CityModel } from 'src/app/modules/configurations/models/city.model';
 import { SalesBillService } from '../../../services/sales-bill.service';
 import { SalesBillSearchCriteriaDTO } from '../../../models/sales-bill-search-criteria-dto';
 import { SalesBillHeaderDTO } from '../../../models/sales-bill-header.dto';
@@ -31,8 +25,8 @@ export class SalesBillListComponent {
 	recordsPerPage: number = 5;
 	statusDDL: any;
 	@Input() isTemp: boolean = false;
+	@Input() isReturned: boolean = false;
 
-	//Test
 	constructor(private productService: SalesBillService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
@@ -42,6 +36,8 @@ export class SalesBillListComponent {
 
 	ngOnInit() {
 		this.searchCriteriaDTO.isTemp = this.isTemp;
+		this.searchCriteriaDTO.isReturned = this.isReturned;
+
 		this.search();
 		this.statusDDL = [
 			{ label: "All", value: '' },

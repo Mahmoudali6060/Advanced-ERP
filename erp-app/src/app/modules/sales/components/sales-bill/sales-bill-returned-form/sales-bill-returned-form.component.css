@@ -1,0 +1,24 @@
+.flex-container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.is-invalid {
+  border-width: 1.5px;
+}
+
+.is-valid {
+  border-width: 1.5px;
+}
+
+.text-muted {
+  color: red !important;
+}
+.Image{
+   max-height: 60%;
+   width:100%;
+   border-radius: 5px;
+   max-height: 250px;
+}
+
+

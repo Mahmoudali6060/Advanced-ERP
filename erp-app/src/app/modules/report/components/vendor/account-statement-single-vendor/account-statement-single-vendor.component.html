@@ -14,9 +14,11 @@
 
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <label class="form-label" for="selectedVendorId">{{'General.Vendor'|translate}}</label>
-                                        <ng-select name="selectedVendorId" id="selectedVendorId" class="ng-select-custom"
-                                            [(ngModel)]="selectedVendorId" (change)="onClientChange()">
+                                        <label class="form-label"
+                                            for="selectedVendorId">{{'General.Vendor'|translate}}</label>
+                                        <ng-select name="selectedVendorId" id="selectedVendorId"
+                                            class="ng-select-custom" [(ngModel)]="selectedVendorId"
+                                            (change)="onClientChange()">
                                             <ng-option value=" null"
                                                 disabled>{{'General.SelectClient'|translate}}</ng-option>
                                             <ng-option *ngFor="let item of vendorList" [value]="item.id">
@@ -71,24 +73,25 @@
                     <tr>
                         <th>#</th>
                         <th class="table-header-fc">{{'General.Date' |translate}}</th>
+                        <th class="table-header-fc">{{'General.PaymentMethod' |translate}}</th>
                         <th class="table-header-fc">{{'General.Debit' |translate}}</th>
                         <th class="table-header-fc">{{'General.Credit' |translate}}</th>
-                        <th class="table-header-fc">{{'General.Details' |translate}}</th>
-                        <!-- <th></th> -->
+                        <th class="table-header-fc">{{'General.RefNo' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Notes' |translate}}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="tr-shadow" *ngFor="let item of clientVendorBalanceList;let i=index;">
                         <td>{{i+1}}</td>
                         <td>{{item.date}}</td>
+                        <td>
+                            {{'PaymentMethodEnum.'+paymentMethodEnum[item.paymentMethodId] |translate}}
+                        </td>
                         <td>{{item.debit}}</td>
                         <td>{{item.credit}}</td>
-                        <td>
-                            <a *ngIf="item.details=='General.BillNo';else oppeningBalance" [routerLink]="['/purchases-bill/purchases-bill-form/'+item.refId]" class="btn btn-link">
-                                {{(item.details)|translate}}:
-                                {{item.number}}</a>
-                                <ng-template #oppeningBalance>{{(item.details)|translate}}</ng-template>
-                        </td>
+                        <td>{{item.refNo}}</td>
+                        <td>{{item.notes}}</td>
+
                     </tr>
                 </tbody>
 

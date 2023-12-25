@@ -38,13 +38,16 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	// @HostListener allows us to also guard against browser refresh, close, etc.
 	@HostListener('window:beforeunload')
 	canDeactivate(): Observable<any> | any {
-		return this.salesBillHeaderDTO.salesBillDetailList.length > 0
-		
+		// debugger;
+		if (this.viewMode == false && this.salesBillHeaderDTO.salesBillDetailList.length > 0) {
+			return true;
+		}
+		return false;
 	}
 	salesBillHeaderDTO: SalesBillHeaderDTO = new SalesBillHeaderDTO();
 	originalSalesBillDetailsList: Array<SalesBillDetailsDTO> = new Array<SalesBillDetailsDTO>();
 	serverUrl: string;
-	viewMode: boolean;
+	viewMode: boolean = false;
 	productList: Array<ProductDTO> = new Array<ProductDTO>();
 	clientList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
 	salesHeaderId: any;
@@ -61,6 +64,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	vatPercentage: number = 0;
 	numberOfProducts: number = 1;
 	@Input() isTemp: boolean = false;
+	@Input() isReturned: boolean = false;
 	isTransfereToBill: boolean = false;
 	constructor(
 		private salesBillService: SalesBillService,
@@ -84,6 +88,8 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 
 	ngOnInit() {
 		this.salesBillHeaderDTO.isTemp = this.isTemp;
+		this.salesBillHeaderDTO.isReturned = this.isReturned;
+
 		this.serverUrl = this._configService.getServerUrl();
 
 		this.salesHeaderId = this.route.snapshot.paramMap.get('id');
@@ -180,6 +186,14 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	save(isPrint: boolean, form?: NgForm) {
 		if (this.isTransfereToBill == true)
 			this.salesBillHeaderDTO.isTemp = false;
+		if (this.salesBillHeaderDTO.isReturned) {
+			this.salesBillHeaderDTO.id = 0;
+			this.salesBillHeaderDTO.salesBillDetailList = this.salesBillHeaderDTO.salesBillDetailList.filter(x => x.isReturned == true);
+			for (let item of this.salesBillHeaderDTO.salesBillDetailList) {
+				item.salesBillHeaderId = 0;
+				item.id = 0;
+			}
+		}
 		if (this.validation(this.salesBillHeaderDTO)) {
 			if (this.salesBillHeaderDTO.id) {
 				this.salesBillService.update(this.salesBillHeaderDTO).subscribe(res => {
@@ -280,10 +294,18 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		this.salesBillHeaderDTO.total = 0;
 		this.salesBillHeaderDTO.profit = 0;
 		for (let item of this.salesBillHeaderDTO.salesBillDetailList) {
-			item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
-			item.subTotal = item.priceAfterDiscount * item.quantity;
-			this.salesBillHeaderDTO.total += item.subTotal;
-			this.salesBillHeaderDTO.profit += (item.subTotal - (item.lastPurchasingPrice * item.quantity));
+			if (!this.salesBillHeaderDTO.isReturned) {
+				item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
+				item.subTotal = item.priceAfterDiscount * item.quantity;
+				this.salesBillHeaderDTO.total += item.subTotal;
+				this.salesBillHeaderDTO.profit += (item.subTotal - (item.lastPurchasingPrice * item.quantity));
+			}
+			else if (this.salesBillHeaderDTO.isReturned && item.isReturned) {
+				item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
+				item.subTotal = item.priceAfterDiscount * item.quantity;
+				this.salesBillHeaderDTO.total += item.subTotal;
+				this.salesBillHeaderDTO.profit += (item.subTotal - (item.lastPurchasingPrice * item.quantity));
+			}
 		}
 		this.salesBillHeaderDTO.totalAfterDiscount = parseFloat((this.salesBillHeaderDTO.total - this.salesBillHeaderDTO.discount).toFixed(2));
 		this.salesBillHeaderDTO.vatAmount = parseFloat((this.vatPercentage * this.salesBillHeaderDTO.totalAfterDiscount).toFixed(2))
@@ -330,6 +352,10 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 				return;
 			}
 			this.salesBillHeaderDTO = res;
+			if (this.isReturned) {
+				this.salesBillHeaderDTO.id = null;
+				this.salesBillHeaderDTO.isReturned = true;
+			}
 			this.getAllProducts();
 			this.getAllClients();
 		});
@@ -358,6 +384,10 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	}
 
 
+	setReturnedItem(item: SalesBillDetailsDTO) {
+		item.isReturned = !item.isReturned;
+		this.updateTotal();
+	}
 	saveAndPrint() {
 		this.save(true, undefined)
 	}

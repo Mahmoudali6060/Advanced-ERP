@@ -18,6 +18,8 @@ import { ReportService } from '../report/services/report.service';
 import { RepresentiveService } from '../setup/services/representive.service';
 import { SalesBillTempFormComponent } from './components/sales-bill/sales-bill-temp-form/sales-bill-temp-form.component';
 import { SalesBillTempListComponent } from './components/sales-bill/sales-bill-temp-list/sales-bill-temp-list.component';
+import { SalesBillReturnedFormComponent } from './components/sales-bill/sales-bill-returned-form/sales-bill-returned-form.component';
+import { SalesBillReturnedListComponent } from './components/sales-bill/sales-bill-returned-list/sales-bill-returned-list.component';
 
 @NgModule({
   imports: [
@@ -37,7 +39,9 @@ import { SalesBillTempListComponent } from './components/sales-bill/sales-bill-t
     SalesBillFormComponent,
     SalesBillSearchComponent,
     SalesBillTempFormComponent,
-    SalesBillTempListComponent
+    SalesBillTempListComponent,
+    SalesBillReturnedFormComponent,
+    SalesBillReturnedListComponent,
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

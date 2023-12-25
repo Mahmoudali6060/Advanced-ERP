@@ -1,5 +1,5 @@
 
 export class BaseDTO {
-    id: number;
+    id: number | null;
     isActive: boolean = true;
 }

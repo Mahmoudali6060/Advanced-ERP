@@ -15,7 +15,11 @@ import { ClientVendorSearchCriteriaDTO } from 'src/app/modules/setup/models/clie
 import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 import { ReportService } from '../../../services/report.service';
 import { ClientVendorBalanceDTO } from 'src/app/modules/setup/models/client-vendor-balance.dto';
-import { SalesBillService } from 'src/app/modules/sales/services/sales-bill.service';
+import { TreasuryService } from 'src/app/modules/accounting/services/treasury.service';
+import { TreasurySearchDTO } from 'src/app/modules/accounting/models/treasury-search.dto';
+import { AccountTypeEnum } from 'src/app/shared/enums/account-type.enum';
+import { TreasuryDTO } from 'src/app/modules/accounting/models/treasury.dto';
+import { PaymentMethodEnum } from 'src/app/shared/enums/payment-method.enum';
 
 @Component({
 	selector: 'app-account-statement-single-client',
@@ -28,15 +32,16 @@ export class AccountStatementSingleClientComponent {
 	clientList: Array<ClientVendorDTO>;
 	selectedClient: ClientVendorDTO = new ClientVendorDTO();
 	selectedClientId: number;
-	clientVendorBalanceList: Array<ClientVendorBalanceDTO>;
+	clientVendorBalanceList: Array<TreasuryDTO>;
 	currentBalance: number = 0;
+	paymentMethodEnum = PaymentMethodEnum
 	constructor(private clientVendorService: ClientVendorService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
 		private translate: TranslateService,
 		private _configService: ConfigService,
 		private reportService: ReportService,
-		private salesBillService: SalesBillService) {
+		private treasuryService: TreasuryService) {
 
 	}
 
@@ -66,10 +71,14 @@ export class AccountStatementSingleClientComponent {
 
 	getAllByClientId(isPrint?: boolean) {
 		if (this.selectedClientId) {
-			this.salesBillService.getAllByClientId(this.selectedClient.id).subscribe((res: any) => {
-				this.clientVendorBalanceList = res;
+			let searchCriteria: TreasurySearchDTO = new TreasurySearchDTO();
+			searchCriteria.pageSize = 1000000;
+			searchCriteria.accountTypeId = AccountTypeEnum.Clients;
+			searchCriteria.clientVendorId = this.selectedClientId;
+			this.treasuryService.getAll(searchCriteria).subscribe((res: any) => {
+				this.clientVendorBalanceList = res.list;
 				if (isPrint)
-					setTimeout(() => {                          
+					setTimeout(() => {
 						this.print();
 					}, 300);
 			});

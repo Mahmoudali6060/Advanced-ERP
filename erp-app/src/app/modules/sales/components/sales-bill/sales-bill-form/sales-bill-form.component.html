@@ -1,9 +1,9 @@
 <div [ngClass]="{'disabled':viewMode}">
-    
+
     <form #frm="ngForm">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-header" *ngIf="!salesBillHeaderDTO.isTemp">
+                <div class="card-header" *ngIf="!salesBillHeaderDTO.isTemp && !salesBillHeaderDTO.isReturned">
 
                     <strong *ngIf="!salesBillHeaderDTO.id">{{'Sales.AddSalesBill' |translate}}</strong>
                     <strong *ngIf="salesBillHeaderDTO.id && !viewMode">{{'Sales.EditSalesBill'
@@ -15,6 +15,9 @@
                     <strong *ngIf="!salesBillHeaderDTO.id">{{'Sales.AddSalesBillTemp' |translate}}</strong>
                     <strong *ngIf="salesBillHeaderDTO.id && !viewMode">{{'Sales.EditSalesBillTemp'
                         |translate}}</strong>
+                </div>
+                <div class="card-header" *ngIf="salesBillHeaderDTO.isReturned">
+                    <strong *ngIf="!salesBillHeaderDTO.id">{{'General.AddBillReturnedForm' |translate}}</strong>
                 </div>
                 <div class="card-body card-block">
                     <div class="row">
@@ -34,7 +37,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-3" [ngClass]="{'disabled':salesBillHeaderDTO.isReturned}">
                             <label class="form-label" for="clientId">{{'General.Client'|translate}}</label>
                             <div class="input-group">
                                 <ng-select name="clientId" id="clientId" class="ng-select-custom"
@@ -73,7 +76,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-3" [ngClass]="{'disabled':salesBillHeaderDTO.isReturned}">
                             <label class="form-label" for="representiveId">{{'General.Representive'|translate}}</label>
                             <div class="input-group">
                                 <ng-select name="representiveId" id="representiveId" class="ng-select-custom"
@@ -182,11 +185,29 @@
                                                     <td>
                                                         <div class="table-data-feature">
 
-                                                            <button class="item ml-2" data-toggle="tooltip"
-                                                                type="button" title="{{'General.RemoveRow' |translate}}"
+                                                            <button *ngIf="!salesBillHeaderDTO.isReturned"
+                                                                class="item ml-2" data-toggle="tooltip" type="button"
+                                                                title="{{'General.RemoveRow' |translate}}"
                                                                 (click)="deleteRow($event,item)">
                                                                 <i class="zmdi zmdi-delete"></i>
                                                             </button>
+
+                                                            <button
+                                                                *ngIf="salesBillHeaderDTO.isReturned && !item.isReturned"
+                                                                class="item ml-2" data-toggle="tooltip" type="button"
+                                                                title="{{'General.AddToReturnedBill' |translate}}"
+                                                                (click)="setReturnedItem(item)">
+                                                                <i class="fa fa-repeat"></i>
+                                                            </button>
+
+                                                            <button
+                                                                *ngIf="salesBillHeaderDTO.isReturned && item.isReturned"
+                                                                class="item ml-2" data-toggle="tooltip" type="button"
+                                                                title="{{'General.AddToReturnedBill' |translate}}"
+                                                                (click)="setReturnedItem(item)">
+                                                                <i class="fa fa-rotate-left (alias)"></i>
+                                                            </button>
+
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -195,7 +216,7 @@
                                         </table>
                                     </div>
 
-                                    <div class="element-floating item ml-2">
+                                    <div class="element-floating item ml-2" *ngIf="!salesBillHeaderDTO.isReturned">
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <input [disabled]="viewMode" [(ngModel)]="numberOfProducts"
@@ -315,7 +336,9 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <label for="totalAmount" class=" form-control-label">{{'General.TotalAmount'
+                                        <label for="totalAmount" class=" form-control-label">
+                                            {{(salesBillHeaderDTO.isReturned
+                                            ?'General.TotalAmountReturn':'General.TotalAmount')
                                             |translate}}</label>
                                         <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.totalAmount"
                                             type="text" id="totalAmount" class="form-control" #totalAmount="ngModel"

@@ -270,6 +270,10 @@ namespace DataService.Setup.Handlers
                 purchasesBillHeaderList = purchasesBillHeaderList.Where(x => x.IsTemp == searchCriteriaDTO.IsTemp.Value);
             }
 
+            if (searchCriteriaDTO.IsReturned.HasValue)
+            {
+                purchasesBillHeaderList = purchasesBillHeaderList.Where(x => x.IsReturned == searchCriteriaDTO.IsReturned.Value);
+            }
             return purchasesBillHeaderList;
         }
 

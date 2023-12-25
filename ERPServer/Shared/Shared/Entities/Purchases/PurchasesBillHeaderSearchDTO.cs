@@ -10,6 +10,8 @@ namespace Data.Entities.Purchases
         public string Notes { get; set; }
         public long? VendorId { get; set; }
         public bool? IsTemp { get; set; }
+        public bool? IsReturned { get; set; }
+
 
     }
 }

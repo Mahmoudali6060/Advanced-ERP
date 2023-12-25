@@ -16,5 +16,7 @@ export class SalesBillDetailsDTO extends BaseDTO {
     productName: string;
     productCode: string;
     companyId: number;
+    isReturned: boolean = false;
+    salesBillHeaderId:number;
 
 }

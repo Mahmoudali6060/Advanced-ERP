@@ -29,6 +29,7 @@ namespace Shared.Entities.Purchases
         public bool IsTax { get; set; }
         public bool IsTemp { get; set; }
         public bool IsCancel { get; set; }
+        public bool IsReturned { get; set; }
         public string Notes { get; set; }
         public long ClientVendorId { get; set; }
         public long RepresentiveId { get; set; }

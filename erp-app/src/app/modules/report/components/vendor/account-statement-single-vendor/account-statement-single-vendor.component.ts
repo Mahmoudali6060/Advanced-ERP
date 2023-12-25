@@ -17,6 +17,11 @@ import { ReportService } from '../../../services/report.service';
 import { ClientVendorBalanceDTO } from 'src/app/modules/setup/models/client-vendor-balance.dto';
 import { SalesBillService } from 'src/app/modules/sales/services/sales-bill.service';
 import { PurchasesBillService } from 'src/app/modules/purchases/services/purchases-bill.service';
+import { TreasuryDTO } from 'src/app/modules/accounting/models/treasury.dto';
+import { PaymentMethodEnum } from 'src/app/shared/enums/payment-method.enum';
+import { AccountTypeEnum } from 'src/app/shared/enums/account-type.enum';
+import { TreasurySearchDTO } from 'src/app/modules/accounting/models/treasury-search.dto';
+import { TreasuryService } from 'src/app/modules/accounting/services/treasury.service';
 
 @Component({
 	selector: 'app-account-statement-single-vendor',
@@ -29,15 +34,17 @@ export class AccountStatementSingleVendorComponent {
 	vendorList: Array<ClientVendorDTO>;
 	selectedVendor: ClientVendorDTO = new ClientVendorDTO();
 	selectedVendorId: number;
-	clientVendorBalanceList: Array<ClientVendorBalanceDTO>;
+	clientVendorBalanceList: Array<TreasuryDTO>;
 	currentBalance: number = 0;
+	paymentMethodEnum = PaymentMethodEnum;
+
 	constructor(private clientVendorService: ClientVendorService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
 		private translate: TranslateService,
 		private _configService: ConfigService,
 		private reportService: ReportService,
-		private purchasesBillService: PurchasesBillService) {
+		private treasuryService: TreasuryService) {
 
 	}
 
@@ -67,8 +74,12 @@ export class AccountStatementSingleVendorComponent {
 
 	getAllByVendorId(isPrint?: boolean) {
 		if (this.selectedVendorId) {
-			this.purchasesBillService.GetAllByVendorId(this.selectedVendor.id).subscribe((res: any) => {
-				this.clientVendorBalanceList = res;
+			let searchCriteria: TreasurySearchDTO = new TreasurySearchDTO();
+			searchCriteria.pageSize = 1000000;
+			searchCriteria.accountTypeId = AccountTypeEnum.Vendors;
+			searchCriteria.clientVendorId = this.selectedVendorId;
+			this.treasuryService.getAll(searchCriteria).subscribe((res: any) => {
+				this.clientVendorBalanceList = res.list;
 				if (isPrint)
 					setTimeout(() => {
 						this.print();

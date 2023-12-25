@@ -71,24 +71,25 @@
                     <tr>
                         <th>#</th>
                         <th class="table-header-fc">{{'General.Date' |translate}}</th>
+                        <th class="table-header-fc">{{'General.PaymentMethod' |translate}}</th>
                         <th class="table-header-fc">{{'General.Debit' |translate}}</th>
                         <th class="table-header-fc">{{'General.Credit' |translate}}</th>
-                        <th class="table-header-fc">{{'General.Details' |translate}}</th>
-                        <!-- <th></th> -->
+                        <th class="table-header-fc">{{'General.RefNo' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Notes' |translate}}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="tr-shadow" *ngFor="let item of clientVendorBalanceList;let i=index;">
                         <td>{{i+1}}</td>
                         <td>{{item.date}}</td>
+                        <td>
+                            {{'PaymentMethodEnum.'+paymentMethodEnum[item.paymentMethodId] |translate}}
+                        </td>
                         <td>{{item.debit}}</td>
                         <td>{{item.credit}}</td>
-                        <td>
-                            <a *ngIf="item.details=='General.BillNo';else oppeningBalance" [routerLink]="['/sales-bill/sales-bill-form/'+item.refId]" class="btn btn-link">
-                                {{(item.details)|translate}}:
-                                {{item.number}}</a>
-                                <ng-template #oppeningBalance>{{(item.details)|translate}}</ng-template>
-                        </td>
+                        <td>{{item.refNo}}</td>
+                        <td>{{item.notes}}</td>
+
                     </tr>
                 </tbody>
 

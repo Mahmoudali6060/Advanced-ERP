@@ -17,6 +17,7 @@ using Shared.Entities.Setup;
 using Data.Entities.Accouting;
 using Data.Entities.Setup;
 using Shared.Enums;
+using System.Diagnostics;
 
 namespace DataService.Sales.Handlers
 {
@@ -122,7 +123,7 @@ namespace DataService.Sales.Handlers
                 foreach (var item in entity.SalesBillDetailList)
                 {
                     var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
-                    product.ActualQuantity = product.ActualQuantity - item.Quantity;
+                    product.ActualQuantity = entity.IsReturned ? product.ActualQuantity + item.Quantity : product.ActualQuantity - item.Quantity;
                     product.Price = item.Price;
                     await _unitOfWork.ProductDAL.Update(product);
                 }
@@ -141,8 +142,16 @@ namespace DataService.Sales.Handlers
                 var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
                 if (clientVendor != null)
                 {
-                    clientVendor.Debit += entity.Paid;
-                    clientVendor.Credit += entity.TotalAfterDiscount;
+                    if (entity.IsReturned)
+                    {
+                        clientVendor.Debit += entity.TotalAfterDiscount;
+                        clientVendor.Credit += entity.Paid;
+                    }
+                    else
+                    {
+                        clientVendor.Debit += entity.Paid;
+                        clientVendor.Credit += entity.TotalAfterDiscount;
+                    }
 
                     await _unitOfWork.ClientVendorDAL.Update(clientVendor);
                 }
@@ -178,7 +187,7 @@ namespace DataService.Sales.Handlers
                     var exsitedSalesBillDetails = exsitedSalesBillDetailList.SingleOrDefault(x => x.Id == item.Id && x.ProductId == item.ProductId);
                     decimal quantity = exsitedSalesBillDetails != null ? exsitedSalesBillDetails.Quantity : item.Quantity;
                     var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
-                    product.ActualQuantity = product.ActualQuantity - quantity;
+                    product.ActualQuantity = entity.IsReturned == true ? product.ActualQuantity + quantity : product.ActualQuantity - quantity;
                     product.Price = item.Price;
                     await _unitOfWork.ProductDAL.Update(product);
                 }
@@ -191,16 +200,34 @@ namespace DataService.Sales.Handlers
                 var existedClientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
                 if (existedClientVendor != null)
                 {
-                    existedClientVendor.Debit += entity.Paid - exsitedSalesHeader.Paid;
-                    existedClientVendor.Credit += entity.TotalAfterDiscount - exsitedSalesHeader.TotalAfterDiscount;
+                    if (entity.IsReturned == true)
+                    {
+                        existedClientVendor.Debit -= entity.Paid - exsitedSalesHeader.Paid;
+                        existedClientVendor.Credit -= entity.TotalAfterDiscount - exsitedSalesHeader.TotalAfterDiscount;
+                    }
+                    else
+                    {
+                        existedClientVendor.Debit += entity.Paid - exsitedSalesHeader.Paid;
+                        existedClientVendor.Credit += entity.TotalAfterDiscount - exsitedSalesHeader.TotalAfterDiscount;
+                    }
+
                     await _unitOfWork.ClientVendorDAL.Update(existedClientVendor);
                 }
                 #endregion
 
                 #region Update Treasury
                 var treasury = await _unitOfWork.TreasuryDAL.GetById(entity.TreasuryId.Value);
-                treasury.Debit = entity.Paid;
-                treasury.Credit = entity.TotalAfterDiscount;
+
+                if (entity.IsReturned == true)
+                {
+                    treasury.Debit -= entity.Paid;
+                    treasury.Credit -= entity.TotalAfterDiscount;
+                }
+                else
+                {
+                    treasury.Debit = entity.Paid;
+                    treasury.Credit = entity.TotalAfterDiscount;
+                }
                 await _unitOfWork.TreasuryDAL.Update(treasury);
                 #endregion
 
@@ -219,7 +246,7 @@ namespace DataService.Sales.Handlers
                 foreach (var item in entity.SalesBillDetailList)
                 {
                     var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
-                    product.ActualQuantity = product.ActualQuantity + item.Quantity;
+                    product.ActualQuantity = entity.IsReturned == true ? product.ActualQuantity - item.Quantity : product.ActualQuantity + item.Quantity;
                     product.Price = item.Price;
                     await _unitOfWork.ProductDAL.Update(product);
                 }
@@ -230,14 +257,33 @@ namespace DataService.Sales.Handlers
                 var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
                 if (clientVendor != null)
                 {
-                    clientVendor.Debit -= entity.TotalAfterDiscount;
-                    clientVendor.Credit -= entity.Paid;
+                    if (entity.IsReturned == true)
+                    {
+                        clientVendor.Debit += entity.TotalAfterDiscount;
+                        clientVendor.Credit += entity.Paid;
+                    }
+                    else
+                    {
+                        clientVendor.Debit -= entity.TotalAfterDiscount;
+                        clientVendor.Credit -= entity.Paid;
+                    }
+
                     await _unitOfWork.ClientVendorDAL.Update(clientVendor);
                 }
                 #endregion
 
                 #region Update Treasury
                 var treasury = await _unitOfWork.TreasuryDAL.GetById(entity.TreasuryId.Value);
+                //if (entity.IsReturned == true)
+                //{
+                //    treasury.Debit -= entity.Paid;
+                //    treasury.Credit -= entity.TotalAfterDiscount;
+                //}
+                //else
+                //{
+                //    treasury.Debit += entity.Paid;
+                //    treasury.Credit += entity.TotalAfterDiscount;
+                //}
                 treasury.IsCancel = true;
                 await _unitOfWork.TreasuryDAL.Update(treasury);
                 #endregion
@@ -271,13 +317,18 @@ namespace DataService.Sales.Handlers
             {
                 salesBillHeaderList = salesBillHeaderList.Where(x => x.IsTemp == searchCriteriaDTO.IsTemp.Value);
             }
+
+            if (searchCriteriaDTO.IsReturned.HasValue)
+            {
+                salesBillHeaderList = salesBillHeaderList.Where(x => x.IsReturned == searchCriteriaDTO.IsReturned.Value);
+            }
             return salesBillHeaderList;
         }
 
 
         private Treasury MapTreasury(SalesBillHeaderDTO entity)
         {
-            return new Treasury()
+            Treasury treasury = new Treasury()
             {
                 Date = DateTime.Parse(entity.Date),
                 AccountTypeId = AccountTypeEnum.Clients,
@@ -285,11 +336,25 @@ namespace DataService.Sales.Handlers
                 BeneficiaryName = entity.ClientVendorName,
                 //TransactionTypeId = TransactionTypeEnum.Incoming,
                 PaymentMethodId = PaymentMethodEnum.Cash,
-                Debit = entity.Paid,
-                Credit = entity.TotalAfterDiscount,
                 RefNo = entity.Number,
-                Notes = entity.Notes
             };
+
+            if (entity.IsReturned)
+            {
+                treasury.Debit = entity.TotalAfterDiscount;
+                treasury.Credit = entity.Paid;
+                treasury.Notes = "فاتورة مرتجعات";
+
+            }
+            else
+            {
+                treasury.Debit = entity.Paid;
+                treasury.Credit = entity.TotalAfterDiscount;
+                treasury.Notes = "فاتورة";
+
+            }
+
+            return treasury;
         }
 
         #endregion

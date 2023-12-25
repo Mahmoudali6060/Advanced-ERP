@@ -2,7 +2,6 @@ import { SalesBillDetailsDTO } from "./sales-bill-details.dto";
 import { AuditDTO } from "src/app/shared/models/audit-dto.model";
 
 export class SalesBillHeaderDTO extends AuditDTO {
-    id: number;
     number: string;
     isActive: boolean;
     date: string | undefined;
@@ -27,6 +26,7 @@ export class SalesBillHeaderDTO extends AuditDTO {
     profit: number = 0 | 0;
     isTax: boolean = false;
     isTemp: boolean = false;
+    isReturned: boolean = false;
     salesBillDetailList: Array<SalesBillDetailsDTO> = Array<SalesBillDetailsDTO>();
 
 

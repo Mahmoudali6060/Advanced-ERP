@@ -4,11 +4,11 @@ import { PagingDTO } from "src/app/shared/models/paging-dto";
 
 export class TreasurySearchDTO extends PagingDTO {
     date: string;
-    accountTypeId: AccountTypeEnum;
-    clientVendorId: string;
-    transactionTypeId: AccountTypeEnum;
-    paymentMethodId: PaymentMethodEnum;
-    amount: number;
+    accountTypeId: AccountTypeEnum | null;
+    clientVendorId: number | null;
+    transactionTypeId: AccountTypeEnum | null;
+    paymentMethodId: PaymentMethodEnum | null;
+    amount: number | null;
     refNo: string;
     bankAccountNo: string;
     checkNo: string;

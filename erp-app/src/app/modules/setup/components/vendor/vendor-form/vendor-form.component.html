@@ -119,7 +119,7 @@
                                     <div class="form-group">
                                         <label for="debit" class=" form-control-label">{{'General.Debit'
                                             |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="vendorDTO.debit" type="number"
+                                        <input readonly [disabled]="viewMode" [(ngModel)]="vendorDTO.debit" type="number"
                                             id="debit" class="form-control" #debit="ngModel"
                                             [class.is-invalid]="debit.invalid && debit.touched"
                                             [class.is-valid]="debit.valid" name="debit" id="debit"
@@ -132,7 +132,7 @@
                                     <div class="form-group">
                                         <label for="credit" class=" form-control-label">{{'General.Credit'
                                             |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="vendorDTO.credit" type="number"
+                                        <input readonly [disabled]="viewMode" [(ngModel)]="vendorDTO.credit" type="number"
                                             id="credit" class="form-control" #credit="ngModel"
                                             [class.is-invalid]="credit.invalid && credit.touched"
                                             [class.is-valid]="credit.valid" name="credit" id="credit"

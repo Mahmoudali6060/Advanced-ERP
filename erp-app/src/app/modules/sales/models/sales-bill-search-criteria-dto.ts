@@ -6,4 +6,5 @@ export class SalesBillSearchCriteriaDTO extends PagingDTO {
     date: string;
     isActive: boolean;
     isTemp: boolean = false;
+    isReturned: boolean = false;
 }
