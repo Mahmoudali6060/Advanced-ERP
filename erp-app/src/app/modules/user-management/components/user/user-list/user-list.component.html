@@ -137,11 +137,11 @@
                                     data-original-title="More" [routerLink]="['/user/view/'+item.id]">
                                     <i class="fa fa-eye"></i>
                                 </button> -->
-                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                <button *IfPrivilege="helperService.privileges.UserManagement.Users.Edit" class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Edit" [routerLink]="['/user/user-form/'+item.id]">
                                     <i class="zmdi zmdi-edit"></i>
                                 </button>
-                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                <button *IfPrivilege="helperService.privileges.UserManagement.Users.Delete" class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Delete" (click)="openConfirmationDialog(item)">
                                     <i class="zmdi zmdi-delete"></i>
                                 </button>
