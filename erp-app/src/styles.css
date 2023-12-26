@@ -322,10 +322,25 @@ i:hover {
     text-align: center;
 }
 
-.disabled
-{
-  pointer-events: none;
-  /* for "disabled" effect */
-  opacity: 0.9;
-  background: #fff;
+.disabled {
+    pointer-events: none;
+    /* for "disabled" effect */
+    opacity: 0.9;
+    background: #fff;
+}
+
+.notifi__item .img-cir i {
+    left: 40%;
+}
+
+.table-data-feature .item i {
+    left: 40%;
+}
+
+.table-data2.table thead th {
+    font-size: 14px;
+}
+
+.table-data2.table tbody td {
+    font-size: 14px;
 }
