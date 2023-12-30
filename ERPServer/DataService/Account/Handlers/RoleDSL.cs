@@ -30,10 +30,10 @@ namespace Accout.DataServiceLayer
         public async Task<ResponseEntityList<RoleGroupDTO>> GetAll(RoleGroupSearchDTO searchCriteriaDTO)
         {
             var roleGroupList = await _unitOfWork.RoleDAL.GetAll();
-            int total = roleGroupList.Count();
 
             #region Apply Filters
             roleGroupList = ApplyFilert(roleGroupList, searchCriteriaDTO);
+            int total = roleGroupList.Count();
             #endregion
 
             #region Apply Pagination

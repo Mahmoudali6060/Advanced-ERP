@@ -50,7 +50,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	viewMode: boolean = false;
 	productList: Array<ProductDTO> = new Array<ProductDTO>();
 	clientList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
-	salesHeaderId: any;
+	@Input() salesHeaderId: number = 0;
 	currentBalance: number = 0;
 	@Input() searchByNumber: boolean = false;
 	selectedClient: ClientVendorDTO = new ClientVendorDTO();
@@ -92,14 +92,14 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 
 		this.serverUrl = this._configService.getServerUrl();
 
-		this.salesHeaderId = this.route.snapshot.paramMap.get('id');
-
-		if (this.salesHeaderId) {
-			this.getSalesBillById(this.salesHeaderId);
+		let salesHeaderId = this.route.snapshot.paramMap.get('id');
+		if (salesHeaderId || (this.salesBillHeaderDTO.isReturned && this.salesHeaderId)) {
+			this.getSalesBillById(salesHeaderId);
 			if (this.router.url.includes('view')) {
 				this.viewMode = true;
 			}
 		}
+
 		else {
 			this.salesBillHeaderDTO.clientVendorId = null;
 			this.addNewRow();
@@ -143,6 +143,8 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			this.getAllClients();
 			this.getAllRepresentives();
 			this.isTaxChange();
+			this.salesBillHeaderDTO.isReturned = this.isReturned;
+
 		});
 	}
 
@@ -187,11 +189,12 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		if (this.isTransfereToBill == true)
 			this.salesBillHeaderDTO.isTemp = false;
 		if (this.salesBillHeaderDTO.isReturned) {
-			this.salesBillHeaderDTO.id = 0;
+			this.salesBillHeaderDTO.id = this.salesHeaderId;
 			this.salesBillHeaderDTO.salesBillDetailList = this.salesBillHeaderDTO.salesBillDetailList.filter(x => x.isReturned == true);
 			for (let item of this.salesBillHeaderDTO.salesBillDetailList) {
-				item.salesBillHeaderId = 0;
-				item.id = 0;
+				item.salesBillHeaderId = this.salesHeaderId;
+				if (this.salesHeaderId == 0 || this.salesHeaderId == null)
+					item.id = 0;
 			}
 		}
 		if (this.validation(this.salesBillHeaderDTO)) {

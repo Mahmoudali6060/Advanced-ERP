@@ -32,7 +32,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4"
-                                    *ngIf="treasuryDTO.accountTypeId && treasuryDTO.accountTypeId!=accountTypeEnum.Other">
+                                    *ngIf="treasuryDTO.accountTypeId && treasuryDTO.accountTypeId==accountTypeEnum.Clients || treasuryDTO.accountTypeId==accountTypeEnum.Vendors">
                                     <label class="form-label"
                                         for="clientVendorId">{{(treasuryDTO.accountTypeId==accountTypeEnum.Clients?"General.Client":"General.Vendor")|translate}}</label>
                                     <ng-select name="clientVendorId" id="clientVendorId"
@@ -45,7 +45,7 @@
                                     </ng-select>
                                 </div>
                                 <div class="col-md-4"
-                                    *ngIf="treasuryDTO.accountTypeId && treasuryDTO.accountTypeId==accountTypeEnum.Other">
+                                    *ngIf="treasuryDTO.accountTypeId && (treasuryDTO.accountTypeId !=accountTypeEnum.Vendors || treasuryDTO.accountTypeId !=accountTypeEnum.Vendors)">
                                     <div class="form-group">
                                         <label for="beneficiaryName"
                                             class=" form-control-label">{{'General.BeneficiaryName'

@@ -185,6 +185,7 @@
                                                     <td>
                                                         <div class="table-data-feature">
 
+
                                                             <button *ngIf="!salesBillHeaderDTO.isReturned"
                                                                 class="item ml-2" data-toggle="tooltip" type="button"
                                                                 title="{{'General.RemoveRow' |translate}}"
@@ -204,8 +205,8 @@
                                                                 *ngIf="salesBillHeaderDTO.isReturned && item.isReturned"
                                                                 class="item ml-2" data-toggle="tooltip" type="button"
                                                                 title="{{'General.AddToReturnedBill' |translate}}"
-                                                                (click)="setReturnedItem(item)">
-                                                                <i class="fa fa-rotate-left (alias)"></i>
+                                                                (click)="deleteRow($event,item)">
+                                                                <i class="zmdi zmdi-delete"></i>
                                                             </button>
 
                                                         </div>

@@ -36,6 +36,7 @@ namespace Shared.Entities.Purchases
         public string ClientVendorName { get; set; }
         public long? CompanyId { get; set; }
         public long? TreasuryId { get; set; }
+        public long? ParentId { get; set; }
 
         public virtual List<PurchasesBillDetailDTO> PurchasesBillDetailList { get; set; }
 

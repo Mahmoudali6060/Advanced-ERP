@@ -37,6 +37,7 @@ namespace Shared.Entities.Sales
         public long? TreasuryId { get; set; }
         public bool IsCancel { get; set; }
         public bool IsReturned { get; set; }
+        public long? ParentId { get; set; }
         public virtual List<SalesBillDetailDTO> SalesBillDetailList { get; set; }
 
     }

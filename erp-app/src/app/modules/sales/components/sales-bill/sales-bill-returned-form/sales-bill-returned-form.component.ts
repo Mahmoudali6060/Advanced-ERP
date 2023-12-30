@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-sales-bill-returned-form',
@@ -6,11 +7,17 @@ import { Component } from '@angular/core';
 	styleUrls: ['./sales-bill-returned-form.component.css']
 })
 export class SalesBillReturnedFormComponent {
-	constructor() {
+	salesHeaderId: number;
+	constructor(
+		private route: ActivatedRoute,
+	) {
 	}
 
 	ngOnInit() {
-
+		let salesHeaderId = this.route.snapshot.paramMap.get('id');
+		if (salesHeaderId) {
+			this.salesHeaderId = parseInt(salesHeaderId);
+		}
 	}
 
 }

@@ -15,9 +15,9 @@ const routes: Routes = [
   { path: 'user-form/:id', component: UserFormComponent, canActivate: [AuthGuard], data: { privilegeId: Privileges.UserManagement.Users.Edit } },
   { path: 'view/:id', component: UserFormComponent, canActivate: [AuthGuard], data: { privilegeId: Privileges.UserManagement.Users.View } },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { privilegeId: Privileges.UserManagement.Users.View } },
-  { path: 'role-list', component: RoleListComponent },
-  { path: 'role-form', component: RoleFormComponent },
-  { path: 'role-form/:id', component: RoleFormComponent },
+  { path: 'role-list', component: RoleListComponent,data: { privilegeId: Privileges.UserManagement.Roles.View }  },
+  { path: 'role-form', component: RoleFormComponent,data: { privilegeId: Privileges.UserManagement.Roles.Add }  },
+  { path: 'role-form/:id', component: RoleFormComponent,data: { privilegeId: Privileges.UserManagement.Roles.Edit }  },
 
 ];
 

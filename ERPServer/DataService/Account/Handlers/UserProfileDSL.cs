@@ -30,10 +30,10 @@ namespace Accout.DataServiceLayer
         public async Task<ResponseEntityList<UserProfileDTO>> GetAll(UserProfileSearchCriteriaDTO searchCriteriaDTO)
         {
             var userProfileList = await _unitOfWork.UserProfileDAL.GetAll();
-            int total = userProfileList.Count();
 
             #region Apply Filters
             userProfileList = ApplyFilert(userProfileList, searchCriteriaDTO);
+            int total = userProfileList.Count();
             #endregion
 
             #region Apply Pagination

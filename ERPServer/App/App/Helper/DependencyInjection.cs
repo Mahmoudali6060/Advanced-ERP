@@ -21,8 +21,6 @@ using Infrastructure.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 using Purchases.DataAccessLayer;
 using Sales.DataAccessLayer;
-using Setting.DataAccessLayer;
-using Setting.DataServiceLayer;
 using Setup.DataAccessLayer;
 using UnitOfWork.Contracts;
 using UnitOfWork.Handlers;
@@ -36,12 +34,6 @@ namespace App.Helper
 
             #region Unit Of Work
             services.AddScoped<IUnitOfWork, UnitofWork>();
-            #endregion
-
-            #region Settings
-            services.AddTransient<ISettingDSL, SettingDSL>();
-            services.AddTransient<ISettingDAL, SettingDAL>();
-            //services.AddTransient<IDatabaseBackupDSL, DatabaseBackupDSL>();
             #endregion
 
             #region Infrastructure

@@ -6,9 +6,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Data\Data\Data.csproj" />
-    <ProjectReference Include="..\Setting\Setting\Setting.csproj" />
+    <ProjectReference Include="..\Data\UnitOfWork\UnitOfWork.csproj" />
     <ProjectReference Include="..\Shared\Shared\Shared.csproj" />
-    <ProjectReference Include="..\UnitOfWork\UnitOfWork.csproj" />
   </ItemGroup>
 
   <ItemGroup>

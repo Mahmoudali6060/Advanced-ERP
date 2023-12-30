@@ -1,7 +1,12 @@
 <div class="row">
     <div class="col-md-12">
         <!-- DATA TABLE -->
-        <h3 class="title-5 m-b-35">{{'Sales.SalesBillsTitle' |translate}}</h3>
+        <h3 class="title-5 m-b-35" *ngIf="!searchCriteriaDTO.isTemp && !searchCriteriaDTO.isReturned">
+            {{'Sales.SalesBillsTitle' |translate}}</h3>
+        <h3 class="title-5 m-b-35" *ngIf="searchCriteriaDTO.isTemp">{{'Sales.SalesBillsTempTitle' |translate}}</h3>
+        <h3 class="title-5 m-b-35" *ngIf="searchCriteriaDTO.isReturned">{{'General.BillsSalesReturnedList' |translate}}
+        </h3>
+
         <div class="table-data__tool">
             <div class="table-data__tool-left">
                 <button class="au-btn-filter" (click)="toggleFilter()">
@@ -87,19 +92,28 @@
                         <td>{{item.notes}}</td>
                         <td>
                             <div class="table-data-feature">
-                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                <button *ngIf="!searchCriteriaDTO.isReturned" class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="View"
                                     [routerLink]="['/sales-bill/sales-bill-form-view/'+item.id]">
                                     <i class="zmdi zmdi-eye"></i>
                                 </button>
 
-                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                <button *ngIf="!searchCriteriaDTO.isReturned" class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Edit" [routerLink]="['/sales-bill/sales-bill-form/'+item.id]">
                                     <i class="zmdi zmdi-edit"></i>
                                 </button>
+                                <button *ngIf="searchCriteriaDTO.isReturned" class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                data-original-title="Edit" [routerLink]="['/sales-bill/sales-bill-returned-form/'+item.id]">
+                                <i class="zmdi zmdi-edit"></i>
+                            </button>
                                 <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Delete" (click)="openConfirmationDialog(item)">
                                     <i class="zmdi zmdi-delete"></i>
+                                </button>
+                                <button *ngIf="!searchCriteriaDTO.isReturned && !searchCriteriaDTO.isTemp"  class="item ml-2"
+                                    data-toggle="tooltip" type="button"
+                                    title="{{'General.AddToReturnedBill' |translate}}" [routerLink]="['/sales-bill/sales-bill-returned-form/'+item.id]">
+                                    <i class="fa fa-repeat"></i>
                                 </button>
                             </div>
                         </td>

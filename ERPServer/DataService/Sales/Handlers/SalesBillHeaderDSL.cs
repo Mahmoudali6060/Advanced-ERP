@@ -37,10 +37,10 @@ namespace DataService.Sales.Handlers
         public async Task<ResponseEntityList<SalesBillHeaderDTO>> GetAll(SalesBillHeaderSearchDTO searchCriteriaDTO)
         {
             var salesBillHeaderList = await _unitOfWork.SalesBillHeaderDAL.GetAll();
-            int total = salesBillHeaderList.Count();
 
             #region Apply Filters
             salesBillHeaderList = ApplyFilert(salesBillHeaderList, searchCriteriaDTO);
+            int total = salesBillHeaderList.Count();
             #endregion
 
             #region Apply Pagination
@@ -164,19 +164,9 @@ namespace DataService.Sales.Handlers
 
         public async Task<long> Update(SalesBillHeaderDTO entity)
         {
-            #region Update SalesBillHeader
-            var exsitedSalesBillDetailList = await _unitOfWork.SalesBillDetailDAL.GetAllByHeaderId(entity.Id);
-
-            await _unitOfWork.SalesBillDetailDAL.DeleteRange(exsitedSalesBillDetailList.ToList());
-            foreach (var item in entity.SalesBillDetailList)
-            {
-                item.SalesBillHeaderId = entity.Id;
-            }
-            await _unitOfWork.SalesBillDetailDAL.AddRange(_mapper.Map<List<SalesBillDetail>>(entity.SalesBillDetailList));
+            var salesHeader = _mapper.Map<SalesBillHeader>(entity);
             var tempSalesBillDetailList = entity.SalesBillDetailList;
-            entity.SalesBillDetailList = null;
-            var result = await _unitOfWork.SalesBillHeaderDAL.Update(_mapper.Map<SalesBillHeader>(entity));
-            #endregion
+            var exsitedSalesBillDetailList = await _unitOfWork.SalesBillDetailDAL.GetAllByHeaderId(entity.Id);
 
             if (entity.IsTemp == false)
             {
@@ -216,22 +206,43 @@ namespace DataService.Sales.Handlers
                 #endregion
 
                 #region Update Treasury
-                var treasury = await _unitOfWork.TreasuryDAL.GetById(entity.TreasuryId.Value);
 
-                if (entity.IsReturned == true)
+                if (entity.TreasuryId.HasValue)
                 {
-                    treasury.Debit -= entity.Paid;
-                    treasury.Credit -= entity.TotalAfterDiscount;
+                    var treasury = await _unitOfWork.TreasuryDAL.GetById(entity.TreasuryId.Value);
+
+                    if (entity.IsReturned == true)
+                    {
+                        treasury.Debit -= entity.Paid;
+                        treasury.Credit -= entity.TotalAfterDiscount;
+                    }
+                    else
+                    {
+                        treasury.Debit = entity.Paid;
+                        treasury.Credit = entity.TotalAfterDiscount;
+                    }
+                    await _unitOfWork.TreasuryDAL.Update(treasury);
                 }
                 else
                 {
-                    treasury.Debit = entity.Paid;
-                    treasury.Credit = entity.TotalAfterDiscount;
+                    #region Add Sales and Treasury
+                    salesHeader.Treasury = MapTreasury(entity);
+                    #endregion
                 }
-                await _unitOfWork.TreasuryDAL.Update(treasury);
                 #endregion
 
             }
+            #region Update SalesBillHeader
+
+            await _unitOfWork.SalesBillDetailDAL.DeleteRange(exsitedSalesBillDetailList.ToList());
+            foreach (var item in entity.SalesBillDetailList)
+            {
+                item.SalesBillHeaderId = entity.Id;
+            }
+            await _unitOfWork.SalesBillDetailDAL.AddRange(_mapper.Map<List<SalesBillDetail>>(entity.SalesBillDetailList));
+            salesHeader.SalesBillDetailList = null;
+            var result = await _unitOfWork.SalesBillHeaderDAL.Update(salesHeader);
+            #endregion
             await _unitOfWork.CompleteAsync();
             return result;
         }

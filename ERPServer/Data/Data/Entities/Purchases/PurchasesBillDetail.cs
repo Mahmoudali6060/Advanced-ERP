@@ -19,6 +19,7 @@ namespace Data.Entities.Purchases
         public decimal PriceAfterDiscount { get; set; }
         public decimal SubTotal { get; set; }
         public string Notes { get; set; }
+        public bool IsReturned { get; set; }
         public virtual Product Product { get; set; }
         public virtual PurchasesBillHeader PurchasesBillHeader { get; set; }
         public long? CompanyId { get; set; }

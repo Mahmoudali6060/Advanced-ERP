@@ -34,6 +34,8 @@ namespace Data.Entities.Sales
         public bool IsTemp { get; set; }
         public bool IsCancel { get; set; }
         public bool IsReturned { get; set; }
+        public long? ParentId { get; set; }
+
         public virtual ClientVendor ClientVendor { get; set; }
         public virtual List<SalesBillDetail> SalesBillDetailList { get; set; }
         public long? CompanyId { get; set; }

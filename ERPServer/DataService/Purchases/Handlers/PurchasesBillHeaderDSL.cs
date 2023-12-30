@@ -36,10 +36,10 @@ namespace DataService.Setup.Handlers
         public async Task<ResponseEntityList<PurchasesBillHeaderDTO>> GetAll(PurchasesBillHeaderSearchDTO searchCriteriaDTO)
         {
             var purchasesBillHeaderList = await _unitOfWork.PurchasesBillHeaderDAL.GetAll();
-            int total = purchasesBillHeaderList.Count();
 
             #region Apply Filters
             purchasesBillHeaderList = ApplyFilert(purchasesBillHeaderList, searchCriteriaDTO);
+            int total = purchasesBillHeaderList.Count();
             #endregion
 
             #region Apply Pagination

@@ -35,10 +35,10 @@ namespace DataService.Accounting.Handlers
         public async Task<ResponseEntityList<TreasuryDTO>> GetAll(TreasurySearchDTO searchCriteriaDTO)
         {
             var userProfileList = await _unitOfWork.TreasuryDAL.GetAll();
-            int total = userProfileList.Count();
 
             #region Apply Filters
             userProfileList = ApplyFilert(userProfileList, searchCriteriaDTO);
+            int total = userProfileList.Count();
             #endregion
 
             #region Apply Pagination

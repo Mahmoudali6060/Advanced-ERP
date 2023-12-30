@@ -51,11 +51,11 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4"
-                                    *ngIf="searchCriteriaDTO.accountTypeId && searchCriteriaDTO.accountTypeId!=accountTypeEnum.Other">
+                                    *ngIf="searchCriteriaDTO.accountTypeId && searchCriteriaDTO.accountTypeId==accountTypeEnum.Clients || searchCriteriaDTO.accountTypeId==accountTypeEnum.Vendors">
                                     <label class="form-label"
                                         for="clientVendorId">{{(searchCriteriaDTO.accountTypeId==accountTypeEnum.Clients?"General.Client":"General.Vendor")|translate}}</label>
                                     <ng-select name="clientVendorId" id="clientVendorId"
-                                        [(ngModel)]="searchCriteriaDTO.clientVendorId">
+                                        [(ngModel)]="searchCriteriaDTO.clientVendorId" >
                                         <ng-option value=" null"
                                             disabled>{{searchCriteriaDTO.accountTypeId==accountTypeEnum.Clients?"General.SelectClient":"General.SelectVendor"|translate}}</ng-option>
                                         <ng-option *ngFor="let item of clientVendorList" [value]="item.id">
@@ -63,6 +63,19 @@
                                         </ng-option>
                                     </ng-select>
                                 </div>
+                                <div class="col-md-4"
+                                    *ngIf="searchCriteriaDTO.accountTypeId && (searchCriteriaDTO.accountTypeId !=accountTypeEnum.Vendors || searchCriteriaDTO.accountTypeId !=accountTypeEnum.Vendors)">
+                                    <div class="form-group">
+                                        <label for="beneficiaryName"
+                                            class=" form-control-label">{{'General.BeneficiaryName'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="searchCriteriaDTO.beneficiaryName"
+                                            type="text" id="beneficiaryName" class="form-control"
+                                            #beneficiaryName="ngModel" name="beneficiaryName" id="beneficiaryName"
+                                            class="form-control" aria-describedby="helpId">
+                                    </div>
+                                </div>
+
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label"

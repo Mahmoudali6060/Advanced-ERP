@@ -21,6 +21,7 @@ namespace Shared.Entities.Purchases
         public decimal SubTotal { get; set; }
         public string Notes { get; set; }
         public long? CompanyId { get; set; }
+        public bool IsReturned { get; set; }
 
         [JsonIgnore]
         public virtual PurchasesBillHeaderDTO PurchasesBillHeader { get; set; }

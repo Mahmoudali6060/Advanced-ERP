@@ -147,7 +147,9 @@
     "BeneficiaryName": "اسم الشخص المستفيد",
     "TransfereToBill": "تحويل الى فاتورة",
     "AddBillReturnedForm": "إضافة فاتورة مرتجعات",
-    "BillsReturnedList": "فواتير المرتجعات"
+    "BillsSalesReturnedList": "فواتير مرتجعات المبيعات",
+    "BillsPurchasesReturnedList": "فواتير مرتجعات المبيعات"
+
   },
   "Dashboard": {
     "overview": "نظرة عامة",

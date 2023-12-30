@@ -12,4 +12,5 @@ export class TreasurySearchDTO extends PagingDTO {
     refNo: string;
     bankAccountNo: string;
     checkNo: string;
+    beneficiaryName:string;
 }

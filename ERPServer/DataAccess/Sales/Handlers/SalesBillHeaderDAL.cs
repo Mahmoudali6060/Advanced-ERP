@@ -17,7 +17,7 @@ namespace Sales.DataAccessLayer
         #region Query
         public async Task<IQueryable<SalesBillHeader>> GetAll()
         {
-            return _appDbContext.SalesBillHeaders.Include(x=>x.ClientVendor).Include(x => x.CreatedByProfile).Include(x => x.ModifiedByProfile).OrderByDescending(x => x.Date).AsQueryable();
+            return _appDbContext.SalesBillHeaders.Include(x => x.ClientVendor).Include(x => x.CreatedByProfile).Include(x => x.ModifiedByProfile).OrderByDescending(x => x.Id).AsQueryable();
         }
 
         public async Task<IQueryable<SalesBillHeader>> GetAllLite()
@@ -27,18 +27,18 @@ namespace Sales.DataAccessLayer
 
         public async Task<SalesBillHeader> GetById(long id)
         {
-            var SalesBillHeader = _appDbContext.SalesBillHeaders.Include(x=>x.ClientVendor).Include(x => x.SalesBillDetailList).SingleOrDefaultAsync(x => x.Id == id);
+            var SalesBillHeader = _appDbContext.SalesBillHeaders.Include(x => x.ClientVendor).Include(x => x.SalesBillDetailList).SingleOrDefaultAsync(x => x.Id == id);
             return await SalesBillHeader;
         }
 
         public async Task<IQueryable<SalesBillHeader>> GetAllByClientId(long clientId)
         {
-            return  _appDbContext.SalesBillHeaders.Include(x => x.ClientVendor).Where(x => x.ClientVendorId == clientId).AsQueryable();
+            return _appDbContext.SalesBillHeaders.Include(x => x.ClientVendor).Where(x => x.ClientVendorId == clientId).AsQueryable();
         }
 
         public async Task<SalesBillHeader> GetByNumber(string number)
         {
-            var SalesBillHeader = _appDbContext.SalesBillHeaders.Include(x => x.ClientVendor).Include(x => x.SalesBillDetailList).SingleOrDefaultAsync(x => x.Number==number);
+            var SalesBillHeader = _appDbContext.SalesBillHeaders.Include(x => x.ClientVendor).Include(x => x.SalesBillDetailList).SingleOrDefaultAsync(x => x.Number == number);
             return await SalesBillHeader;
         }
 
