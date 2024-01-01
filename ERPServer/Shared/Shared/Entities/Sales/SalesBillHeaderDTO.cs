@@ -30,13 +30,14 @@ namespace Shared.Entities.Sales
         public bool IsTax { get; set; }
         public bool IsTemp { get; set; }
         public string Notes { get; set; }
-        public long RepresentiveId { get; set; }
+        public long? RepresentiveId { get; set; }
         public long ClientVendorId { get; set; }
         public string ClientVendorName { get; set; }
         public long? CompanyId { get; set; }
         public long? TreasuryId { get; set; }
         public bool IsCancel { get; set; }
         public bool IsReturned { get; set; }
+        public bool IsNewReturned { get; set; }
         public long? ParentId { get; set; }
         public virtual List<SalesBillDetailDTO> SalesBillDetailList { get; set; }
 

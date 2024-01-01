@@ -32,6 +32,7 @@ export class TreasuryFormComponent {
 	transactionTypeList: LabelValuePair[];
 	clientVendorList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
 	accountTypeEnum = AccountTypeEnum;
+	paymentMethodEnum = PaymentMethodEnum;
 	constructor(
 		private treasuryService: TreasuryService,
 		private clientVendorService: ClientVendorService,

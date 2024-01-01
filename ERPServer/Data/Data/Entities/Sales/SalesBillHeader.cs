@@ -22,7 +22,7 @@ namespace Data.Entities.Sales
         public decimal TotalDiscount { get; set; }
         public string Notes { get; set; }
         public long ClientVendorId { get; set; }
-        public long RepresentiveId { get; set; }
+        public long? RepresentiveId { get; set; }
         public decimal VatAmount { get; set; }
         public decimal TotalAfterVAT { get; set; }
         public decimal TaxPercentage { get; set; }

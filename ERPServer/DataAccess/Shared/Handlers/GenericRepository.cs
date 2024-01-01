@@ -5,6 +5,7 @@ using Shared.DataAccessLayer.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,10 +26,27 @@ namespace DataAccess.Shared.Handlers
         {
             return _dbContext.Set<TEntity>().AsNoTracking();
         }
+
+        public async Task<IQueryable<TEntity>> GetAllWithIncludes(Expression<Func<TEntity, bool>> predicate=null, params Expression<Func<TEntity, object>>[] includes)
+        {
+            IQueryable<TEntity> query=null;
+            if (predicate == null)
+            {
+                query = GetAll().Result;
+
+            }
+            else
+            {
+                query = GetAll().Result.Where(predicate);
+
+            }
+            return includes.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+        }
         public async Task<IQueryable<TEntity>> GetAllLite()
         {
             return _dbContext.Set<TEntity>().AsNoTracking();
         }
+
 
         public async Task<TEntity> GetById(long id)
         {
@@ -36,6 +54,7 @@ namespace DataAccess.Shared.Handlers
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
+
 
         public async Task<long> Add(TEntity entity)
         {

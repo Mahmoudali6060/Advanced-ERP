@@ -18,6 +18,8 @@ const routes: Routes = [
   { path: 'sales-bill-temp-form', component: SalesBillTempFormComponent },
   { path: 'sales-bill-temp-form/:id', component: SalesBillTempFormComponent },
   { path: 'sales-bill-temp-list', component: SalesBillTempListComponent },
+  { path: 'sales-bill-new-returned-form', component: SalesBillReturnedFormComponent },
+  { path: 'sales-bill-new-returned-form/:id', component: SalesBillReturnedFormComponent },
   { path: 'sales-bill-returned-form', component: SalesBillReturnedFormComponent },
   { path: 'sales-bill-returned-form/:id', component: SalesBillReturnedFormComponent },
   { path: 'sales-bill-returned-list', component: SalesBillReturnedListComponent },

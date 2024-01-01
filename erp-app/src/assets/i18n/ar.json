@@ -148,7 +148,8 @@
     "TransfereToBill": "تحويل الى فاتورة",
     "AddBillReturnedForm": "إضافة فاتورة مرتجعات",
     "BillsSalesReturnedList": "فواتير مرتجعات المبيعات",
-    "BillsPurchasesReturnedList": "فواتير مرتجعات المبيعات"
+    "BillsPurchasesReturnedList": "فواتير مرتجعات المشتريات"
+    
 
   },
   "Dashboard": {

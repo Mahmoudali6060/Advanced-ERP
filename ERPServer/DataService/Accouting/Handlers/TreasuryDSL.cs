@@ -16,6 +16,7 @@ using DataService.Setup.Contracts;
 using Data.Entities.Accouting;
 using Shared.Entities.Accouting;
 using DataService.Accounting.Contracts;
+using System.Linq.Expressions;
 
 namespace DataService.Accounting.Handlers
 {
@@ -34,22 +35,22 @@ namespace DataService.Accounting.Handlers
         #region Query
         public async Task<ResponseEntityList<TreasuryDTO>> GetAll(TreasurySearchDTO searchCriteriaDTO)
         {
-            var userProfileList = await _unitOfWork.TreasuryDAL.GetAll();
-
+            var treasuryList = await _unitOfWork.TreasuryDAL.GetAllWithIncludes(x => x.IsCancel == false, x => x.ClientVendor);
             #region Apply Filters
-            userProfileList = ApplyFilert(userProfileList, searchCriteriaDTO);
-            int total = userProfileList.Count();
+            treasuryList = treasuryList.OrderByDescending(x => x.Id);
+            treasuryList = ApplyFilert(treasuryList, searchCriteriaDTO);
+            int total = treasuryList.Count();
             #endregion
 
             #region Apply Pagination
-            userProfileList = userProfileList.Skip((searchCriteriaDTO.Page - 1) * searchCriteriaDTO.PageSize).Take(searchCriteriaDTO.PageSize);
+            treasuryList = treasuryList.Skip((searchCriteriaDTO.Page - 1) * searchCriteriaDTO.PageSize).Take(searchCriteriaDTO.PageSize);
             #endregion
 
             #region Mapping and Return List
-            var userProfileDTOList = _mapper.Map<IEnumerable<TreasuryDTO>>(userProfileList);
+            var treasuryDTOList = _mapper.Map<IEnumerable<TreasuryDTO>>(treasuryList);
             return new ResponseEntityList<TreasuryDTO>
             {
-                List = userProfileDTOList,
+                List = treasuryDTOList,
                 Total = total
             };
             #endregion
@@ -160,7 +161,7 @@ namespace DataService.Accounting.Handlers
                 TreasuryList = TreasuryList.Where(x => x.ClientVendorId == searchCriteriaDTO.ClientVendorId);
             }
 
-           
+
 
             if (searchCriteriaDTO.PaymentMethodId.HasValue)
             {

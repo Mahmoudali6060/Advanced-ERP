@@ -116,8 +116,8 @@ namespace App.Helper
 
             #region Accounting
             CreateMap<Treasury, TreasuryDTO>()
-                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")));
-
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")))
+                .ForMember(dest => dest.BeneficiaryName, opt => opt.MapFrom(src => src.ClientVendor != null ? src.ClientVendor.FullName : src.BeneficiaryName));
 
             CreateMap<TreasuryDTO, Treasury>();
 

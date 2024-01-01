@@ -28,19 +28,20 @@ namespace DataService.Setup.Handlers
         #region Query
         public async Task<ResponseEntityList<ProductDTO>> GetAll(ProductSearchDTO searchCriteriaDTO)
         {
-            var userProfileList = await _unitOfWork.ProductDAL.GetAll();
-            int total = userProfileList.Count();
+            var productList = await _unitOfWork.ProductDAL.GetAll();
 
             #region Apply Filters
-            userProfileList = ApplyFilert(userProfileList, searchCriteriaDTO);
+            productList = productList.OrderByDescending(x => x.Id);
+            productList = ApplyFilert(productList, searchCriteriaDTO);
+            int total = productList.Count();
             #endregion
 
             #region Apply Pagination
-            userProfileList = userProfileList.Skip((searchCriteriaDTO.Page - 1) * searchCriteriaDTO.PageSize).Take(searchCriteriaDTO.PageSize);
+            productList = productList.Skip((searchCriteriaDTO.Page - 1) * searchCriteriaDTO.PageSize).Take(searchCriteriaDTO.PageSize);
             #endregion
 
             #region Mapping and Return List
-            var userProfileDTOList = _mapper.Map<IEnumerable<ProductDTO>>(userProfileList);
+            var userProfileDTOList = _mapper.Map<IEnumerable<ProductDTO>>(productList);
             return new ResponseEntityList<ProductDTO>
             {
                 List = userProfileDTOList,

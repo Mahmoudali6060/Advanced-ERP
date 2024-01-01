@@ -31,19 +31,21 @@ namespace DataService.Setup.Handlers
         #region Query
         public async Task<ResponseEntityList<RepresentiveDTO>> GetAll(RepresentiveSearchDTO searchCriteriaDTO)
         {
-            var userProfileList = await _unitOfWork.RepresentiveDAL.GetAll();
-            int total = userProfileList.Count();
+            var representiveList = await _unitOfWork.RepresentiveDAL.GetAll();
 
             #region Apply Filters
-            userProfileList = ApplyFilert(userProfileList, searchCriteriaDTO);
+            representiveList = representiveList.OrderByDescending(x => x.Id);
+            representiveList = ApplyFilert(representiveList, searchCriteriaDTO);
+            int total = representiveList.Count();
+
             #endregion
 
             #region Apply Pagination
-            userProfileList = userProfileList.Skip((searchCriteriaDTO.Page - 1) * searchCriteriaDTO.PageSize).Take(searchCriteriaDTO.PageSize);
+            representiveList = representiveList.Skip((searchCriteriaDTO.Page - 1) * searchCriteriaDTO.PageSize).Take(searchCriteriaDTO.PageSize);
             #endregion
 
             #region Mapping and Return List
-            var userProfileDTOList = _mapper.Map<IEnumerable<RepresentiveDTO>>(userProfileList);
+            var userProfileDTOList = _mapper.Map<IEnumerable<RepresentiveDTO>>(representiveList);
             return new ResponseEntityList<RepresentiveDTO>
             {
                 List = userProfileDTOList,

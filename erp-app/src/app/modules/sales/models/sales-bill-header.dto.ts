@@ -27,6 +27,7 @@ export class SalesBillHeaderDTO extends AuditDTO {
     isTax: boolean = false;
     isTemp: boolean = false;
     isReturned: boolean = false;
+    isNewReturned: boolean = false;
     salesBillDetailList: Array<SalesBillDetailsDTO> = Array<SalesBillDetailsDTO>();
 
 

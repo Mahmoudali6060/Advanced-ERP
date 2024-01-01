@@ -34,7 +34,7 @@ namespace Data.Entities.Purchases
         public bool IsReturned { get; set; }
         public string Notes { get; set; }
         public long ClientVendorId { get; set; }
-        public long RepresentiveId { get; set; }
+        public long? RepresentiveId { get; set; }
         public long? ParentId { get; set; }
 
         public virtual ClientVendor ClientVendor { get; set; }

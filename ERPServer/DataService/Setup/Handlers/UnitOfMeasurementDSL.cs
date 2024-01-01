@@ -31,19 +31,20 @@ namespace DataService.Setup.Handlers
         #region Query
         public async Task<ResponseEntityList<UnitOfMeasurementDTO>> GetAll(UnitOfMeasurementSearchDTO searchCriteriaDTO)
         {
-            var userProfileList = await _unitOfWork.UnitOfMeasurementDAL.GetAll();
-            int total = userProfileList.Count();
+            var unitOfMeasurementList = await _unitOfWork.UnitOfMeasurementDAL.GetAll();
 
             #region Apply Filters
-            userProfileList = ApplyFilert(userProfileList, searchCriteriaDTO);
+            unitOfMeasurementList = unitOfMeasurementList.OrderByDescending(x => x.Id);
+            unitOfMeasurementList = ApplyFilert(unitOfMeasurementList, searchCriteriaDTO);
+            int total = unitOfMeasurementList.Count();
             #endregion
 
             #region Apply Pagination
-            userProfileList = userProfileList.Skip((searchCriteriaDTO.Page - 1) * searchCriteriaDTO.PageSize).Take(searchCriteriaDTO.PageSize);
+            unitOfMeasurementList = unitOfMeasurementList.Skip((searchCriteriaDTO.Page - 1) * searchCriteriaDTO.PageSize).Take(searchCriteriaDTO.PageSize);
             #endregion
 
             #region Mapping and Return List
-            var userProfileDTOList = _mapper.Map<IEnumerable<UnitOfMeasurementDTO>>(userProfileList);
+            var userProfileDTOList = _mapper.Map<IEnumerable<UnitOfMeasurementDTO>>(unitOfMeasurementList);
             return new ResponseEntityList<UnitOfMeasurementDTO>
             {
                 List = userProfileDTOList,
@@ -105,7 +106,7 @@ namespace DataService.Setup.Handlers
             return UnitOfMeasurementList;
         }
 
-  
+
 
         #endregion
     }

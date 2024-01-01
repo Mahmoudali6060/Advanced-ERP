@@ -46,11 +46,9 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	}
 	salesBillHeaderDTO: SalesBillHeaderDTO = new SalesBillHeaderDTO();
 	originalSalesBillDetailsList: Array<SalesBillDetailsDTO> = new Array<SalesBillDetailsDTO>();
-	serverUrl: string;
 	viewMode: boolean = false;
 	productList: Array<ProductDTO> = new Array<ProductDTO>();
 	clientList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
-	@Input() salesHeaderId: number = 0;
 	currentBalance: number = 0;
 	@Input() searchByNumber: boolean = false;
 	selectedClient: ClientVendorDTO = new ClientVendorDTO();
@@ -66,6 +64,9 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	@Input() isTemp: boolean = false;
 	@Input() isReturned: boolean = false;
 	isTransfereToBill: boolean = false;
+	isNewReturn: boolean = false;
+	@Input() salesHeaderId: number = 0;
+
 	constructor(
 		private salesBillService: SalesBillService,
 		private productService: ProductService,
@@ -90,14 +91,15 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		this.salesBillHeaderDTO.isTemp = this.isTemp;
 		this.salesBillHeaderDTO.isReturned = this.isReturned;
 
-		this.serverUrl = this._configService.getServerUrl();
-
+		if (this.router.url.includes('view')) {
+			this.viewMode = true;
+		}
+		if (this.router.url.includes('sales-bill-new-returned-form')) {
+			this.isNewReturn = true;
+		}
 		let salesHeaderId = this.route.snapshot.paramMap.get('id');
 		if (salesHeaderId || (this.salesBillHeaderDTO.isReturned && this.salesHeaderId)) {
 			this.getSalesBillById(salesHeaderId);
-			if (this.router.url.includes('view')) {
-				this.viewMode = true;
-			}
 		}
 
 		else {
@@ -160,8 +162,14 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	}
 
 	back() {
-		this.location.back();
-		// this.router.navigateByUrl('sales-bill/sales-bill-list');
+		if (this.isTemp)
+			this.router.navigateByUrl('sales-bill/sales-bill-temp-list');
+		else if (this.isReturned)
+			this.router.navigateByUrl('sales-bill/sales-bill-returned-list');
+		else
+			this.router.navigateByUrl('sales-bill/sales-bill-list');
+
+
 	}
 	validation(salesBillDTO: SalesBillHeaderDTO): boolean {
 		if (!salesBillDTO.clientVendorId) {
@@ -188,6 +196,12 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	save(isPrint: boolean, form?: NgForm) {
 		if (this.isTransfereToBill == true)
 			this.salesBillHeaderDTO.isTemp = false;
+
+		if (this.isNewReturn == true) {
+			this.salesHeaderId = 0;
+			this.salesBillHeaderDTO.isNewReturned = true;
+		}
+
 		if (this.salesBillHeaderDTO.isReturned) {
 			this.salesBillHeaderDTO.id = this.salesHeaderId;
 			this.salesBillHeaderDTO.salesBillDetailList = this.salesBillHeaderDTO.salesBillDetailList.filter(x => x.isReturned == true);

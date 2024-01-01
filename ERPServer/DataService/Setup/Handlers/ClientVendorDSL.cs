@@ -11,6 +11,7 @@ using DataService.Setup.Contracts;
 using System;
 using Entities.Account;
 using Shared.Enums;
+using Data.Migrations;
 
 namespace DataService.Setup.Handlers
 {
@@ -30,10 +31,11 @@ namespace DataService.Setup.Handlers
         public async Task<ResponseEntityList<ClientVendorDTO>> GetAll(ClientVendorSearchDTO searchCriteriaDTO)
         {
             var userProfileList = await _unitOfWork.ClientVendorDAL.GetAll();
-            int total = userProfileList.Count();
 
             #region Apply Filters
+            userProfileList = userProfileList.OrderByDescending(x => x.FullName);
             userProfileList = ApplyFilert(userProfileList, searchCriteriaDTO);
+            int total = userProfileList.Count();
             #endregion
 
             #region Apply Pagination
@@ -95,7 +97,6 @@ namespace DataService.Setup.Handlers
             await _unitOfWork.CompleteAsync();
             return result;
         }
-
 
         public async Task<bool> Delete(long id)
         {

@@ -4,10 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfigService } from 'src/app/shared/services/config.service';
 import { NgForm } from '@angular/forms';
 import { ProductDTO } from 'src/app/modules/setup/models/product.dto';
-import { PurchasesBillService } from '../../../services/purchases-bill.service';
 import { ProductService } from 'src/app/modules/setup/services/product.service';
-import { PurchasesBillHeaderDTO } from '../../../models/purchases-bill-header.dto';
-import { PurchasesBillDetailsDTO } from '../../../models/purchases-bill-details.dto';
 import { Pipe, PipeTransform } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { HelperService } from 'src/app/shared/services/helper.service';
@@ -24,6 +21,9 @@ import { RepresentiveDTO } from 'src/app/modules/setup/models/representive.dto';
 import { RepresentiveService } from 'src/app/modules/setup/services/representive.service';
 import { RepresentiveFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/representive-form-popup/representive-form-popup.component';
 import { RepresentiveTypeEnum } from 'src/app/shared/enums/representive-type.enum';
+import { PurchasesBillHeaderDTO } from '../../models/purchases-bill-header.dto';
+import { PurchasesBillService } from '../../services/purchases-bill.service';
+import { PurchasesBillDetailsDTO } from '../../models/purchases-bill-details.dto';
 @Component({
 	selector: 'app-purchases-bill-form',
 	templateUrl: './purchases-bill-form.component.html',
@@ -33,7 +33,6 @@ export class PurchasesBillFormComponent {
 
 	purchasesBillHeaderDTO: PurchasesBillHeaderDTO = new PurchasesBillHeaderDTO();
 	imageSrc!: string;
-	serverUrl: string;
 	viewMode: boolean;
 	productList: Array<ProductDTO> = new Array<ProductDTO>();
 	vendorList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
@@ -47,6 +46,10 @@ export class PurchasesBillFormComponent {
 	numberOfProducts: number = 1;
 	@Input() isTemp: boolean = false;
 	isTransfereToBill: boolean = false;
+	@Input() isReturned: boolean = false;
+	isNewReturn: boolean = false;
+	@Input() purchasesHeaderId: number = 0;
+
 	constructor(
 		private purchasesBillService: PurchasesBillService,
 		private productService: ProductService,
@@ -65,14 +68,19 @@ export class PurchasesBillFormComponent {
 
 	ngOnInit() {
 		this.purchasesBillHeaderDTO.isTemp = this.isTemp;
-		this.imageSrc = "assets/images/icon/avatar-big-01.jpg";
-		this.purchaseHeaderId = this.route.snapshot.paramMap.get('id');
-		if (this.purchaseHeaderId) {
-			this.getPurchasesBillById(this.purchaseHeaderId);
-			if (this.router.url.includes('view')) {
-				this.viewMode = true;
-			}
+		this.purchasesBillHeaderDTO.isReturned = this.isReturned;
+
+		if (this.router.url.includes('view')) {
+			this.viewMode = true;
 		}
+		if (this.router.url.includes('purchases-bill-new-returned-form')) {
+			this.isNewReturn = true;
+		}
+		let purchasesHeaderId = this.route.snapshot.paramMap.get('id');
+		if (purchasesHeaderId || (this.purchasesBillHeaderDTO.isReturned && this.purchasesHeaderId)) {
+			this.getPurchasesBillById(purchasesHeaderId);
+		}
+
 		else {
 			this.purchasesBillHeaderDTO.clientVendorId = null;
 			this.addNewRow();
@@ -113,6 +121,8 @@ export class PurchasesBillFormComponent {
 			this.getAllVendors();
 			this.getAllRepresentives();
 			this.isTaxChange();
+			this.purchasesBillHeaderDTO.isReturned = this.isReturned;
+
 		});
 	}
 
@@ -142,8 +152,16 @@ export class PurchasesBillFormComponent {
 	}
 
 	back() {
-		this.router.navigateByUrl('purchases-bill/purchases-bill-list');
+		if (this.isTemp)
+			this.router.navigateByUrl('purchases-bill/purchases-bill-temp-list');
+		else if (this.isReturned)
+			this.router.navigateByUrl('purchases-bill/purchases-bill-returned-list');
+		else
+			this.router.navigateByUrl('purchases-bill/purchases-bill-list');
+
+
 	}
+
 	validation(purchasesBillDTO: PurchasesBillHeaderDTO): boolean {
 		if (!purchasesBillDTO.clientVendorId) {
 			this.toasterService.error(this.translate.instant("Errors.YouMustSelectVendor"));
@@ -169,6 +187,21 @@ export class PurchasesBillFormComponent {
 	save(isPrint: boolean, form?: NgForm) {
 		if (this.isTransfereToBill == true)
 			this.purchasesBillHeaderDTO.isTemp = false;
+
+		if (this.isNewReturn == true) {
+			this.purchasesHeaderId = 0;
+			this.purchasesBillHeaderDTO.isNewReturned = true;
+		}
+
+		if (this.purchasesBillHeaderDTO.isReturned) {
+			this.purchasesBillHeaderDTO.id = this.purchasesHeaderId;
+			this.purchasesBillHeaderDTO.purchasesBillDetailList = this.purchasesBillHeaderDTO.purchasesBillDetailList.filter(x => x.isReturned == true);
+			for (let item of this.purchasesBillHeaderDTO.purchasesBillDetailList) {
+				item.purchasesBillHeaderId = this.purchasesHeaderId;
+				if (this.purchasesHeaderId == 0 || this.purchasesHeaderId == null)
+					item.id = 0;
+			}
+		}
 		if (this.validation(this.purchasesBillHeaderDTO)) {
 			if (this.purchasesBillHeaderDTO.id) {
 				this.purchasesBillService.update(this.purchasesBillHeaderDTO).subscribe(res => {
@@ -278,7 +311,7 @@ export class PurchasesBillFormComponent {
 					this.getAllProducts();
 				}
 			})
-			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+			.catch(() => console.log('PurchasesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
 	}
 
 	onVendorChange() {
@@ -299,7 +332,7 @@ export class PurchasesBillFormComponent {
 					this.getAllVendors();
 				}
 			})
-			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+			.catch(() => console.log('PurchasesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
 	}
 
 	showRepresentiveFormPopUp() {
@@ -310,7 +343,7 @@ export class PurchasesBillFormComponent {
 					this.getAllRepresentives();
 				}
 			})
-			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+			.catch(() => console.log('PurchasesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
 	}
 
 

@@ -5,14 +5,14 @@ import { ToastrService } from 'ngx-toastr';
 import { PaginationComponent } from 'src/app/shared/components/pagination/pagination.component';
 import { ConfigService } from 'src/app/shared/services/config.service';
 import { HelperService } from 'src/app/shared/services/helper.service';
-import { PagingDTO } from '../../../../../shared/models/paging-dto';
-import { DialogService } from '../../../../../shared/services/confirmation-dialog.service';
 import { CountryModel } from 'src/app/modules/configurations/models/country.model';
 import { StateModel } from 'src/app/modules/configurations/models/state.model';
 import { CityModel } from 'src/app/modules/configurations/models/city.model';
-import { PurchasesBillService } from '../../../services/purchases-bill.service';
-import { PurchasesBillSearchCriteriaDTO } from '../../../models/purchases-bill-search-criteria-dto';
-import { PurchasesBillHeaderDTO } from '../../../models/purchases-bill-header.dto';
+import { PagingDTO } from 'src/app/shared/models/paging-dto';
+import { PurchasesBillHeaderDTO } from '../../models/purchases-bill-header.dto';
+import { PurchasesBillSearchCriteriaDTO } from '../../models/purchases-bill-search-criteria-dto';
+import { DialogService } from 'src/app/shared/services/confirmation-dialog.service';
+import { PurchasesBillService } from '../../services/purchases-bill.service';
 
 @Component({
 	selector: 'app-purchases-bill-list',
@@ -31,6 +31,7 @@ export class PurchasesBillListComponent {
 	recordsPerPage: number = 5;
 	statusDDL: any;
 	@Input() isTemp: boolean = false;
+	@Input() isReturned: boolean = false;
 
 	constructor(private productService: PurchasesBillService,
 		private confirmationDialogService: DialogService,
@@ -41,6 +42,8 @@ export class PurchasesBillListComponent {
 
 	ngOnInit() {
 		this.searchCriteriaDTO.isTemp = this.isTemp;
+		this.searchCriteriaDTO.isReturned = this.isReturned;
+
 		this.search();
 		this.statusDDL = [
 			{ label: "All", value: '' },
