@@ -2,7 +2,7 @@ import { AuditDTO } from "src/app/shared/models/audit-dto.model";
 import { PurchasesBillDetailsDTO } from "./purchases-bill-details.dto";
 
 export class PurchasesBillHeaderDTO extends AuditDTO {
-    id: number;
+    id: number | null;
     number: string;
     isActive: boolean;
     date: string | undefined;

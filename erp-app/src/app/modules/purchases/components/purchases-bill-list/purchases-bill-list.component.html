@@ -1,15 +1,32 @@
 <div class="row">
     <div class="col-md-12">
-        <!-- DATA TABLE -->
-        <h3 class="title-5 m-b-35">{{'Purchases.PurchasesBillsTitle' |translate}}</h3>
+        <h3 class="title-5 m-b-35" *ngIf="!isTemp && !isReturned">
+            {{'Purchases.PurchasesBillsTitle' |translate}}</h3>
+        <h3 class="title-5 m-b-35" *ngIf="isTemp">{{'Purchases.PurchasesBillsTempTitle' |translate}}</h3>
+        <h3 class="title-5 m-b-35" *ngIf="isReturned">{{'General.BillsPurchasesReturnedList' |translate}}
+        </h3>
+
         <div class="table-data__tool">
             <div class="table-data__tool-left">
                 <button class="au-btn-filter" (click)="toggleFilter()">
                     <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
             </div>
-            <div class="table-data__tool-right">
-                <button [routerLink]="['/purchases-bill/purchases-bill-form']"  class="au-btn au-btn-icon au-btn--black au-btn--small">
+            <div class="table-data__tool-right" *ngIf="!isTemp && !isReturned">
+                <button [routerLink]="['/purchases-bill/purchases-bill-form']"
+                    class="au-btn au-btn-icon au-btn--black au-btn--small">
                     <i class="zmdi zmdi-plus"></i>{{'Purchases.AddPurchasesBill' |translate}}
+                </button>
+            </div>
+            <div class="table-data__tool-right" *ngIf="isTemp">
+                <button [routerLink]="['/purchases-bill/purchases-bill-temp-form']"
+                    class="au-btn au-btn-icon au-btn--black au-btn--small">
+                    <i class="zmdi zmdi-plus"></i>{{'Purchases.AddPurchasesBillTemp' |translate}}
+                </button>
+            </div>
+            <div class="table-data__tool-right" *ngIf="isReturned">
+                <button [routerLink]="['/purchases-bill/purchases-bill-new-returned-form']"
+                    class="au-btn au-btn-icon au-btn--black au-btn--small">
+                    <i class="zmdi zmdi-plus"></i>{{'General.AddBillReturnedForm' |translate}}
                 </button>
             </div>
         </div>
@@ -87,18 +104,32 @@
                         <td>{{item.notes}}</td>
                         <td>
                             <div class="table-data-feature">
-                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
-                                    data-original-title="View" [routerLink]="['/purchases-bill/purchases-bill-form-view/'+item.id]">
+                                <button *ngIf="!searchCriteriaDTO.isReturned" class="item ml-2" data-toggle="tooltip"
+                                    data-placement="top" title="" data-original-title="View"
+                                    [routerLink]="['/purchases-bill/purchases-bill-form-view/'+item.id]">
                                     <i class="zmdi zmdi-eye"></i>
-                                </button> 
-                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
-                                    data-original-title="Edit" [routerLink]="['/purchases-bill/purchases-bill-form/'+item.id]">
+                                </button>
+
+                                <button *ngIf="!searchCriteriaDTO.isReturned" class="item ml-2" data-toggle="tooltip"
+                                    data-placement="top" title="" data-original-title="Edit"
+                                    [routerLink]="['/purchases-bill/purchases-bill-form/'+item.id]">
+                                    <i class="zmdi zmdi-edit"></i>
+                                </button>
+                                <button *ngIf="searchCriteriaDTO.isReturned" class="item ml-2" data-toggle="tooltip"
+                                    data-placement="top" title="" data-original-title="Edit"
+                                    [routerLink]="['/purchases-bill/purchases-bill-returned-form/'+item.id]">
                                     <i class="zmdi zmdi-edit"></i>
                                 </button>
                                 <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Delete" (click)="openConfirmationDialog(item)">
                                     <i class="zmdi zmdi-delete"></i>
-                                </button> 
+                                </button>
+                                <button *ngIf="!searchCriteriaDTO.isReturned && !searchCriteriaDTO.isTemp"
+                                    class="item ml-2" data-toggle="tooltip" type="button"
+                                    title="{{'General.AddToReturnedBill' |translate}}"
+                                    [routerLink]="['/purchases-bill/purchases-bill-new-returned-form/'+item.id]">
+                                    <i class="fa fa-repeat"></i>
+                                </button>
                             </div>
                         </td>
                     </tr>

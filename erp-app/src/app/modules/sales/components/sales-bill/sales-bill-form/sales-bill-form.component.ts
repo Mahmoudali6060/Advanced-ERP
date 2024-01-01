@@ -311,13 +311,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		this.salesBillHeaderDTO.total = 0;
 		this.salesBillHeaderDTO.profit = 0;
 		for (let item of this.salesBillHeaderDTO.salesBillDetailList) {
-			if (!this.salesBillHeaderDTO.isReturned) {
-				item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
-				item.subTotal = item.priceAfterDiscount * item.quantity;
-				this.salesBillHeaderDTO.total += item.subTotal;
-				this.salesBillHeaderDTO.profit += (item.subTotal - (item.lastPurchasingPrice * item.quantity));
-			}
-			else if (this.salesBillHeaderDTO.isReturned && item.isReturned) {
+			if (!this.salesBillHeaderDTO.isReturned || (this.salesBillHeaderDTO.isReturned && item.isReturned)) {
 				item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
 				item.subTotal = item.priceAfterDiscount * item.quantity;
 				this.salesBillHeaderDTO.total += item.subTotal;

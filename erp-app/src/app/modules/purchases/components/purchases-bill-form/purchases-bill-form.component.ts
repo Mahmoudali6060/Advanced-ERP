@@ -135,6 +135,10 @@ export class PurchasesBillFormComponent {
 				return;
 			}
 			this.purchasesBillHeaderDTO = res;
+			if (this.isReturned) {
+				this.purchasesBillHeaderDTO.id = null;
+				this.purchasesBillHeaderDTO.isReturned = true;
+			}
 			this.getAllProducts();
 			this.getAllVendors();
 		});
@@ -288,9 +292,12 @@ export class PurchasesBillFormComponent {
 	updateTotal() {
 		this.purchasesBillHeaderDTO.total = 0;
 		for (let item of this.purchasesBillHeaderDTO.purchasesBillDetailList) {
-			item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
-			item.subTotal = item.priceAfterDiscount * item.quantity;
-			this.purchasesBillHeaderDTO.total += item.subTotal;
+			if (!this.purchasesBillHeaderDTO.isReturned || (this.purchasesBillHeaderDTO.isReturned && item.isReturned)) {
+				item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
+				item.subTotal = item.priceAfterDiscount * item.quantity;
+				this.purchasesBillHeaderDTO.total += item.subTotal;
+			}
+
 		}
 		this.purchasesBillHeaderDTO.totalAfterDiscount = parseFloat((this.purchasesBillHeaderDTO.total - this.purchasesBillHeaderDTO.discount).toFixed(2));
 		this.purchasesBillHeaderDTO.vatAmount = parseFloat((this.vatPercentage * this.purchasesBillHeaderDTO.totalAfterDiscount).toFixed(2))
@@ -322,6 +329,11 @@ export class PurchasesBillFormComponent {
 				this.currentBalance = this.selectedVendor?.debit - this.selectedVendor?.credit;
 			}
 		}
+	}
+
+	setReturnedItem(item: PurchasesBillDetailsDTO) {
+		item.isReturned = !item.isReturned;
+		this.updateTotal();
 	}
 
 	showCleintVendorFormPopUp() {
