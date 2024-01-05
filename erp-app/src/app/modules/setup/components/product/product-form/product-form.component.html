@@ -46,7 +46,7 @@
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="form-label"
                                             for="form3Example3c">{{'General.Category'|translate}}</label>
                                         <ng-select name="category" id="category" [(ngModel)]="productDTO.categoryId">
@@ -54,7 +54,23 @@
                                             <ng-option *ngFor="let item of categoryList" [value]="item.id">
                                                 {{item.name}}</ng-option>
                                         </ng-select>
+                                    </div> -->
+                                    <label class="form-label" for="categoryId">{{'General.Category'|translate}}</label>
+                                    <div class="input-group">
+                                        <ng-select name="categoryId" id="categoryId" class="ng-select-custom"
+                                            [(ngModel)]="productDTO.categoryId">
+                                            <ng-option value=" null"
+                                                disabled>{{'General.SelectCategory'|translate}}</ng-option>
+                                            <ng-option *ngFor="let item of categoryList" [value]="item.id">
+                                                {{item.name}}
+                                            </ng-option>
+                                        </ng-select>
+                                        <div class="input-group-addon" data-toggle="tooltip" data-placement="top"
+                                            (click)="showCategoryFormPopUp()" title="Add Category">
+                                            <i class="fa fa-plus-square"></i>
+                                        </div>
                                     </div>
+
                                 </div>
 
                                 <div class="col-lg-6">
@@ -164,19 +180,22 @@
                                         <label for="description" class=" form-control-label">{{'Product.Description'
                                             |translate}}</label>
                                         <input [disabled]="viewMode" [(ngModel)]="productDTO.description" type="text"
-                                            id="description" class="form-control" #description="ngModel" name="description"
-                                            aria-describedby="helpId">
+                                            id="description" class="form-control" #description="ngModel"
+                                            name="description" aria-describedby="helpId">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="unitOfMeasurementId" class=" form-control-label">{{'Product.UnitOfMeasurement'
+                                        <label for="unitOfMeasurementId"
+                                            class=" form-control-label">{{'Product.UnitOfMeasurement'
                                             |translate}}</label>
-                                            <ng-select name="unitOfMeasurementId" id="unitOfMeasurementId" [(ngModel)]="productDTO.unitOfMeasurementId">
-                                                <ng-option value="">{{'General.SelectUnitOfMeasurement'|translate}}</ng-option>
-                                                <ng-option *ngFor="let item of unitOfMeasurementList" [value]="item.id">
-                                                    {{item.name}}</ng-option>
-                                            </ng-select>
+                                        <ng-select name="unitOfMeasurementId" id="unitOfMeasurementId"
+                                            [(ngModel)]="productDTO.unitOfMeasurementId">
+                                            <ng-option
+                                                value="">{{'General.SelectUnitOfMeasurement'|translate}}</ng-option>
+                                            <ng-option *ngFor="let item of unitOfMeasurementList" [value]="item.id">
+                                                {{item.name}}</ng-option>
+                                        </ng-select>
                                     </div>
                                 </div>
 
