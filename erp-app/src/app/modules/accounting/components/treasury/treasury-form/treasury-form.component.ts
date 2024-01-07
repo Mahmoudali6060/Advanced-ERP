@@ -26,7 +26,7 @@ import { ReportService } from 'src/app/modules/report/services/report.service';
 export class TreasuryFormComponent {
 
 	treasuryDTO: TreasuryDTO = new TreasuryDTO();
-	viewMode: boolean;
+	viewMode: boolean = false;
 	accountTypeList: LabelValuePair[];
 	paymentMethodList: LabelValuePair[];
 	transactionTypeList: LabelValuePair[];
@@ -58,7 +58,7 @@ export class TreasuryFormComponent {
 		const id = this.route.snapshot.paramMap.get('id');
 		if (id) {
 			this.getTreasuryById(id);
-			if (this.router.url.includes('/view/')) {
+			if (this.router.url.includes('view')) {
 				this.viewMode = true;
 			}
 		}
@@ -164,16 +164,16 @@ export class TreasuryFormComponent {
 		if (this.treasuryDTO.id) {
 			// this.currentBalance = parseFloat((clientVendor?.debit - clientVendor?.credit).toFixed(2));
 			// this.previousBalance = parseFloat((this.currentBalance - (clientVendor?.debit - clientVendor?.credit)).toFixed(2));
-		
+
 			this.currentBalance = parseFloat((clientVendor?.debit - clientVendor?.credit).toFixed(2));
 			this.previousBalance = parseFloat((this.currentBalance + this.treasuryDTO?.debit + this.treasuryDTO?.credit).toFixed(2));
-	
+
 		}
 		//Add
 		else {
 			this.previousBalance = parseFloat((clientVendor?.debit - clientVendor?.credit).toFixed(2));
 			this.currentBalance = parseFloat((this.previousBalance - this.treasuryDTO?.debit - this.treasuryDTO?.credit).toFixed(2));
-	
+
 		}
 	}
 

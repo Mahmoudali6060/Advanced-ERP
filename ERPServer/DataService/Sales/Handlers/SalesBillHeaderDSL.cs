@@ -388,6 +388,7 @@ namespace DataService.Sales.Handlers
                 //TransactionTypeId = TransactionTypeEnum.Incoming,
                 PaymentMethodId = PaymentMethodEnum.Cash,
                 RefNo = entity.Number,
+                IsBilled = true
             };
 
             if (entity.IsReturned)

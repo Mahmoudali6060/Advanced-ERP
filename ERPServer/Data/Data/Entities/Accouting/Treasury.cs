@@ -24,6 +24,7 @@ namespace Data.Entities.Accouting
         public string RefNo { get; set; }
         public string Notes { get; set; }
         public bool IsCancel { get; set; }
+        public bool IsBilled { get; set; }
         public virtual ClientVendor ClientVendor { get; set; }
 
     }

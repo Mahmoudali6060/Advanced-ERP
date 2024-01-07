@@ -15,4 +15,5 @@ export class TreasuryDTO extends BaseDTO {
     credit: number = 0;
     refNo: string;
     notes: string;
+    isBilled: boolean;
 }

@@ -7,6 +7,9 @@ const routes: Routes = [
   { path: 'treasury-list', component: TreasuryListComponent },
   { path: 'treasury-form', component: TreasuryFormComponent },
   { path: 'treasury-form/:id', component: TreasuryFormComponent },
+  { path: 'treasury-form-view/:id', component: TreasuryFormComponent },
+
+
 
 ];
 

@@ -55,7 +55,7 @@
                                     <label class="form-label"
                                         for="clientVendorId">{{(searchCriteriaDTO.accountTypeId==accountTypeEnum.Clients?"General.Client":"General.Vendor")|translate}}</label>
                                     <ng-select name="clientVendorId" id="clientVendorId"
-                                        [(ngModel)]="searchCriteriaDTO.clientVendorId" >
+                                        [(ngModel)]="searchCriteriaDTO.clientVendorId">
                                         <ng-option value=" null"
                                             disabled>{{searchCriteriaDTO.accountTypeId==accountTypeEnum.Clients?"General.SelectClient":"General.SelectVendor"|translate}}</ng-option>
                                         <ng-option *ngFor="let item of clientVendorList" [value]="item.id">
@@ -179,6 +179,11 @@
                                     data-original-title="Edit" [routerLink]="['/accounting/treasury-form/'+item.id]">
                                     <i class="zmdi zmdi-edit"></i>
                                 </button> -->
+                                <button *ngIf="!item.isBilled" class="item ml-2" data-toggle="tooltip"
+                                    data-placement="top" title="" data-original-title="View"
+                                    [routerLink]="['/accounting/treasury-form-view/'+item.id]">
+                                    <i class="zmdi zmdi-eye"></i>
+                                </button>
                                 <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Delete" (click)="openConfirmationDialog(item)">
                                     <i class="zmdi zmdi-delete"></i>

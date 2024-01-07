@@ -23,7 +23,7 @@
                                     <div class="form-group">
                                         <label class="form-label"
                                             for="accountTypeId">{{'General.AccountType'|translate}}</label>
-                                        <ng-select name="accountTypeId" id="accountTypeId"
+                                        <ng-select [disabled]="viewMode" name="accountTypeId" id="accountTypeId"
                                             [(ngModel)]="treasuryDTO.accountTypeId" (change)="onAccountTypeChange()">
                                             <ng-option *ngFor="let item of accountTypeList" [value]="item.value">
                                                 {{'AccountTypeEnum.'+item.label |translate}}
@@ -35,7 +35,7 @@
                                     *ngIf="treasuryDTO.accountTypeId && treasuryDTO.accountTypeId==accountTypeEnum.Clients || treasuryDTO.accountTypeId==accountTypeEnum.Vendors">
                                     <label class="form-label"
                                         for="clientVendorId">{{(treasuryDTO.accountTypeId==accountTypeEnum.Clients?"General.Client":"General.Vendor")|translate}}</label>
-                                    <ng-select name="clientVendorId" id="clientVendorId"
+                                    <ng-select [disabled]="viewMode" name="clientVendorId" id="clientVendorId"
                                         [(ngModel)]="treasuryDTO.clientVendorId" (change)="onClientVendorChange()">
                                         <ng-option value=" null"
                                             disabled>{{treasuryDTO.accountTypeId==accountTypeEnum.Clients?"General.SelectClient":"General.SelectVendor"|translate}}</ng-option>
@@ -45,7 +45,7 @@
                                     </ng-select>
                                 </div>
                                 <div class="col-md-4"
-                                    *ngIf="treasuryDTO.accountTypeId && treasuryDTO.accountTypeId==accountTypeEnum.Clients || treasuryDTO.accountTypeId==accountTypeEnum.Vendors">
+                                    *ngIf="!viewMode && (treasuryDTO.accountTypeId && treasuryDTO.accountTypeId==accountTypeEnum.Clients || treasuryDTO.accountTypeId==accountTypeEnum.Vendors)">
                                     <div class="form-group">
                                         <label for="previousBalance"
                                             class=" form-control-label">{{'General.PreviousBalance' |translate}}
@@ -89,7 +89,7 @@
                                     <div class="form-group">
                                         <label class="form-label"
                                             for="paymentMethodId">{{'General.PaymentMethod'|translate}}</label>
-                                        <ng-select name="paymentMethodId" id="paymentMethodId"
+                                        <ng-select [disabled]="viewMode" name="paymentMethodId" id="paymentMethodId"
                                             [(ngModel)]="treasuryDTO.paymentMethodId">
                                             <ng-option *ngFor="let item of paymentMethodList" [value]="item.value">
                                                 {{'PaymentMethodEnum.'+item.label |translate}}
@@ -101,7 +101,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="debit" class=" form-control-label">
-                                            {{'General.Debit'|translate}} -{{'General.DebitDetails'|translate}} </label> 
+                                            {{'General.Debit'|translate}} -{{'General.DebitDetails'|translate}} </label>
                                         <input [disabled]="viewMode" [(ngModel)]="treasuryDTO.debit" type="number"
                                             id="debit" class="form-control" #debit="ngModel"
                                             [class.is-invalid]="debit.invalid && debit.touched"
@@ -148,12 +148,16 @@
                     </div>
                 </div>
                 <div class="flex-container p-3">
-                    <button (click)="saveAndPrint()" type="button" class="btn btn-outline-success mr-1">
+                    <button *ngIf="!viewMode" (click)="saveAndPrint()" type="button"
+                        class="btn btn-outline-success mr-1">
                         <i class="fa fa-print"></i>{{'General.SaveAndPrint' |translate}}
                     </button>
-                    <button (click)="save()" type="button" class="btn btn-outline-primary mr-1"
+                    <button *ngIf="!viewMode" (click)="save()" type="button" class="btn btn-outline-primary mr-1"
                         [disabled]="frm.invalid">
                         <i class="fa fa-dot-circle-o"></i>{{'General.SaveChanges' |translate}}
+                    </button>
+                    <button *ngIf="viewMode" (click)="print()" type="button" class="btn btn-outline-success mr-1">
+                        <i class="fa fa-print"></i>{{'General.Print' |translate}}
                     </button>
                     <button type="reset" class="btn btn-danger mr-1" (click)="back()">
                         <i class="fa fa-ban"></i>{{'General.Back' |translate}}
@@ -170,7 +174,8 @@
     <br>
     <br>
     <br>
-    <h2 class="text-center"> إيصال إستلام نقدية</h2>
+    <h2 class="text-center" *ngIf="treasuryDTO.debit>0"> إيصال إستلام نقدية</h2>
+    <h2 class="text-center"  *ngIf="treasuryDTO.credit>0"> إيصال صرف نقدية</h2>
     <!-- <h5 class="text-center">رقم:{{treasuryDTO.number}}</h5> -->
     <h6 class="text-center">التاريخ:{{treasuryDTO.date}}</h6>
     <br>
@@ -196,7 +201,7 @@
                         جنيه مصري </td>
                     <td class="text-left">Amount</td>
                 </tr>
-                <tr *ngIf="treasuryDTO.clientVendorId">
+                <tr *ngIf="!viewMode && treasuryDTO.clientVendorId">
                     <td class="text-right">الرصيد السابق </td>
                     <td class="text-center text-bold">{{ previousBalance}}
                         جنيه مصري </td>
