@@ -33,6 +33,9 @@ export class TreasuryFormComponent {
 	clientVendorList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
 	accountTypeEnum = AccountTypeEnum;
 	paymentMethodEnum = PaymentMethodEnum;
+	currentBalance: number = 0;
+	previousBalance: number = 0;
+
 	constructor(
 		private treasuryService: TreasuryService,
 		private clientVendorService: ClientVendorService,
@@ -72,7 +75,7 @@ export class TreasuryFormComponent {
 				this.clientVendorList = this.clientVendorList.filter(x => x.typeId == ClientVendorTypeEnum.All || x.typeId == ClientVendorTypeEnum.Vendor)
 			}
 			this.treasuryDTO.beneficiaryName = this.clientVendorList.find(x => x.id == this.treasuryDTO.clientVendorId)?.fullName;
-
+			this.onClientVendorChange();
 		})
 	}
 
@@ -140,7 +143,10 @@ export class TreasuryFormComponent {
 
 	onClientVendorChange() {
 		if (this.treasuryDTO.clientVendorId) {
-			this.treasuryDTO.beneficiaryName = this.clientVendorList.find(x => x.id == this.treasuryDTO.clientVendorId)?.fullName;
+			let clientVendor: any | undefined = this.clientVendorList.find(x => x.id == this.treasuryDTO.clientVendorId);
+			this.treasuryDTO.beneficiaryName = clientVendor?.fullName;
+			this.previousBalance = clientVendor?.credit - clientVendor?.debit;
+			this.currentBalance = this.previousBalance + this.treasuryDTO?.debit - this.treasuryDTO?.credit;
 		}
 	}
 

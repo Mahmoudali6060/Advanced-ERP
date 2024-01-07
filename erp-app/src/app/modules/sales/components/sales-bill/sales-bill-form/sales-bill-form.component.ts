@@ -66,6 +66,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	isTransfereToBill: boolean = false;
 	isNewReturn: boolean = false;
 	@Input() salesHeaderId: number = 0;
+	hideBillnumber: boolean = false;
 
 	constructor(
 		private salesBillService: SalesBillService,
@@ -91,12 +92,6 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		this.salesBillHeaderDTO.isTemp = this.isTemp;
 		this.salesBillHeaderDTO.isReturned = this.isReturned;
 
-		if (this.router.url.includes('view')) {
-			this.viewMode = true;
-		}
-		if (this.router.url.includes('sales-bill-new-returned-form')) {
-			this.isNewReturn = true;
-		}
 		let salesHeaderId = this.route.snapshot.paramMap.get('id');
 		if (salesHeaderId || (this.salesBillHeaderDTO.isReturned && this.salesHeaderId)) {
 			this.getSalesBillById(salesHeaderId);
@@ -112,11 +107,32 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			this.getAllRepresentives();
 		}
 
+		if (this.router.url.includes('view')) {
+			this.viewMode = true;
+		}
+		if (this.router.url.includes('sales-bill-new-returned-form')) {
+			this.isNewReturn = true;
+		}
+
+		if (salesHeaderId == null && (this.router.url.includes('sales-bill-form') || this.router.url.includes('sales-bill-temp-form'))) {
+			this.hideBillnumber = true;
+		}
 	}
 
 	getAllProducts() {
 		this.productService.getAllLite().subscribe((res: any) => {
 			this.productList = res.list;
+			if (this.isNewReturn && this.salesBillHeaderDTO.number) {
+				let tempProductList: Array<ProductDTO> = new Array<ProductDTO>();
+				for (let item of this.salesBillHeaderDTO.salesBillDetailList) {
+					let product: any = this.productList.find(x => x.id == item.productId);
+					tempProductList.push(product);
+				}
+				this.productList = tempProductList;
+				this.salesBillHeaderDTO.salesBillDetailList = [];
+				this.addNewRow();
+
+			}
 			this.setPurchaseDetailsDefaultData();
 		})
 	}
@@ -212,6 +228,9 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			}
 		}
 		if (this.validation(this.salesBillHeaderDTO)) {
+			for (let item of this.salesBillHeaderDTO.salesBillDetailList) {
+				if (!item.discount) item.discount = 0;
+			}
 			if (this.salesBillHeaderDTO.id) {
 				this.salesBillService.update(this.salesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
@@ -291,6 +310,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			item.sellingPrice = (product.lastPurchasingPrice - (product.sellingPricePercentage / 100) * product.lastPurchasingPrice);
 			item.productName = product.name;
 			item.productCode = product.code;
+			item.isReturned = this.salesBillHeaderDTO.isReturned;
 			this.updateTotal();
 		}
 	}
@@ -311,12 +331,12 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		this.salesBillHeaderDTO.total = 0;
 		this.salesBillHeaderDTO.profit = 0;
 		for (let item of this.salesBillHeaderDTO.salesBillDetailList) {
-			if (!this.salesBillHeaderDTO.isReturned || (this.salesBillHeaderDTO.isReturned && item.isReturned)) {
-				item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
-				item.subTotal = item.priceAfterDiscount * item.quantity;
-				this.salesBillHeaderDTO.total += item.subTotal;
-				this.salesBillHeaderDTO.profit += (item.subTotal - (item.lastPurchasingPrice * item.quantity));
-			}
+			//if (!this.salesBillHeaderDTO.isReturned || (this.salesBillHeaderDTO.isReturned && item.isReturned)) {
+			item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
+			item.subTotal = parseFloat((item.priceAfterDiscount * item.quantity).toFixed(2));
+			this.salesBillHeaderDTO.total += item.subTotal;
+			this.salesBillHeaderDTO.profit += (item.subTotal - (item.lastPurchasingPrice * item.quantity));
+			//}
 		}
 		this.salesBillHeaderDTO.totalAfterDiscount = parseFloat((this.salesBillHeaderDTO.total - this.salesBillHeaderDTO.discount).toFixed(2));
 		this.salesBillHeaderDTO.vatAmount = parseFloat((this.vatPercentage * this.salesBillHeaderDTO.totalAfterDiscount).toFixed(2))

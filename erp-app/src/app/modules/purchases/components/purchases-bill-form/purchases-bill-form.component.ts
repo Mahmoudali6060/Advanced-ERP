@@ -49,6 +49,7 @@ export class PurchasesBillFormComponent {
 	@Input() isReturned: boolean = false;
 	isNewReturn: boolean = false;
 	@Input() purchasesHeaderId: number = 0;
+	hideBillnumber: boolean = false;
 
 	constructor(
 		private purchasesBillService: PurchasesBillService,
@@ -70,17 +71,11 @@ export class PurchasesBillFormComponent {
 		this.purchasesBillHeaderDTO.isTemp = this.isTemp;
 		this.purchasesBillHeaderDTO.isReturned = this.isReturned;
 
-		if (this.router.url.includes('view')) {
-			this.viewMode = true;
-		}
-		if (this.router.url.includes('purchases-bill-new-returned-form')) {
-			this.isNewReturn = true;
-		}
+
 		let purchasesHeaderId = this.route.snapshot.paramMap.get('id');
 		if (purchasesHeaderId || (this.purchasesBillHeaderDTO.isReturned && this.purchasesHeaderId)) {
 			this.getPurchasesBillById(purchasesHeaderId);
 		}
-
 		else {
 			this.purchasesBillHeaderDTO.clientVendorId = null;
 			this.addNewRow();
@@ -91,11 +86,32 @@ export class PurchasesBillFormComponent {
 			this.getAllRepresentives();
 		}
 
+		if (this.router.url.includes('view')) {
+			this.viewMode = true;
+		}
+		if (this.router.url.includes('purchases-bill-new-returned-form')) {
+			this.isNewReturn = true;
+		}
+		if (purchasesHeaderId == null && (this.router.url.includes('purchases-bill-form') || this.router.url.includes('purchases-bill-temp-form'))) {
+			this.hideBillnumber = true;
+		}
+
 	}
 
 	getAllProducts() {
 		this.productService.getAllLite().subscribe((res: any) => {
 			this.productList = res.list;
+			if (this.isNewReturn && this.purchasesBillHeaderDTO.number) {
+				let tempProductList: Array<ProductDTO> = new Array<ProductDTO>();
+				for (let item of this.purchasesBillHeaderDTO.purchasesBillDetailList) {
+					let product: any = this.productList.find(x => x.id == item.productId);
+					tempProductList.push(product);
+				}
+				this.productList = tempProductList;
+				this.purchasesBillHeaderDTO.purchasesBillDetailList = [];
+				this.addNewRow();
+
+			}
 			this.setPurchaseDetailsDefaultData();
 		})
 	}
@@ -207,6 +223,9 @@ export class PurchasesBillFormComponent {
 			}
 		}
 		if (this.validation(this.purchasesBillHeaderDTO)) {
+			for (let item of this.purchasesBillHeaderDTO.purchasesBillDetailList) {
+				if (!item.discount) item.discount = 0;
+			}
 			if (this.purchasesBillHeaderDTO.id) {
 				this.purchasesBillService.update(this.purchasesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
@@ -271,6 +290,8 @@ export class PurchasesBillFormComponent {
 			item.actualQuantity = product.actualQuantity;
 			item.productName = product.name;
 			item.productCode = product.code;
+			item.isReturned = this.purchasesBillHeaderDTO.isReturned;
+
 			this.updateTotal();
 		}
 	}
@@ -292,11 +313,11 @@ export class PurchasesBillFormComponent {
 	updateTotal() {
 		this.purchasesBillHeaderDTO.total = 0;
 		for (let item of this.purchasesBillHeaderDTO.purchasesBillDetailList) {
-			if (!this.purchasesBillHeaderDTO.isReturned || (this.purchasesBillHeaderDTO.isReturned && item.isReturned)) {
+			//if (!this.purchasesBillHeaderDTO.isReturned || (this.purchasesBillHeaderDTO.isReturned && item.isReturned)) {
 				item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
-				item.subTotal = item.priceAfterDiscount * item.quantity;
+				item.subTotal = parseFloat((item.priceAfterDiscount * item.quantity).toFixed(2));
 				this.purchasesBillHeaderDTO.total += item.subTotal;
-			}
+			//}
 
 		}
 		this.purchasesBillHeaderDTO.totalAfterDiscount = parseFloat((this.purchasesBillHeaderDTO.total - this.purchasesBillHeaderDTO.discount).toFixed(2));

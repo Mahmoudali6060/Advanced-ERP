@@ -18,10 +18,14 @@
                 </div>
                 <div class="card-header" *ngIf="salesBillHeaderDTO.isReturned">
                     <strong *ngIf="!salesBillHeaderDTO.id">{{'General.AddBillReturnedForm' |translate}}</strong>
+                    <strong *ngIf="salesBillHeaderDTO.id && !viewMode">{{'Sales.EditBillReturnedForm'
+                        |translate}}</strong>
+                    <strong *ngIf="salesBillHeaderDTO.id  && viewMode ">{{'Sales.ViewBillReturnedForm'
+                        |translate}}</strong>
                 </div>
                 <div class="card-body card-block">
                     <div class="row">
-                        <div class="col-lg-2">
+                        <div class="col-lg-2" *ngIf="!hideBillnumber">
                             <div class="form-group">
                                 <label for="number" class=" form-control-label">{{'General.BillNumber'
                                     |translate}}</label>
@@ -37,7 +41,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3" [ngClass]="{'disabled':salesBillHeaderDTO.isReturned}">
+                        <div class="col-lg-3" >
                             <label class="form-label" for="clientId">{{'General.Client'|translate}}</label>
                             <div class="input-group">
                                 <ng-select name="clientId" id="clientId" class="ng-select-custom"
@@ -76,7 +80,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3" [ngClass]="{'disabled':salesBillHeaderDTO.isReturned}">
+                        <div class="col-lg-3" >
                             <label class="form-label" for="representiveId">{{'General.Representive'|translate}}</label>
                             <div class="input-group">
                                 <ng-select name="representiveId" id="representiveId" class="ng-select-custom"
@@ -141,9 +145,10 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <input [(ngModel)]="item.actualQuantity" type="number"
+                                                        {{item.actualQuantity}}
+                                                        <!-- <input [(ngModel)]="item.actualQuantity" type="number"
                                                             class="form-control" readonly
-                                                            [ngModelOptions]="{standalone: true}">
+                                                            [ngModelOptions]="{standalone: true}"> -->
                                                     </td>
                                                     <!-- <td>
                                                     <input [(ngModel)]="item.sellingPrice" type="number"
@@ -161,9 +166,10 @@
                                                             [ngModelOptions]="{standalone: true}">
                                                     </td>
                                                     <td>
-                                                        <input [(ngModel)]="item.lastPurchasingPrice" type="number"
+                                                        {{item.lastPurchasingPrice}}
+                                                        <!-- <input [(ngModel)]="item.lastPurchasingPrice" type="number"
                                                             class="form-control" readonly
-                                                            [ngModelOptions]="{standalone: true}">
+                                                            [ngModelOptions]="{standalone: true}"> -->
                                                     </td>
                                                     <td>
                                                         <input [(ngModel)]="item.discount" type="number"
@@ -171,14 +177,16 @@
                                                             [ngModelOptions]="{standalone: true}">
                                                     </td>
                                                     <td>
-                                                        <input [(ngModel)]="item.priceAfterDiscount" readonly
-                                                            class="form-control" [ngModelOptions]="{standalone: true}">
+                                                        {{item.priceAfterDiscount}}
+                                                        <!-- <input [(ngModel)]="item.priceAfterDiscount" readonly
+                                                            class="form-control" [ngModelOptions]="{standalone: true}"> -->
                                                     </td>
 
                                                     <td>
-                                                        <input [(ngModel)]="item.subTotal" class="form-control" readonly
+                                                        {{item.subTotal}}
+                                                        <!-- <input [(ngModel)]="item.subTotal" class="form-control" readonly
                                                             (change)="updateTotal()"
-                                                            [ngModelOptions]="{standalone: true}">
+                                                            [ngModelOptions]="{standalone: true}"> -->
                                                     </td>
 
 
@@ -186,23 +194,22 @@
                                                         <div class="table-data-feature">
 
 
-                                                            <button *ngIf="!salesBillHeaderDTO.isReturned"
+                                                            <!-- <button *ngIf="!salesBillHeaderDTO.isReturned"
                                                                 class="item ml-2" data-toggle="tooltip" type="button"
                                                                 title="{{'General.RemoveRow' |translate}}"
                                                                 (click)="deleteRow($event,item)">
                                                                 <i class="zmdi zmdi-delete"></i>
-                                                            </button>
-
+                                                            </button> -->
+<!-- 
                                                             <button
                                                                 *ngIf="salesBillHeaderDTO.isReturned && !item.isReturned"
                                                                 class="item ml-2" data-toggle="tooltip" type="button"
                                                                 title="{{'General.AddToReturnedBill' |translate}}"
                                                                 (click)="setReturnedItem(item)">
                                                                 <i class="fa fa-repeat"></i>
-                                                            </button>
+                                                            </button> -->
 
                                                             <button
-                                                                *ngIf="salesBillHeaderDTO.isReturned && item.isReturned"
                                                                 class="item ml-2" data-toggle="tooltip" type="button"
                                                                 title="{{'General.AddToReturnedBill' |translate}}"
                                                                 (click)="deleteRow($event,item)">
@@ -217,7 +224,7 @@
                                         </table>
                                     </div>
 
-                                    <div class="element-floating item ml-2" *ngIf="!salesBillHeaderDTO.isReturned">
+                                    <div class="element-floating item ml-2" >
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <input [disabled]="viewMode" [(ngModel)]="numberOfProducts"

@@ -88,6 +88,7 @@
     "SelectClient": "Select client",
     "SelectVendor": "Select vendor",
     "CurrentBalance": "Current Balance",
+    "PreviousBalance": "Previous Balance",
     "Paid": "Paid",
     "Remaining": "Remaining",
     "SellingPrice": "Selling Price",
@@ -554,7 +555,7 @@
     "Clients": "Clients",
     "Vendors": "Vendors",
     "Loans": "Loans",
-    "Guarantee":"Guarantee",
+    "Guarantee": "Guarantee",
     "Other": "Other"
   },
   "PaymentMethodEnum": {

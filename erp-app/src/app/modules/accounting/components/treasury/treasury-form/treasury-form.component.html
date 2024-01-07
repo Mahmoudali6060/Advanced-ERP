@@ -1,5 +1,5 @@
 <div class="row">
-    <form #frm="ngForm" (ngSubmit)="save(frm)">
+    <form #frm="ngForm">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
@@ -43,6 +43,35 @@
                                             {{item.fullName}}
                                         </ng-option>
                                     </ng-select>
+                                </div>
+                                <div class="col-md-4"
+                                    *ngIf="treasuryDTO.accountTypeId && treasuryDTO.accountTypeId==accountTypeEnum.Clients || treasuryDTO.accountTypeId==accountTypeEnum.Vendors">
+                                    <div class="form-group">
+                                        <label for="previousBalance"
+                                            class=" form-control-label">{{'General.PreviousBalance' |translate}}
+                                            <span *ngIf="previousBalance!=0">
+                                                -{{(previousBalance>0?'General.Debit':'General.Credit')
+                                                |translate}}</span>
+                                        </label>
+                                        <input [disabled]="viewMode" [value]="previousBalance" type="text"
+                                            id="previousBalance" class="form-control" readonly name="previousBalance"
+                                            aria-describedby="helpId">
+                                    </div>
+                                </div>
+                                <div class="col-md-4"
+                                    *ngIf="treasuryDTO.accountTypeId && treasuryDTO.accountTypeId==accountTypeEnum.Clients || treasuryDTO.accountTypeId==accountTypeEnum.Vendors">
+                                    <div class="form-group">
+                                        <label for="currentBalance"
+                                            class=" form-control-label">{{'General.CurrentBalance'
+                                            |translate}}
+                                            <span *ngIf="currentBalance!=0">
+                                                -{{(currentBalance>0?'General.Debit':'General.Credit')
+                                                |translate}}</span>
+                                        </label>
+                                        <input [disabled]="viewMode" [value]="currentBalance" type="text"
+                                            id="currentBalance" class="form-control" readonly name="currentBalance"
+                                            aria-describedby="helpId">
+                                    </div>
                                 </div>
                                 <div class="col-md-4"
                                     *ngIf="treasuryDTO.accountTypeId && (treasuryDTO.accountTypeId !=accountTypeEnum.Vendors || treasuryDTO.accountTypeId !=accountTypeEnum.Vendors)">
@@ -122,7 +151,8 @@
                     <button (click)="print()" type="button" class="btn btn-outline-success mr-1">
                         <i class="fa fa-print"></i>{{'General.Print' |translate}}
                     </button>
-                    <button type="submit" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
+                    <button (click)="save(frm)" type="submit" class="btn btn-outline-primary mr-1"
+                        [disabled]="frm.invalid">
                         <i class="fa fa-dot-circle-o"></i>{{'General.SaveChanges' |translate}}
                     </button>
                     <button type="reset" class="btn btn-danger mr-1" (click)="back()">
@@ -166,6 +196,18 @@
                         جنيه مصري </td>
                     <td class="text-left">Amount</td>
                 </tr>
+                <tr *ngIf="treasuryDTO.clientVendorId">
+                    <td class="text-right">الرصيد السابق </td>
+                    <td class="text-center text-bold">{{ previousBalance}}
+                        جنيه مصري </td>
+                    <td class="text-left">Previous Balance</td>
+                </tr>
+                <tr *ngIf="treasuryDTO.clientVendorId">
+                    <td class="text-right">الرصيد الحالي </td>
+                    <td class="text-center text-bold">{{ currentBalance}}
+                        جنيه مصري </td>
+                    <td class="text-left">Current Balance</td>
+                </tr>
                 <tr>
                     <td class="text-right">وذلك مقابل </td>
                     <td class="text-center text-bold">{{treasuryDTO.notes}} </td>
@@ -173,7 +215,8 @@
                 </tr>
                 <tr>
                     <td class="text-right"> طريقة الدفع </td>
-                    <td class="text-center text-bold"> {{'PaymentMethodEnum.'+paymentMethodEnum[treasuryDTO.paymentMethodId] |translate}} </td>
+                    <td class="text-center text-bold">
+                        {{'PaymentMethodEnum.'+paymentMethodEnum[treasuryDTO.paymentMethodId] |translate}} </td>
                     <td class="text-left">Payment Method</td>
                 </tr>
                 <tr>

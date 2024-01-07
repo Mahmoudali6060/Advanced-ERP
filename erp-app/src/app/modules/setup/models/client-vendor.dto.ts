@@ -10,8 +10,8 @@ export class ClientVendorDTO {
     phoneNumber2: string;
     vatNo: string;
     commercialNo: string;
-    debit: number//سعر 
-    credit: number//سعر 
+    debit: number;//سعر 
+    credit: number;//سعر 
     notes: string;
     idNumber: string;
     imageBase64: string;

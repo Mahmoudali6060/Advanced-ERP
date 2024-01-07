@@ -168,7 +168,7 @@ namespace Data.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -189,7 +189,7 @@ namespace Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,7 +209,7 @@ namespace Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -227,13 +227,13 @@ namespace Data.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -253,7 +253,7 @@ namespace Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -483,7 +483,7 @@ namespace Data.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -506,7 +506,7 @@ namespace Data.Migrations
                         column: x => x.RoleGroupId,
                         principalTable: "RoleGroups",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -594,7 +594,7 @@ namespace Data.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_ProductTrackings_UserProfiles_CreatedByProfileId",
                         column: x => x.CreatedByProfileId,
@@ -648,7 +648,7 @@ namespace Data.Migrations
                         column: x => x.ClientVendorId,
                         principalTable: "ClientVendors",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_PurchasesBillHeader_Companies_CompanyId",
                         column: x => x.CompanyId,
@@ -707,7 +707,7 @@ namespace Data.Migrations
                         column: x => x.ClientVendorId,
                         principalTable: "ClientVendors",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_SalesBillHeaders_Companies_CompanyId",
                         column: x => x.CompanyId,
@@ -802,13 +802,13 @@ namespace Data.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_PurchasesBillDetails_PurchasesBillHeader_PurchasesBillHeaderId",
                         column: x => x.PurchasesBillHeaderId,
                         principalTable: "PurchasesBillHeader",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -843,13 +843,13 @@ namespace Data.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_SalesBillDetails_SalesBillHeaders_SalesBillHeaderId",
                         column: x => x.SalesBillHeaderId,
                         principalTable: "SalesBillHeaders",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                         onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(

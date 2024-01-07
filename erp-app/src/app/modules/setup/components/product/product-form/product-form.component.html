@@ -143,8 +143,8 @@
                                         <input [disabled]="viewMode" [(ngModel)]="productDTO.actualQuantity" type="text"
                                             id="actualQuantity" class="form-control" #actualQuantity="ngModel"
                                             [class.is-invalid]="actualQuantity.invalid && actualQuantity.touched"
-                                            [class.is-valid]="actualQuantity.valid" required name="actualQuantity"
-                                            id="actualQuantity" class="form-control" aria-describedby="helpId">
+                                            [class.is-valid]="actualQuantity.valid"  name="actualQuantity"
+                                            id="actualQuantity"  [value]="0" class="form-control" aria-describedby="helpId">
                                         <small [hidden]="actualQuantity.valid || actualQuantity.untouched" id="helpId"
                                             class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
                                     </div>
