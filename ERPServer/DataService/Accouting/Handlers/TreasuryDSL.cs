@@ -85,6 +85,7 @@ namespace DataService.Accounting.Handlers
                 if (clientVendor != null)
                 {
                     clientVendor.Debit += entity.Debit;
+                    clientVendor.Credit += entity.Credit;
                     await _unitOfWork.ClientVendorDAL.Update(clientVendor);
                 }
             }
@@ -96,7 +97,7 @@ namespace DataService.Accounting.Handlers
 
         public async Task<long> Update(TreasuryDTO entity)
         {
-            var exsitedEntity = await _unitOfWork.TreasuryDAL.GetById(entity.Id);
+            var oldEntity = await _unitOfWork.TreasuryDAL.GetById(entity.Id);
             var result = await _unitOfWork.TreasuryDAL.Update(_mapper.Map<Treasury>(entity));
             #region Update Balance
             if (entity.ClientVendorId.HasValue == true)
@@ -104,13 +105,14 @@ namespace DataService.Accounting.Handlers
                 var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId.Value);
                 if (clientVendor != null)
                 {
-                    //clientVendor.Debit = exsitedEntity.Debit - entity.Amount;
+                    clientVendor.Debit += entity.Debit - oldEntity.Debit;
+                    clientVendor.Credit += entity.Credit - oldEntity.Credit;
                     await _unitOfWork.ClientVendorDAL.Update(clientVendor);
                 }
             }
-            else if (exsitedEntity.ClientVendorId.HasValue)
+            else if (oldEntity.ClientVendorId.HasValue)
             {
-                var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(exsitedEntity.ClientVendorId.Value);
+                var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(oldEntity.ClientVendorId.Value);
                 if (clientVendor != null)
                 {
                     //clientVendor.Debit -= entity.Amount;
@@ -133,6 +135,7 @@ namespace DataService.Accounting.Handlers
                 if (clientVendor != null)
                 {
                     clientVendor.Debit -= entity.Debit;
+                    clientVendor.Credit -= entity.Credit;
                     await _unitOfWork.ClientVendorDAL.Update(clientVendor);
                 }
             }

@@ -353,7 +353,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			let selectedClient: any = this.clientList.find(c => c.id == this.salesBillHeaderDTO.clientVendorId);
 			if (selectedClient) {
 				this.selectedClient = selectedClient;
-				this.currentBalance = selectedClient?.debit - selectedClient?.credit;
+				this.currentBalance = parseFloat((selectedClient?.debit - selectedClient?.credit).toFixed(2));
 			}
 		}
 	}

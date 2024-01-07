@@ -100,13 +100,13 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="debit" class=" form-control-label">{{'General.Debit'
-                                            |translate}}</label>
+                                        <label for="debit" class=" form-control-label">
+                                            {{'General.Debit'|translate}} -{{'General.DebitDetails'|translate}} </label> 
                                         <input [disabled]="viewMode" [(ngModel)]="treasuryDTO.debit" type="number"
                                             id="debit" class="form-control" #debit="ngModel"
                                             [class.is-invalid]="debit.invalid && debit.touched"
                                             [class.is-valid]="debit.valid" name="debit" id="debit" class="form-control"
-                                            aria-describedby="helpId">
+                                            aria-describedby="helpId" (change)="onAmountsChange()">
                                         <small [hidden]="debit.valid || debit.untouched" id="helpId" class="text-muted"
                                             [translate]="'Errors.ThisFieldIsRequired'"></small>
                                     </div>
@@ -114,12 +114,12 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="credit" class=" form-control-label">{{'General.Credit'
-                                            |translate}}</label>
+                                            |translate}}-{{'General.CreditDetails'|translate}} </label>
                                         <input [disabled]="viewMode" [(ngModel)]="treasuryDTO.credit" type="number"
                                             id="credit" class="form-control" #credit="ngModel"
                                             [class.is-invalid]="credit.invalid && credit.touched"
                                             [class.is-valid]="credit.valid" name="credit" id="credit"
-                                            class="form-control" aria-describedby="helpId">
+                                            class="form-control" aria-describedby="helpId" (change)="onAmountsChange()">
                                         <!-- <small [hidden]="credit.valid || credit.untouched" id="helpId"
                                             class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small> -->
                                     </div>
@@ -148,10 +148,10 @@
                     </div>
                 </div>
                 <div class="flex-container p-3">
-                    <button (click)="print()" type="button" class="btn btn-outline-success mr-1">
-                        <i class="fa fa-print"></i>{{'General.Print' |translate}}
+                    <button (click)="saveAndPrint()" type="button" class="btn btn-outline-success mr-1">
+                        <i class="fa fa-print"></i>{{'General.SaveAndPrint' |translate}}
                     </button>
-                    <button (click)="save(frm)" type="submit" class="btn btn-outline-primary mr-1"
+                    <button (click)="save()" type="button" class="btn btn-outline-primary mr-1"
                         [disabled]="frm.invalid">
                         <i class="fa fa-dot-circle-o"></i>{{'General.SaveChanges' |translate}}
                     </button>

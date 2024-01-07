@@ -314,9 +314,9 @@ export class PurchasesBillFormComponent {
 		this.purchasesBillHeaderDTO.total = 0;
 		for (let item of this.purchasesBillHeaderDTO.purchasesBillDetailList) {
 			//if (!this.purchasesBillHeaderDTO.isReturned || (this.purchasesBillHeaderDTO.isReturned && item.isReturned)) {
-				item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
-				item.subTotal = parseFloat((item.priceAfterDiscount * item.quantity).toFixed(2));
-				this.purchasesBillHeaderDTO.total += item.subTotal;
+			item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
+			item.subTotal = parseFloat((item.priceAfterDiscount * item.quantity).toFixed(2));
+			this.purchasesBillHeaderDTO.total += item.subTotal;
 			//}
 
 		}
@@ -347,7 +347,7 @@ export class PurchasesBillFormComponent {
 			let selectedVendor = this.vendorList.find(c => c.id == this.purchasesBillHeaderDTO.clientVendorId);
 			if (selectedVendor) {
 				this.selectedVendor = selectedVendor;
-				this.currentBalance = this.selectedVendor?.debit - this.selectedVendor?.credit;
+				this.currentBalance = parseFloat((selectedVendor?.debit - selectedVendor?.credit).toFixed(2));
 			}
 		}
 	}

@@ -100,6 +100,8 @@
     "Credit": "مدين(عليه)",
     "Debit": "دائن(له)",
     "CurrentBalance": "الرصيد الحالي",
+    "DebitDetails": "المبلغ المستلم من الشخص",
+    "CreditDetails": "المبلغ المدفوع الى الشخص",
     "PreviousBalance": "الرصيد السابق",
     "Paid": "المدفوع",
     "Remaining": "المتبقي",
@@ -519,7 +521,7 @@
     "AddPurchasesBillTemp": "إضافة  أمر توريد ",
     "EditPurchasesBillTemp": "تعديل أمر التوريد  ",
     "PurchasesBillsTempTitle": "قائمة  أوامر التوريد",
-    "EditBillReturnedForm":"تعديل فاتورة مرتجعات المشتريات"
+    "EditBillReturnedForm": "تعديل فاتورة مرتجعات المشتريات"
   },
   "Sales": {
     "SalesBillsTitle": "فواتير المبيعات",
@@ -530,7 +532,7 @@
     "SalesBillsTempTitle": "قائمة عروض الأسعار",
     "ViewSalesBill": "عرض فاتورة المبيعات",
     "SearchSalesBill": "بحث عن فاتورة مبيعات",
-    "EditBillReturnedForm":"تعديل فاتورة مرتجعات المبيعات"
+    "EditBillReturnedForm": "تعديل فاتورة مرتجعات المبيعات"
   },
   "Privileges": {
     "UserManagement": "اعدادات المستخدمين",

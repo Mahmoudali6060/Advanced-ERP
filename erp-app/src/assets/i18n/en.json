@@ -88,6 +88,7 @@
     "SelectClient": "Select client",
     "SelectVendor": "Select vendor",
     "CurrentBalance": "Current Balance",
+    "DebitDetails":"DebitDetails",
     "PreviousBalance": "Previous Balance",
     "Paid": "Paid",
     "Remaining": "Remaining",

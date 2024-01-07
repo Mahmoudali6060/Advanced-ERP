@@ -119,18 +119,27 @@ export class TreasuryFormComponent {
 
 	}
 
-	save(form: NgForm) {
+	save(isPrint?: boolean) {
 		if (this.validattion(this.treasuryDTO)) {
 			if (this.treasuryDTO.id) {
 				this.treasuryService.update(this.treasuryDTO).subscribe(res => {
 					this.toasterService.success("success");
+					if (isPrint) {
+						this.print();
+					}
 					this.back();
 				})
 			}
 			else {
 				this.treasuryService.add(this.treasuryDTO).subscribe(res => {
 					this.toasterService.success("success");
-					this.back();
+					if (isPrint) {
+						this.print();
+						this.back();
+					}
+					else {
+						this.back();
+					}
 				})
 			}
 		}
@@ -145,9 +154,35 @@ export class TreasuryFormComponent {
 		if (this.treasuryDTO.clientVendorId) {
 			let clientVendor: any | undefined = this.clientVendorList.find(x => x.id == this.treasuryDTO.clientVendorId);
 			this.treasuryDTO.beneficiaryName = clientVendor?.fullName;
-			this.previousBalance = clientVendor?.credit - clientVendor?.debit;
-			this.currentBalance = this.previousBalance + this.treasuryDTO?.debit - this.treasuryDTO?.credit;
+			this.updateBalance();
 		}
+	}
+
+	updateBalance() {
+		let clientVendor: any | undefined = this.clientVendorList.find(x => x.id == this.treasuryDTO.clientVendorId);
+		//Edit
+		if (this.treasuryDTO.id) {
+			// this.currentBalance = parseFloat((clientVendor?.debit - clientVendor?.credit).toFixed(2));
+			// this.previousBalance = parseFloat((this.currentBalance - (clientVendor?.debit - clientVendor?.credit)).toFixed(2));
+		
+			this.currentBalance = parseFloat((clientVendor?.debit - clientVendor?.credit).toFixed(2));
+			this.previousBalance = parseFloat((this.currentBalance + this.treasuryDTO?.debit + this.treasuryDTO?.credit).toFixed(2));
+	
+		}
+		//Add
+		else {
+			this.previousBalance = parseFloat((clientVendor?.debit - clientVendor?.credit).toFixed(2));
+			this.currentBalance = parseFloat((this.previousBalance - this.treasuryDTO?.debit - this.treasuryDTO?.credit).toFixed(2));
+	
+		}
+	}
+
+	onAmountsChange() {
+		this.currentBalance = parseFloat((this.previousBalance + this.treasuryDTO?.debit - this.treasuryDTO?.credit).toFixed(2));
+	}
+	saveAndPrint() {
+		this.save(true);
+
 	}
 
 	print() {
