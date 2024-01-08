@@ -44,7 +44,7 @@ export class ProductFormComponent {
 	}
 
 	ngOnInit() {
-		this.imageSrc = "assets/images/icon/avatar-big-01.jpg";
+		this.imageSrc = "assets/images/icon/default-product-image.png";
 		this.productDTO = new ProductDTO();
 		const id = this.route.snapshot.paramMap.get('id');
 		if (id) {

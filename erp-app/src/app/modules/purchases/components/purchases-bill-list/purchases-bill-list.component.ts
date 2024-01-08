@@ -13,6 +13,8 @@ import { PurchasesBillHeaderDTO } from '../../models/purchases-bill-header.dto';
 import { PurchasesBillSearchCriteriaDTO } from '../../models/purchases-bill-search-criteria-dto';
 import { DialogService } from 'src/app/shared/services/confirmation-dialog.service';
 import { PurchasesBillService } from '../../services/purchases-bill.service';
+import { ClientVendorDTO, ClientVendorTypeEnum } from 'src/app/modules/setup/models/client-vendor.dto';
+import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 
 @Component({
 	selector: 'app-purchases-bill-list',
@@ -32,18 +34,20 @@ export class PurchasesBillListComponent {
 	statusDDL: any;
 	@Input() isTemp: boolean = false;
 	@Input() isReturned: boolean = false;
+	vendorList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
 
 	constructor(private productService: PurchasesBillService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
-		private translate: TranslateService) {
+		private translate: TranslateService,
+		private clientVendorService: ClientVendorService) {
 
 	}
 
 	ngOnInit() {
 		this.searchCriteriaDTO.isTemp = this.isTemp;
 		this.searchCriteriaDTO.isReturned = this.isReturned;
-
+		this.getAllVendors();
 		this.search();
 		this.statusDDL = [
 			{ label: "All", value: '' },
@@ -56,6 +60,13 @@ export class PurchasesBillListComponent {
 	toggleFilter() {
 		this.searchCriteriaDTO = new PurchasesBillSearchCriteriaDTO();
 		this.showFilterControls = !this.showFilterControls;
+	}
+
+
+	getAllVendors() {
+		this.clientVendorService.getAllLiteByTypeId(ClientVendorTypeEnum.Vendor).subscribe((res: any) => {
+			this.vendorList = res.list;
+		})
 	}
 
 	getAllPurchasesBills() {

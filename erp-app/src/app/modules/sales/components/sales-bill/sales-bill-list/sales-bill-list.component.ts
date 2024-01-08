@@ -7,6 +7,8 @@ import { DialogService } from '../../../../../shared/services/confirmation-dialo
 import { SalesBillService } from '../../../services/sales-bill.service';
 import { SalesBillSearchCriteriaDTO } from '../../../models/sales-bill-search-criteria-dto';
 import { SalesBillHeaderDTO } from '../../../models/sales-bill-header.dto';
+import { ClientVendorDTO, ClientVendorTypeEnum } from 'src/app/modules/setup/models/client-vendor.dto';
+import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 
 @Component({
 	selector: 'app-sales-bill-list',
@@ -26,18 +28,20 @@ export class SalesBillListComponent {
 	statusDDL: any;
 	@Input() isTemp: boolean = false;
 	@Input() isReturned: boolean = false;
+	clientList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
 
 	constructor(private productService: SalesBillService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
-		private translate: TranslateService) {
+		private translate: TranslateService,
+		private clientVendorService: ClientVendorService) {
 
 	}
 
 	ngOnInit() {
 		this.searchCriteriaDTO.isTemp = this.isTemp;
 		this.searchCriteriaDTO.isReturned = this.isReturned;
-
+		this.getAllClients();
 		this.search();
 		this.statusDDL = [
 			{ label: "All", value: '' },
@@ -47,6 +51,11 @@ export class SalesBillListComponent {
 		console.table("status", this.statusDDL);
 	}
 
+	getAllClients() {
+		this.clientVendorService.getAllLiteByTypeId(ClientVendorTypeEnum.Client).subscribe((res: any) => {
+			this.clientList = res.list;
+		})
+	}
 	toggleFilter() {
 		this.searchCriteriaDTO = new SalesBillSearchCriteriaDTO();
 		this.showFilterControls = !this.showFilterControls;

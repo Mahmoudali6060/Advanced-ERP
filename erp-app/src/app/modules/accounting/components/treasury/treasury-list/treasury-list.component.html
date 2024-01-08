@@ -169,7 +169,9 @@
                             {{'TransactionTypeEnum.'+transactionTypeEnum[item.transactionTypeId] |translate}}
                         </td> -->
                         <td>
-                            {{'PaymentMethodEnum.'+paymentMethodEnum[item.paymentMethodId] |translate}}
+                            <span *ngIf="item.paymentMethodId>0"> {{'PaymentMethodEnum.'+paymentMethodEnum[item.paymentMethodId]
+                                |translate}}
+                            </span>
                         </td>
                         <td>{{item.debit}}</td>
                         <td>{{item.credit}}</td>
@@ -187,8 +189,9 @@
                                     [routerLink]="['/accounting/treasury-form-view/'+item.id]">
                                     <i class="zmdi zmdi-eye"></i>
                                 </button>
-                                <button *ngIf="!item.isBilled"  class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
-                                    data-original-title="Delete" (click)="openConfirmationDialog(item)">
+                                <button *ngIf="!item.isBilled" class="item ml-2" data-toggle="tooltip"
+                                    data-placement="top" title="" data-original-title="Delete"
+                                    (click)="openConfirmationDialog(item)">
                                     <i class="zmdi zmdi-delete"></i>
                                 </button>
 
@@ -236,7 +239,9 @@
                 <td>{{item.beneficiaryName}}</td>
 
                 <td>
-                    {{'PaymentMethodEnum.'+paymentMethodEnum[item.paymentMethodId] |translate}}
+                    <span *ngIf="item.paymentMethodId>0"> {{'PaymentMethodEnum.'+paymentMethodEnum[item.paymentMethodId]
+                        |translate}}
+                    </span>
                 </td>
                 <td>{{item.debit}}</td>
                 <td>{{item.credit}}</td>

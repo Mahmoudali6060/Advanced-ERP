@@ -50,6 +50,13 @@ namespace Infrastructure.ExceptionHandling
             {
                 message = "Errors.CannotDeleteThisRecordDueToRelatedToAnotherData";
             }
+            if (exception.InnerException != null
+               && exception.InnerException.Message != null
+               && exception.InnerException.Message.Contains("UNIQUE"))
+            {
+                message = "Errors.DuplicatedFullName";
+            }
+
             await context.Response.WriteAsync(new ErrorDetails()
             {
                 StatusCode = context.Response.StatusCode,

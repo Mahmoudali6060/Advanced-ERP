@@ -1,3 +1,4 @@
+import { PaymentMethodEnum } from "src/app/shared/enums/payment-method.enum";
 import { SalesBillDetailsDTO } from "./sales-bill-details.dto";
 import { AuditDTO } from "src/app/shared/models/audit-dto.model";
 
@@ -28,6 +29,8 @@ export class SalesBillHeaderDTO extends AuditDTO {
     isTemp: boolean = false;
     isReturned: boolean = false;
     isNewReturned: boolean = false;
+    paymentMethodId: PaymentMethodEnum;
+    refNo: string;
     salesBillDetailList: Array<SalesBillDetailsDTO> = Array<SalesBillDetailsDTO>();
 
 

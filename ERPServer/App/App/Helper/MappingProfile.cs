@@ -86,7 +86,9 @@ namespace App.Helper
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")))
                 .ForMember(dest => dest.ClientVendorName, opt => opt.MapFrom(src => src.ClientVendor.FullName))
                 .ForMember(dest => dest.CreatedByUsername, opt => opt.MapFrom(src => src.CreatedByUsername))
-                .ForMember(dest => dest.ModifiedByUsername, opt => opt.MapFrom(src => src.ModifiedByUsername));
+                .ForMember(dest => dest.ModifiedByUsername, opt => opt.MapFrom(src => src.ModifiedByUsername))
+                .ForMember(dest => dest.PaymentMethodId, opt => opt.MapFrom(src => src.Treasury.PaymentMethodId))
+                .ForMember(dest => dest.RefNo, opt => opt.MapFrom(src => src.Treasury.RefNo));
 
 
             CreateMap<PurchasesBillHeaderDTO, PurchasesBillHeader>()
@@ -104,7 +106,11 @@ namespace App.Helper
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")))
                 .ForMember(dest => dest.ClientVendorName, opt => opt.MapFrom(src => src.ClientVendor.FullName))
                 .ForMember(dest => dest.CreatedByUsername, opt => opt.MapFrom(src => src.CreatedByUsername))
-                .ForMember(dest => dest.ModifiedByUsername, opt => opt.MapFrom(src => src.ModifiedByUsername));
+                .ForMember(dest => dest.ModifiedByUsername, opt => opt.MapFrom(src => src.ModifiedByUsername))
+                .ForMember(dest => dest.PaymentMethodId, opt => opt.MapFrom(src => src.Treasury.PaymentMethodId))
+                .ForMember(dest => dest.RefNo, opt => opt.MapFrom(src => src.Treasury.RefNo));
+
+
 
             CreateMap<SalesBillHeaderDTO, SalesBillHeader>()
                 .ForMember(dest => dest.SalesBillDetailList, opt => opt.MapFrom(src => src.SalesBillDetailList))

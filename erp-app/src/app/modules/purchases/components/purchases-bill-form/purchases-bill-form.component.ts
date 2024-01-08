@@ -24,6 +24,8 @@ import { RepresentiveTypeEnum } from 'src/app/shared/enums/representive-type.enu
 import { PurchasesBillHeaderDTO } from '../../models/purchases-bill-header.dto';
 import { PurchasesBillService } from '../../services/purchases-bill.service';
 import { PurchasesBillDetailsDTO } from '../../models/purchases-bill-details.dto';
+import { PaymentMethodEnum } from 'src/app/shared/enums/payment-method.enum';
+import { LabelValuePair } from 'src/app/shared/enums/label-value-pair';
 @Component({
 	selector: 'app-purchases-bill-form',
 	templateUrl: './purchases-bill-form.component.html',
@@ -50,6 +52,8 @@ export class PurchasesBillFormComponent {
 	isNewReturn: boolean = false;
 	@Input() purchasesHeaderId: number = 0;
 	hideBillnumber: boolean = false;
+	tempPurchasesBillDetailList: PurchasesBillDetailsDTO[];
+	paymentMethodList: LabelValuePair[];
 
 	constructor(
 		private purchasesBillService: PurchasesBillService,
@@ -70,6 +74,7 @@ export class PurchasesBillFormComponent {
 	ngOnInit() {
 		this.purchasesBillHeaderDTO.isTemp = this.isTemp;
 		this.purchasesBillHeaderDTO.isReturned = this.isReturned;
+		this.paymentMethodList = this.helperService.enumSelector(PaymentMethodEnum);
 
 
 		let purchasesHeaderId = this.route.snapshot.paramMap.get('id');
@@ -108,6 +113,7 @@ export class PurchasesBillFormComponent {
 					tempProductList.push(product);
 				}
 				this.productList = tempProductList;
+				this.tempPurchasesBillDetailList = this.purchasesBillHeaderDTO.purchasesBillDetailList;
 				this.purchasesBillHeaderDTO.purchasesBillDetailList = [];
 				this.addNewRow();
 
@@ -226,6 +232,8 @@ export class PurchasesBillFormComponent {
 			for (let item of this.purchasesBillHeaderDTO.purchasesBillDetailList) {
 				if (!item.discount) item.discount = 0;
 			}
+			if (!this.purchasesBillHeaderDTO.discount) this.purchasesBillHeaderDTO.discount = 0;
+
 			if (this.purchasesBillHeaderDTO.id) {
 				this.purchasesBillService.update(this.purchasesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
@@ -278,6 +286,8 @@ export class PurchasesBillFormComponent {
 
 	setProductToPurchase(item: PurchasesBillDetailsDTO, overrideOldData: boolean) {
 		let product = this.productList.find(x => x.id == item.productId);
+		let purchasesBillDetail = this.tempPurchasesBillDetailList?.find(x => x.productId == item.productId);
+
 		if (product) {
 			item.price = overrideOldData ? product.price : item.price;
 			item.lastPurchasingPrice = product.lastPurchasingPrice;
@@ -287,7 +297,9 @@ export class PurchasesBillFormComponent {
 			item.productName = product.name;
 			item.productCode = product.code;
 			item.isReturned = this.purchasesBillHeaderDTO.isReturned;
-
+			if (purchasesBillDetail) {
+				item.purchasedQuantity = purchasesBillDetail.quantity;
+			}
 			this.updateTotal();
 		}
 	}

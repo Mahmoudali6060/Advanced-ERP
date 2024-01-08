@@ -28,6 +28,8 @@ import { RepresentiveFormPopupComponent } from 'src/app/shared/modules/setup-sha
 import { Location } from '@angular/common';
 import { ComponentCanDeactivate } from 'src/app/shared/guards/pending-changes-guard.service';
 import { Observable } from 'rxjs';
+import { LabelValuePair } from 'src/app/shared/enums/label-value-pair';
+import { PaymentMethodEnum } from 'src/app/shared/enums/payment-method.enum';
 
 @Component({
 	selector: 'app-sales-bill-form',
@@ -67,6 +69,8 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	isNewReturn: boolean = false;
 	@Input() salesHeaderId: number = 0;
 	hideBillnumber: boolean = false;
+	tempSalesBillDetailList: Array<SalesBillDetailsDTO> = new Array<SalesBillDetailsDTO>();
+	paymentMethodList: LabelValuePair[];
 
 	constructor(
 		private salesBillService: SalesBillService,
@@ -89,6 +93,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	}
 
 	ngOnInit() {
+		this.paymentMethodList = this.helperService.enumSelector(PaymentMethodEnum);
 		this.salesBillHeaderDTO.isTemp = this.isTemp;
 		this.salesBillHeaderDTO.isReturned = this.isReturned;
 
@@ -129,6 +134,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 					tempProductList.push(product);
 				}
 				this.productList = tempProductList;
+				this.tempSalesBillDetailList = this.salesBillHeaderDTO.salesBillDetailList;
 				this.salesBillHeaderDTO.salesBillDetailList = [];
 				this.addNewRow();
 
@@ -231,6 +237,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			for (let item of this.salesBillHeaderDTO.salesBillDetailList) {
 				if (!item.discount) item.discount = 0;
 			}
+			if (!this.salesBillHeaderDTO.discount) this.salesBillHeaderDTO.discount = 0;
 			if (this.salesBillHeaderDTO.id) {
 				this.salesBillService.update(this.salesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
@@ -289,8 +296,13 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 				quantity = exsitedSalesBillDetails.quantity;
 			}
 		}
-		if (item.quantity > item.actualQuantity + quantity) {
+		if (!this.salesBillHeaderDTO.isReturned && (item.quantity > item.actualQuantity + quantity)) {
 			this.alertService.showWarning(this.translate.instant("Errors.QuantityIsGreaterThanActualQuantity"), this.translate.instant("Errors.Warning"));
+			//item.quantity = item.actualQuantity;
+			//return;
+		}
+		if (this.salesBillHeaderDTO.isReturned && (item.quantity > item.selledQuantity + quantity)) {
+			this.alertService.showWarning(this.translate.instant("Errors.QuantityIsGreaterThanSelledQuantity"), this.translate.instant("Errors.Warning"));
 			//item.quantity = item.actualQuantity;
 			//return;
 		}
@@ -298,6 +310,8 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	}
 	setProductToSales(item: SalesBillDetailsDTO, overrideOldData: boolean) {
 		let product = this.productList.find(x => x.id == item.productId);
+		let salesBillDetail = this.tempSalesBillDetailList?.find(x => x.productId == item.productId);
+
 		if (product) {
 			item.price = overrideOldData ? product.price : item.price;
 			item.lastPurchasingPrice = product.lastPurchasingPrice;
@@ -307,6 +321,8 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			item.productName = product.name;
 			item.productCode = product.code;
 			item.isReturned = this.salesBillHeaderDTO.isReturned;
+			if (salesBillDetail)
+				item.selledQuantity = salesBillDetail.quantity;
 			this.updateTotal();
 		}
 	}

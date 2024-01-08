@@ -143,7 +143,9 @@ namespace Accout.DataServiceLayer
                     entity.AppUserId = appUser.Id;
                     entity.DefaultLanguage = "en";
                     UploadImage(entity);
-                    return await _unitOfWork.UserProfileDAL.Add(_mapper.Map<UserProfile>(entity));
+                    var result = await _unitOfWork.UserProfileDAL.Add(_mapper.Map<UserProfile>(entity));
+                    await _unitOfWork.CompleteAsync();
+                    return result;
                 }
                 await _unitOfWork.AccountDAL.DeleteUser(appUser.Id);
                 await _unitOfWork.CompleteAsync();
@@ -184,7 +186,7 @@ namespace Accout.DataServiceLayer
                 //>>To-Do >> Check this again
                 if (userProfile.AppUserId != null)
                     await _unitOfWork.UserProfileDAL.Delete(userProfile);
-                var result= await _unitOfWork.AccountDAL.DeleteUser(userProfile.AppUserId);
+                var result = await _unitOfWork.AccountDAL.DeleteUser(userProfile.AppUserId);
                 await _unitOfWork.CompleteAsync();
                 return result;
             }

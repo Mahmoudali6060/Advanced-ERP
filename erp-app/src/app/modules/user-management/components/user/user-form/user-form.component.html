@@ -48,18 +48,7 @@
                                             class="text-muted" [translate]="'Errors.InvalidLastName'"></small>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="mobile" class=" form-control-label">{{'User.Mobile'
-                                            |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.mobile" type="text"
-                                            id="mobile" class="form-control" [pattern]="mobNumberPattern" name="mobile"
-                                            aria-describedby="helpId">
 
-                                    </div>
-                                </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="username" class=" form-control-label">{{'User.UserName'
@@ -73,8 +62,28 @@
                                             class="text-muted" [translate]="'Errors.InvalidUserName'"></small>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
+
+                                <div class="col-lg-6" *ngIf="!userProfileDTO.id">
+                                    <div class="form-group">
+                                        <label for="defaultPassword" class="form-control-label">{{'User.DefaultPassword'
+                                            |translate}}</label>
+                                        <input readonly type="text" id="defaultPassword" value="P@ssw0rd"
+                                            class="form-control" name="defaultPassword">
+
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="mobile" class=" form-control-label">{{'User.Mobile'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.mobile" type="text"
+                                            id="mobile" class="form-control" [pattern]="mobNumberPattern" name="mobile"
+                                            aria-describedby="helpId">
+
+                                    </div>
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="email" class=" form-control-label">{{'User.Email'
@@ -82,7 +91,7 @@
                                         <input [disabled]="viewMode" [(ngModel)]="userProfileDTO.email" type="email"
                                             id="email" class="form-control" name="email" id="email"
                                             class="form-control">
-                                            <!-- #email="ngModel"
+                                        <!-- #email="ngModel"
                                             [class.is-invalid]="email.invalid && email.touched"
                                             [class.is-valid]="email.valid"="8" -->
                                         <!-- <small [hidden]="email.valid || email.untouched" id="helpId" class="text-muted"
@@ -100,8 +109,8 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="role" class=" form-control-label">{{'User.Role' |translate}}</label>
-                                        <ng-select name="role" required id="select" 
-                                            [disabled]="viewMode" [(ngModel)]="userProfileDTO.roleId" #roleId="ngModel">
+                                        <ng-select name="role" required id="select" [disabled]="viewMode"
+                                            [(ngModel)]="userProfileDTO.roleId" #roleId="ngModel">
                                             <ng-option *ngFor="let role of roleList" [value]="role.id">
                                                 {{role.name}}
                                             </ng-option>

@@ -150,7 +150,7 @@ namespace Account.DataServiceLayer
                 }
                 if (userProfile == null)
                     throw new Exception("Errors.InvalidUsernameOrPassword");
-                UserProfileDTO userDto=_mapper.Map<UserProfileDTO>(userProfile);
+                UserProfileDTO userDto = _mapper.Map<UserProfileDTO>(userProfile);
                 userDto.Token = AddToken(appUser, userDto);
                 userDto.Email = appUser.Email;
                 userDto.UserName = appUser.UserName;
@@ -199,6 +199,7 @@ namespace Account.DataServiceLayer
                 var userProfile = await _unitOfWork.UserProfileDAL.GetUserProfileByAppUserId(user.Id);
                 userProfile.IsFirstLogin = false;
                 await _unitOfWork.UserProfileDAL.Update(userProfile);
+                await _unitOfWork.CompleteAsync();
             }
             return true;
 

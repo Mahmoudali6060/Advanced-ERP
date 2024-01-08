@@ -64,6 +64,8 @@
     "InActive": "غير فعّال",
     "Category": "التصنيف",
     "ActualQuantity": "الكمية الفعلية",
+    "SelledQuantity": "الكمية المباعة",
+    "PurchasedQuantity": "الكمية المشتراه",
     "Back": "إلغاء",
     "IsActive": "فعًال",
     "LowQuantity": "الحد الأدنى للكمية(يتم عندها التنبيه)",
@@ -153,7 +155,9 @@
     "BillsSalesReturnedList": "فواتير مرتجعات المبيعات",
     "BillsPurchasesReturnedList": "فواتير مرتجعات المشتريات",
     "TreasuryBalance": "رصيد الخزينة",
-    "GeneralSettings":"الإعدادت العامة"
+    "GeneralSettings": "الإعدادت العامة",
+    "ClientPhoneNumber": "رقم هاتف العميل",
+    "VendorPhoneNumber": "رقم هاتف المورد"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -380,7 +384,9 @@
     "CanNotDelete": "هذا السجل مرتبط بسجلات أخرى",
     "YouMustSelectVendor": "يجب اختيار مورد",
     "YouMustSelectClient": "يجب اختيار عميل",
-    "QuantityIsGreaterThanActualQuantity": "الكمية المطلوبة أكبر من الكمية المتاحة"
+    "QuantityIsGreaterThanActualQuantity": "الكمية المطلوبة أكبر من الكمية المتاحة",
+    "QuantityIsGreaterThanSelledQuantity": "الكمية المطلوبة أكبر من الكمية المباعة",
+    "QuantityIsGreaterThanPurchasedQuantity": "الكمية المطلوبة أكبر من الكمية المشتراه"
   },
   "Warning": {
     "NoDriversAvialable": "لا يوجد سائق متاح في هذه الفترة"
@@ -420,7 +426,8 @@
     "companyNameEn": "اسم الشركة بالإنجليزية",
     "companyNameAr": "اسم الشركة بالعربية",
     "category": "فئة",
-    "Status": "الحالة"
+    "Status": "الحالة",
+    "DefaultPassword": "كلمة المرور الإفتراضية"
   },
   "Role": {
     "Roles": "الادوار",
@@ -554,7 +561,9 @@
   },
   "Reports": {
     "SalesBill": "فاتورة مبيعات",
+    "ReturnedSalesBill": "فاتورة مرتجعات المبيعات ",
     "PurchasesBill": "فاتورة مشتريات",
+    "ReturnedPurchasesBill": "فاتورة مرتجعات المشتريات",
     "AccountStatementForAllClients": "كشف حسابات العملاء(مُجمَل)",
     "AccountStatementForSingleClient": "كشف حساب العميل(مُفَصَّل)",
     "AccountStatementForAllVendors": "كشف حسابات الموردين(مُجمَل)",
