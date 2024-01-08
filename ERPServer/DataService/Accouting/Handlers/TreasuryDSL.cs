@@ -40,6 +40,7 @@ namespace DataService.Accounting.Handlers
             treasuryList = treasuryList.OrderByDescending(x => x.Id);
             treasuryList = ApplyFilert(treasuryList, searchCriteriaDTO);
             int total = treasuryList.Count();
+
             #endregion
 
             #region Apply Pagination
@@ -51,7 +52,33 @@ namespace DataService.Accounting.Handlers
             return new ResponseEntityList<TreasuryDTO>
             {
                 List = treasuryDTOList,
-                Total = total
+                Total = total,
+            };
+            #endregion
+
+        }
+
+        public async Task<TreasuryGridDTO> GetAllForGrid(TreasurySearchDTO searchCriteriaDTO)
+        {
+            var treasuryList = await _unitOfWork.TreasuryDAL.GetAllWithIncludes(x => x.IsCancel == false, x => x.ClientVendor);
+            #region Apply Filters
+            treasuryList = treasuryList.OrderByDescending(x => x.Id);
+            treasuryList = ApplyFilert(treasuryList, searchCriteriaDTO);
+            int total = treasuryList.Count();
+            decimal balance = treasuryList.Sum(x => x.Debit - x.Credit);
+            #endregion
+
+            #region Apply Pagination
+            treasuryList = treasuryList.Skip((searchCriteriaDTO.Page - 1) * searchCriteriaDTO.PageSize).Take(searchCriteriaDTO.PageSize);
+            #endregion
+
+            #region Mapping and Return List
+            var treasuryDTOList = _mapper.Map<IEnumerable<TreasuryDTO>>(treasuryList);
+            return new TreasuryGridDTO
+            {
+                List = treasuryDTOList,
+                Total = total,
+                Balance = balance
             };
             #endregion
 

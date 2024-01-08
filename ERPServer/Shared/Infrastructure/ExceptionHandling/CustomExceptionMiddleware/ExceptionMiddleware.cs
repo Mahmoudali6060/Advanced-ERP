@@ -44,10 +44,12 @@ namespace Infrastructure.ExceptionHandling
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             var message = exception.Message;
             ////To-Do
-            //if (exception.InnerException.Message.Contains("DELETE"))
-            //{
-            //    message = "Errors.HasRelatedData";
-            //}
+            if (exception.InnerException != null
+                && exception.InnerException.Message != null
+                && exception.InnerException.Message.Contains("DELETE"))
+            {
+                message = "Errors.CannotDeleteThisRecordDueToRelatedToAnotherData";
+            }
             await context.Response.WriteAsync(new ErrorDetails()
             {
                 StatusCode = context.Response.StatusCode,

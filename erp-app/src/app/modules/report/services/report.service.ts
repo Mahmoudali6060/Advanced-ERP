@@ -37,7 +37,7 @@ export class ReportService {
                    <div class="invoice">
                      <div class="row">
                        <div class="col-lg-12 text-center">
-                          <img width="100" src="${this.serverUrl}/wwwroot/Images/Companies/${this.authService.loggedUserProfile.companyDTO.imageUrl}" class="logo">
+                          <img width="100" src="${this.serverUrl}wwwroot/Images/Companies/${this.authService.loggedUserProfile.companyDTO.imageUrl}" class="logo">
                         </div>
                         <div class="col-lg-12">
                           <h1 class="display-4 text-center">El Bawab</h1>

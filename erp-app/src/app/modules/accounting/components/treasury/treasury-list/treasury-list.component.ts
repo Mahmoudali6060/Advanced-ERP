@@ -40,7 +40,7 @@ export class TreasuryListComponent {
 	paymentMethodEnum = PaymentMethodEnum;
 	incomingTotal: number = 0;
 	outcomingTotal: number = 0;
-
+	treasuryBalance: number = 0;
 	constructor(private treasuryService: TreasuryService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
@@ -56,7 +56,6 @@ export class TreasuryListComponent {
 		this.paymentMethodList = this.helperService.enumSelector(PaymentMethodEnum);
 		this.transactionTypeList = this.helperService.enumSelector(TransactionTypeEnum);
 		this.search();
-		this.getAllTreasuries();
 	}
 
 	toggleFilter() {
@@ -80,9 +79,10 @@ export class TreasuryListComponent {
 
 
 	getAllTreasuries() {
-		this.treasuryService.getAll(this.searchCriteriaDTO).subscribe((res: any) => {
+		this.treasuryService.getAllForGrid(this.searchCriteriaDTO).subscribe((res: any) => {
 			this.treasuryList = res.list;
 			this.total = res.total;
+			this.treasuryBalance = res.balance;
 			if (this.paginationComponent) {
 				this.paginationComponent.totalRecordsCount = this.total;
 				this.paginationComponent.setPagination(this.searchCriteriaDTO.page);

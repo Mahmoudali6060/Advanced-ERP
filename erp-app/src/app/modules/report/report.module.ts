@@ -15,6 +15,7 @@ import { ProductListReportComponent } from './components/product/product-list-re
 import { ProductService } from '../setup/services/product.service';
 import { ProductListLowQuantityReportComponent } from './components/product/product-list-low-quantity-report/product-list-low-quantity-report.component';
 import { TreasuryService } from '../accounting/services/treasury.service';
+import { CategoryService } from '../setup/services/category.service';
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { TreasuryService } from '../accounting/services/treasury.service';
     SalesBillService,
     PurchasesBillService,
     ProductService,
-    TreasuryService
+    TreasuryService,
+    CategoryService
   ]
 })
 

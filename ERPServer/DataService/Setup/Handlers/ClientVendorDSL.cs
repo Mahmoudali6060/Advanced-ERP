@@ -9,9 +9,7 @@ using Shared.Entities.Setup;
 using Data.Entities.Setup;
 using DataService.Setup.Contracts;
 using System;
-using Entities.Account;
 using Shared.Enums;
-using Data.Migrations;
 
 namespace DataService.Setup.Handlers
 {

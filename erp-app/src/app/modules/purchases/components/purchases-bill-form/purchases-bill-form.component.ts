@@ -232,9 +232,7 @@ export class PurchasesBillFormComponent {
 					if (isPrint) {
 						this.print();
 					}
-					else {
-						this.back();
-					}
+					this.back();
 				})
 			}
 			else {
@@ -243,11 +241,9 @@ export class PurchasesBillFormComponent {
 					this.toasterService.success("success");
 					if (isPrint) {
 						this.print();
-						this.back();
 					}
-					else {
-						this.back();
-					}
+					this.purchasesBillHeaderDTO = new PurchasesBillHeaderDTO();
+					this.back();
 				})
 			}
 		}

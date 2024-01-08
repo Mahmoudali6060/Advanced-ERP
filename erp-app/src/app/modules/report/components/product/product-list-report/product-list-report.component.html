@@ -3,10 +3,82 @@
         <!-- DATA TABLE -->
         <h3 class="title-5 m-b-35">{{'Product.Title' |translate}}</h3>
         <div class="table-data__tool">
-            <button (click)="print()" type="button" class="btn btn-outline-success mr-1">
-                <i class="fa fa-print"></i>{{'General.Print' |translate}}
-            </button>
+            <div class="table-data__tool-left">
+                <button class="au-btn-filter" (click)="toggleFilter()">
+                    <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
+            </div>
+            <div class="table-data__tool-right">
+                <button (click)="print()" type="button" class="btn btn-outline-success mr-1">
+                    <i class="fa fa-print"></i>{{'General.Print' |translate}}
+                </button>
+            </div>
         </div>
+
+        <!--Filters-->
+        <div class="row" *ngIf="showFilterControls">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">{{'General.Filters'|translate}}</div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="form3Example3c">{{'General.Status'|translate}}</label>
+                                        <ng-select name="drivers" id="drivers" [(ngModel)]="searchCriteriaDTO.isActive">
+                                            <ng-option value=''> {{'General.All' |translate}}</ng-option>
+                                            <ng-option value=true> {{'General.Active' |translate}}</ng-option>
+                                            <ng-option value=false> {{'General.InActive' |translate}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="form3Example3c">{{'General.Category'|translate}}</label>
+                                        <ng-select name="category" id="category"
+                                            [(ngModel)]="searchCriteriaDTO.categoryId">
+                                            <ng-option value="">{{'General.SelectCategory'|translate}}</ng-option>
+                                            <ng-option *ngFor="let item of categoryList" [value]="item.id">
+                                                {{item.name}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="code" class=" form-control-label">{{'General.Code'
+                                            |translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.code" type="text" id="code"
+                                            class="form-control" #code="ngModel" name="code">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="name" class=" form-control-label">{{'General.Name'
+                                            |translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.name" type="text" id="name"
+                                            class="form-control" #name="ngModel" name="name">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-lg-9">
+                                    <button (click)="search()"
+                                        class="au-btn au-btn-icon au-btn--blue au-btn--small btn-search mt-4">
+                                        <i class="zmdi zmdi-search"></i>{{'General.Search'|translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Filters-->
 
         <div class="table-report" id="product-list">
             <table class="table-report table table-data2">
@@ -58,7 +130,7 @@
                 </tbody>
 
             </table>
-          
+
         </div>
         <!-- END DATA TABLE -->
     </div>

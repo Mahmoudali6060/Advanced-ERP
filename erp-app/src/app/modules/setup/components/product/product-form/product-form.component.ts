@@ -138,7 +138,9 @@ export class ProductFormComponent {
 				this.productService.add(this.productDTO).subscribe(res => {
 					this.toasterService.success("success");
 					if (res) {
+						let tempCategoryId = this.productDTO.categoryId;
 						this.productDTO = new ProductDTO();
+						this.productDTO.categoryId = tempCategoryId;
 					}
 					//this.back();
 				})

@@ -236,11 +236,9 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 					this.toasterService.success("success");
 					if (isPrint) {
 						this.print();
-						window.location.reload();
 					}
-					else {
-						this.back();
-					}
+					this.salesBillHeaderDTO = new SalesBillHeaderDTO();
+					this.back();
 				})
 			}
 			else {
@@ -249,11 +247,9 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 					this.toasterService.success("success");
 					if (isPrint) {
 						this.print();
-						this.back();
 					}
-					else {
-						this.back();
-					}
+					this.salesBillHeaderDTO = new SalesBillHeaderDTO();
+					this.back();
 				})
 			}
 		}

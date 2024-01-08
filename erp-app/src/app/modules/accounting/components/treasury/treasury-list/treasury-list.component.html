@@ -7,6 +7,9 @@
                 <button class="au-btn-filter" (click)="toggleFilter()">
                     <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
             </div>
+            <h3>
+                {{'General.TreasuryBalance'|translate}}: {{treasuryBalance}}
+            </h3>
             <div class="table-data__tool-right">
                 <button [routerLink]="['/accounting/treasury-form']"
                     class="au-btn au-btn-icon au-btn--black au-btn--small">
@@ -184,7 +187,7 @@
                                     [routerLink]="['/accounting/treasury-form-view/'+item.id]">
                                     <i class="zmdi zmdi-eye"></i>
                                 </button>
-                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                <button *ngIf="!item.isBilled"  class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Delete" (click)="openConfirmationDialog(item)">
                                     <i class="zmdi zmdi-delete"></i>
                                 </button>

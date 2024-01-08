@@ -14,6 +14,6 @@ namespace DataService.Accounting.Contracts
 {
     public interface ITreasuryDSL : ICRUDOperationsDSL<TreasuryDTO, TreasurySearchDTO>
     {
-
+        Task<TreasuryGridDTO> GetAllForGrid(TreasurySearchDTO searchCriteriaDTO);
     }
 }

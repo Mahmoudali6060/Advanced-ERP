@@ -151,7 +151,9 @@
     "TransfereToBill": "تحويل الى فاتورة",
     "AddBillReturnedForm": "إضافة فاتورة مرتجعات",
     "BillsSalesReturnedList": "فواتير مرتجعات المبيعات",
-    "BillsPurchasesReturnedList": "فواتير مرتجعات المشتريات"
+    "BillsPurchasesReturnedList": "فواتير مرتجعات المشتريات",
+    "TreasuryBalance": "رصيد الخزينة",
+    "GeneralSettings":"الإعدادت العامة"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -374,7 +376,8 @@
     "Error": "خطأ",
     "Warning": "تحذير",
     "NotFound": "لا يوجد فاتورة بهذا الرقم  ",
-    "HasRelatedData:": "هذا السجل مرتبط بسجلات أخرى",
+    "ThisRecordHasRelatedData:": "هذا السجل مرتبط بسجلات أخرى",
+    "CanNotDelete": "هذا السجل مرتبط بسجلات أخرى",
     "YouMustSelectVendor": "يجب اختيار مورد",
     "YouMustSelectClient": "يجب اختيار عميل",
     "QuantityIsGreaterThanActualQuantity": "الكمية المطلوبة أكبر من الكمية المتاحة"
