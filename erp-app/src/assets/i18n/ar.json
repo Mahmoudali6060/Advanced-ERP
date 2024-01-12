@@ -64,6 +64,8 @@
     "InActive": "غير فعّال",
     "Category": "التصنيف",
     "ActualQuantity": "الكمية الفعلية",
+    "SelledQuantity": "الكمية المباعة",
+    "PurchasedQuantity": "الكمية المشتراه",
     "Back": "إلغاء",
     "IsActive": "فعًال",
     "LowQuantity": "الحد الأدنى للكمية(يتم عندها التنبيه)",
@@ -100,6 +102,9 @@
     "Credit": "مدين(عليه)",
     "Debit": "دائن(له)",
     "CurrentBalance": "الرصيد الحالي",
+    "DebitDetails": "المبلغ المستلم من الشخص",
+    "CreditDetails": "المبلغ المدفوع الى الشخص",
+    "PreviousBalance": "الرصيد السابق",
     "Paid": "المدفوع",
     "Remaining": "المتبقي",
     "SellingPrice": "سعر الشراء",
@@ -148,9 +153,11 @@
     "TransfereToBill": "تحويل الى فاتورة",
     "AddBillReturnedForm": "إضافة فاتورة مرتجعات",
     "BillsSalesReturnedList": "فواتير مرتجعات المبيعات",
-    "BillsPurchasesReturnedList": "فواتير مرتجعات المشتريات"
-    
-
+    "BillsPurchasesReturnedList": "فواتير مرتجعات المشتريات",
+    "TreasuryBalance": "رصيد الخزينة",
+    "GeneralSettings": "الإعدادت العامة",
+    "ClientPhoneNumber": "رقم هاتف العميل",
+    "VendorPhoneNumber": "رقم هاتف المورد"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -373,10 +380,13 @@
     "Error": "خطأ",
     "Warning": "تحذير",
     "NotFound": "لا يوجد فاتورة بهذا الرقم  ",
-    "HasRelatedData:": "هذا السجل مرتبط بسجلات أخرى",
+    "ThisRecordHasRelatedData:": "هذا السجل مرتبط بسجلات أخرى",
+    "CanNotDelete": "هذا السجل مرتبط بسجلات أخرى",
     "YouMustSelectVendor": "يجب اختيار مورد",
     "YouMustSelectClient": "يجب اختيار عميل",
-    "QuantityIsGreaterThanActualQuantity": "الكمية المطلوبة أكبر من الكمية المتاحة"
+    "QuantityIsGreaterThanActualQuantity": "الكمية المطلوبة أكبر من الكمية المتاحة",
+    "QuantityIsGreaterThanSelledQuantity": "الكمية المطلوبة أكبر من الكمية المباعة",
+    "QuantityIsGreaterThanPurchasedQuantity": "الكمية المطلوبة أكبر من الكمية المشتراه"
   },
   "Warning": {
     "NoDriversAvialable": "لا يوجد سائق متاح في هذه الفترة"
@@ -416,7 +426,8 @@
     "companyNameEn": "اسم الشركة بالإنجليزية",
     "companyNameAr": "اسم الشركة بالعربية",
     "category": "فئة",
-    "Status": "الحالة"
+    "Status": "الحالة",
+    "DefaultPassword": "كلمة المرور الإفتراضية"
   },
   "Role": {
     "Roles": "الادوار",
@@ -519,7 +530,8 @@
     "SearchPurehasesBill": "بحث عن فاتورة المشتريات",
     "AddPurchasesBillTemp": "إضافة  أمر توريد ",
     "EditPurchasesBillTemp": "تعديل أمر التوريد  ",
-    "PurchasesBillsTempTitle": "قائمة  أوامر التوريد"
+    "PurchasesBillsTempTitle": "قائمة  أوامر التوريد",
+    "EditBillReturnedForm": "تعديل فاتورة مرتجعات المشتريات"
   },
   "Sales": {
     "SalesBillsTitle": "فواتير المبيعات",
@@ -529,7 +541,8 @@
     "EditSalesBillTemp": "تعديل عرض السعر ",
     "SalesBillsTempTitle": "قائمة عروض الأسعار",
     "ViewSalesBill": "عرض فاتورة المبيعات",
-    "SearchSalesBill": "بحث عن فاتورة مبيعات"
+    "SearchSalesBill": "بحث عن فاتورة مبيعات",
+    "EditBillReturnedForm": "تعديل فاتورة مرتجعات المبيعات"
   },
   "Privileges": {
     "UserManagement": "اعدادات المستخدمين",
@@ -548,7 +561,9 @@
   },
   "Reports": {
     "SalesBill": "فاتورة مبيعات",
+    "ReturnedSalesBill": "فاتورة مرتجعات المبيعات ",
     "PurchasesBill": "فاتورة مشتريات",
+    "ReturnedPurchasesBill": "فاتورة مرتجعات المشتريات",
     "AccountStatementForAllClients": "كشف حسابات العملاء(مُجمَل)",
     "AccountStatementForSingleClient": "كشف حساب العميل(مُفَصَّل)",
     "AccountStatementForAllVendors": "كشف حسابات الموردين(مُجمَل)",

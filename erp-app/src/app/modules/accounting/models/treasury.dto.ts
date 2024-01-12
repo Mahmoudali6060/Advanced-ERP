@@ -11,8 +11,9 @@ export class TreasuryDTO extends BaseDTO {
     beneficiaryName: string | undefined;
     //transactionTypeId: TransactionTypeEnum;
     paymentMethodId: PaymentMethodEnum;
-    debit: number;
-    credit: number;
+    debit: number = 0;
+    credit: number = 0;
     refNo: string;
     notes: string;
+    isBilled: boolean;
 }

@@ -1,6 +1,7 @@
 ﻿using Data.Entities.Shared;
 using Newtonsoft.Json;
 using Shared.Entities.Shared;
+using Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,8 @@ namespace Shared.Entities.Purchases
         public long? CompanyId { get; set; }
         public long? TreasuryId { get; set; }
         public long? ParentId { get; set; }
+        public PaymentMethodEnum? PaymentMethodId { get; set; }
+        public string RefNo { get; set; }
 
         public virtual List<PurchasesBillDetailDTO> PurchasesBillDetailList { get; set; }
 

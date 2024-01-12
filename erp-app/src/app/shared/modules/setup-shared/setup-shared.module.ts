@@ -7,6 +7,7 @@ import { ClientVendorService } from 'src/app/modules/setup/services/client-vendo
 import { ClientVendorFormPopupComponent } from './components/client-vendor-form-popup/client-vendor-form-popup.component';
 import { RepresentiveFormPopupComponent } from './components/representive-form-popup/representive-form-popup.component';
 import { RepresentiveService } from 'src/app/modules/setup/services/representive.service';
+import { CategoryFormPopupComponent } from './components/category-form-popup/category-form-popup.component';
 
 @NgModule({
   imports: [
@@ -15,12 +16,14 @@ import { RepresentiveService } from 'src/app/modules/setup/services/representive
   exports: [
     ProductFormPopupComponent,
     ClientVendorFormPopupComponent,
-    RepresentiveFormPopupComponent
+    RepresentiveFormPopupComponent,
+    CategoryFormPopupComponent
   ],
   declarations: [
     ProductFormPopupComponent,
     ClientVendorFormPopupComponent,
-    RepresentiveFormPopupComponent
+    RepresentiveFormPopupComponent,
+    CategoryFormPopupComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

@@ -125,6 +125,7 @@ namespace DataService.Sales.Handlers
                 {
                     var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
                     product.ActualQuantity = entity.IsReturned ? product.ActualQuantity + item.Quantity : product.ActualQuantity - item.Quantity;
+                    product.LastSellingPrice = item.PriceAfterDiscount;
                     product.Price = item.Price;
                     await _unitOfWork.ProductDAL.Update(product);
                 }
@@ -196,6 +197,7 @@ namespace DataService.Sales.Handlers
                     var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
                     product.ActualQuantity = entity.IsReturned == true ? product.ActualQuantity + quantity : product.ActualQuantity - quantity;
                     product.Price = item.Price;
+                    product.LastSellingPrice = item.PriceAfterDiscount;
                     await _unitOfWork.ProductDAL.Update(product);
                 }
                 #endregion
@@ -244,7 +246,9 @@ namespace DataService.Sales.Handlers
                 if (entity.TreasuryId.HasValue)
                 {
                     var treasury = await _unitOfWork.TreasuryDAL.GetById(entity.TreasuryId.Value);
-
+                    treasury.PaymentMethodId = entity.PaymentMethodId;
+                    treasury.RefNo = entity.RefNo;
+                    treasury.Date = DateTime.Parse(entity.Date);
                     if (entity.IsReturned)
                     {
                         treasury.Debit = entity.TotalAfterDiscount;
@@ -364,6 +368,16 @@ namespace DataService.Sales.Handlers
                 salesBillHeaderList = salesBillHeaderList.Where(x => x.ClientVendorId == searchCriteriaDTO.ClientVendorId);
             }
 
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.Date))
+            {
+                salesBillHeaderList = salesBillHeaderList.Where(x => x.Date.Date == DateTime.Parse(searchCriteriaDTO.Date).Date);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.PersonPhoneNumber))
+            {
+                salesBillHeaderList = salesBillHeaderList.Where(x => x.ClientVendor.PhoneNumber1 == searchCriteriaDTO.PersonPhoneNumber || x.ClientVendor.PhoneNumber2 == searchCriteriaDTO.PersonPhoneNumber);
+            }
+
             if (searchCriteriaDTO.IsTemp.HasValue)
             {
                 salesBillHeaderList = salesBillHeaderList.Where(x => x.IsTemp == searchCriteriaDTO.IsTemp.Value);
@@ -386,22 +400,23 @@ namespace DataService.Sales.Handlers
                 ClientVendorId = entity.ClientVendorId,
                 BeneficiaryName = entity.ClientVendorName,
                 //TransactionTypeId = TransactionTypeEnum.Incoming,
-                PaymentMethodId = PaymentMethodEnum.Cash,
-                RefNo = entity.Number,
+                PaymentMethodId = entity.PaymentMethodId,
+                RefNo = entity.RefNo,
+                IsBilled = true
             };
 
             if (entity.IsReturned)
             {
                 treasury.Debit = entity.TotalAfterDiscount;
                 treasury.Credit = entity.Paid;
-                treasury.Notes = "فاتورة مرتجعات";
+                treasury.Notes = "فاتورة مرتجعات المبيعات";
 
             }
             else
             {
                 treasury.Debit = entity.Paid;
                 treasury.Credit = entity.TotalAfterDiscount;
-                treasury.Notes = "فاتورة";
+                treasury.Notes = "فاتورة مبيعات";
 
             }
 

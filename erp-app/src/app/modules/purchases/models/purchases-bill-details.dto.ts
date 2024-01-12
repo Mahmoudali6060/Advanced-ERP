@@ -17,6 +17,7 @@ export class PurchasesBillDetailsDTO {
     productCode: string;
     purchasesBillHeaderId: number;
     isReturned: boolean = false;
+    purchasedQuantity: number;
 
 
 }

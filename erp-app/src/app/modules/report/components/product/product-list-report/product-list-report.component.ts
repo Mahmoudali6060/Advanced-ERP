@@ -30,15 +30,19 @@ export class ProductListReportComponent {
 	@Input() searchCriteriaDTO: ProductSearchCriteriaDTO = new ProductSearchCriteriaDTO()
 	total: number;
 	recordsPerPage: number = 5;
+	showFilterControls: boolean = false;
+	categoryList: Array<CategoryDTO> = new Array<CategoryDTO>();
 
 	constructor(private productService: ProductService,
 		private _configService: ConfigService,
 		private translate: TranslateService,
-		private reportService: ReportService) {
+		private reportService: ReportService,
+		private categoryService: CategoryService) {
 	}
 
 	ngOnInit() {
 		this.searchCriteriaDTO.pageSize = 1000000;
+		this.getAllCategories();
 		this.search();
 	}
 
@@ -46,16 +50,25 @@ export class ProductListReportComponent {
 		this.productService.getAll(this.searchCriteriaDTO).subscribe((res: any) => {
 			this.productList = res.list;
 			this.total = res.total;
-			
+
 			this.serverUrl = this._configService.getServerUrl();
 		});
+	}
+
+	getAllCategories() {
+		this.categoryService.getAllLite().subscribe((res: any) => {
+			this.categoryList = res.list;
+		})
+	}
+	toggleFilter() {
+		this.showFilterControls = !this.showFilterControls;
 	}
 
 	search() {
 		this.getAllProducts();
 	}
 
-	
+
 
 	print() {
 		let div: any = document.getElementById('product-list');

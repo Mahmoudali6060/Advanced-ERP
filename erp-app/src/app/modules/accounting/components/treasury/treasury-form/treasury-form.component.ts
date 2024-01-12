@@ -26,13 +26,16 @@ import { ReportService } from 'src/app/modules/report/services/report.service';
 export class TreasuryFormComponent {
 
 	treasuryDTO: TreasuryDTO = new TreasuryDTO();
-	viewMode: boolean;
+	viewMode: boolean = false;
 	accountTypeList: LabelValuePair[];
 	paymentMethodList: LabelValuePair[];
 	transactionTypeList: LabelValuePair[];
 	clientVendorList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
 	accountTypeEnum = AccountTypeEnum;
 	paymentMethodEnum = PaymentMethodEnum;
+	currentBalance: number = 0;
+	previousBalance: number = 0;
+
 	constructor(
 		private treasuryService: TreasuryService,
 		private clientVendorService: ClientVendorService,
@@ -55,7 +58,7 @@ export class TreasuryFormComponent {
 		const id = this.route.snapshot.paramMap.get('id');
 		if (id) {
 			this.getTreasuryById(id);
-			if (this.router.url.includes('/view/')) {
+			if (this.router.url.includes('view')) {
 				this.viewMode = true;
 			}
 		}
@@ -72,7 +75,7 @@ export class TreasuryFormComponent {
 				this.clientVendorList = this.clientVendorList.filter(x => x.typeId == ClientVendorTypeEnum.All || x.typeId == ClientVendorTypeEnum.Vendor)
 			}
 			this.treasuryDTO.beneficiaryName = this.clientVendorList.find(x => x.id == this.treasuryDTO.clientVendorId)?.fullName;
-
+			this.onClientVendorChange();
 		})
 	}
 
@@ -116,18 +119,27 @@ export class TreasuryFormComponent {
 
 	}
 
-	save(form: NgForm) {
+	save(isPrint?: boolean) {
 		if (this.validattion(this.treasuryDTO)) {
 			if (this.treasuryDTO.id) {
 				this.treasuryService.update(this.treasuryDTO).subscribe(res => {
 					this.toasterService.success("success");
+					if (isPrint) {
+						this.print();
+					}
 					this.back();
 				})
 			}
 			else {
 				this.treasuryService.add(this.treasuryDTO).subscribe(res => {
 					this.toasterService.success("success");
-					this.back();
+					if (isPrint) {
+						this.print();
+						this.back();
+					}
+					else {
+						this.back();
+					}
 				})
 			}
 		}
@@ -140,8 +152,37 @@ export class TreasuryFormComponent {
 
 	onClientVendorChange() {
 		if (this.treasuryDTO.clientVendorId) {
-			this.treasuryDTO.beneficiaryName = this.clientVendorList.find(x => x.id == this.treasuryDTO.clientVendorId)?.fullName;
+			let clientVendor: any | undefined = this.clientVendorList.find(x => x.id == this.treasuryDTO.clientVendorId);
+			this.treasuryDTO.beneficiaryName = clientVendor?.fullName;
+			this.updateBalance();
 		}
+	}
+
+	updateBalance() {
+		let clientVendor: any | undefined = this.clientVendorList.find(x => x.id == this.treasuryDTO.clientVendorId);
+		//Edit
+		if (this.treasuryDTO.id) {
+			// this.currentBalance = parseFloat((clientVendor?.debit - clientVendor?.credit).toFixed(2));
+			// this.previousBalance = parseFloat((this.currentBalance - (clientVendor?.debit - clientVendor?.credit)).toFixed(2));
+
+			this.currentBalance = parseFloat((clientVendor?.debit - clientVendor?.credit).toFixed(2));
+			this.previousBalance = parseFloat((this.currentBalance + this.treasuryDTO?.debit + this.treasuryDTO?.credit).toFixed(2));
+
+		}
+		//Add
+		else {
+			this.previousBalance = parseFloat((clientVendor?.debit - clientVendor?.credit).toFixed(2));
+			this.currentBalance = parseFloat((this.previousBalance - this.treasuryDTO?.debit - this.treasuryDTO?.credit).toFixed(2));
+
+		}
+	}
+
+	onAmountsChange() {
+		this.currentBalance = parseFloat((this.previousBalance + this.treasuryDTO?.debit - this.treasuryDTO?.credit).toFixed(2));
+	}
+	saveAndPrint() {
+		this.save(true);
+
 	}
 
 	print() {

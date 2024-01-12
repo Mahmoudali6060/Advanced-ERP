@@ -345,3 +345,6 @@ i:hover {
     font-size: 14px;
 }
 
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked{
+    background-color: #b5b8bb !important;
+}

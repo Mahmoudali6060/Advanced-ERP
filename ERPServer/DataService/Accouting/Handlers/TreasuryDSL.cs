@@ -40,6 +40,7 @@ namespace DataService.Accounting.Handlers
             treasuryList = treasuryList.OrderByDescending(x => x.Id);
             treasuryList = ApplyFilert(treasuryList, searchCriteriaDTO);
             int total = treasuryList.Count();
+
             #endregion
 
             #region Apply Pagination
@@ -51,7 +52,33 @@ namespace DataService.Accounting.Handlers
             return new ResponseEntityList<TreasuryDTO>
             {
                 List = treasuryDTOList,
-                Total = total
+                Total = total,
+            };
+            #endregion
+
+        }
+
+        public async Task<TreasuryGridDTO> GetAllForGrid(TreasurySearchDTO searchCriteriaDTO)
+        {
+            var treasuryList = await _unitOfWork.TreasuryDAL.GetAllWithIncludes(x => x.IsCancel == false, x => x.ClientVendor);
+            #region Apply Filters
+            treasuryList = treasuryList.OrderByDescending(x => x.Id);
+            treasuryList = ApplyFilert(treasuryList, searchCriteriaDTO);
+            int total = treasuryList.Count();
+            decimal balance = treasuryList.Sum(x => x.Debit - x.Credit);
+            #endregion
+
+            #region Apply Pagination
+            treasuryList = treasuryList.Skip((searchCriteriaDTO.Page - 1) * searchCriteriaDTO.PageSize).Take(searchCriteriaDTO.PageSize);
+            #endregion
+
+            #region Mapping and Return List
+            var treasuryDTOList = _mapper.Map<IEnumerable<TreasuryDTO>>(treasuryList);
+            return new TreasuryGridDTO
+            {
+                List = treasuryDTOList,
+                Total = total,
+                Balance = balance
             };
             #endregion
 
@@ -85,6 +112,7 @@ namespace DataService.Accounting.Handlers
                 if (clientVendor != null)
                 {
                     clientVendor.Debit += entity.Debit;
+                    clientVendor.Credit += entity.Credit;
                     await _unitOfWork.ClientVendorDAL.Update(clientVendor);
                 }
             }
@@ -96,7 +124,7 @@ namespace DataService.Accounting.Handlers
 
         public async Task<long> Update(TreasuryDTO entity)
         {
-            var exsitedEntity = await _unitOfWork.TreasuryDAL.GetById(entity.Id);
+            var oldEntity = await _unitOfWork.TreasuryDAL.GetById(entity.Id);
             var result = await _unitOfWork.TreasuryDAL.Update(_mapper.Map<Treasury>(entity));
             #region Update Balance
             if (entity.ClientVendorId.HasValue == true)
@@ -104,13 +132,14 @@ namespace DataService.Accounting.Handlers
                 var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId.Value);
                 if (clientVendor != null)
                 {
-                    //clientVendor.Debit = exsitedEntity.Debit - entity.Amount;
+                    clientVendor.Debit += entity.Debit - oldEntity.Debit;
+                    clientVendor.Credit += entity.Credit - oldEntity.Credit;
                     await _unitOfWork.ClientVendorDAL.Update(clientVendor);
                 }
             }
-            else if (exsitedEntity.ClientVendorId.HasValue)
+            else if (oldEntity.ClientVendorId.HasValue)
             {
-                var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(exsitedEntity.ClientVendorId.Value);
+                var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(oldEntity.ClientVendorId.Value);
                 if (clientVendor != null)
                 {
                     //clientVendor.Debit -= entity.Amount;
@@ -133,6 +162,7 @@ namespace DataService.Accounting.Handlers
                 if (clientVendor != null)
                 {
                     clientVendor.Debit -= entity.Debit;
+                    clientVendor.Credit -= entity.Credit;
                     await _unitOfWork.ClientVendorDAL.Update(clientVendor);
                 }
             }

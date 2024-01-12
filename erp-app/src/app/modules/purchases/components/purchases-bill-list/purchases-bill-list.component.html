@@ -30,33 +30,54 @@
                 </button>
             </div>
         </div>
-     
-         <!--Filters-->
-         <div class="row" *ngIf="showFilterControls">
+
+        <!--Filters-->
+        <div class="row" *ngIf="showFilterControls">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">{{'General.Filters'|translate}}</div>
                     <div class="card-body">
                         <div class="col-lg-12">
                             <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-label"
-                                            for="form3Example3c">{{'General.Status'|translate}}</label>
-                                        <ng-select name="drivers" id="drivers"
-                                            [(ngModel)]="searchCriteriaDTO.isActive">
-                                            <ng-option value=''> {{'General.All' |translate}}</ng-option>
-                                            <ng-option value=true> {{'General.Active' |translate}}</ng-option>
-                                            <ng-option value=false> {{'General.InActive' |translate}}</ng-option>
-                                        </ng-select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         <label for="number" class=" form-control-label">{{'General.Number'
                                             |translate}}</label>
                                         <input [(ngModel)]="searchCriteriaDTO.number" type="text" id="code"
                                             class="form-control" #number="ngModel" name="number">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="date">{{'General.Date'|translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.date" type="date" id="date"
+                                            class="form-control" #date="ngModel" name="date"
+                                            [value]="searchCriteriaDTO.date" aria-describedby="helpId">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="form-label" for="vendorId">{{'General.Vendor'|translate}}</label>
+                                    <div class="input-group">
+                                        <ng-select name="vendorId" id="vendorId" class="ng-select-custom"
+                                            [(ngModel)]="searchCriteriaDTO.clientVendorId">
+                                            <ng-option value=" null"
+                                                disabled>{{'General.SelectVendor'|translate}}</ng-option>
+                                            <ng-option *ngFor="let item of vendorList" [value]="item.id">
+                                                {{item.fullName}}
+                                            </ng-option>
+                                        </ng-select>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="personPhoneNumber"
+                                            class=" form-control-label">{{'General.VendorPhoneNumber'
+                                            |translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.personPhoneNumber" type="text"
+                                            id="personPhoneNumber" class="form-control" #personPhoneNumber="ngModel"
+                                            name="personPhoneNumber">
                                     </div>
                                 </div>
                             </div>
@@ -134,9 +155,10 @@
                         </td>
                     </tr>
                 </tbody>
-       
+
             </table>
-            <app-pagination (pageChange)="onPageChange($event)" [totalRecordsCount]="total" [recordsPerPage]="searchCriteriaDTO.pageSize" *ngIf="purchasesBillHeaderList">
+            <app-pagination (pageChange)="onPageChange($event)" [totalRecordsCount]="total"
+                [recordsPerPage]="searchCriteriaDTO.pageSize" *ngIf="purchasesBillHeaderList">
             </app-pagination>
         </div>
         <!-- END DATA TABLE -->

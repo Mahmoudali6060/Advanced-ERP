@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h4 class="modal-title"><span>
+            {{'General.AddCategory' |translate}}</span></h4>
+
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="name" class=" form-control-label">{{'General.Name'
+                            |translate}}</label>
+                        <input [(ngModel)]="categoryDTO.name" type="text" id="name" class="form-control" #name="ngModel"
+                            [class.is-invalid]="name.invalid && name.touched" [class.is-valid]="name.valid" required
+                            name="name" aria-describedby="helpId">
+                        <small [hidden]="name.valid || name.untouched" id="helpId" class="text-muted"
+                            [translate]="'Errors.ThisFieldIsRequired'"></small>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-info" (click)="save()" translate>General.Save</button>
+    <button type="button" class="btn btn-danger" (click)="cancel()" translate>General.Cancel</button>
+</div>

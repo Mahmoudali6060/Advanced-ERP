@@ -39,9 +39,9 @@ const routes: Routes = [
   { path: 'vendor-form', component: VendorFormComponent, canActivate: [AuthGuard],data: { privilegeId: Privileges.Setup.Vendors.Add } },
   { path: 'vendor-form/:id', component: VendorFormComponent , canActivate: [AuthGuard],data: { privilegeId: Privileges.Setup.Vendors.Edit }},
   
-  // { path: 'company-list', component: CompanyListComponent , data: { privilegeId: Privileges.Setup.Users.View }},
-  // { path: 'company-form', component: CompanyFormComponent, data: { privilegeId: Privileges.Setup.Users.View } },
-  // { path: 'company-form/:id', component: CompanyFormComponent , data: { privilegeId: Privileges.Setup.Users.View }},
+  { path: 'company-list', component: CompanyListComponent },
+  { path: 'company-form', component: CompanyFormComponent},
+  { path: 'company-form/:id', component: CompanyFormComponent },
   
   { path: 'representive-list', component: RepresentiveListComponent,canActivate: [AuthGuard], data: { privilegeId: Privileges.Setup.Representives.View } },
   { path: 'representive-form', component: RepresentiveFormComponent , canActivate: [AuthGuard],data: { privilegeId: Privileges.Setup.Representives.Add }},

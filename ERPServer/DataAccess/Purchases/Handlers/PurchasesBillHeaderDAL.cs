@@ -28,7 +28,7 @@ namespace Purchases.DataAccessLayer
 
         public async Task<PurchasesBillHeader> GetById(long id)
         {
-            var PurchasesBillHeader = _appDbContext.PurchasesBillHeaders.Include(x => x.ClientVendor).Include(x => x.PurchasesBillDetailList).SingleOrDefaultAsync(x => x.Id == id);
+            var PurchasesBillHeader = _appDbContext.PurchasesBillHeaders.Include(x => x.ClientVendor).Include(x => x.PurchasesBillDetailList).Include(x=>x.Treasury).SingleOrDefaultAsync(x => x.Id == id);
             return await PurchasesBillHeader;
         }
 

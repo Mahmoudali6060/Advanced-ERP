@@ -20,6 +20,10 @@ namespace App.Controllers.Accounting
         //[Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> GetAll([FromBody] TreasurySearchDTO searchCriteriaDTO) => Ok(await _treasuryDSL.GetAll(searchCriteriaDTO));
 
+        [HttpPost, Route("GetAllForGrid")]
+        //[Authorize(Roles = Roles.Admin)]
+        public async Task<IActionResult> GetAllForGrid([FromBody] TreasurySearchDTO searchCriteriaDTO) => Ok(await _treasuryDSL.GetAllForGrid(searchCriteriaDTO));
+
         [HttpGet, Route("GetById/{id}")]
         //[Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> GetById(long id) => Ok(await _treasuryDSL.GetById(id));

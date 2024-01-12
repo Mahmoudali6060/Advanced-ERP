@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -168,7 +168,7 @@ namespace Data.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -189,7 +189,7 @@ namespace Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,7 +209,7 @@ namespace Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -227,13 +227,13 @@ namespace Data.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -253,7 +253,7 @@ namespace Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -464,7 +464,9 @@ namespace Data.Migrations
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     SellingPricePercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    LastSellingPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     PurchasingPricePercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    LastPurchasingPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     ActualQuantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     LowQuantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     HighQuantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -483,7 +485,7 @@ namespace Data.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -506,7 +508,7 @@ namespace Data.Migrations
                         column: x => x.RoleGroupId,
                         principalTable: "RoleGroups",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -594,7 +596,7 @@ namespace Data.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_ProductTrackings_UserProfiles_CreatedByProfileId",
                         column: x => x.CreatedByProfileId,
@@ -602,124 +604,6 @@ namespace Data.Migrations
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ProductTrackings_UserProfiles_ModifiedByProfileId",
-                        column: x => x.ModifiedByProfileId,
-                        principalTable: "UserProfiles",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PurchasesBillHeader",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    OtherExpenses = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalAfterDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    VatAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalAfterVAT = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TaxPercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TaxAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Paid = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Remaining = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IsTax = table.Column<bool>(type: "bit", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClientVendorId = table.Column<long>(type: "bigint", nullable: false),
-                    RepresentiveId = table.Column<long>(type: "bigint", nullable: false),
-                    CompanyId = table.Column<long>(type: "bigint", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedByProfileId = table.Column<long>(type: "bigint", nullable: true),
-                    CreatedByUsername = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ModifiedByProfileId = table.Column<long>(type: "bigint", nullable: true),
-                    ModifiedByUsername = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PurchasesBillHeader", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PurchasesBillHeader_ClientVendors_ClientVendorId",
-                        column: x => x.ClientVendorId,
-                        principalTable: "ClientVendors",
-                        principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PurchasesBillHeader_Companies_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Companies",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_PurchasesBillHeader_UserProfiles_CreatedByProfileId",
-                        column: x => x.CreatedByProfileId,
-                        principalTable: "UserProfiles",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_PurchasesBillHeader_UserProfiles_ModifiedByProfileId",
-                        column: x => x.ModifiedByProfileId,
-                        principalTable: "UserProfiles",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SalesBillHeaders",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    OtherExpenses = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalAfterDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClientVendorId = table.Column<long>(type: "bigint", nullable: false),
-                    RepresentiveId = table.Column<long>(type: "bigint", nullable: false),
-                    VatAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalAfterVAT = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TaxPercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TaxAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Paid = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Remaining = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IsTax = table.Column<bool>(type: "bit", nullable: false),
-                    CompanyId = table.Column<long>(type: "bigint", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedByProfileId = table.Column<long>(type: "bigint", nullable: true),
-                    CreatedByUsername = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ModifiedByProfileId = table.Column<long>(type: "bigint", nullable: true),
-                    ModifiedByUsername = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SalesBillHeaders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SalesBillHeaders_ClientVendors_ClientVendorId",
-                        column: x => x.ClientVendorId,
-                        principalTable: "ClientVendors",
-                        principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_SalesBillHeaders_Companies_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Companies",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_SalesBillHeaders_UserProfiles_CreatedByProfileId",
-                        column: x => x.CreatedByProfileId,
-                        principalTable: "UserProfiles",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_SalesBillHeaders_UserProfiles_ModifiedByProfileId",
                         column: x => x.ModifiedByProfileId,
                         principalTable: "UserProfiles",
                         principalColumn: "Id");
@@ -735,13 +619,13 @@ namespace Data.Migrations
                     AccountTypeId = table.Column<int>(type: "int", nullable: false),
                     ClientVendorId = table.Column<long>(type: "bigint", nullable: true),
                     BeneficiaryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TransactionTypeId = table.Column<int>(type: "int", nullable: false),
                     PaymentMethodId = table.Column<int>(type: "int", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Debit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Credit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     RefNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BankAccountNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CheckNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsCancel = table.Column<bool>(type: "bit", nullable: false),
+                    IsBilled = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -771,6 +655,145 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PurchasesBillHeader",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    OtherExpenses = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalAfterDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    VatAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalAfterVAT = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TaxPercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TaxAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Paid = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Remaining = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    IsTax = table.Column<bool>(type: "bit", nullable: false),
+                    IsTemp = table.Column<bool>(type: "bit", nullable: false),
+                    IsCancel = table.Column<bool>(type: "bit", nullable: false),
+                    IsReturned = table.Column<bool>(type: "bit", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClientVendorId = table.Column<long>(type: "bigint", nullable: false),
+                    RepresentiveId = table.Column<long>(type: "bigint", nullable: true),
+                    ParentId = table.Column<long>(type: "bigint", nullable: true),
+                    CompanyId = table.Column<long>(type: "bigint", nullable: true),
+                    TreasuryId = table.Column<long>(type: "bigint", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedByProfileId = table.Column<long>(type: "bigint", nullable: true),
+                    CreatedByUsername = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedByProfileId = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedByUsername = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PurchasesBillHeader", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PurchasesBillHeader_ClientVendors_ClientVendorId",
+                        column: x => x.ClientVendorId,
+                        principalTable: "ClientVendors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_PurchasesBillHeader_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PurchasesBillHeader_Treasuries_TreasuryId",
+                        column: x => x.TreasuryId,
+                        principalTable: "Treasuries",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PurchasesBillHeader_UserProfiles_CreatedByProfileId",
+                        column: x => x.CreatedByProfileId,
+                        principalTable: "UserProfiles",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PurchasesBillHeader_UserProfiles_ModifiedByProfileId",
+                        column: x => x.ModifiedByProfileId,
+                        principalTable: "UserProfiles",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SalesBillHeaders",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Profit = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    OtherExpenses = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalAfterDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClientVendorId = table.Column<long>(type: "bigint", nullable: false),
+                    RepresentiveId = table.Column<long>(type: "bigint", nullable: true),
+                    VatAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalAfterVAT = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TaxPercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TaxAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Paid = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Remaining = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    IsTax = table.Column<bool>(type: "bit", nullable: false),
+                    IsTemp = table.Column<bool>(type: "bit", nullable: false),
+                    IsCancel = table.Column<bool>(type: "bit", nullable: false),
+                    IsReturned = table.Column<bool>(type: "bit", nullable: false),
+                    ParentId = table.Column<long>(type: "bigint", nullable: true),
+                    CompanyId = table.Column<long>(type: "bigint", nullable: true),
+                    TreasuryId = table.Column<long>(type: "bigint", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedByProfileId = table.Column<long>(type: "bigint", nullable: true),
+                    CreatedByUsername = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedByProfileId = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedByUsername = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SalesBillHeaders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SalesBillHeaders_ClientVendors_ClientVendorId",
+                        column: x => x.ClientVendorId,
+                        principalTable: "ClientVendors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_SalesBillHeaders_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_SalesBillHeaders_Treasuries_TreasuryId",
+                        column: x => x.TreasuryId,
+                        principalTable: "Treasuries",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_SalesBillHeaders_UserProfiles_CreatedByProfileId",
+                        column: x => x.CreatedByProfileId,
+                        principalTable: "UserProfiles",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_SalesBillHeaders_UserProfiles_ModifiedByProfileId",
+                        column: x => x.ModifiedByProfileId,
+                        principalTable: "UserProfiles",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PurchasesBillDetails",
                 columns: table => new
                 {
@@ -784,6 +807,7 @@ namespace Data.Migrations
                     PriceAfterDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     SubTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsReturned = table.Column<bool>(type: "bit", nullable: false),
                     CompanyId = table.Column<long>(type: "bigint", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -802,13 +826,13 @@ namespace Data.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_PurchasesBillDetails_PurchasesBillHeader_PurchasesBillHeaderId",
                         column: x => x.PurchasesBillHeaderId,
                         principalTable: "PurchasesBillHeader",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -825,6 +849,7 @@ namespace Data.Migrations
                     PriceAfterDiscount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     SubTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsReturned = table.Column<bool>(type: "bit", nullable: false),
                     CompanyId = table.Column<long>(type: "bigint", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -843,13 +868,13 @@ namespace Data.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_SalesBillDetails_SalesBillHeaders_SalesBillHeaderId",
                         column: x => x.SalesBillHeaderId,
                         principalTable: "SalesBillHeaders",
                         principalColumn: "Id",
-                         onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
@@ -984,6 +1009,11 @@ namespace Data.Migrations
                 column: "ModifiedByProfileId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PurchasesBillHeader_TreasuryId",
+                table: "PurchasesBillHeader",
+                column: "TreasuryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RoleGroups_CompanyId",
                 table: "RoleGroups",
                 column: "CompanyId");
@@ -1027,6 +1057,11 @@ namespace Data.Migrations
                 name: "IX_SalesBillHeaders_ModifiedByProfileId",
                 table: "SalesBillHeaders",
                 column: "ModifiedByProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SalesBillHeaders_TreasuryId",
+                table: "SalesBillHeaders",
+                column: "TreasuryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_States_CompanyId",
@@ -1127,9 +1162,6 @@ namespace Data.Migrations
                 name: "Settings");
 
             migrationBuilder.DropTable(
-                name: "Treasuries");
-
-            migrationBuilder.DropTable(
                 name: "UnitOfMeasurements");
 
             migrationBuilder.DropTable(
@@ -1146,6 +1178,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Treasuries");
 
             migrationBuilder.DropTable(
                 name: "ClientVendors");

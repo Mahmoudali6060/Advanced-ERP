@@ -15,6 +15,7 @@ import { LocalStorageItems } from 'src/app/shared/constants/local-storage-items'
 import { isNullOrUndefined } from 'util';
 import { RoleDTO } from '../../../models/role.dto';
 import { RoleService } from '../../../services/role.service';
+import { AuthService } from 'src/app/modules/authentication/services/auth.service';
 
 @Component({
 	selector: 'app-user-form',
@@ -43,7 +44,8 @@ export class UserFormComponent {
 		private subjectService: SubjectService,
 		private localStorageService: LocalStorageService,
 		private router: Router,
-		private roleService: RoleService,) {
+		private roleService: RoleService,
+		private authService: AuthService) {
 	}
 
 	ngOnInit() {
@@ -117,8 +119,8 @@ export class UserFormComponent {
 				})
 			}
 			else {
+				this.userProfileDTO.companyId = this.authService.loggedUserProfile?.companyId;
 				this.userProfileDTO.password = "P@ssw0rd"
-				//this.userProfileDTO.userTypeId = UserTypeEnum.Operator; //by default
 				this.userProfileService.add(this.userProfileDTO).subscribe(res => {
 					this.toasterService.success("success");
 					this.cancel();

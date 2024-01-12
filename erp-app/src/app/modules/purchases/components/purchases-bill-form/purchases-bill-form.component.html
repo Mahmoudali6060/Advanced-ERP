@@ -1,386 +1,447 @@
-<div [ngClass]="{'disabled':viewMode}">
+<div>
     <form #frm="ngForm">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-header" *ngIf="!purchasesBillHeaderDTO.isTemp && !purchasesBillHeaderDTO.isReturned">
+                <div [ngClass]="{'disabled':viewMode}">
+                    <div class="card-header"
+                        *ngIf="!purchasesBillHeaderDTO.isTemp && !purchasesBillHeaderDTO.isReturned">
 
-                    <strong *ngIf="!purchasesBillHeaderDTO.id">{{'Purchases.AddPurchasesBill' |translate}}</strong>
-                    <strong *ngIf="purchasesBillHeaderDTO.id && !viewMode">{{'Purchases.EditPurchasesBill'
-                        |translate}}</strong>
-                    <strong *ngIf="purchasesBillHeaderDTO.id  && viewMode ">{{'Purchases.ViewPurchasesBill'
-                        |translate}}</strong>
-                </div>
-                <div class="card-header" *ngIf="purchasesBillHeaderDTO.isTemp">
-                    <strong *ngIf="!purchasesBillHeaderDTO.id">{{'Purchases.AddPurchasesBillTemp' |translate}}</strong>
-                    <strong *ngIf="purchasesBillHeaderDTO.id && !viewMode">{{'Purchases.EditPurchasesBillTemp'
-                        |translate}}</strong>
-                </div>
-                <div class="card-header" *ngIf="purchasesBillHeaderDTO.isReturned">
-                    <strong *ngIf="!purchasesBillHeaderDTO.id">{{'General.AddBillReturnedForm' |translate}}</strong>
-                </div>
-                <div class="card-body card-block">
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label for="number" class=" form-control-label">{{'General.BillNumber'
-                                    |translate}}</label>
+                        <strong *ngIf="!purchasesBillHeaderDTO.id">{{'Purchases.AddPurchasesBill' |translate}}</strong>
+                        <strong *ngIf="purchasesBillHeaderDTO.id && !viewMode">{{'Purchases.EditPurchasesBill'
+                            |translate}}</strong>
+                        <strong *ngIf="purchasesBillHeaderDTO.id  && viewMode ">{{'Purchases.ViewPurchasesBill'
+                            |translate}}</strong>
+                    </div>
+                    <div class="card-header" *ngIf="purchasesBillHeaderDTO.isTemp">
+                        <strong *ngIf="!purchasesBillHeaderDTO.id">{{'Purchases.AddPurchasesBillTemp'
+                            |translate}}</strong>
+                        <strong *ngIf="purchasesBillHeaderDTO.id && !viewMode">{{'Purchases.EditPurchasesBillTemp'
+                            |translate}}</strong>
+                    </div>
+                    <div class="card-header" *ngIf="purchasesBillHeaderDTO.isReturned">
+                        <strong *ngIf="!purchasesBillHeaderDTO.id">{{'General.AddBillReturnedForm' |translate}}</strong>
+                        <strong *ngIf="purchasesBillHeaderDTO.id && !viewMode">{{'Purchases.EditBillReturnedForm'
+                            |translate}}</strong>
+                        <strong *ngIf="purchasesBillHeaderDTO.id  && viewMode ">{{'Purchases.ViewBillReturnedForm'
+                            |translate}}</strong>
+                    </div>
+                    <div class="card-body card-block">
+                        <div class="row">
+                            <div class="col-lg-2" *ngIf="!hideBillnumber">
+                                <div class="form-group">
+                                    <label for="number" class=" form-control-label">{{'General.BillNumber'
+                                        |translate}}</label>
+                                    <div class="input-group">
+                                        <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.number"
+                                            type="text" id="number" class="form-control" #number="ngModel" name="number"
+                                            aria-describedby="helpId" (keyup.enter)="getPurchaseByNumber()">
+                                        <div class="input-group-addon" data-toggle="tooltip" data-placement="top"
+                                            title="Search" (click)="getPurchaseByNumber()">
+                                            <i class="fa fa-search"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <label class="form-label" for="vendorId">{{'General.Vendor'|translate}}</label>
                                 <div class="input-group">
-                                    <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.number" type="text"
-                                        id="number" class="form-control" #number="ngModel" name="number"
-                                        aria-describedby="helpId" (keyup.enter)="getPurchaseByNumber()">
+                                    <ng-select name="vendorId" id="vendorId" class="ng-select-custom"
+                                        [(ngModel)]="purchasesBillHeaderDTO.clientVendorId" (change)="onVendorChange()">
+                                        <ng-option value=" null"
+                                            disabled>{{'General.SelectVendor'|translate}}</ng-option>
+                                        <ng-option *ngFor="let item of vendorList" [value]="item.id"> {{item.fullName}}
+                                        </ng-option>
+                                    </ng-select>
                                     <div class="input-group-addon" data-toggle="tooltip" data-placement="top"
-                                        title="Search" (click)="getPurchaseByNumber()">
-                                        <i class="fa fa-search"></i>
+                                        (click)="showCleintVendorFormPopUp()" title="Add Vendor">
+                                        <i class="fa fa-plus-square"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="currentBalance" class=" form-control-label">{{'General.CurrentBalance'
+                                        |translate}}
+                                        <span *ngIf="currentBalance!=0">
+                                            -{{(currentBalance>0?'General.Debit':'General.Credit')
+                                            |translate}}</span>
+                                    </label>
+                                    <input [disabled]="viewMode" [value]="currentBalance" type="text"
+                                        id="currentBalance" class="form-control" readonly name="currentBalance"
+                                        aria-describedby="helpId">
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label class="form-label" for="date">{{'General.Date'|translate}}</label>
+                                    <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.date" type="date"
+                                        id="date" class="form-control" #date="ngModel" name="date"
+                                        [value]="purchasesBillHeaderDTO.date" aria-describedby="helpId">
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <label class="form-label"
+                                    for="representiveId">{{'General.Representive'|translate}}</label>
+                                <div class="input-group">
+                                    <ng-select name="representiveId" id="representiveId" class="ng-select-custom"
+                                        [(ngModel)]="purchasesBillHeaderDTO.representiveId">
+                                        <ng-option value=" null"
+                                            disabled>{{'General.SelectRepresentive'|translate}}</ng-option>
+                                        <ng-option *ngFor="let item of representiveList" [value]="item.id">
+                                            {{item.fullName}}
+                                        </ng-option>
+                                    </ng-select>
+                                    <div class="input-group-addon" data-toggle="tooltip" data-placement="top"
+                                        (click)="showRepresentiveFormPopUp()" title="Add Representive">
+                                        <i class="fa fa-plus-square"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-3">
-                            <label class="form-label" for="vendorId">{{'General.Vendor'|translate}}</label>
-                            <div class="input-group">
-                                <ng-select name="vendorId" id="vendorId" class="ng-select-custom"
-                                    [(ngModel)]="purchasesBillHeaderDTO.clientVendorId" (change)="onVendorChange()">
-                                    <ng-option value=" null" disabled>{{'General.SelectVendor'|translate}}</ng-option>
-                                    <ng-option *ngFor="let item of vendorList" [value]="item.id"> {{item.fullName}}
-                                    </ng-option>
-                                </ng-select>
-                                <div class="input-group-addon" data-toggle="tooltip" data-placement="top"
-                                    (click)="showCleintVendorFormPopUp()" title="Add Vendor">
-                                    <i class="fa fa-plus-square"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label for="currentBalance" class=" form-control-label">{{'General.CurrentBalance'
-                                    |translate}}
-                                    <span *ngIf="currentBalance!=0">
-                                        -{{(currentBalance>0?'General.Debit':'General.Credit')
-                                        |translate}}</span>
-                                </label>
-                                <input [disabled]="viewMode" [value]="currentBalance" type="text" id="currentBalance"
-                                    class="form-control" readonly name="currentBalance" aria-describedby="helpId">
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label class="form-label" for="date">{{'General.Date'|translate}}</label>
-                                <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.date" type="date"
-                                    id="date" class="form-control" #date="ngModel" name="date"
-                                    [value]="purchasesBillHeaderDTO.date" aria-describedby="helpId">
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3">
-                            <label class="form-label" for="representiveId">{{'General.Representive'|translate}}</label>
-                            <div class="input-group">
-                                <ng-select name="representiveId" id="representiveId" class="ng-select-custom"
-                                    [(ngModel)]="purchasesBillHeaderDTO.representiveId">
-                                    <ng-option value=" null"
-                                        disabled>{{'General.SelectRepresentive'|translate}}</ng-option>
-                                    <ng-option *ngFor="let item of representiveList" [value]="item.id">
-                                        {{item.fullName}}
-                                    </ng-option>
-                                </ng-select>
-                                <div class="input-group-addon" data-toggle="tooltip" data-placement="top"
-                                    (click)="showRepresentiveFormPopUp()" title="Add Representive">
-                                    <i class="fa fa-plus-square"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="table-responsive table-responsive-data2">
-                                        <table class="table table-data2">
-                                            <thead class="table-header-bc">
-                                                <tr>
-                                                    <th class="table-header-fc">#</th>
-                                                    <th class="table-header-fc">{{'General.Product' |translate}}</th>
-                                                    <th class="table-header-fc">{{'General.ActualQuantity' |translate}}
-                                                    </th>
-                                                    <th class="table-header-fc">{{'General.Quantity' |translate}}</th>
-                                                    <th class="table-header-fc">{{'General.Price' |translate}}</th>
-                                                    <th class="table-header-fc">{{'General.LastPurchasingPrice'
-                                                        |translate}}
-                                                    </th>
-                                                    <th class="table-header-fc">{{'General.Discount' |translate}} %</th>
-                                                    <th class="table-header-fc">{{'General.PriceAfterDiscount'
-                                                        |translate}}
-                                                    </th>
-                                                    <th class="table-header-fc">{{'General.SubTotal' |translate}}</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="tr-shadow"
-                                                    *ngFor="let item of purchasesBillHeaderDTO.purchasesBillDetailList;let i=index; ">
-                                                    <td>
-                                                        {{i+1}}
-                                                    </td>
-                                                    <td class="cell-width-35">
-                                                        <div class="input-group">
-                                                            <ng-select [(ngModel)]="item.productId"
-                                                                class="ng-select-custom text-font-size-md"
-                                                                [ngModelOptions]="{standalone: true}"
-                                                                (change)="onProductChange(item,$event)">
-                                                                <ng-option *ngFor="let product of productList"
-                                                                    [value]="product.id">{{product.code}} -
-                                                                    {{product.name}}</ng-option>
-                                                            </ng-select>
-                                                            <div class="input-group-addon" data-toggle="tooltip"
-                                                                data-placement="top" title="Add Product"
-                                                                (click)="showProductFormPopUp(item)">
-                                                                <i class="fa fa-plus-square"></i>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive table-responsive-data2">
+                                            <table class="table table-data2">
+                                                <thead class="table-header-bc">
+                                                    <tr>
+                                                        <th class="table-header-fc">#</th>
+                                                        <th class="table-header-fc">{{'General.Product' |translate}}
+                                                        </th>
+                                                        <th class="table-header-fc">{{'General.ActualQuantity'
+                                                            |translate}}
+                                                        </th>
+                                                        <th *ngIf="purchasesBillHeaderDTO.isReturned"
+                                                            class="table-header-fc">{{'General.PurchasedQuantity'
+                                                            |translate}}
+                                                        </th>
+                                                        <th class="table-header-fc">{{'General.Quantity' |translate}}
+                                                        </th>
+                                                        <th class="table-header-fc">{{'General.Price' |translate}}</th>
+                                                        <th class="table-header-fc">{{'General.LastPurchasingPrice'
+                                                            |translate}}
+                                                        </th>
+                                                        <th class="table-header-fc">{{'General.Discount' |translate}} %
+                                                        </th>
+                                                        <th class="table-header-fc">{{'General.PriceAfterDiscount'
+                                                            |translate}}
+                                                        </th>
+                                                        <th class="table-header-fc">{{'General.SubTotal' |translate}}
+                                                        </th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="tr-shadow"
+                                                        *ngFor="let item of purchasesBillHeaderDTO.purchasesBillDetailList;let i=index; ">
+                                                        <td>
+                                                            {{i+1}}
+                                                        </td>
+                                                        <td class="cell-width-35">
+                                                            <div class="input-group">
+                                                                <ng-select [(ngModel)]="item.productId"
+                                                                    class="ng-select-custom text-font-size-md"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    (change)="onProductChange(item,$event)">
+                                                                    <ng-option *ngFor="let product of productList"
+                                                                        [value]="product.id">{{product.code}} -
+                                                                        {{product.name}}</ng-option>
+                                                                </ng-select>
+                                                                <div class="input-group-addon" data-toggle="tooltip"
+                                                                    data-placement="top" title="Add Product"
+                                                                    (click)="showProductFormPopUp(item)">
+                                                                    <i class="fa fa-plus-square"></i>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <input [(ngModel)]="item.actualQuantity" readonly type="number"
+                                                        </td>
+                                                        <td>
+                                                            {{item.actualQuantity}}
+                                                            <!-- <input [(ngModel)]="item.actualQuantity" readonly type="number"
                                                             class="form-control" (change)="updateTotal()"
-                                                            [ngModelOptions]="{standalone: true}">
-                                                    </td>
-                                                    <td>
-                                                        <input [(ngModel)]="item.quantity" type="number"
-                                                            class="form-control" (change)="updateTotal()"
-                                                            [ngModelOptions]="{standalone: true}">
-                                                    </td>
-                                                    <td class="cell-width-10">
-                                                        <input [(ngModel)]="item.price" type="number"
-                                                            class="form-control" (change)="updateTotal()"
-                                                            [ngModelOptions]="{standalone: true}">
-                                                    </td>
-                                                    <td class="cell-width-10">
-                                                        <input [(ngModel)]="item.lastPurchasingPrice" type="number"
+                                                            [ngModelOptions]="{standalone: true}"> -->
+                                                        </td>
+                                                        <td *ngIf="purchasesBillHeaderDTO.isReturned">
+                                                            {{item.purchasedQuantity}}
+                                                        </td>
+                                                        <td>
+                                                            <input [(ngModel)]="item.quantity" type="number"
+                                                                class="form-control" (change)="updateTotal()"
+                                                                [ngModelOptions]="{standalone: true}">
+                                                        </td>
+                                                        <td class="cell-width-10">
+                                                            <input [(ngModel)]="item.price" type="number"
+                                                                class="form-control" (change)="updateTotal()"
+                                                                [ngModelOptions]="{standalone: true}">
+                                                        </td>
+                                                        <td class="cell-width-10">
+                                                            {{item.lastPurchasingPrice}}
+                                                            <!-- <input [(ngModel)]="item.lastPurchasingPrice" type="number"
                                                             readonly class="form-control"
-                                                            [ngModelOptions]="{standalone: true}">
-                                                    </td>
-                                                    <td>
-                                                        <input [(ngModel)]="item.discount" type="number"
-                                                            class="form-control" (change)="updateTotal()"
-                                                            [ngModelOptions]="{standalone: true}">
-                                                    </td>
-                                                    <td>
-                                                        <input [(ngModel)]="item.priceAfterDiscount" readonly
-                                                            class="form-control" [ngModelOptions]="{standalone: true}">
-                                                    </td>
+                                                            [ngModelOptions]="{standalone: true}"> -->
+                                                        </td>
+                                                        <td>
+                                                            <input [(ngModel)]="item.discount" type="number"
+                                                                class="form-control" (change)="updateTotal()"
+                                                                [ngModelOptions]="{standalone: true}">
+                                                        </td>
+                                                        <td>
+                                                            {{item.priceAfterDiscount}}
+                                                            <!-- <input [(ngModel)]="item.priceAfterDiscount" readonly
+                                                            class="form-control" [ngModelOptions]="{standalone: true}"> -->
+                                                        </td>
 
-                                                    <td>
-                                                        <input [(ngModel)]="item.subTotal" class="form-control" readonly
+                                                        <td>
+                                                            {{item.subTotal}}
+                                                            <!-- <input [(ngModel)]="item.subTotal" class="form-control" readonly
                                                             (change)="updateTotal()"
-                                                            [ngModelOptions]="{standalone: true}">
-                                                    </td>
+                                                            [ngModelOptions]="{standalone: true}"> -->
+                                                        </td>
 
 
-                                                    <td>
-                                                        <div class="table-data-feature">
+                                                        <td>
+                                                            <div class="table-data-feature">
 
 
-                                                            <button *ngIf="!purchasesBillHeaderDTO.isReturned"
-                                                                class="item ml-2" data-toggle="tooltip" type="button"
-                                                                title="{{'General.RemoveRow' |translate}}"
-                                                                (click)="deleteRow($event,item)">
-                                                                <i class="zmdi zmdi-delete"></i>
-                                                            </button>
+                                                                <button class="item ml-2" data-toggle="tooltip"
+                                                                    type="button"
+                                                                    title="{{'General.RemoveRow' |translate}}"
+                                                                    (click)="deleteRow($event,item)">
+                                                                    <i class="zmdi zmdi-delete"></i>
+                                                                </button>
 
-                                                            <button
+                                                                <!-- <button
                                                                 *ngIf="purchasesBillHeaderDTO.isReturned && !item.isReturned"
                                                                 class="item ml-2" data-toggle="tooltip" type="button"
                                                                 title="{{'General.AddToReturnedBill' |translate}}"
                                                                 (click)="setReturnedItem(item)">
                                                                 <i class="fa fa-repeat"></i>
-                                                            </button>
+                                                            </button> -->
 
-                                                            <button
+                                                                <!-- <button
                                                                 *ngIf="purchasesBillHeaderDTO.isReturned && item.isReturned"
                                                                 class="item ml-2" data-toggle="tooltip" type="button"
                                                                 title="{{'General.AddToReturnedBill' |translate}}"
                                                                 (click)="deleteRow($event,item)">
                                                                 <i class="zmdi zmdi-delete"></i>
-                                                            </button>
+                                                            </button> -->
 
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
 
-                                        </table>
-                                    </div>
-                                    <div class="element-floating item ml-2">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <input [disabled]="viewMode" [(ngModel)]="numberOfProducts"
-                                                    type="number" id="numberOfProducts" class="form-control text-sm"
-                                                    name="numberOfProducts" aria-describedby="helpId"
-                                                    (keyup.enter)="addNewRow()">
-                                                <div class="input-group-addon" data-toggle="tooltip"
-                                                    data-placement="top" title="Add new row" (click)="addNewRow()">
-                                                    <i class="fa fa-plus-square"></i>
+                                            </table>
+                                        </div>
+                                        <div class="element-floating item ml-2">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input [disabled]="viewMode" [(ngModel)]="numberOfProducts"
+                                                        type="number" id="numberOfProducts" class="form-control text-sm"
+                                                        name="numberOfProducts" aria-describedby="helpId"
+                                                        (keyup.enter)="addNewRow()">
+                                                    <div class="input-group-addon" data-toggle="tooltip"
+                                                        data-placement="top" title="Add new row" (click)="addNewRow()">
+                                                        <i class="fa fa-plus-square"></i>
+                                                    </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <label for="isTax" class=" form-control-label">{{'General.IsTax'
+                                            |translate}}</label>
+                                        <p-inputSwitch [disabled]="viewMode" id="isTax"
+                                            [(ngModel)]="purchasesBillHeaderDTO.isTax" name="isTax" class="input-switch"
+                                            (onChange)="isTaxChange()"
+                                            [ngModelOptions]="{standalone: true}"></p-inputSwitch>
+                                    </div>
+                                    <div class="col-lg-3" *ngIf="purchasesBillHeaderDTO.isTemp">
+                                        <label for="isTransfereToBill"
+                                            class=" form-control-label">{{'General.TransfereToBill'
+                                            |translate}}</label>
+                                        <p-inputSwitch id="isTransfereToBill" [(ngModel)]="isTransfereToBill"
+                                            name="isTransfereToBill" class="input-switch"
+                                            [ngModelOptions]="{standalone: true}"></p-inputSwitch>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <label for="total" class=" form-control-label">{{'General.Total'
+                                                |translate}}</label>
+                                            <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.total"
+                                                type="text" id="total" class="form-control" #total="ngModel" readonly
+                                                name="total" aria-describedby="helpId">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <label for="discount" class=" form-control-label">{{'General.Discount'
+                                                |translate}}</label>
+                                            <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.discount"
+                                                type="text" id="discount" class="form-control" (change)="updateTotal()"
+                                                #discount="ngModel" name="discount">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <label for="totalAfterDiscount"
+                                                class=" form-control-label">{{'General.TotalAfterDiscount'
+                                                |translate}}</label>
+                                            <input [disabled]="viewMode"
+                                                [(ngModel)]="purchasesBillHeaderDTO.totalAfterDiscount" type="text"
+                                                id="totalAfterDiscount" class="form-control"
+                                                #totalAfterDiscount="ngModel" readonly name="totalAfterDiscount"
+                                                aria-describedby="helpId">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <label class="form-label"
+                                                for="paymentMethodId">{{'General.PaymentMethod'|translate}}</label>
+                                            <ng-select [disabled]="viewMode" name="paymentMethodId" id="paymentMethodId"
+                                                [(ngModel)]="purchasesBillHeaderDTO.paymentMethodId">
+                                                <ng-option *ngFor="let item of paymentMethodList" [value]="item.value">
+                                                    {{'PaymentMethodEnum.'+item.label |translate}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <label for="refNo" class=" form-control-label">{{'General.RefNo'
+                                                |translate}}</label>
+                                            <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.refNo" type="text"
+                                                id="refNo" class="form-control" #refNo="ngModel" name="refNo" id="refNo"
+                                                class="form-control" aria-describedby="helpId">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2" *ngIf="purchasesBillHeaderDTO.isTax">
+                                        <div class="form-group">
+                                            <label for="vatAmount" class=" form-control-label">{{'General.VATAmount'
+                                                |translate}}</label>
+                                            <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.vatAmount"
+                                                type="text" id="vatAmount" class="form-control" #vatAmount="ngModel"
+                                                readonly name="vatAmount" aria-describedby="helpId">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2" *ngIf="purchasesBillHeaderDTO.isTax">
+                                        <div class="form-group">
+                                            <label for="taxPercentage"
+                                                class=" form-control-label">{{'General.TaxPercentage'
+                                                |translate}}</label>
+                                            <input [disabled]="!purchasesBillHeaderDTO.isTax"
+                                                [(ngModel)]="purchasesBillHeaderDTO.taxPercentage" type="text"
+                                                (change)="updateTotal()" id="taxPercentage" class="form-control"
+                                                #taxPercentage="ngModel" name="taxPercentage" aria-describedby="helpId">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2" *ngIf="purchasesBillHeaderDTO.isTax">
+                                        <div class="form-group">
+                                            <label for="taxAmount" class=" form-control-label">{{'General.TaxAmount'
+                                                |translate}}</label>
+                                            <input [(ngModel)]="purchasesBillHeaderDTO.taxAmount" type="text" readonly
+                                                id="taxAmount" class="form-control" #taxAmount="ngModel"
+                                                name="taxAmount" aria-describedby="helpId">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-2" *ngIf="purchasesBillHeaderDTO.isTax">
+                                        <div class="form-group">
+                                            <label for="totalAfterVAT"
+                                                class=" form-control-label">{{'General.TotalAfterVAT'
+                                                |translate}}</label>
+                                            <input [disabled]="viewMode"
+                                                [(ngModel)]="purchasesBillHeaderDTO.totalAfterVAT" type="text"
+                                                id="totalAfterVAT" class="form-control" #totalAfterVAT="ngModel"
+                                                readonly name="totalAfterVAT" aria-describedby="helpId">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <label for="otherExpenses"
+                                                class=" form-control-label">{{'General.OtherExpenses'
+                                                |translate}}</label>
+                                            <input [disabled]="viewMode"
+                                                [(ngModel)]="purchasesBillHeaderDTO.otherExpenses" type="number"
+                                                id="otherExpenses" (change)="updateTotal()" class="form-control"
+                                                #otherExpenses="ngModel" name="otherExpenses" aria-describedby="helpId">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <label for="totalAmount" class=" form-control-label">{{'General.TotalAmount'
+                                                |translate}}</label>
+                                            <input [disabled]="viewMode"
+                                                [(ngModel)]="purchasesBillHeaderDTO.totalAmount" type="text"
+                                                id="totalAmount" class="form-control" #totalAmount="ngModel" readonly
+                                                name="totalAmount" aria-describedby="helpId">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <label for="paid" class=" form-control-label">{{'General.Paid'
+                                                |translate}}</label>
+                                            <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.paid"
+                                                type="text" id="discount" class="form-control" (change)="updateTotal()"
+                                                #paid="ngModel" name="paid">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <label for="remaining" class=" form-control-label">{{'General.Remaining'
+                                                |translate}}</label>
+                                            <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.remaining"
+                                                type="text" id="remaining" class="form-control" #remaining="ngModel"
+                                                readonly name="remaining" aria-describedby="helpId">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <label for="notes" class=" form-control-label">{{'General.Notes'
+                                                |translate}}</label>
+                                            <textarea [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.notes"
+                                                id="notes" class="form-control" #notes="ngModel" name="notes" rows="1"
+                                                aria-describedby="helpId"></textarea>
                                         </div>
                                     </div>
                                 </div>
 
                             </div>
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <label for="isTax" class=" form-control-label">{{'General.IsTax'
-                                        |translate}}</label>
-                                    <p-inputSwitch [disabled]="viewMode" id="isTax"
-                                        [(ngModel)]="purchasesBillHeaderDTO.isTax" name="isTax" class="input-switch"
-                                        (onChange)="isTaxChange()"
-                                        [ngModelOptions]="{standalone: true}"></p-inputSwitch>
-                                </div>
-                                <div class="col-lg-3" *ngIf="purchasesBillHeaderDTO.isTemp">
-                                    <label for="isTransfereToBill"
-                                        class=" form-control-label">{{'General.TransfereToBill'
-                                        |translate}}</label>
-                                    <p-inputSwitch id="isTransfereToBill" [(ngModel)]="isTransfereToBill"
-                                        name="isTransfereToBill" class="input-switch"
-                                        [ngModelOptions]="{standalone: true}"></p-inputSwitch>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <label for="total" class=" form-control-label">{{'General.Total'
-                                            |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.total"
-                                            type="text" id="total" class="form-control" #total="ngModel" readonly
-                                            name="total" aria-describedby="helpId">
-                                    </div>
-                                </div>
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <label for="discount" class=" form-control-label">{{'General.Discount'
-                                            |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.discount"
-                                            type="text" id="discount" class="form-control" (change)="updateTotal()"
-                                            #discount="ngModel" name="discount">
-                                    </div>
-                                </div>
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <label for="totalAfterDiscount"
-                                            class=" form-control-label">{{'General.TotalAfterDiscount'
-                                            |translate}}</label>
-                                        <input [disabled]="viewMode"
-                                            [(ngModel)]="purchasesBillHeaderDTO.totalAfterDiscount" type="text"
-                                            id="totalAfterDiscount" class="form-control" #totalAfterDiscount="ngModel"
-                                            readonly name="totalAfterDiscount" aria-describedby="helpId">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-2" *ngIf="purchasesBillHeaderDTO.isTax">
-                                    <div class="form-group">
-                                        <label for="vatAmount" class=" form-control-label">{{'General.VATAmount'
-                                            |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.vatAmount"
-                                            type="text" id="vatAmount" class="form-control" #vatAmount="ngModel"
-                                            readonly name="vatAmount" aria-describedby="helpId">
-                                    </div>
-                                </div>
-                                <div class="col-lg-2" *ngIf="purchasesBillHeaderDTO.isTax">
-                                    <div class="form-group">
-                                        <label for="taxPercentage" class=" form-control-label">{{'General.TaxPercentage'
-                                            |translate}}</label>
-                                        <input [disabled]="!purchasesBillHeaderDTO.isTax"
-                                            [(ngModel)]="purchasesBillHeaderDTO.taxPercentage" type="text"
-                                            (change)="updateTotal()" id="taxPercentage" class="form-control"
-                                            #taxPercentage="ngModel" name="taxPercentage" aria-describedby="helpId">
-                                    </div>
-                                </div>
-                                <div class="col-lg-2" *ngIf="purchasesBillHeaderDTO.isTax">
-                                    <div class="form-group">
-                                        <label for="taxAmount" class=" form-control-label">{{'General.TaxAmount'
-                                            |translate}}</label>
-                                        <input [(ngModel)]="purchasesBillHeaderDTO.taxAmount" type="text" readonly
-                                            id="taxAmount" class="form-control" #taxAmount="ngModel" name="taxAmount"
-                                            aria-describedby="helpId">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-2" *ngIf="purchasesBillHeaderDTO.isTax">
-                                    <div class="form-group">
-                                        <label for="totalAfterVAT" class=" form-control-label">{{'General.TotalAfterVAT'
-                                            |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.totalAfterVAT"
-                                            type="text" id="totalAfterVAT" class="form-control" #totalAfterVAT="ngModel"
-                                            readonly name="totalAfterVAT" aria-describedby="helpId">
-                                    </div>
-                                </div>
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <label for="otherExpenses" class=" form-control-label">{{'General.OtherExpenses'
-                                            |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.otherExpenses"
-                                            type="number" id="otherExpenses" (change)="updateTotal()"
-                                            class="form-control" #otherExpenses="ngModel" name="otherExpenses"
-                                            aria-describedby="helpId">
-                                    </div>
-                                </div>
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <label for="totalAmount" class=" form-control-label">{{'General.TotalAmount'
-                                            |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.totalAmount"
-                                            type="text" id="totalAmount" class="form-control" #totalAmount="ngModel"
-                                            readonly name="totalAmount" aria-describedby="helpId">
-                                    </div>
-                                </div>
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <label for="paid" class=" form-control-label">{{'General.Paid'
-                                            |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.paid"
-                                            type="text" id="discount" class="form-control" (change)="updateTotal()"
-                                            #paid="ngModel" name="paid">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <label for="remaining" class=" form-control-label">{{'General.Remaining'
-                                            |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.remaining"
-                                            type="text" id="remaining" class="form-control" #remaining="ngModel"
-                                            readonly name="remaining" aria-describedby="helpId">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <label for="notes" class=" form-control-label">{{'General.Notes'
-                                            |translate}}</label>
-                                        <textarea [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.notes"
-                                            id="notes" class="form-control" #notes="ngModel" name="notes" rows="1"
-                                            aria-describedby="helpId"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
+
+
+
+
                     </div>
-
-
-
-
                 </div>
                 <div class="flex-container p-3">
-                    <button (click)="save(false,frm)" type="button" class="btn btn-outline-primary mr-1"
-                        [disabled]="frm.invalid">
+                    <button *ngIf="!viewMode" (click)="save(false,frm)" type="button"
+                        class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
                         <i class="fa fa-dot-circle-o"></i>{{'General.Save' |translate}}
                     </button>
-                    <button (click)="saveAndPrint()" type="button" class="btn btn-outline-success mr-1">
+                    <button *ngIf="!viewMode" (click)="saveAndPrint()" type="button"
+                        class="btn btn-outline-success mr-1">
                         <i class="fa fa-print"></i>{{'General.SaveAndPrint' |translate}}
+                    </button>
+
+                    <button *ngIf="viewMode" (click)="print()" type="button" class="btn btn-outline-success mr-1">
+                        <i class="fa fa-print"></i>{{'General.Print' |translate}}
                     </button>
                     <button type="reset" class="btn btn-danger mr-1" (click)="back()">
                         <i class="fa fa-ban"></i>{{'General.Back' |translate}}
@@ -399,7 +460,9 @@
 
         <div class="col-lg-12">
             <br><br>
-
+            <!-- <h2 class="text-center">فاتورة مبيعات </h2> -->
+            <br>
+            <br>
             <table class="table-report" style="background-color: white !important" border="0">
                 <tr>
                     <td class="text-right">المورد</td>
@@ -408,7 +471,11 @@
                 </tr>
                 <tr>
                     <td class="text-right">الرصيد</td>
-                    <td class="text-center text-bold">{{currentBalance}}</td>
+                    <td class="text-center text-bold">{{currentBalance}}
+                        <span *ngIf="currentBalance!=0">
+                            {{(currentBalance>0?'General.Debit':'General.Credit')
+                            |translate}}</span>
+                    </td>
                     <td class="text-left">Balance</td>
                 </tr>
                 <tr>

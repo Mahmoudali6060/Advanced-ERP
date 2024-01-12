@@ -60,6 +60,9 @@ namespace Data.Migrations
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsBilled")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsCancel")
                         .HasColumnType("bit");
 

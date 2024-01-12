@@ -128,7 +128,8 @@ namespace DataService.Setup.Handlers
                 {
                     var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
                     product.ActualQuantity = entity.IsReturned ? product.ActualQuantity - item.Quantity : product.ActualQuantity + item.Quantity;
-                    product.Price = item.Price;
+                    product.LastPurchasingPrice = item.PriceAfterDiscount;
+                    product.Price = product.Price;
                     await _unitOfWork.ProductDAL.Update(product);
                 }
             }
@@ -200,6 +201,7 @@ namespace DataService.Setup.Handlers
                     var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
                     product.ActualQuantity = entity.IsReturned == true ? product.ActualQuantity - quantity : product.ActualQuantity + quantity;
                     product.Price = item.Price;
+                    product.LastPurchasingPrice = item.PriceAfterDiscount;
                     await _unitOfWork.ProductDAL.Update(product);
                 }
                 #endregion
@@ -211,7 +213,7 @@ namespace DataService.Setup.Handlers
                 var existedClientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
                 if (existedClientVendor != null)
                 {
-                   
+
                     //Convert Temp To Purchases Bill
                     if (entity.IsTemp == false && exsitedPurchasesHeader.IsTemp == true)
                     {
@@ -243,6 +245,9 @@ namespace DataService.Setup.Handlers
                 if (entity.TreasuryId.HasValue)
                 {
                     var treasury = await _unitOfWork.TreasuryDAL.GetById(entity.TreasuryId.Value);
+                    treasury.PaymentMethodId = entity.PaymentMethodId;
+                    treasury.RefNo = entity.RefNo;
+                    treasury.Date = DateTime.Parse(entity.Date);
 
                     if (entity.IsReturned)
                     {
@@ -364,6 +369,16 @@ namespace DataService.Setup.Handlers
                 purchasesBillHeaderList = purchasesBillHeaderList.Where(x => x.ClientVendorId == searchCriteriaDTO.VendorId);
             }
 
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.Date))
+            {
+                purchasesBillHeaderList = purchasesBillHeaderList.Where(x => x.Date.Date == DateTime.Parse(searchCriteriaDTO.Date).Date);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.PersonPhoneNumber))
+            {
+                purchasesBillHeaderList = purchasesBillHeaderList.Where(x => x.ClientVendor.PhoneNumber1 == searchCriteriaDTO.PersonPhoneNumber || x.ClientVendor.PhoneNumber2 == searchCriteriaDTO.PersonPhoneNumber);
+            }
+
             if (searchCriteriaDTO.IsTemp.HasValue)
             {
                 purchasesBillHeaderList = purchasesBillHeaderList.Where(x => x.IsTemp == searchCriteriaDTO.IsTemp.Value);
@@ -386,22 +401,24 @@ namespace DataService.Setup.Handlers
                 ClientVendorId = entity.ClientVendorId,
                 BeneficiaryName = entity.ClientVendorName,
                 //TransactionTypeId = TransactionTypeEnum.Incoming,
-                PaymentMethodId = PaymentMethodEnum.Cash,
-                RefNo = entity.Number,
+                PaymentMethodId = entity.PaymentMethodId,
+                RefNo = entity.RefNo,
+                IsBilled = true
+
             };
 
             if (entity.IsReturned)
             {
                 treasury.Debit = entity.Paid;
                 treasury.Credit = entity.TotalAfterDiscount;
-                treasury.Notes = "فاتورة مرتجعات";
+                treasury.Notes = "فاتورة مرتجعات المشتريات";
 
             }
             else
             {
                 treasury.Debit = entity.TotalAfterDiscount;
                 treasury.Credit = entity.Paid;
-                treasury.Notes = "فاتورة";
+                treasury.Notes = "فاتورة مشتريات";
 
             }
 

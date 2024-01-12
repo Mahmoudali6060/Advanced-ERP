@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231219185432_UpdateBillsV2")]
-    partial class UpdateBillsV2
+    [Migration("20240107230348_InitialDB")]
+    partial class InitialDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,6 +60,9 @@ namespace Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsBilled")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsCancel")
@@ -112,6 +115,9 @@ namespace Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsReturned")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("Modified")
@@ -184,6 +190,9 @@ namespace Data.Migrations
                     b.Property<bool>("IsCancel")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsReturned")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsTax")
                         .HasColumnType("bit");
 
@@ -211,10 +220,13 @@ namespace Data.Migrations
                     b.Property<decimal>("Paid")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
                     b.Property<decimal>("Remaining")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<long>("RepresentiveId")
+                    b.Property<long?>("RepresentiveId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("TaxAmount")
@@ -277,6 +289,9 @@ namespace Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsReturned")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("Modified")
@@ -349,6 +364,9 @@ namespace Data.Migrations
                     b.Property<bool>("IsCancel")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsReturned")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsTax")
                         .HasColumnType("bit");
 
@@ -376,13 +394,16 @@ namespace Data.Migrations
                     b.Property<decimal>("Paid")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
+
                     b.Property<decimal?>("Profit")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Remaining")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<long>("RepresentiveId")
+                    b.Property<long?>("RepresentiveId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("TaxAmount")

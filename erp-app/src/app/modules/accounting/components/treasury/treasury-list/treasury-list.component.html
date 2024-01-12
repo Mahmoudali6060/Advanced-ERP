@@ -7,6 +7,9 @@
                 <button class="au-btn-filter" (click)="toggleFilter()">
                     <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
             </div>
+            <h3>
+                {{'General.TreasuryBalance'|translate}}: {{treasuryBalance}}
+            </h3>
             <div class="table-data__tool-right">
                 <button [routerLink]="['/accounting/treasury-form']"
                     class="au-btn au-btn-icon au-btn--black au-btn--small">
@@ -55,7 +58,7 @@
                                     <label class="form-label"
                                         for="clientVendorId">{{(searchCriteriaDTO.accountTypeId==accountTypeEnum.Clients?"General.Client":"General.Vendor")|translate}}</label>
                                     <ng-select name="clientVendorId" id="clientVendorId"
-                                        [(ngModel)]="searchCriteriaDTO.clientVendorId" >
+                                        [(ngModel)]="searchCriteriaDTO.clientVendorId">
                                         <ng-option value=" null"
                                             disabled>{{searchCriteriaDTO.accountTypeId==accountTypeEnum.Clients?"General.SelectClient":"General.SelectVendor"|translate}}</ng-option>
                                         <ng-option *ngFor="let item of clientVendorList" [value]="item.id">
@@ -166,7 +169,9 @@
                             {{'TransactionTypeEnum.'+transactionTypeEnum[item.transactionTypeId] |translate}}
                         </td> -->
                         <td>
-                            {{'PaymentMethodEnum.'+paymentMethodEnum[item.paymentMethodId] |translate}}
+                            <span *ngIf="item.paymentMethodId>0"> {{'PaymentMethodEnum.'+paymentMethodEnum[item.paymentMethodId]
+                                |translate}}
+                            </span>
                         </td>
                         <td>{{item.debit}}</td>
                         <td>{{item.credit}}</td>
@@ -175,12 +180,18 @@
 
                         <td>
                             <div class="table-data-feature">
-                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                <!-- <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Edit" [routerLink]="['/accounting/treasury-form/'+item.id]">
                                     <i class="zmdi zmdi-edit"></i>
+                                </button> -->
+                                <button *ngIf="!item.isBilled" class="item ml-2" data-toggle="tooltip"
+                                    data-placement="top" title="" data-original-title="View"
+                                    [routerLink]="['/accounting/treasury-form-view/'+item.id]">
+                                    <i class="zmdi zmdi-eye"></i>
                                 </button>
-                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
-                                    data-original-title="Delete" (click)="openConfirmationDialog(item)">
+                                <button *ngIf="!item.isBilled" class="item ml-2" data-toggle="tooltip"
+                                    data-placement="top" title="" data-original-title="Delete"
+                                    (click)="openConfirmationDialog(item)">
                                     <i class="zmdi zmdi-delete"></i>
                                 </button>
 
@@ -228,7 +239,9 @@
                 <td>{{item.beneficiaryName}}</td>
 
                 <td>
-                    {{'PaymentMethodEnum.'+paymentMethodEnum[item.paymentMethodId] |translate}}
+                    <span *ngIf="item.paymentMethodId>0"> {{'PaymentMethodEnum.'+paymentMethodEnum[item.paymentMethodId]
+                        |translate}}
+                    </span>
                 </td>
                 <td>{{item.debit}}</td>
                 <td>{{item.credit}}</td>

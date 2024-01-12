@@ -1,5 +1,6 @@
 import { AuditDTO } from "src/app/shared/models/audit-dto.model";
 import { PurchasesBillDetailsDTO } from "./purchases-bill-details.dto";
+import { PaymentMethodEnum } from "src/app/shared/enums/payment-method.enum";
 
 export class PurchasesBillHeaderDTO extends AuditDTO {
     id: number | null;
@@ -27,5 +28,6 @@ export class PurchasesBillHeaderDTO extends AuditDTO {
     isTemp: boolean = false;
     isReturned: boolean = false;
     isNewReturned: boolean = false;
-
+    paymentMethodId: PaymentMethodEnum;
+    refNo: string;
 }

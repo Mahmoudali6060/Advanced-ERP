@@ -14,6 +14,8 @@ import { CategoryDTO } from '../../../models/category.dto';
 import { CategoryService } from '../../../services/category.service';
 import { UnitOfMeasurementDTO } from '../../../models/unit-of-measurement.dto';
 import { UnitOfMeasurementService } from '../../../services/unit-of-measurement.service';
+import { CategoryFormPopupComponent } from 'src/app/shared/modules/setup-shared/components/category-form-popup/category-form-popup.component';
+import { DialogService } from 'src/app/shared/services/confirmation-dialog.service';
 
 @Component({
 	selector: 'app-product-form',
@@ -37,11 +39,12 @@ export class ProductFormComponent {
 		private route: ActivatedRoute,
 		private toasterService: ToastrService,
 		private _configService: ConfigService,
+		private dialogService: DialogService,
 		private router: Router) {
 	}
 
 	ngOnInit() {
-		this.imageSrc = "assets/images/icon/avatar-big-01.jpg";
+		this.imageSrc = "assets/images/icon/default-product-image.png";
 		this.productDTO = new ProductDTO();
 		const id = this.route.snapshot.paramMap.get('id');
 		if (id) {
@@ -111,6 +114,18 @@ export class ProductFormComponent {
 
 	}
 
+	showCategoryFormPopUp() {
+		this.dialogService.show("sm", CategoryFormPopupComponent)
+			.then((category) => {
+				if (category) {
+					this.productDTO.categoryId = category.id
+					this.getAllCategories();
+				}
+			})
+			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+	}
+
+
 	save(form: NgForm) {
 		if (this.validattion(this.productDTO)) {
 			if (this.productDTO.id) {
@@ -123,7 +138,9 @@ export class ProductFormComponent {
 				this.productService.add(this.productDTO).subscribe(res => {
 					this.toasterService.success("success");
 					if (res) {
+						let tempCategoryId = this.productDTO.categoryId;
 						this.productDTO = new ProductDTO();
+						this.productDTO.categoryId = tempCategoryId;
 					}
 					//this.back();
 				})
