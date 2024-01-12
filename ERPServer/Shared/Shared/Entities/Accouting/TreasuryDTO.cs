@@ -9,8 +9,7 @@ namespace Shared.Entities.Accouting
         public AccountTypeEnum AccountTypeId { get; set; }
         public long? ClientVendorId { get; set; }
         public string BeneficiaryName { get; set; }
-        //public TransactionTypeEnum TransactionTypeId { get; set; }
-        public PaymentMethodEnum PaymentMethodId { get; set; }
+        public PaymentMethodEnum? PaymentMethodId { get; set; }
         public decimal Debit { get; set; }
         public decimal Credit { get; set; }
         public string RefNo { get; set; }
