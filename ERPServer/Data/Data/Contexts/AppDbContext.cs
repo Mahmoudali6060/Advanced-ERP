@@ -120,6 +120,19 @@ namespace Data.Contexts
             return result;
         }
 
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            SetLoggedUserData();
+            AddAuitInfo();
+            // Get audit entries
+            var auditEntries = OnBeforeSaveChanges();
+            // Save current entity
+            var result = base.SaveChanges(acceptAllChangesOnSuccess);
+            // Save audit entries
+            OnAfterSaveChanges(auditEntries, acceptAllChangesOnSuccess);
+            return result;
+        }
+
         private void SetLoggedUserData()
         {
             string userProfileId = _httpContextAccessor.HttpContext.Request.Headers["UserProfileId"];
@@ -218,6 +231,37 @@ namespace Data.Contexts
             AuditEntries.AddRange(auditEntries);
             return SaveChangesAsync();
         }
+
+        private int OnAfterSaveChanges(List<AuditEntry> auditEntries, bool acceptAllChangesOnSuccess)
+        {
+            if (auditEntries == null || auditEntries.Count == 0)
+                return 0;
+
+            // For each temporary property in each audit entry - update the value in the audit entry to the actual (generated) value
+            foreach (var entry in auditEntries)
+            {
+                foreach (var prop in entry.TempProperties)
+                {
+                    if (prop.Metadata.IsPrimaryKey())
+                    {
+                        entry.EntityId = prop.CurrentValue.ToString();
+                        entry.OldData[prop.Metadata.Name] = prop.OriginalValue;
+                        entry.NewData[prop.Metadata.Name] = prop.CurrentValue;
+
+                    }
+                    else
+                    {
+                        entry.OldData[prop.Metadata.Name] = prop.OriginalValue;
+                        entry.NewData[prop.Metadata.Name] = prop.CurrentValue;
+
+                    }
+                }
+            }
+
+            AuditEntries.AddRange(auditEntries);
+            return SaveChanges(acceptAllChangesOnSuccess);
+        }
+
         #endregion
 
     }

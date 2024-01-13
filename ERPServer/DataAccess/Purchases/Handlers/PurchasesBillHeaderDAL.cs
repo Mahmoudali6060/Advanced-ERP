@@ -28,7 +28,7 @@ namespace Purchases.DataAccessLayer
 
         public async Task<PurchasesBillHeader> GetById(long id)
         {
-            var PurchasesBillHeader = _appDbContext.PurchasesBillHeaders.Include(x => x.ClientVendor).Include(x => x.PurchasesBillDetailList).Include(x=>x.Treasury).SingleOrDefaultAsync(x => x.Id == id);
+            var PurchasesBillHeader = _appDbContext.PurchasesBillHeaders.Include(x => x.ClientVendor).Include(x => x.PurchasesBillDetailList).Include(x => x.Treasury).SingleOrDefaultAsync(x => x.Id == id);
             return await PurchasesBillHeader;
         }
 
@@ -72,6 +72,8 @@ namespace Purchases.DataAccessLayer
         #region Helper
         private string GenerateSequenceNumber()
         {
+
+
             var lastElement = _appDbContext.PurchasesBillHeaders.OrderByDescending(p => p.Id)
                        .FirstOrDefault();
             if (lastElement == null)
@@ -80,6 +82,7 @@ namespace Purchases.DataAccessLayer
             }
             int code = int.Parse(lastElement.Number) + 1;
             return code.ToString();
+
         }
         #endregion
 

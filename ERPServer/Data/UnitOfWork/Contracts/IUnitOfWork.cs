@@ -48,5 +48,7 @@ namespace UnitOfWork.Contracts
         ITreasuryDAL TreasuryDAL { get; }
         #endregion
         Task CompleteAsync();
+        public void Complete();
+
     }
 }

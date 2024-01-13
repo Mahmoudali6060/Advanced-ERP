@@ -17,7 +17,7 @@ namespace DataService.Purchases.Contracts
     {
         Task<PurchasesBillHeaderDTO> GetByNumber(string number);
         Task<List<ClientVendorBalanceDTO>> GetAllByVendorId(long vendorId);
-
+        long AddNormal(PurchasesBillHeaderDTO entity);
 
     }
 }

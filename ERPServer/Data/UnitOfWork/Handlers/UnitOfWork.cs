@@ -116,6 +116,11 @@ namespace UnitOfWork.Handlers
             await _context.SaveChangesAsync(true);
         }
 
+        public void Complete()
+        {
+            _context.SaveChanges(true);
+        }
+
 
         public void Dispose()
         {

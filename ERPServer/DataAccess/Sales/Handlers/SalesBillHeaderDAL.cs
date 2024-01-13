@@ -71,14 +71,18 @@ namespace Sales.DataAccessLayer
         #region Helper
         private string GenerateSequenceNumber()
         {
-            var lastElement = _appDbContext.SalesBillHeaders.OrderByDescending(p => p.Id)
-                       .FirstOrDefault();
-            if (lastElement == null)
+            lock (this)
             {
-                return "1000";
+                var lastElement = _appDbContext.SalesBillHeaders.OrderByDescending(p => p.Id)
+                      .FirstOrDefault();
+                if (lastElement == null)
+                {
+                    return "1000";
+                }
+                int code = int.Parse(lastElement.Number) + 1;
+                return code.ToString();
             }
-            int code = int.Parse(lastElement.Number) + 1;
-            return code.ToString();
+           
         }
         #endregion
 

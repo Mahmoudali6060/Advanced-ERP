@@ -21,6 +21,7 @@ using Shared.Entities.Purchases;
 using Data.Entities.Purchases;
 using Data.Entities.Purchases;
 using Data.Entities.Sales;
+using Data.Contexts;
 
 namespace DataService.Setup.Handlers
 {
@@ -29,6 +30,7 @@ namespace DataService.Setup.Handlers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IFileManager _fileManager;
         private readonly IMapper _mapper;
+        private readonly object purchasesBillHeaderLock = new object();
         public PurchasesBillHeaderDSL(IUnitOfWork unitOfWork, IFileManager fileManager, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
@@ -119,56 +121,61 @@ namespace DataService.Setup.Handlers
         #endregion
 
         #region Command
-        public async Task<long> Add(PurchasesBillHeaderDTO entity)
+        public long AddNormal(PurchasesBillHeaderDTO entity)
         {
 
-            #region Update Product
-            if (entity.IsTemp == false)
+            lock (purchasesBillHeaderLock)
             {
-                foreach (var item in entity.PurchasesBillDetailList)
+                #region Update Product
+                if (entity.IsTemp == false)
                 {
-                    var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
-                    product.ActualQuantity = entity.IsReturned ? product.ActualQuantity - item.Quantity : product.ActualQuantity + item.Quantity;
-                    product.LastPurchasingPrice = item.PriceAfterDiscount;
-                    product.Price = product.Price;
-                    await _unitOfWork.ProductDAL.Update(product);
+                    foreach (var item in entity.PurchasesBillDetailList)
+                    {
+                        
+                        var product = _unitOfWork.ProductDAL.GetById(item.ProductId).Result;
+                        product.ActualQuantity = entity.IsReturned ? product.ActualQuantity - item.Quantity : product.ActualQuantity + item.Quantity;
+                        product.LastPurchasingPrice = item.PriceAfterDiscount;
+                        product.Price = product.Price;
+                        _unitOfWork.ProductDAL.Update(product);
+                    }
                 }
-            }
-            #endregion
+                #endregion
 
-            #region Add Purchases and Treasury
-            var purchasesBillHeader = _mapper.Map<PurchasesBillHeader>(entity);
-            if (entity.IsTemp == false)
-            {
-                purchasesBillHeader.Treasury = MapTreasury(entity);
-            }
-            var result = await _unitOfWork.PurchasesBillHeaderDAL.Add(purchasesBillHeader);
-            #endregion
-
-            #region Update Balance
-            if (entity.IsTemp == false)
-            {
-                var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
-                if (clientVendor != null)
+                #region Add Purchases and Treasury
+                var purchasesBillHeader = _mapper.Map<PurchasesBillHeader>(entity);
+                if (entity.IsTemp == false)
                 {
-                    if (entity.IsNewReturned)//Return Purchases Bill
-                    {
-                        clientVendor.Debit += entity.Paid;
-                        clientVendor.Credit += entity.TotalAfterDiscount;
-                    }
-                    else//Normal Purchases Bill
-                    {
-                        clientVendor.Debit += entity.TotalAfterDiscount;
-                        clientVendor.Credit += entity.Paid;
-                    }
-
-                    await _unitOfWork.ClientVendorDAL.Update(clientVendor);
+                    purchasesBillHeader.Treasury = MapTreasury(entity);
                 }
-            }
-            #endregion
+                var result = _unitOfWork.PurchasesBillHeaderDAL.Add(purchasesBillHeader);
+                #endregion
 
-            await _unitOfWork.CompleteAsync();
-            return purchasesBillHeader.Id;
+                #region Update Balance
+                if (entity.IsTemp == false)
+                {
+                    var clientVendor = _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId).Result;
+                    if (clientVendor != null)
+                    {
+                        if (entity.IsNewReturned)//Return Purchases Bill
+                        {
+                            clientVendor.Debit += entity.Paid;
+                            clientVendor.Credit += entity.TotalAfterDiscount;
+                        }
+                        else//Normal Purchases Bill
+                        {
+                            clientVendor.Debit += entity.TotalAfterDiscount;
+                            clientVendor.Credit += entity.Paid;
+                        }
+
+                        _unitOfWork.ClientVendorDAL.Update(clientVendor);
+                    }
+                }
+                #endregion
+
+                _unitOfWork.Complete();
+
+                return purchasesBillHeader.Id;
+            }
         }
 
         public async Task<long> Update(PurchasesBillHeaderDTO entity)
@@ -423,6 +430,11 @@ namespace DataService.Setup.Handlers
             }
 
             return treasury;
+        }
+
+        public Task<long> Add(PurchasesBillHeaderDTO entity)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

@@ -17,6 +17,7 @@ using Data.Entities.Accouting;
 using Shared.Entities.Accouting;
 using DataService.Accounting.Contracts;
 using System.Linq.Expressions;
+using Data.Contexts;
 
 namespace DataService.Accounting.Handlers
 {
@@ -103,6 +104,7 @@ namespace DataService.Accounting.Handlers
         #region Command
         public async Task<long> Add(TreasuryDTO entityDTO)
         {
+            entityDTO.Number = GenerateSequenceNumber();
             var entity = _mapper.Map<Treasury>(entityDTO);
             await _unitOfWork.TreasuryDAL.Add(entity);
             #region Update Balance
@@ -207,7 +209,18 @@ namespace DataService.Accounting.Handlers
         }
 
 
+        private string GenerateSequenceNumber()
+        {
+            var lastElement = _unitOfWork.TreasuryDAL.GetAll().Result.OrderByDescending(x => x.Id).FirstOrDefault();
+            if (lastElement == null)
+            {
+                return "1000";
+            }
+            int code = int.Parse(lastElement.Number) + 1;
+            return code.ToString();
 
+        }
         #endregion
+
     }
 }
