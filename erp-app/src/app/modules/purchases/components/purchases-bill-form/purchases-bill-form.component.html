@@ -322,9 +322,9 @@
                                         <div class="form-group">
                                             <label for="refNo" class=" form-control-label">{{'General.RefNo'
                                                 |translate}}</label>
-                                            <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.refNo" type="text"
-                                                id="refNo" class="form-control" #refNo="ngModel" name="refNo" id="refNo"
-                                                class="form-control" aria-describedby="helpId">
+                                            <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.refNo"
+                                                type="text" id="refNo" class="form-control" #refNo="ngModel"
+                                                name="refNo" id="refNo" class="form-control" aria-describedby="helpId">
                                         </div>
                                     </div>
 
@@ -485,7 +485,7 @@
                 </tr>
                 <tr>
                     <td class="text-right">رقم الفاتورة</td>
-                    <td class="text-center text-bold">{{purchasesBillHeaderDTO.number}}</td>
+                    <td class="text-center text-bold" id="billNumber">{{purchasesBillHeaderDTO.number}}</td>
                     <td class="text-left">Invoice No</td>
                 </tr>
                 <tr>

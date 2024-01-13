@@ -158,7 +158,7 @@
 
                                                             </div>
                                                         </td>
-                                                        <td >
+                                                        <td>
                                                             {{item.actualQuantity}}
                                                             <!-- <input [(ngModel)]="item.actualQuantity" type="number"
                                                             class="form-control" readonly
@@ -327,12 +327,12 @@
                                         <div class="form-group">
                                             <label for="refNo" class=" form-control-label">{{'General.RefNo'
                                                 |translate}}</label>
-                                            <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.refNo" type="text"
-                                                id="refNo" class="form-control" #refNo="ngModel" name="refNo" id="refNo"
-                                                class="form-control" aria-describedby="helpId">
+                                            <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.refNo"
+                                                type="text" id="refNo" class="form-control" #refNo="ngModel"
+                                                name="refNo" id="refNo" class="form-control" aria-describedby="helpId">
                                         </div>
                                     </div>
-    
+
                                     <div class="col-lg-2" *ngIf="salesBillHeaderDTO.isTax">
                                         <div class="form-group">
                                             <label for="vatAmount" class=" form-control-label">{{'General.VATAmount'
@@ -497,7 +497,7 @@
                 </tr>
                 <tr>
                     <td class="text-right">رقم الفاتورة</td>
-                    <td class="text-center text-bold">{{salesBillHeaderDTO.number}}</td>
+                    <td class="text-center text-bold" id="billNumber">{{salesBillHeaderDTO.number}}</td>
                     <td class="text-left">Invoice No</td>
                 </tr>
                 <tr>

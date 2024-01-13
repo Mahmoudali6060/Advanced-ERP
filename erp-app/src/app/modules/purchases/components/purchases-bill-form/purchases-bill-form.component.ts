@@ -136,14 +136,21 @@ export class PurchasesBillFormComponent {
 		})
 	}
 
-	getPurchasesBillById(purchasesBillId: any) {
+	getPurchasesBillById(purchasesBillId: any, isPrint?: boolean) {
 		this.purchasesBillService.getById(purchasesBillId).subscribe((res: any) => {
 			this.purchasesBillHeaderDTO = res;
-			this.getAllProducts();
-			this.getAllVendors();
-			this.getAllRepresentives();
-			this.isTaxChange();
-			this.purchasesBillHeaderDTO.isReturned = this.isReturned;
+			if (isPrint) {
+				this.print();
+				this.back();
+			}
+			else{
+				this.getAllProducts();
+				this.getAllVendors();
+				this.getAllRepresentives();
+				this.isTaxChange();
+				this.purchasesBillHeaderDTO.isReturned = this.isReturned;
+			}
+		
 
 		});
 	}
@@ -178,6 +185,8 @@ export class PurchasesBillFormComponent {
 	}
 
 	back() {
+		this.purchasesBillHeaderDTO = new PurchasesBillHeaderDTO();
+
 		if (this.isTemp)
 			this.router.navigateByUrl('purchases-bill/purchases-bill-temp-list');
 		else if (this.isReturned)
@@ -206,6 +215,12 @@ export class PurchasesBillFormComponent {
 				}
 			}
 		}
+
+		if (!purchasesBillDTO.paid) {
+			this.toasterService.error(this.translate.instant("Errors.YouMustSetPaidAmount"));
+			return false;
+		}
+
 		return true;
 
 	}
@@ -248,10 +263,12 @@ export class PurchasesBillFormComponent {
 				this.purchasesBillService.add(this.purchasesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
 					if (isPrint) {
-						this.print();
+						this.getPurchasesBillById(res, isPrint);
 					}
-					this.purchasesBillHeaderDTO = new PurchasesBillHeaderDTO();
-					this.back();
+					else {
+						this.back();
+					}
+
 				})
 			}
 		}
@@ -285,6 +302,16 @@ export class PurchasesBillFormComponent {
 
 
 	setProductToPurchase(item: PurchasesBillDetailsDTO, overrideOldData: boolean) {
+		if (this.isNewReturn) {
+			this.purchasesBillHeaderDTO.total = 0;
+			this.purchasesBillHeaderDTO.discount = 0;
+			this.purchasesBillHeaderDTO.totalAfterDiscount = 0;
+			this.purchasesBillHeaderDTO.otherExpenses = 0;
+			this.purchasesBillHeaderDTO.totalAmount = 0;
+			this.purchasesBillHeaderDTO.paid = 0;
+			this.purchasesBillHeaderDTO.remaining = 0;
+
+		}
 		let product = this.productList.find(x => x.id == item.productId);
 		let purchasesBillDetail = this.tempPurchasesBillDetailList?.find(x => x.productId == item.productId);
 
@@ -333,7 +360,7 @@ export class PurchasesBillFormComponent {
 		this.purchasesBillHeaderDTO.taxAmount = parseFloat(((this.purchasesBillHeaderDTO.taxPercentage / 100) * this.purchasesBillHeaderDTO.totalAfterDiscount).toFixed(2))
 		this.purchasesBillHeaderDTO.totalAfterVAT = this.purchasesBillHeaderDTO.totalAfterDiscount + this.purchasesBillHeaderDTO.vatAmount + this.purchasesBillHeaderDTO.taxAmount;
 		this.purchasesBillHeaderDTO.totalAmount = this.purchasesBillHeaderDTO.totalAfterVAT + this.purchasesBillHeaderDTO.otherExpenses;
-		this.purchasesBillHeaderDTO.remaining = parseFloat((this.purchasesBillHeaderDTO.paid - this.purchasesBillHeaderDTO.totalAmount).toFixed(2));
+		this.purchasesBillHeaderDTO.remaining = parseFloat(((this.purchasesBillHeaderDTO.paid ?? 0) - this.purchasesBillHeaderDTO.totalAmount).toFixed(2));
 
 	}
 
@@ -393,6 +420,8 @@ export class PurchasesBillFormComponent {
 	}
 
 	print() {
+		let billNumber: any = document.getElementById('billNumber');
+		billNumber.innerHTML = this.purchasesBillHeaderDTO.number;
 		let div: any = document.getElementById('purchasesBill');
 		this.reportService.print(this.translate.instant("Reports.PurchasesBill"), div);
 	}

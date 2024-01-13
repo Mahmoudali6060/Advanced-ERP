@@ -5,6 +5,7 @@ import { BaseDTO } from "src/app/shared/models/base-dto.model";
 
 export class TreasuryDTO extends BaseDTO {
 
+    number: number;
     date: string | undefined;
     accountTypeId: AccountTypeEnum;
     clientVendorId: number | null;

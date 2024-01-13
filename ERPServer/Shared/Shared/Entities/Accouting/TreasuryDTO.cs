@@ -5,6 +5,7 @@ namespace Shared.Entities.Accouting
 {
     public class TreasuryDTO : BaseDTO
     {
+        public string Number { get; set; }
         public string Date { get; set; }
         public AccountTypeEnum AccountTypeId { get; set; }
         public long? ClientVendorId { get; set; }

@@ -384,6 +384,7 @@
     "CanNotDelete": "هذا السجل مرتبط بسجلات أخرى",
     "YouMustSelectVendor": "يجب اختيار مورد",
     "YouMustSelectClient": "يجب اختيار عميل",
+    "YouMustSetPaidAmount": "يجب ادخال المبلغ المدفوع ",
     "QuantityIsGreaterThanActualQuantity": "الكمية المطلوبة أكبر من الكمية المتاحة",
     "QuantityIsGreaterThanSelledQuantity": "الكمية المطلوبة أكبر من الكمية المباعة",
     "QuantityIsGreaterThanPurchasedQuantity": "الكمية المطلوبة أكبر من الكمية المشتراه"

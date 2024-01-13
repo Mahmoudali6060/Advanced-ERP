@@ -1,4 +1,5 @@
-﻿--->>>>8_1_2024 --- Published:False
+﻿begin 
+--->>>>8_1_2024 --- Published:True
 
 --Make Product Name unique
 ALTER TABLE Products ALTER COLUMN Name nvarchar(500)
@@ -64,10 +65,15 @@ INSERT INTO [dbo].[RolePrivileges]
            ,1
            ,'08/01/2024'
            ,'08/01/2024')
+End
 
 
-GO
+Begin  --13_1_2024 Published:False
 
+ALTER TABLE Treasuries
+ADD Number Nvarchar(500);
+
+End
 
 
 

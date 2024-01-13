@@ -20,6 +20,7 @@ using Data.Entities.Purchases;
 using Shared.Entities.Purchases;
 using Data.Entities.Purchases;
 using Data.Entities.Purchases;
+using Data.Entities.Sales;
 
 namespace DataService.Setup.Handlers
 {
@@ -167,9 +168,8 @@ namespace DataService.Setup.Handlers
             #endregion
 
             await _unitOfWork.CompleteAsync();
-            return result;
+            return purchasesBillHeader.Id;
         }
-
 
         public async Task<long> Update(PurchasesBillHeaderDTO entity)
         {

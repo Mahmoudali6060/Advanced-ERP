@@ -13,6 +13,7 @@ namespace Data.Entities.Accouting
 {
     public class Treasury : AuditEntity
     {
+        public string Number { get; set; }
         public DateTime Date { get; set; }
         public AccountTypeEnum AccountTypeId { get; set; }
         public long? ClientVendorId { get; set; }

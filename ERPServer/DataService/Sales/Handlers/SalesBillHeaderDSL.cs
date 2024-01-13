@@ -164,7 +164,7 @@ namespace DataService.Sales.Handlers
             #endregion
 
             await _unitOfWork.CompleteAsync();
-            return result;
+            return salesBillHeader.Id;
         }
 
         public async Task<long> Update(SalesBillHeaderDTO entity)

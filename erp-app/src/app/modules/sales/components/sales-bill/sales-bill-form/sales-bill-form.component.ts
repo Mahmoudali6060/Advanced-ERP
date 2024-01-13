@@ -158,16 +158,22 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		})
 	}
 
-	getSalesBillById(salesBillId: any) {
+	getSalesBillById(salesBillId: any, isPrint?: boolean) {
 		this.salesBillService.getById(salesBillId).subscribe((res: any) => {
 			this.salesBillHeaderDTO = res;
-			//To prevent change after cloning
-			this.originalSalesBillDetailsList = res.salesBillDetailList.map((el: any) => Object.assign({}, el));
-			this.getAllProducts();
-			this.getAllClients();
-			this.getAllRepresentives();
-			this.isTaxChange();
-			this.salesBillHeaderDTO.isReturned = this.isReturned;
+			if (isPrint) {
+				this.print();
+				this.back();
+			}
+			else {
+				//To prevent change after cloning
+				this.originalSalesBillDetailsList = res.salesBillDetailList.map((el: any) => Object.assign({}, el));
+				this.getAllProducts();
+				this.getAllClients();
+				this.getAllRepresentives();
+				this.isTaxChange();
+				this.salesBillHeaderDTO.isReturned = this.isReturned;
+			}
 
 		});
 	}
@@ -184,6 +190,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	}
 
 	back() {
+		this.salesBillHeaderDTO = new SalesBillHeaderDTO();
 		if (this.isTemp)
 			this.router.navigateByUrl('sales-bill/sales-bill-temp-list');
 		else if (this.isReturned)
@@ -211,6 +218,12 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 				}
 			}
 		}
+
+		if (salesBillDTO.paid == null) {
+			this.toasterService.error(this.translate.instant("Errors.YouMustSetPaidAmount"));
+			return false;
+		}
+
 		return true;
 
 	}
@@ -242,9 +255,9 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 				this.salesBillService.update(this.salesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
 					if (isPrint) {
+
 						this.print();
 					}
-					this.salesBillHeaderDTO = new SalesBillHeaderDTO();
 					this.back();
 				})
 			}
@@ -253,10 +266,11 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 				this.salesBillService.add(this.salesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
 					if (isPrint) {
-						this.print();
+						this.getSalesBillById(res, isPrint);
 					}
-					this.salesBillHeaderDTO = new SalesBillHeaderDTO();
-					this.back();
+					else {
+						this.back();
+					}
 				})
 			}
 		}
@@ -309,6 +323,17 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		this.updateTotal();
 	}
 	setProductToSales(item: SalesBillDetailsDTO, overrideOldData: boolean) {
+		if (this.isNewReturn) {
+			this.salesBillHeaderDTO.total = 0;
+			this.salesBillHeaderDTO.discount = 0;
+			this.salesBillHeaderDTO.totalAfterDiscount = 0;
+			this.salesBillHeaderDTO.otherExpenses = 0;
+			this.salesBillHeaderDTO.totalAmount = 0;
+			this.salesBillHeaderDTO.paid = 0;
+			this.salesBillHeaderDTO.remaining = 0;
+
+		}
+
 		let product = this.productList.find(x => x.id == item.productId);
 		let salesBillDetail = this.tempSalesBillDetailList?.find(x => x.productId == item.productId);
 
@@ -355,7 +380,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		this.salesBillHeaderDTO.taxAmount = parseFloat(((this.salesBillHeaderDTO.taxPercentage / 100) * this.salesBillHeaderDTO.totalAfterDiscount).toFixed(2))
 		this.salesBillHeaderDTO.totalAfterVAT = this.salesBillHeaderDTO.totalAfterDiscount + this.salesBillHeaderDTO.vatAmount + this.salesBillHeaderDTO.taxAmount;
 		this.salesBillHeaderDTO.totalAmount = this.salesBillHeaderDTO.totalAfterVAT + this.salesBillHeaderDTO.otherExpenses;
-		this.salesBillHeaderDTO.remaining = parseFloat((this.salesBillHeaderDTO.paid - this.salesBillHeaderDTO.totalAmount).toFixed(2));
+		this.salesBillHeaderDTO.remaining = parseFloat(((this.salesBillHeaderDTO.paid ?? 0) - this.salesBillHeaderDTO.totalAmount).toFixed(2));
 	}
 
 
@@ -427,15 +452,13 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	}
 
 
-	setReturnedItem(item: SalesBillDetailsDTO) {
-		item.isReturned = !item.isReturned;
-		this.updateTotal();
-	}
 	saveAndPrint() {
 		this.save(true, undefined)
 	}
 
 	print() {
+		let billNumber: any = document.getElementById('billNumber');
+		billNumber.innerHTML = this.salesBillHeaderDTO.number;
 		let div: any = document.getElementById('salesBill');
 		this.reportService.print(this.translate.instant("Reports.SalesBill"), div);
 	}

@@ -79,9 +79,13 @@ export class TreasuryFormComponent {
 		})
 	}
 
-	getTreasuryById(treasuryId: any) {
+	getTreasuryById(treasuryId: any, isPrint?: boolean) {
 		this.treasuryService.getById(treasuryId).subscribe((res: any) => {
 			this.treasuryDTO = res;
+			if (isPrint) {
+				this.print();
+				this.back();
+			}
 			if (this.treasuryDTO.accountTypeId != AccountTypeEnum.Other)
 				this.getAllClientVendors();
 		})
@@ -134,8 +138,7 @@ export class TreasuryFormComponent {
 				this.treasuryService.add(this.treasuryDTO).subscribe(res => {
 					this.toasterService.success("success");
 					if (isPrint) {
-						this.print();
-						this.back();
+						this.getTreasuryById(res, isPrint);
 					}
 					else {
 						this.back();

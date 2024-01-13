@@ -22,7 +22,7 @@ export class SalesBillHeaderDTO extends AuditDTO {
     taxPercentage: number = 0 | 0;
     taxAmount: number = 0 | 0;
     totalAmount: number = 0 | 0;
-    paid: number = 0 | 0;
+    paid: number ;
     remaining: number = 0 | 0;
     profit: number = 0 | 0;
     isTax: boolean = false;
