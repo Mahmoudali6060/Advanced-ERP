@@ -19,7 +19,7 @@ namespace DataAccess.Setup.Handlers
         {
             _appDbContext = appDbContext;
         }
-        public async Task<long> Add(Advertisment entity)
+        public async Task<long> AddAsync(Advertisment entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Added;
             return entity.Id;
@@ -31,29 +31,29 @@ namespace DataAccess.Setup.Handlers
             return lstAdvertisments.Count;
         }
 
-        public async Task<bool> Delete(Advertisment entity)
+        public async Task<bool> DeleteAsync(Advertisment entity)
         {
             _appDbContext.Advertisments.Remove(entity);
             return true;
         }
 
-        public async Task<IQueryable<Advertisment>> GetAll()
+        public async Task<IQueryable<Advertisment>> GetAllAsync()
         {
             return _appDbContext.Advertisments.AsQueryable();
         }
 
-        public async Task<IQueryable<Advertisment>> GetAllLite()
+        public async Task<IQueryable<Advertisment>> GetAllLiteAsync()
         {
             return _appDbContext.Advertisments.AsQueryable();
         }
 
-        public async Task<Advertisment> GetById(long id)
+        public async Task<Advertisment> GetByIdAsync(long id)
         {
             var Advertisment = _appDbContext.Advertisments.SingleOrDefaultAsync(x => x.Id == id);
             return await Advertisment;
         }
 
-        public async Task<long> Update(Advertisment entity)
+        public async Task<long> UpdateAsync(Advertisment entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
             return entity.Id;

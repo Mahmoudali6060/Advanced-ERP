@@ -15,30 +15,30 @@ namespace Account.DataAccessLayer
             _appDbContext = appDbContext;
         }
 
-        public async Task<IQueryable<RoleGroup>> GetAll()
+        public async Task<IQueryable<RoleGroup>> GetAllAsync()
         {
             return _appDbContext.RoleGroups.Include(x => x.RolePrivileges).AsQueryable();
         }
 
-        public async Task<IQueryable<RoleGroup>> GetAllLite()
+        public async Task<IQueryable<RoleGroup>> GetAllLiteAsync()
         {
             return _appDbContext.RoleGroups.AsQueryable();
         }
 
-        public async Task<RoleGroup> GetById(long id)
+        public async Task<RoleGroup> GetByIdAsync(long id)
         {
             var Role = _appDbContext.RoleGroups.Include(x => x.RolePrivileges).SingleOrDefaultAsync(x => x.Id == id);
             return await Role;
         }
 
 
-        public async Task<long> Add(RoleGroup entity)
+        public async Task<long> AddAsync(RoleGroup entity)
         {
             await _appDbContext.AddAsync(entity);
             return entity.Id;
         }
 
-        public async Task<long> Update(RoleGroup entity)
+        public async Task<long> UpdateAsync(RoleGroup entity)
         {
             var privileges = _appDbContext.RolePrivileges.Where(x => x.RoleGroupId == entity.Id).ToList();
             if (privileges != null && privileges.Count()>0) _appDbContext.RolePrivileges.RemoveRange(privileges);
@@ -53,7 +53,7 @@ namespace Account.DataAccessLayer
             return entity.Id;
         }
 
-        public async Task<bool> Delete(RoleGroup roleGroup)
+        public async Task<bool> DeleteAsync(RoleGroup roleGroup)
         {
             _appDbContext.RoleGroups.Remove(roleGroup);
             return true;

@@ -31,7 +31,7 @@ namespace DataService.Setup.Handlers
         #region Query
         public async Task<ResponseEntityList<UnitOfMeasurementDTO>> GetAll(UnitOfMeasurementSearchDTO searchCriteriaDTO)
         {
-            var unitOfMeasurementList = await _unitOfWork.UnitOfMeasurementDAL.GetAll();
+            var unitOfMeasurementList = await _unitOfWork.UnitOfMeasurementDAL.GetAllAsync();
 
             #region Apply Filters
             unitOfMeasurementList = unitOfMeasurementList.OrderByDescending(x => x.Id);
@@ -56,15 +56,15 @@ namespace DataService.Setup.Handlers
 
         public async Task<UnitOfMeasurementDTO> GetById(long id)
         {
-            return _mapper.Map<UnitOfMeasurementDTO>(await _unitOfWork.UnitOfMeasurementDAL.GetById(id));
+            return _mapper.Map<UnitOfMeasurementDTO>(await _unitOfWork.UnitOfMeasurementDAL.GetByIdAsync(id));
         }
 
         public async Task<ResponseEntityList<UnitOfMeasurementDTO>> GetAllLite()
         {
             return new ResponseEntityList<UnitOfMeasurementDTO>()
             {
-                List = _mapper.Map<IEnumerable<UnitOfMeasurementDTO>>(_unitOfWork.UnitOfMeasurementDAL.GetAllLite().Result),
-                Total = _unitOfWork.UnitOfMeasurementDAL.GetAllLite().Result.Count()
+                List = _mapper.Map<IEnumerable<UnitOfMeasurementDTO>>(_unitOfWork.UnitOfMeasurementDAL.GetAllLiteAsync().Result),
+                Total = _unitOfWork.UnitOfMeasurementDAL.GetAllLiteAsync().Result.Count()
             };
         }
 
@@ -74,22 +74,22 @@ namespace DataService.Setup.Handlers
         public async Task<long> Add(UnitOfMeasurementDTO entityDTO)
         {
             var entity = _mapper.Map<UnitOfMeasurement>(entityDTO);
-            await _unitOfWork.UnitOfMeasurementDAL.Add(entity);
+            await _unitOfWork.UnitOfMeasurementDAL.AddAsync(entity);
             await _unitOfWork.CompleteAsync();
             return entity.Id;
         }
 
         public async Task<long> Update(UnitOfMeasurementDTO entity)
         {
-            var result = await _unitOfWork.UnitOfMeasurementDAL.Update(_mapper.Map<UnitOfMeasurement>(entity));
+            var result = await _unitOfWork.UnitOfMeasurementDAL.UpdateAsync(_mapper.Map<UnitOfMeasurement>(entity));
             await _unitOfWork.CompleteAsync();
             return result;
         }
 
         public async Task<bool> Delete(long id)
         {
-            UnitOfMeasurement entity = await _unitOfWork.UnitOfMeasurementDAL.GetById(id);
-            var result = await _unitOfWork.UnitOfMeasurementDAL.Delete(entity);
+            UnitOfMeasurement entity = await _unitOfWork.UnitOfMeasurementDAL.GetByIdAsync(id);
+            var result = await _unitOfWork.UnitOfMeasurementDAL.DeleteAsync(entity);
             await _unitOfWork.CompleteAsync();
             return result;
         }

@@ -10,12 +10,12 @@ namespace Shared.DataAccessLayer.Contracts
 {
     public interface ICRUDOperationsDAL<TEntity>
     {
-        Task<IQueryable<TEntity>> GetAll();
-        Task<IQueryable<TEntity>> GetAllLite();
-        Task<TEntity> GetById(long id);
-        Task<long> Add(TEntity entity);
-        Task<long> Update(TEntity entity);
-        Task<bool> Delete(TEntity entity);
+        IQueryable<TEntity> GetAll();
+        IQueryable<TEntity> GetAllLite();
+        TEntity GetById(long id);
+        long Add(TEntity entity);
+        long Update(TEntity entity);
+        bool Delete(TEntity entity);
 
     }
 }

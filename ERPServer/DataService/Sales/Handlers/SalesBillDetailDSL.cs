@@ -28,7 +28,7 @@ namespace DataService.Sales.Handlers
         #region Query
         public async Task<ResponseEntityList<SalesBillDetailDTO>> GetAll(SalesBillDetailSearchDTO searchCriteriaDTO)
         {
-            var salesBillDetailList = await _unitOfWork.SalesBillDetailDAL.GetAll();
+            var salesBillDetailList = await _unitOfWork.SalesBillDetailDAL.GetAllAsync();
             int total = salesBillDetailList.Count();
 
 
@@ -49,16 +49,16 @@ namespace DataService.Sales.Handlers
 
         public async Task<SalesBillDetailDTO> GetById(long id)
         {
-            var test = _mapper.Map<SalesBillDetailDTO>(await _unitOfWork.SalesBillDetailDAL.GetById(id));
-            return _mapper.Map<SalesBillDetailDTO>(await _unitOfWork.SalesBillDetailDAL.GetById(id));
+            var test = _mapper.Map<SalesBillDetailDTO>(await _unitOfWork.SalesBillDetailDAL.GetByIdAsync(id));
+            return _mapper.Map<SalesBillDetailDTO>(await _unitOfWork.SalesBillDetailDAL.GetByIdAsync(id));
         }
 
         public async Task<ResponseEntityList<SalesBillDetailDTO>> GetAllLite()
         {
             return new ResponseEntityList<SalesBillDetailDTO>()
             {
-                List = _mapper.Map<IEnumerable<SalesBillDetailDTO>>(_unitOfWork.SalesBillDetailDAL.GetAllLite().Result),
-                Total = _unitOfWork.SalesBillDetailDAL.GetAllLite().Result.Count()
+                List = _mapper.Map<IEnumerable<SalesBillDetailDTO>>(_unitOfWork.SalesBillDetailDAL.GetAllLiteAsync().Result),
+                Total = _unitOfWork.SalesBillDetailDAL.GetAllLiteAsync().Result.Count()
             };
         }
 
@@ -68,22 +68,22 @@ namespace DataService.Sales.Handlers
         #region Command
         public async Task<long> Add(SalesBillDetailDTO entity)
         {
-            var result = await _unitOfWork.SalesBillDetailDAL.Add(_mapper.Map<SalesBillDetail>(entity));
+            var result = await _unitOfWork.SalesBillDetailDAL.AddAsync(_mapper.Map<SalesBillDetail>(entity));
             await _unitOfWork.CompleteAsync();
             return result;
         }
 
         public async Task<long> Update(SalesBillDetailDTO entity)
         {
-            var result = await _unitOfWork.SalesBillDetailDAL.Update(_mapper.Map<SalesBillDetail>(entity));
+            var result = await _unitOfWork.SalesBillDetailDAL.UpdateAsync(_mapper.Map<SalesBillDetail>(entity));
             await _unitOfWork.CompleteAsync();
             return result;
         }
 
         public async Task<bool> Delete(long id)
         {
-            SalesBillDetail entity = await _unitOfWork.SalesBillDetailDAL.GetById(id);
-            var result = await _unitOfWork.SalesBillDetailDAL.Delete(entity);
+            SalesBillDetail entity = await _unitOfWork.SalesBillDetailDAL.GetByIdAsync(id);
+            var result = await _unitOfWork.SalesBillDetailDAL.DeleteAsync(entity);
             await _unitOfWork.CompleteAsync();
             return result;
         }

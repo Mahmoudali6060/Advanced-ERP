@@ -31,7 +31,7 @@ namespace DataService.Setup.Handlers
         #region Query
         public async Task<ResponseEntityList<CountryDTO>> GetAll(CountrySearchDTO searchCriteriaDTO)
         {
-            var userProfileList = await _unitOfWork.CountryDAL.GetAll();
+            var userProfileList = await _unitOfWork.CountryDAL.GetAllAsync();
             int total = userProfileList.Count();
 
             #region Apply Filters
@@ -55,16 +55,16 @@ namespace DataService.Setup.Handlers
 
         public async Task<CountryDTO> GetById(long id)
         {
-            var test = _mapper.Map<CountryDTO>(await _unitOfWork.CountryDAL.GetById(id));
-            return _mapper.Map<CountryDTO>(await _unitOfWork.CountryDAL.GetById(id));
+            var test = _mapper.Map<CountryDTO>(await _unitOfWork.CountryDAL.GetByIdAsync(id));
+            return _mapper.Map<CountryDTO>(await _unitOfWork.CountryDAL.GetByIdAsync(id));
         }
 
         public async Task<ResponseEntityList<CountryDTO>> GetAllLite()
         {
             return new ResponseEntityList<CountryDTO>()
             {
-                List = _mapper.Map<IEnumerable<CountryDTO>>(_unitOfWork.CountryDAL.GetAllLite().Result),
-                Total = _unitOfWork.CountryDAL.GetAllLite().Result.Count()
+                List = _mapper.Map<IEnumerable<CountryDTO>>(_unitOfWork.CountryDAL.GetAllLiteAsync().Result),
+                Total = _unitOfWork.CountryDAL.GetAllLiteAsync().Result.Count()
             };
         }
 
@@ -73,18 +73,18 @@ namespace DataService.Setup.Handlers
         #region Command
         public async Task<long> Add(CountryDTO entity)
         {
-            return await _unitOfWork.CountryDAL.Add(_mapper.Map<Country>(entity));
+            return await _unitOfWork.CountryDAL.AddAsync(_mapper.Map<Country>(entity));
         }
 
         public async Task<long> Update(CountryDTO entity)
         {
-            return await _unitOfWork.CountryDAL.Update(_mapper.Map<Country>(entity));
+            return await _unitOfWork.CountryDAL.UpdateAsync(_mapper.Map<Country>(entity));
         }
 
         public async Task<bool> Delete(long id)
         {
-            Country entity = await _unitOfWork.CountryDAL.GetById(id);
-            return await _unitOfWork.CountryDAL.Delete(entity);
+            Country entity = await _unitOfWork.CountryDAL.GetByIdAsync(id);
+            return await _unitOfWork.CountryDAL.DeleteAsync(entity);
         }
         #endregion
 

@@ -15,17 +15,17 @@ namespace Account.DataAccessLayer
             _appDbContext = appDbContext;
         }
 
-        public async Task<IQueryable<UserProfile>> GetAll()
+        public async Task<IQueryable<UserProfile>> GetAllAsync()
         {
             return _appDbContext.UserProfiles.Where(x=>x.IsHide == false).Include(x => x.AppUser).Include(x=>x.Role).AsQueryable();
         }
 
-        public async Task<IQueryable<UserProfile>> GetAllLite()
+        public async Task<IQueryable<UserProfile>> GetAllLiteAsync()
         {
             return _appDbContext.UserProfiles.Include(x => x.AppUser).Include(x=>x.Role).AsQueryable();
         }
 
-        public async Task<UserProfile> GetById(long id)
+        public async Task<UserProfile> GetByIdAsync(long id)
         {
             var UserProfile = _appDbContext.UserProfiles.Include(c => c.Company).Include(x => x.AppUser).SingleOrDefaultAsync(x => x.Id == id);
             return await UserProfile;
@@ -38,13 +38,13 @@ namespace Account.DataAccessLayer
         }
 
 
-        public async Task<long> Add(UserProfile entity)
+        public async Task<long> AddAsync(UserProfile entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Added;
             return entity.Id;
         }
 
-        public async Task<long> Update(UserProfile entity)
+        public async Task<long> UpdateAsync(UserProfile entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
             return entity.Id;
@@ -56,7 +56,7 @@ namespace Account.DataAccessLayer
             return entity.Id;
         }
 
-        public async Task<bool> Delete(UserProfile userProfile)
+        public async Task<bool> DeleteAsync(UserProfile userProfile)
         {
             _appDbContext.UserProfiles.Remove(userProfile);
             return true;

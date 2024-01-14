@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Setup.DataAccessLayer
 {
-    public interface ICityDAL : ICRUDOperationsDAL<City>
+    public interface ICityDAL : ICRUDOperationsAsyncDAL<City>
     {
         Task<IQueryable<City>> GetAllLiteByStateId(long stateId);
     }

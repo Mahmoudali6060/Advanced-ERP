@@ -36,7 +36,7 @@ namespace DataService.Sales.Handlers
         #region Query
         public async Task<ResponseEntityList<SalesBillHeaderDTO>> GetAll(SalesBillHeaderSearchDTO searchCriteriaDTO)
         {
-            var salesBillHeaderList = await _unitOfWork.SalesBillHeaderDAL.GetAll();
+            var salesBillHeaderList = await _unitOfWork.SalesBillHeaderDAL.GetAllAsync();
 
             #region Apply Filters
             salesBillHeaderList.OrderByDescending(x => x.Id);
@@ -65,7 +65,7 @@ namespace DataService.Sales.Handlers
         }
         public async Task<SalesBillHeaderDTO> GetById(long id)
         {
-            var tt = _mapper.Map<SalesBillHeaderDTO>(await _unitOfWork.SalesBillHeaderDAL.GetById(id));
+            var tt = _mapper.Map<SalesBillHeaderDTO>(await _unitOfWork.SalesBillHeaderDAL.GetByIdAsync(id));
             return tt;
         }
 
@@ -108,8 +108,8 @@ namespace DataService.Sales.Handlers
         {
             return new ResponseEntityList<SalesBillHeaderDTO>()
             {
-                List = _mapper.Map<IEnumerable<SalesBillHeaderDTO>>(_unitOfWork.SalesBillHeaderDAL.GetAllLite().Result),
-                Total = _unitOfWork.SalesBillHeaderDAL.GetAllLite().Result.Count()
+                List = _mapper.Map<IEnumerable<SalesBillHeaderDTO>>(_unitOfWork.SalesBillHeaderDAL.GetAllLiteAsync().Result),
+                Total = _unitOfWork.SalesBillHeaderDAL.GetAllLiteAsync().Result.Count()
             };
         }
 
@@ -123,11 +123,11 @@ namespace DataService.Sales.Handlers
             {
                 foreach (var item in entity.SalesBillDetailList)
                 {
-                    var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
+                    var product = await _unitOfWork.ProductDAL.GetByIdAsync(item.ProductId);
                     product.ActualQuantity = entity.IsReturned ? product.ActualQuantity + item.Quantity : product.ActualQuantity - item.Quantity;
                     product.LastSellingPrice = item.PriceAfterDiscount;
                     product.Price = item.Price;
-                    await _unitOfWork.ProductDAL.Update(product);
+                    await _unitOfWork.ProductDAL.UpdateAsync(product);
                 }
             }
             #endregion
@@ -138,13 +138,13 @@ namespace DataService.Sales.Handlers
             {
                 salesBillHeader.Treasury = MapTreasury(entity);
             }
-            var result = await _unitOfWork.SalesBillHeaderDAL.Add(salesBillHeader);
+            var result = await _unitOfWork.SalesBillHeaderDAL.AddAsync(salesBillHeader);
             #endregion
 
             #region Update Balance
             if (entity.IsTemp == false)
             {
-                var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
+                var clientVendor = await _unitOfWork.ClientVendorDAL.GetByIdAsync(entity.ClientVendorId);
                 if (clientVendor != null)
                 {
                     if (entity.IsNewReturned)//Return Sales Bill
@@ -158,7 +158,7 @@ namespace DataService.Sales.Handlers
                         clientVendor.Credit += entity.TotalAfterDiscount;
                     }
 
-                    await _unitOfWork.ClientVendorDAL.Update(clientVendor);
+                    await _unitOfWork.ClientVendorDAL.UpdateAsync(clientVendor);
                 }
             }
             #endregion
@@ -183,7 +183,7 @@ namespace DataService.Sales.Handlers
             }
             await _unitOfWork.SalesBillDetailDAL.AddRange(_mapper.Map<List<SalesBillDetail>>(entity.SalesBillDetailList));
             salesHeader.SalesBillDetailList = null;
-            var result = await _unitOfWork.SalesBillHeaderDAL.Update(salesHeader);
+            var result = await _unitOfWork.SalesBillHeaderDAL.UpdateAsync(salesHeader);
             #endregion
 
             if (entity.IsTemp == false)
@@ -194,19 +194,19 @@ namespace DataService.Sales.Handlers
                 {
                     var exsitedSalesBillDetails = exsitedSalesBillDetailList.SingleOrDefault(x => x.Id == item.Id && x.ProductId == item.ProductId);
                     decimal quantity = exsitedSalesBillDetails != null ? exsitedSalesBillDetails.Quantity : item.Quantity;
-                    var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
+                    var product = await _unitOfWork.ProductDAL.GetByIdAsync(item.ProductId);
                     product.ActualQuantity = entity.IsReturned == true ? product.ActualQuantity + quantity : product.ActualQuantity - quantity;
                     product.Price = item.Price;
                     product.LastSellingPrice = item.PriceAfterDiscount;
-                    await _unitOfWork.ProductDAL.Update(product);
+                    await _unitOfWork.ProductDAL.UpdateAsync(product);
                 }
                 #endregion
 
                 #region Update Balance
 
-                var exsitedSalesHeader = await _unitOfWork.SalesBillHeaderDAL.GetById(entity.Id);
+                var exsitedSalesHeader = await _unitOfWork.SalesBillHeaderDAL.GetByIdAsync(entity.Id);
                 exsitedSalesHeader.ClientVendor = null;
-                var existedClientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
+                var existedClientVendor = await _unitOfWork.ClientVendorDAL.GetByIdAsync(entity.ClientVendorId);
                 if (existedClientVendor != null)
                 {
                     //if (entity.IsNewReturned == true)
@@ -236,7 +236,7 @@ namespace DataService.Sales.Handlers
                         existedClientVendor.Credit += entity.TotalAfterDiscount - exsitedSalesHeader.TotalAfterDiscount;
                     }
 
-                    await _unitOfWork.ClientVendorDAL.Update(existedClientVendor);
+                    await _unitOfWork.ClientVendorDAL.UpdateAsync(existedClientVendor);
                 }
                 #endregion
 
@@ -245,7 +245,7 @@ namespace DataService.Sales.Handlers
 
                 if (entity.TreasuryId.HasValue)
                 {
-                    var treasury = await _unitOfWork.TreasuryDAL.GetById(entity.TreasuryId.Value);
+                    var treasury = await _unitOfWork.TreasuryDAL.GetByIdAsync(entity.TreasuryId.Value);
                     treasury.PaymentMethodId = entity.PaymentMethodId;
                     treasury.RefNo = entity.RefNo;
                     treasury.Date = DateTime.Parse(entity.Date);
@@ -259,13 +259,13 @@ namespace DataService.Sales.Handlers
                         treasury.Debit = entity.Paid;
                         treasury.Credit = entity.TotalAfterDiscount;
                     }
-                    await _unitOfWork.TreasuryDAL.Update(treasury);
+                    await _unitOfWork.TreasuryDAL.UpdateAsync(treasury);
                 }
                 else
                 {
                     #region Add Sales and Treasury
                     addedTreasury = MapTreasury(entity);
-                    await _unitOfWork.TreasuryDAL.Add(addedTreasury);
+                    await _unitOfWork.TreasuryDAL.AddAsync(addedTreasury);
                     #endregion
                 }
                 #endregion
@@ -277,7 +277,7 @@ namespace DataService.Sales.Handlers
             if (salesHeader.TreasuryId == null && addedTreasury.Id > 0)
             {
                 salesHeader.TreasuryId = addedTreasury.Id;
-                await _unitOfWork.SalesBillHeaderDAL.Update(salesHeader);
+                await _unitOfWork.SalesBillHeaderDAL.UpdateAsync(salesHeader);
                 await _unitOfWork.CompleteAsync();
             }
             #endregion
@@ -287,23 +287,23 @@ namespace DataService.Sales.Handlers
 
         public async Task<bool> Delete(long id)
         {
-            SalesBillHeader entity = await _unitOfWork.SalesBillHeaderDAL.GetById(id);
+            SalesBillHeader entity = await _unitOfWork.SalesBillHeaderDAL.GetByIdAsync(id);
             entity.ClientVendor = null;//To remove tracking
             if (entity.IsTemp == false)
             {
                 #region Update Product
                 foreach (var item in entity.SalesBillDetailList)
                 {
-                    var product = await _unitOfWork.ProductDAL.GetById(item.ProductId);
+                    var product = await _unitOfWork.ProductDAL.GetByIdAsync(item.ProductId);
                     product.ActualQuantity = entity.IsReturned == true ? product.ActualQuantity - item.Quantity : product.ActualQuantity + item.Quantity;
                     product.Price = item.Price;
-                    await _unitOfWork.ProductDAL.Update(product);
+                    await _unitOfWork.ProductDAL.UpdateAsync(product);
                 }
                 #endregion
 
                 #region Update Balance
 
-                var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
+                var clientVendor = await _unitOfWork.ClientVendorDAL.GetByIdAsync(entity.ClientVendorId);
                 if (clientVendor != null)
                 {
                     if (entity.IsReturned == true)
@@ -317,14 +317,14 @@ namespace DataService.Sales.Handlers
                         clientVendor.Credit -= entity.TotalAfterDiscount;
                     }
 
-                    await _unitOfWork.ClientVendorDAL.Update(clientVendor);
+                    await _unitOfWork.ClientVendorDAL.UpdateAsync(clientVendor);
                 }
                 #endregion
 
                 #region Update Treasury
                 if (entity.TreasuryId.HasValue)
                 {
-                    var treasury = await _unitOfWork.TreasuryDAL.GetById(entity.TreasuryId.Value);
+                    var treasury = await _unitOfWork.TreasuryDAL.GetByIdAsync(entity.TreasuryId.Value);
 
                     if (entity.IsReturned)
                     {
@@ -339,14 +339,14 @@ namespace DataService.Sales.Handlers
                         //treasury.Notes = "فاتورة";
                     }
                     treasury.IsCancel = true;
-                    await _unitOfWork.TreasuryDAL.Update(treasury);
+                    await _unitOfWork.TreasuryDAL.UpdateAsync(treasury);
                 }
                 #endregion
             }
 
             #region Update SalesBillHeader
             entity.IsCancel = true;
-            var result = await _unitOfWork.SalesBillHeaderDAL.Update(entity);
+            var result = await _unitOfWork.SalesBillHeaderDAL.UpdateAsync(entity);
             await _unitOfWork.CompleteAsync();
             #endregion
 

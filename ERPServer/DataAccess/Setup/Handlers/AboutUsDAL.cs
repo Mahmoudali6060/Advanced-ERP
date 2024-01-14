@@ -18,35 +18,35 @@ namespace DataAccess.Setup.Handlers
     {
         _appDbContext = appDbContext;
     }
-    public async Task<long> Add(AboutUs entity)
+    public async Task<long> AddAsync(AboutUs entity)
     {
         _appDbContext.Entry(entity).State = EntityState.Added;
         return entity.Id;
     }
 
-    public async Task<bool> Delete(AboutUs entity)
+    public async Task<bool> DeleteAsync(AboutUs entity)
     {
         _appDbContext.AboutUs.Remove(entity);
         return true;
     }
 
-    public async Task<IQueryable<AboutUs>> GetAll()
+    public async Task<IQueryable<AboutUs>> GetAllAsync()
     {
         return _appDbContext.AboutUs.AsQueryable();
     }
 
-    public async Task<IQueryable<AboutUs>> GetAllLite()
+    public async Task<IQueryable<AboutUs>> GetAllLiteAsync()
     {
         return _appDbContext.AboutUs.AsQueryable();
     }
 
-    public async Task<AboutUs> GetById(long id)
+    public async Task<AboutUs> GetByIdAsync(long id)
     {
         var AboutUs = _appDbContext.AboutUs.SingleOrDefaultAsync(x => x.Id == id);
         return await AboutUs;
     }
 
-    public async Task<long> Update(AboutUs entity)
+    public async Task<long> UpdateAsync(AboutUs entity)
     {
         _appDbContext.Entry(entity).State = EntityState.Modified;
         return entity.Id;

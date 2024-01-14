@@ -64,7 +64,7 @@ namespace Account.DataServiceLayer
                 userDto.IsFirstLogin = false;
                 userDto.IsHide = false;
                 //UploadImage(entity);
-                long userProfileIdResult = await _unitOfWork.UserProfileDAL.Add(_mapper.Map<UserProfile>(userDto));
+                long userProfileIdResult = await _unitOfWork.UserProfileDAL.AddAsync(_mapper.Map<UserProfile>(userDto));
                 //Create Token
                 if (userProfileIdResult > 0)
                 {
@@ -198,7 +198,7 @@ namespace Account.DataServiceLayer
             {
                 var userProfile = await _unitOfWork.UserProfileDAL.GetUserProfileByAppUserId(user.Id);
                 userProfile.IsFirstLogin = false;
-                await _unitOfWork.UserProfileDAL.Update(userProfile);
+                await _unitOfWork.UserProfileDAL.UpdateAsync(userProfile);
                 await _unitOfWork.CompleteAsync();
             }
             return true;

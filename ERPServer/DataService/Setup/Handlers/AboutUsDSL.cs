@@ -21,18 +21,18 @@ namespace DataService.Setup.Handlers
         }
         public async Task<long> Add(AboutUs entity)
         {
-            return await _unitOfWork.AboutUsDAL.Add(entity);
+            return await _unitOfWork.AboutUsDAL.AddAsync(entity);
         }
 
         public async Task<bool> Delete(long id)
         {
-            AboutUs AboutUs = await _unitOfWork.AboutUsDAL.GetById(id);
-            return await _unitOfWork.AboutUsDAL.Delete(AboutUs);
+            AboutUs AboutUs = await _unitOfWork.AboutUsDAL.GetByIdAsync(id);
+            return await _unitOfWork.AboutUsDAL.DeleteAsync(AboutUs);
         }
 
         public async Task<ResponseEntityList<AboutUs>> GetAll(AboutUs searchCrieria)
         {
-            var aboutUsList = await _unitOfWork.AboutUsDAL.GetAll();
+            var aboutUsList = await _unitOfWork.AboutUsDAL.GetAllAsync();
             int total = aboutUsList.Count();
 
             #region Return List
@@ -48,19 +48,19 @@ namespace DataService.Setup.Handlers
         {
             return new ResponseEntityList<AboutUs>()
             {
-                List = _unitOfWork.AboutUsDAL.GetAllLite().Result,
-                Total = _unitOfWork.AboutUsDAL.GetAllLite().Result.Count()
+                List = _unitOfWork.AboutUsDAL.GetAllLiteAsync().Result,
+                Total = _unitOfWork.AboutUsDAL.GetAllLiteAsync().Result.Count()
             };
         }
 
         public async Task<AboutUs> GetById(long id)
         {
-            return await _unitOfWork.AboutUsDAL.GetById(id);
+            return await _unitOfWork.AboutUsDAL.GetByIdAsync(id);
         }
 
         public async Task<long> Update(AboutUs entity)
         {
-            return await _unitOfWork.AboutUsDAL.Update(entity);
+            return await _unitOfWork.AboutUsDAL.UpdateAsync(entity);
         }
     }
 }

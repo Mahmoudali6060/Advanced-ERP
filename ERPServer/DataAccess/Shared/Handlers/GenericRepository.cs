@@ -22,33 +22,34 @@ namespace DataAccess.Shared.Handlers
             _dbContext = dbContext;
         }
 
-        public async Task<IQueryable<TEntity>> GetAll()
+        public async Task<IQueryable<TEntity>> GetAllAsync()
         {
             return _dbContext.Set<TEntity>().AsNoTracking();
         }
 
-        public async Task<IQueryable<TEntity>> GetAllWithIncludes(Expression<Func<TEntity, bool>> predicate=null, params Expression<Func<TEntity, object>>[] includes)
+        public async Task<IQueryable<TEntity>> GetAllWithIncludes(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includes)
         {
-            IQueryable<TEntity> query=null;
+            IQueryable<TEntity> query = null;
             if (predicate == null)
             {
-                query = GetAll().Result;
+                query = GetAllAsync().Result;
 
             }
             else
             {
-                query = GetAll().Result.Where(predicate);
+                query = GetAllAsync().Result.Where(predicate);
 
             }
             return includes.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }
-        public async Task<IQueryable<TEntity>> GetAllLite()
+
+        public async Task<IQueryable<TEntity>> GetAllLiteAsync()
         {
             return _dbContext.Set<TEntity>().AsNoTracking();
         }
 
 
-        public async Task<TEntity> GetById(long id)
+        public async Task<TEntity> GetByIdAsync(long id)
         {
             return await _dbContext.Set<TEntity>()
                 .AsNoTracking()
@@ -56,26 +57,62 @@ namespace DataAccess.Shared.Handlers
         }
 
 
-        public async Task<long> Add(TEntity entity)
+        public async Task<long> AddAsync(TEntity entity)
         {
             await _dbContext.Set<TEntity>().AddAsync(entity);
             return entity.Id;
         }
 
-        public async Task<long> Update(TEntity entity)
+        public async Task<long> UpdateAsync(TEntity entity)
         {
             _dbContext.Set<TEntity>().Update(entity);
             return entity.Id;
         }
 
-        public async Task<bool> Delete(TEntity entity)
+        public async Task<bool> DeleteAsync(TEntity entity)
         {
             var exsitedEntity = await _dbContext.Set<TEntity>().FindAsync(entity.Id);
             _dbContext.Set<TEntity>().Remove(exsitedEntity);
             return true;
         }
 
+        public IQueryable<TEntity> GetAll()
+        {
+            return _dbContext.Set<TEntity>().AsNoTracking();
+        }
 
+        public IQueryable<TEntity> GetAllLite()
+        {
+            return _dbContext.Set<TEntity>().AsNoTracking();
+        }
+
+        public TEntity GetById(long id)
+        {
+            return _dbContext.Set<TEntity>()
+                 .AsNoTracking()
+                 .FirstOrDefault(e => e.Id == id);
+        }
+
+        public long Add(TEntity entity)
+        {
+            _dbContext.Set<TEntity>().Add(entity);
+            return entity.Id;
+        }
+
+        public long Update(TEntity entity)
+        {
+            _dbContext.Set<TEntity>().Update(entity);
+            return entity.Id;
+        }
+
+        public bool Delete(TEntity entity)
+        {
+            var exsitedEntity = _dbContext.Set<TEntity>().Find(entity.Id);
+            _dbContext.Set<TEntity>().Remove(exsitedEntity);
+            return true;
+        }
+
+    
     }
 
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Setup.Contracts
 {
-    public interface IContactUsDAL : ICRUDOperationsDAL<ContactUs>
+    public interface IContactUsDAL : ICRUDOperationsAsyncDAL<ContactUs>
     {
     }
 }

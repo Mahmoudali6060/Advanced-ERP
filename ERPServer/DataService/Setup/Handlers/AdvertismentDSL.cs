@@ -28,7 +28,7 @@ namespace DataService.Setup.Handlers
         }
         public async Task<long> Add(AdvertismentDTO entity)
         {
-            return await _unitOfWork.AdvertismentDAL.Add(_mapper.Map<Advertisment>(entity));
+            return await _unitOfWork.AdvertismentDAL.AddAsync(_mapper.Map<Advertisment>(entity));
         }
 
         public async Task<long> AddRang(List<AdvertismentDTO> lstAdvertisments)
@@ -47,13 +47,13 @@ namespace DataService.Setup.Handlers
 
         public async Task<bool> Delete(long id)
         {
-            Advertisment Advertisment = await _unitOfWork.AdvertismentDAL.GetById(id);
-            return await _unitOfWork.AdvertismentDAL.Delete(Advertisment);
+            Advertisment Advertisment = await _unitOfWork.AdvertismentDAL.GetByIdAsync(id);
+            return await _unitOfWork.AdvertismentDAL.DeleteAsync(Advertisment);
         }
 
         public async Task<ResponseEntityList<AdvertismentDTO>> GetAll(AdvertismentSearchDTO searchCrieria)
         {
-            var AdvertismentList = await _unitOfWork.AdvertismentDAL.GetAll();
+            var AdvertismentList = await _unitOfWork.AdvertismentDAL.GetAllAsync();
             int total = AdvertismentList.Count();
 
             var lstAdsDTO = _mapper.Map<IEnumerable<AdvertismentDTO>>(AdvertismentList);
@@ -70,20 +70,20 @@ namespace DataService.Setup.Handlers
         {
             return new ResponseEntityList<AdvertismentDTO>()
             {
-                List = _mapper.Map<IQueryable<AdvertismentDTO>>(_unitOfWork.AdvertismentDAL.GetAllLite().Result),
-                Total = _unitOfWork.AdvertismentDAL.GetAllLite().Result.Count()
+                List = _mapper.Map<IQueryable<AdvertismentDTO>>(_unitOfWork.AdvertismentDAL.GetAllLiteAsync().Result),
+                Total = _unitOfWork.AdvertismentDAL.GetAllLiteAsync().Result.Count()
             };
         }
 
         public async Task<AdvertismentDTO> GetById(long id)
         {
-            return _mapper.Map<AdvertismentDTO>(await _unitOfWork.AdvertismentDAL.GetById(id));
+            return _mapper.Map<AdvertismentDTO>(await _unitOfWork.AdvertismentDAL.GetByIdAsync(id));
         }
 
         public async Task<long> Update(AdvertismentDTO entity)
         {
             UploadImage(entity);
-            return await _unitOfWork.AdvertismentDAL.Update(_mapper.Map<Advertisment>(entity));
+            return await _unitOfWork.AdvertismentDAL.UpdateAsync(_mapper.Map<Advertisment>(entity));
         }
         #region Helper Methods
         private bool UploadImage(AdvertismentDTO entity)

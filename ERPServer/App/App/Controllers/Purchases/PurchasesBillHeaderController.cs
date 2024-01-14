@@ -54,7 +54,7 @@ namespace App.Controllers.Setup
 
         [HttpPost, Route("Add")]
         //[Authorize(Roles = Roles.Admin)]
-        public async Task<IActionResult> Add([FromBody] PurchasesBillHeaderDTO model) => Ok(await _purchasesBillHeaderDSL.Add(model));
+        public  IActionResult Add([FromBody] PurchasesBillHeaderDTO model) => Ok( _purchasesBillHeaderDSL.AddNormal(model));
 
         //[Authorize(Roles = Roles.Admin + "," + Roles.Consumer)]
         [HttpPost, Route("Update")]

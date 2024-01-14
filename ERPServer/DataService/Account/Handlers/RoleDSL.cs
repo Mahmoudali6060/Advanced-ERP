@@ -29,7 +29,7 @@ namespace Accout.DataServiceLayer
 
         public async Task<ResponseEntityList<RoleGroupDTO>> GetAll(RoleGroupSearchDTO searchCriteriaDTO)
         {
-            var roleGroupList = await _unitOfWork.RoleDAL.GetAll();
+            var roleGroupList = await _unitOfWork.RoleDAL.GetAllAsync();
 
             #region Apply Filters
             roleGroupList = ApplyFilert(roleGroupList, searchCriteriaDTO);
@@ -64,13 +64,13 @@ namespace Accout.DataServiceLayer
         }
         public async Task<RoleGroupDTO> GetById(long id)
         {
-            var roleGroup = await _unitOfWork.RoleDAL.GetById(id);
+            var roleGroup = await _unitOfWork.RoleDAL.GetByIdAsync(id);
             return _mapper.Map<RoleGroupDTO>(roleGroup);
         }
 
         public async Task<ResponseEntityList<RoleGroupDTO>> GetAllLite()
         {
-            var roleList = _unitOfWork.RoleDAL.GetAllLite().Result;
+            var roleList = _unitOfWork.RoleDAL.GetAllLiteAsync().Result;
             return new ResponseEntityList<RoleGroupDTO>()
             {
                 List = _mapper.Map<IEnumerable<RoleGroupDTO>>(roleList),
@@ -81,7 +81,7 @@ namespace Accout.DataServiceLayer
 
         public async Task<long> Add(RoleGroupDTO entity)
         {
-            var result = await _unitOfWork.RoleDAL.Add(_mapper.Map<RoleGroup>(entity));
+            var result = await _unitOfWork.RoleDAL.AddAsync(_mapper.Map<RoleGroup>(entity));
             await _unitOfWork.CompleteAsync();
             return result;
 
@@ -89,7 +89,7 @@ namespace Accout.DataServiceLayer
 
         public async Task<long> Update(RoleGroupDTO entity)
         {
-            var result = await _unitOfWork.RoleDAL.Update(_mapper.Map<RoleGroup>(entity));
+            var result = await _unitOfWork.RoleDAL.UpdateAsync(_mapper.Map<RoleGroup>(entity));
             await _unitOfWork.CompleteAsync();
             return result;
 
@@ -98,8 +98,8 @@ namespace Accout.DataServiceLayer
 
         public async Task<bool> Delete(long id)
         {
-            RoleGroup roleGroup = await _unitOfWork.RoleDAL.GetById(id);
-            var result = await _unitOfWork.RoleDAL.Delete(roleGroup);
+            RoleGroup roleGroup = await _unitOfWork.RoleDAL.GetByIdAsync(id);
+            var result = await _unitOfWork.RoleDAL.DeleteAsync(roleGroup);
             await _unitOfWork.CompleteAsync();
             return result;
         }

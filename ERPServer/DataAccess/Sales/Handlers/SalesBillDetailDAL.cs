@@ -19,17 +19,17 @@ namespace Sales.DataAccessLayer
         }
 
         #region Query
-        public async Task<IQueryable<SalesBillDetail>> GetAll()
+        public async Task<IQueryable<SalesBillDetail>> GetAllAsync()
         {
             return _appDbContext.SalesBillDetails.OrderByDescending(x => x.Id).AsQueryable();
         }
 
-        public async Task<IQueryable<SalesBillDetail>> GetAllLite()
+        public async Task<IQueryable<SalesBillDetail>> GetAllLiteAsync()
         {
             return _appDbContext.SalesBillDetails.OrderByDescending(x => x.Id).AsQueryable();
         }
 
-        public async Task<SalesBillDetail> GetById(long id)
+        public async Task<SalesBillDetail> GetByIdAsync(long id)
         {
             var SalesBillDetail = _appDbContext.SalesBillDetails.SingleOrDefaultAsync(x => x.Id == id);
             return await SalesBillDetail;
@@ -39,7 +39,7 @@ namespace Sales.DataAccessLayer
 
         #region Command
 
-        public async Task<long> Add(SalesBillDetail entity)
+        public async Task<long> AddAsync(SalesBillDetail entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Added;
             return entity.Id;
@@ -51,13 +51,13 @@ namespace Sales.DataAccessLayer
             return true;
         }
 
-        public async Task<long> Update(SalesBillDetail entity)
+        public async Task<long> UpdateAsync(SalesBillDetail entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
             return entity.Id;
         }
 
-        public async Task<bool> Delete(SalesBillDetail entity)
+        public async Task<bool> DeleteAsync(SalesBillDetail entity)
         {
             _appDbContext.SalesBillDetails.Remove(entity);
             return true;

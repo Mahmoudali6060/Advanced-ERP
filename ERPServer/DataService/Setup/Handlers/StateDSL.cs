@@ -26,7 +26,7 @@ namespace DataService.Setup.Handlers
         #region Query
         public async Task<ResponseEntityList<StateDTO>> GetAll(StateSearchDTO searchCriteriaDTO)
         {
-            var userProfileList = await _unitOfWork.StateDAL.GetAll();
+            var userProfileList = await _unitOfWork.StateDAL.GetAllAsync();
             int total = userProfileList.Count();
 
             #region Apply Filters
@@ -50,16 +50,16 @@ namespace DataService.Setup.Handlers
 
         public async Task<StateDTO> GetById(long id)
         {
-            var test = _mapper.Map<StateDTO>(await _unitOfWork.StateDAL.GetById(id));
-            return _mapper.Map<StateDTO>(await _unitOfWork.StateDAL.GetById(id));
+            var test = _mapper.Map<StateDTO>(await _unitOfWork.StateDAL.GetByIdAsync(id));
+            return _mapper.Map<StateDTO>(await _unitOfWork.StateDAL.GetByIdAsync(id));
         }
 
         public async Task<ResponseEntityList<StateDTO>> GetAllLite()
         {
             return new ResponseEntityList<StateDTO>()
             {
-                List = _mapper.Map<IEnumerable<StateDTO>>(_unitOfWork.StateDAL.GetAllLite().Result),
-                Total = _unitOfWork.StateDAL.GetAllLite().Result.Count()
+                List = _mapper.Map<IEnumerable<StateDTO>>(_unitOfWork.StateDAL.GetAllLiteAsync().Result),
+                Total = _unitOfWork.StateDAL.GetAllLiteAsync().Result.Count()
             };
         }
 
@@ -68,7 +68,7 @@ namespace DataService.Setup.Handlers
             return new ResponseEntityList<StateDTO>()
             {
                 List = _mapper.Map<IEnumerable<StateDTO>>(_unitOfWork.StateDAL.GetAllLiteByCountryId(countryId).Result),
-                Total = _unitOfWork.StateDAL.GetAllLite().Result.Count()
+                Total = _unitOfWork.StateDAL.GetAllLiteAsync().Result.Count()
             };
         }
 
@@ -77,18 +77,18 @@ namespace DataService.Setup.Handlers
         #region Command
         public async Task<long> Add(StateDTO entity)
         {
-            return await _unitOfWork.StateDAL.Add(_mapper.Map<State>(entity));
+            return await _unitOfWork.StateDAL.AddAsync(_mapper.Map<State>(entity));
         }
 
         public async Task<long> Update(StateDTO entity)
         {
-            return await _unitOfWork.StateDAL.Update(_mapper.Map<State>(entity));
+            return await _unitOfWork.StateDAL.UpdateAsync(_mapper.Map<State>(entity));
         }
 
         public async Task<bool> Delete(long id)
         {
-            State entity = await _unitOfWork.StateDAL.GetById(id);
-            return await _unitOfWork.StateDAL.Delete(entity);
+            State entity = await _unitOfWork.StateDAL.GetByIdAsync(id);
+            return await _unitOfWork.StateDAL.DeleteAsync(entity);
         }
         #endregion
 

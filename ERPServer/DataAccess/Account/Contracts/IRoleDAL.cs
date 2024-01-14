@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Account.DataAccessLayer
 {
-    public interface IRoleDAL : ICRUDOperationsDAL<RoleGroup>
+    public interface IRoleDAL : ICRUDOperationsAsyncDAL<RoleGroup>
     {
 
     }

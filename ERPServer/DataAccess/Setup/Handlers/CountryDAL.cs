@@ -15,17 +15,17 @@ namespace Setup.DataAccessLayer
         }
 
         #region Query
-        public async Task<IQueryable<Country>> GetAll()
+        public async Task<IQueryable<Country>> GetAllAsync()
         {
             return _appDbContext.Countries.OrderBy(x => x.Name).AsQueryable();
         }
 
-        public async Task<IQueryable<Country>> GetAllLite()
+        public async Task<IQueryable<Country>> GetAllLiteAsync()
         {
             return _appDbContext.Countries.OrderBy(x => x.Name).AsQueryable();
         }
 
-        public async Task<Country> GetById(long id)
+        public async Task<Country> GetByIdAsync(long id)
         {
             var Country = _appDbContext.Countries.SingleOrDefaultAsync(x => x.Id == id);
             return await Country;
@@ -35,19 +35,19 @@ namespace Setup.DataAccessLayer
 
         #region Command
 
-        public async Task<long> Add(Country entity)
+        public async Task<long> AddAsync(Country entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Added;
             return entity.Id;
         }
 
-        public async Task<long> Update(Country entity)
+        public async Task<long> UpdateAsync(Country entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
             return entity.Id;
         }
 
-        public async Task<bool> Delete(Country entity)
+        public async Task<bool> DeleteAsync(Country entity)
         {
             _appDbContext.Countries.Remove(entity);
             return true;

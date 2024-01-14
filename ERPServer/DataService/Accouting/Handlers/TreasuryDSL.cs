@@ -87,15 +87,15 @@ namespace DataService.Accounting.Handlers
 
         public async Task<TreasuryDTO> GetById(long id)
         {
-            return _mapper.Map<TreasuryDTO>(await _unitOfWork.TreasuryDAL.GetById(id));
+            return _mapper.Map<TreasuryDTO>(await _unitOfWork.TreasuryDAL.GetByIdAsync(id));
         }
 
         public async Task<ResponseEntityList<TreasuryDTO>> GetAllLite()
         {
             return new ResponseEntityList<TreasuryDTO>()
             {
-                List = _mapper.Map<IEnumerable<TreasuryDTO>>(_unitOfWork.TreasuryDAL.GetAllLite().Result),
-                Total = _unitOfWork.TreasuryDAL.GetAllLite().Result.Count()
+                List = _mapper.Map<IEnumerable<TreasuryDTO>>(_unitOfWork.TreasuryDAL.GetAllLiteAsync().Result),
+                Total = _unitOfWork.TreasuryDAL.GetAllLiteAsync().Result.Count()
             };
         }
 
@@ -106,16 +106,16 @@ namespace DataService.Accounting.Handlers
         {
             entityDTO.Number = GenerateSequenceNumber();
             var entity = _mapper.Map<Treasury>(entityDTO);
-            await _unitOfWork.TreasuryDAL.Add(entity);
+            await _unitOfWork.TreasuryDAL.AddAsync(entity);
             #region Update Balance
             if (entityDTO.ClientVendorId.HasValue == true)
             {
-                var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(entityDTO.ClientVendorId.Value);
+                var clientVendor = await _unitOfWork.ClientVendorDAL.GetByIdAsync(entityDTO.ClientVendorId.Value);
                 if (clientVendor != null)
                 {
                     clientVendor.Debit += entity.Debit;
                     clientVendor.Credit += entity.Credit;
-                    await _unitOfWork.ClientVendorDAL.Update(clientVendor);
+                    await _unitOfWork.ClientVendorDAL.UpdateAsync(clientVendor);
                 }
             }
             #endregion
@@ -126,26 +126,26 @@ namespace DataService.Accounting.Handlers
 
         public async Task<long> Update(TreasuryDTO entity)
         {
-            var oldEntity = await _unitOfWork.TreasuryDAL.GetById(entity.Id);
-            var result = await _unitOfWork.TreasuryDAL.Update(_mapper.Map<Treasury>(entity));
+            var oldEntity = await _unitOfWork.TreasuryDAL.GetByIdAsync(entity.Id);
+            var result = await _unitOfWork.TreasuryDAL.UpdateAsync(_mapper.Map<Treasury>(entity));
             #region Update Balance
             if (entity.ClientVendorId.HasValue == true)
             {
-                var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId.Value);
+                var clientVendor = await _unitOfWork.ClientVendorDAL.GetByIdAsync(entity.ClientVendorId.Value);
                 if (clientVendor != null)
                 {
                     clientVendor.Debit += entity.Debit - oldEntity.Debit;
                     clientVendor.Credit += entity.Credit - oldEntity.Credit;
-                    await _unitOfWork.ClientVendorDAL.Update(clientVendor);
+                    await _unitOfWork.ClientVendorDAL.UpdateAsync(clientVendor);
                 }
             }
             else if (oldEntity.ClientVendorId.HasValue)
             {
-                var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(oldEntity.ClientVendorId.Value);
+                var clientVendor = await _unitOfWork.ClientVendorDAL.GetByIdAsync(oldEntity.ClientVendorId.Value);
                 if (clientVendor != null)
                 {
                     //clientVendor.Debit -= entity.Amount;
-                    await _unitOfWork.ClientVendorDAL.Update(clientVendor);
+                    await _unitOfWork.ClientVendorDAL.UpdateAsync(clientVendor);
                 }
             }
             #endregion
@@ -155,17 +155,17 @@ namespace DataService.Accounting.Handlers
 
         public async Task<bool> Delete(long id)
         {
-            Treasury entity = await _unitOfWork.TreasuryDAL.GetById(id);
-            var result = await _unitOfWork.TreasuryDAL.Delete(entity);
+            Treasury entity = await _unitOfWork.TreasuryDAL.GetByIdAsync(id);
+            var result = await _unitOfWork.TreasuryDAL.DeleteAsync(entity);
             #region Update Balance
             if (entity.ClientVendorId.HasValue == true)
             {
-                var clientVendor = await _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId.Value);
+                var clientVendor = await _unitOfWork.ClientVendorDAL.GetByIdAsync(entity.ClientVendorId.Value);
                 if (clientVendor != null)
                 {
                     clientVendor.Debit -= entity.Debit;
                     clientVendor.Credit -= entity.Credit;
-                    await _unitOfWork.ClientVendorDAL.Update(clientVendor);
+                    await _unitOfWork.ClientVendorDAL.UpdateAsync(clientVendor);
                 }
             }
             #endregion
@@ -211,7 +211,7 @@ namespace DataService.Accounting.Handlers
 
         private string GenerateSequenceNumber()
         {
-            var lastElement = _unitOfWork.TreasuryDAL.GetAll().Result.OrderByDescending(x => x.Id).FirstOrDefault();
+            var lastElement = _unitOfWork.TreasuryDAL.GetAllAsync().Result.OrderByDescending(x => x.Id).FirstOrDefault();
             if (lastElement == null)
             {
                 return "1000";
@@ -220,6 +220,7 @@ namespace DataService.Accounting.Handlers
             return code.ToString();
 
         }
+      
         #endregion
 
     }

@@ -5,7 +5,7 @@ using Shared.DataAccessLayer.Contracts;
 
 namespace Setup.DataAccessLayer
 {
-    public interface ICategoryDAL : ICRUDOperationsDAL<Category>
+    public interface ICategoryDAL : ICRUDOperationsAsyncDAL<Category>
     {
     }
 }

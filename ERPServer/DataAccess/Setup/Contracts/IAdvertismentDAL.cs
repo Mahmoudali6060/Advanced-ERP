@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Setup.Contracts
 {
-    public interface IAdvertismentDAL : ICRUDOperationsDAL<Advertisment>
+    public interface IAdvertismentDAL : ICRUDOperationsAsyncDAL<Advertisment>
     {
         Task<long> AddRang(List<Advertisment> lstAdvertisments);
     }

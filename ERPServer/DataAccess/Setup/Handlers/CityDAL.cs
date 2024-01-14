@@ -15,12 +15,12 @@ namespace Setup.DataAccessLayer
         }
 
         #region Query
-        public async Task<IQueryable<City>> GetAll()
+        public async Task<IQueryable<City>> GetAllAsync()
         {
             return _appDbContext.Cities.OrderBy(x=>x.Name).AsQueryable();
         }
 
-        public async Task<IQueryable<City>> GetAllLite()
+        public async Task<IQueryable<City>> GetAllLiteAsync()
         {
             return _appDbContext.Cities.OrderBy(x => x.Name).AsQueryable();
         }
@@ -30,7 +30,7 @@ namespace Setup.DataAccessLayer
             return _appDbContext.Cities.Where(x => x.StateId == stateId).AsQueryable();
         }
 
-        public async Task<City> GetById(long id)
+        public async Task<City> GetByIdAsync(long id)
         {
             var City = _appDbContext.Cities.SingleOrDefaultAsync(x => x.Id == id);
             return await City;
@@ -40,19 +40,19 @@ namespace Setup.DataAccessLayer
 
         #region Command
 
-        public async Task<long> Add(City entity)
+        public async Task<long> AddAsync(City entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Added;
             return entity.Id;
         }
 
-        public async Task<long> Update(City entity)
+        public async Task<long> UpdateAsync(City entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
             return entity.Id;
         }
 
-        public async Task<bool> Delete(City entity)
+        public async Task<bool> DeleteAsync(City entity)
         {
             _appDbContext.Cities.Remove(entity);
             return true;

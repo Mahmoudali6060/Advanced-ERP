@@ -15,17 +15,17 @@ namespace Setup.DataAccessLayer
         }
 
         #region Query
-        public async Task<IQueryable<Category>> GetAll()
+        public async Task<IQueryable<Category>> GetAllAsync()
         {
             return _appDbContext.Categories.OrderBy(x => x.Name).AsQueryable();
         }
 
-        public async Task<IQueryable<Category>> GetAllLite()
+        public async Task<IQueryable<Category>> GetAllLiteAsync()
         {
             return _appDbContext.Categories.OrderBy(x => x.Name).AsQueryable();
         }
 
-        public async Task<Category> GetById(long id)
+        public async Task<Category> GetByIdAsync(long id)
         {
             var Category = _appDbContext.Categories.SingleOrDefaultAsync(x => x.Id == id);
             return await Category;
@@ -35,20 +35,20 @@ namespace Setup.DataAccessLayer
 
         #region Command
 
-        public async Task<long> Add(Category entity)
+        public async Task<long> AddAsync(Category entity)
         {
             entity.Code = GenerateSequenceNumber();
             _appDbContext.Entry(entity).State = EntityState.Added;
             return entity.Id;
         }
 
-        public async Task<long> Update(Category entity)
+        public async Task<long> UpdateAsync(Category entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
             return entity.Id;
         }
 
-        public async Task<bool> Delete(Category entity)
+        public async Task<bool> DeleteAsync(Category entity)
         {
             _appDbContext.Categories.Remove(entity);
             return true;

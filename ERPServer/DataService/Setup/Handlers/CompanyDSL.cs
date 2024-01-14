@@ -31,7 +31,7 @@ namespace DataService.Setup.Handlers
         #region Query
         public async Task<ResponseEntityList<CompanyDTO>> GetAll(CompanySearchDTO searchCriteriaDTO)
         {
-            var userProfileList = await _unitOfWork.CompanyDAL.GetAll();
+            var userProfileList = await _unitOfWork.CompanyDAL.GetAllAsync();
             int total = userProfileList.Count();
 
             #region Apply Filters
@@ -55,15 +55,15 @@ namespace DataService.Setup.Handlers
 
         public async Task<CompanyDTO> GetById(long id)
         {
-            return _mapper.Map<CompanyDTO>(await _unitOfWork.CompanyDAL.GetById(id));
+            return _mapper.Map<CompanyDTO>(await _unitOfWork.CompanyDAL.GetByIdAsync(id));
         }
 
         public async Task<ResponseEntityList<CompanyDTO>> GetAllLite()
         {
             return new ResponseEntityList<CompanyDTO>()
             {
-                List = _mapper.Map<IEnumerable<CompanyDTO>>(_unitOfWork.CompanyDAL.GetAllLite().Result),
-                Total = _unitOfWork.CompanyDAL.GetAllLite().Result.Count()
+                List = _mapper.Map<IEnumerable<CompanyDTO>>(_unitOfWork.CompanyDAL.GetAllLiteAsync().Result),
+                Total = _unitOfWork.CompanyDAL.GetAllLiteAsync().Result.Count()
             };
         }
 
@@ -74,7 +74,7 @@ namespace DataService.Setup.Handlers
         {
             UploadImage(entityDTO);
             var entity = _mapper.Map<Company>(entityDTO);
-            await _unitOfWork.CompanyDAL.Add(entity);
+            await _unitOfWork.CompanyDAL.AddAsync(entity);
             await _unitOfWork.CompleteAsync();
             return entity.Id;
         }
@@ -82,15 +82,15 @@ namespace DataService.Setup.Handlers
         public async Task<long> Update(CompanyDTO entity)
         {
             UploadImage(entity);
-            var result = await _unitOfWork.CompanyDAL.Update(_mapper.Map<Company>(entity));
+            var result = await _unitOfWork.CompanyDAL.UpdateAsync(_mapper.Map<Company>(entity));
             await _unitOfWork.CompleteAsync();
             return result;
         }
 
         public async Task<bool> Delete(long id)
         {
-            Company entity = await _unitOfWork.CompanyDAL.GetById(id);
-            var result = await _unitOfWork.CompanyDAL.Delete(entity);
+            Company entity = await _unitOfWork.CompanyDAL.GetByIdAsync(id);
+            var result = await _unitOfWork.CompanyDAL.DeleteAsync(entity);
             await _unitOfWork.CompleteAsync();
             return result;
         }

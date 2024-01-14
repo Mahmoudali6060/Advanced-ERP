@@ -19,17 +19,17 @@ namespace Purchases.DataAccessLayer
         }
 
         #region Query
-        public async Task<IQueryable<PurchasesBillDetail>> GetAll()
+        public async Task<IQueryable<PurchasesBillDetail>> GetAllAsync()
         {
             return _appDbContext.PurchasesBillDetails.OrderByDescending(x => x.Id).AsQueryable();
         }
 
-        public async Task<IQueryable<PurchasesBillDetail>> GetAllLite()
+        public async Task<IQueryable<PurchasesBillDetail>> GetAllLiteAsync()
         {
             return _appDbContext.PurchasesBillDetails.OrderByDescending(x => x.Id).AsQueryable();
         }
 
-        public async Task<PurchasesBillDetail> GetById(long id)
+        public async Task<PurchasesBillDetail> GetByIdAsync(long id)
         {
             var PurchasesBillDetail = _appDbContext.PurchasesBillDetails.SingleOrDefaultAsync(x => x.Id == id);
             return await PurchasesBillDetail;
@@ -39,7 +39,7 @@ namespace Purchases.DataAccessLayer
 
         #region Command
 
-        public async Task<long> Add(PurchasesBillDetail entity)
+        public async Task<long> AddAsync(PurchasesBillDetail entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Added;
             return entity.Id;
@@ -51,13 +51,13 @@ namespace Purchases.DataAccessLayer
             return true;
         }
 
-        public async Task<long> Update(PurchasesBillDetail entity)
+        public async Task<long> UpdateAsync(PurchasesBillDetail entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
             return entity.Id;
         }
 
-        public async Task<bool> Delete(PurchasesBillDetail entity)
+        public async Task<bool> DeleteAsync(PurchasesBillDetail entity)
         {
             _appDbContext.PurchasesBillDetails.Remove(entity);
             return true;

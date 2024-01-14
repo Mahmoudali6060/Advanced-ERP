@@ -17,17 +17,17 @@ namespace Setup.DataAccessLayer
         }
 
         #region Query
-        public async Task<IQueryable<ClientVendor>> GetAll()
+        public async Task<IQueryable<ClientVendor>> GetAllAsync()
         {
             return _appDbContext.ClientVendors.OrderBy(x => x.FullName).AsQueryable();
         }
 
-        public async Task<IQueryable<ClientVendor>> GetAllLite()
+        public async Task<IQueryable<ClientVendor>> GetAllLiteAsync()
         {
             return _appDbContext.ClientVendors.OrderBy(x => x.FullName).AsQueryable();
         }
 
-        public async Task<ClientVendor> GetById(long id)
+        public async Task<ClientVendor> GetByIdAsync(long id)
         {
             var ClientVendor = _appDbContext.ClientVendors.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
             return await ClientVendor;
@@ -37,7 +37,7 @@ namespace Setup.DataAccessLayer
 
         #region Command
 
-        public async Task<long> Add(ClientVendor entity)
+        public async Task<long> AddAsync(ClientVendor entity)
         {
             var exsited = _appDbContext.ClientVendors.SingleOrDefault(x => x.FullName == entity.FullName);
             if (exsited != null)
@@ -49,13 +49,13 @@ namespace Setup.DataAccessLayer
             return entity.Id;
         }
 
-        public async Task<long> Update(ClientVendor entity)
+        public async Task<long> UpdateAsync(ClientVendor entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
             return entity.Id;
         }
 
-        public async Task<bool> Delete(ClientVendor entity)
+        public async Task<bool> DeleteAsync(ClientVendor entity)
         {
             _appDbContext.ClientVendors.Remove(entity);
             return true;

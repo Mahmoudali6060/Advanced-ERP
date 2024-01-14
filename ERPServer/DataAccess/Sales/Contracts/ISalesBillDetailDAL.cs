@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Sales.DataAccessLayer
 {
-    public interface ISalesBillDetailDAL : ICRUDOperationsDAL<SalesBillDetail>
+    public interface ISalesBillDetailDAL : ICRUDOperationsAsyncDAL<SalesBillDetail>
     {
         Task<bool> AddRange(List<SalesBillDetail> list);
         Task<bool> DeleteRange(List<SalesBillDetail> list);

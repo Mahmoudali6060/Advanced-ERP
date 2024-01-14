@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Account.DataAccessLayer
 {
-    public interface IUserProfileDAL : ICRUDOperationsDAL<UserProfile>
+    public interface IUserProfileDAL : ICRUDOperationsAsyncDAL<UserProfile>
     {
         Task<UserProfile> GetUserProfileByAppUserId(string appUserId);
         Task<UserProfile> GetUserProfileByCompanyId(long CompanyId);

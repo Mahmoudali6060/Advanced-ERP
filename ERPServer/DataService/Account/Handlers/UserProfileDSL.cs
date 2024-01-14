@@ -29,7 +29,7 @@ namespace Accout.DataServiceLayer
 
         public async Task<ResponseEntityList<UserProfileDTO>> GetAll(UserProfileSearchCriteriaDTO searchCriteriaDTO)
         {
-            var userProfileList = await _unitOfWork.UserProfileDAL.GetAll();
+            var userProfileList = await _unitOfWork.UserProfileDAL.GetAllAsync();
 
             #region Apply Filters
             userProfileList = ApplyFilert(userProfileList, searchCriteriaDTO);
@@ -84,7 +84,7 @@ namespace Accout.DataServiceLayer
         public async Task<UserProfileDTO> GetById(long id)
         {
             UserProfileDTO userProfileDTO = new UserProfileDTO();
-            var userProfile = await _unitOfWork.UserProfileDAL.GetById(id);
+            var userProfile = await _unitOfWork.UserProfileDAL.GetByIdAsync(id);
             userProfileDTO = _mapper.Map<UserProfileDTO>(userProfile);
             if (userProfile.Company != null)
             {
@@ -97,14 +97,14 @@ namespace Accout.DataServiceLayer
         {
             return new ResponseEntityList<UserProfileDTO>()
             {
-                List = _mapper.Map<IQueryable<UserProfileDTO>>(_unitOfWork.UserProfileDAL.GetAllLite().Result),
-                Total = _unitOfWork.UserProfileDAL.GetAllLite().Result.Count()
+                List = _mapper.Map<IQueryable<UserProfileDTO>>(_unitOfWork.UserProfileDAL.GetAllLiteAsync().Result),
+                Total = _unitOfWork.UserProfileDAL.GetAllLiteAsync().Result.Count()
             };
         }
 
         private bool IsExistUser(UserProfileDTO userProfile)
         {
-            var existUsers = _unitOfWork.UserProfileDAL.GetAllLite().Result;
+            var existUsers = _unitOfWork.UserProfileDAL.GetAllLiteAsync().Result;
             if (!string.IsNullOrWhiteSpace(userProfile.UserName))
             {
                 if (existUsers.Any(x => x.AppUser.UserName == userProfile.UserName && x.Id != userProfile.Id))
@@ -143,7 +143,7 @@ namespace Accout.DataServiceLayer
                     entity.AppUserId = appUser.Id;
                     entity.DefaultLanguage = "en";
                     UploadImage(entity);
-                    var result = await _unitOfWork.UserProfileDAL.Add(_mapper.Map<UserProfile>(entity));
+                    var result = await _unitOfWork.UserProfileDAL.AddAsync(_mapper.Map<UserProfile>(entity));
                     await _unitOfWork.CompleteAsync();
                     return result;
                 }
@@ -168,7 +168,7 @@ namespace Accout.DataServiceLayer
                     {
                         var company = UserMapper.MapCompany(entity);
                     }
-                    var result = await _unitOfWork.UserProfileDAL.Update(_mapper.Map<UserProfile>(entity));
+                    var result = await _unitOfWork.UserProfileDAL.UpdateAsync(_mapper.Map<UserProfile>(entity));
                     await _unitOfWork.CompleteAsync();
                     return result;
                 }
@@ -182,10 +182,10 @@ namespace Accout.DataServiceLayer
         {
             try
             {
-                UserProfile userProfile = await _unitOfWork.UserProfileDAL.GetById(id);
+                UserProfile userProfile = await _unitOfWork.UserProfileDAL.GetByIdAsync(id);
                 //>>To-Do >> Check this again
                 if (userProfile.AppUserId != null)
-                    await _unitOfWork.UserProfileDAL.Delete(userProfile);
+                    await _unitOfWork.UserProfileDAL.DeleteAsync(userProfile);
                 var result = await _unitOfWork.AccountDAL.DeleteUser(userProfile.AppUserId);
                 await _unitOfWork.CompleteAsync();
                 return result;

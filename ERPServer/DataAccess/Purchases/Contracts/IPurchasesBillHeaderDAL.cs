@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Purchases.DataAccessLayer
 {
-    public interface IPurchasesBillHeaderDAL : ICRUDOperationsDAL<PurchasesBillHeader>
+    public interface IPurchasesBillHeaderDAL :  IGenericRepository<PurchasesBillHeader>
     {
         Task<PurchasesBillHeader> GetByNumber(string number);
         Task<IQueryable<PurchasesBillHeader>> GetAllByVendorId(long vendorId);

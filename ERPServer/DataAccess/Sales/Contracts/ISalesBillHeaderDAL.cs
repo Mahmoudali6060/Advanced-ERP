@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Sales.DataAccessLayer
 {
-    public interface ISalesBillHeaderDAL : ICRUDOperationsDAL<SalesBillHeader>
+    public interface ISalesBillHeaderDAL : ICRUDOperationsAsyncDAL<SalesBillHeader>
     {
         Task<SalesBillHeader> GetByNumber(string number);
         Task<IQueryable<SalesBillHeader>> GetAllByClientId(long clientId);

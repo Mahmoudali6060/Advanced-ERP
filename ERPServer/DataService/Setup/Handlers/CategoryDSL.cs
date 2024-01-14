@@ -27,7 +27,7 @@ namespace DataService.Setup.Handlers
         #region Query
         public async Task<ResponseEntityList<CategoryDTO>> GetAll(CategorySearchDTO searchCriteriaDTO)
         {
-            var categoryList = await _unitOfWork.CategoryDAL.GetAll();
+            var categoryList = await _unitOfWork.CategoryDAL.GetAllAsync();
             int total = categoryList.Count();
 
             #region Apply Filters
@@ -51,16 +51,16 @@ namespace DataService.Setup.Handlers
 
         public async Task<CategoryDTO> GetById(long id)
         {
-            var test = _mapper.Map<CategoryDTO>(await _unitOfWork.CategoryDAL.GetById(id));
-            return _mapper.Map<CategoryDTO>(await _unitOfWork.CategoryDAL.GetById(id));
+            var test = _mapper.Map<CategoryDTO>(await _unitOfWork.CategoryDAL.GetByIdAsync(id));
+            return _mapper.Map<CategoryDTO>(await _unitOfWork.CategoryDAL.GetByIdAsync(id));
         }
 
         public async Task<ResponseEntityList<CategoryDTO>> GetAllLite()
         {
             return new ResponseEntityList<CategoryDTO>()
             {
-                List = _mapper.Map<IEnumerable<CategoryDTO>>(_unitOfWork.CategoryDAL.GetAllLite().Result),
-                Total = _unitOfWork.CategoryDAL.GetAllLite().Result.Count()
+                List = _mapper.Map<IEnumerable<CategoryDTO>>(_unitOfWork.CategoryDAL.GetAllLiteAsync().Result),
+                Total = _unitOfWork.CategoryDAL.GetAllLiteAsync().Result.Count()
             };
         }
 
@@ -72,22 +72,22 @@ namespace DataService.Setup.Handlers
         public async Task<long> Add(CategoryDTO entityDTO)
         {
             var entity = _mapper.Map<Category>(entityDTO);
-            var result = await _unitOfWork.CategoryDAL.Add(entity);
+            var result = await _unitOfWork.CategoryDAL.AddAsync(entity);
             await _unitOfWork.CompleteAsync();
             return entity.Id;
         }
 
         public async Task<long> Update(CategoryDTO entity)
         {
-            var result = await _unitOfWork.CategoryDAL.Update(_mapper.Map<Category>(entity));
+            var result = await _unitOfWork.CategoryDAL.UpdateAsync(_mapper.Map<Category>(entity));
             await _unitOfWork.CompleteAsync();
             return result;
         }
 
         public async Task<bool> Delete(long id)
         {
-            Category entity = await _unitOfWork.CategoryDAL.GetById(id);
-            var result = await _unitOfWork.CategoryDAL.Delete(entity);
+            Category entity = await _unitOfWork.CategoryDAL.GetByIdAsync(id);
+            var result = await _unitOfWork.CategoryDAL.DeleteAsync(entity);
             await _unitOfWork.CompleteAsync();
             return result;
         }

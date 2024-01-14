@@ -28,7 +28,7 @@ namespace DataService.Setup.Handlers
         #region Query
         public async Task<ResponseEntityList<ClientVendorDTO>> GetAll(ClientVendorSearchDTO searchCriteriaDTO)
         {
-            var userProfileList = await _unitOfWork.ClientVendorDAL.GetAll();
+            var userProfileList = await _unitOfWork.ClientVendorDAL.GetAllAsync();
 
             #region Apply Filters
             userProfileList = userProfileList.OrderByDescending(x => x.FullName);
@@ -53,15 +53,15 @@ namespace DataService.Setup.Handlers
 
         public async Task<ClientVendorDTO> GetById(long id)
         {
-            return _mapper.Map<ClientVendorDTO>(await _unitOfWork.ClientVendorDAL.GetById(id));
+            return _mapper.Map<ClientVendorDTO>(await _unitOfWork.ClientVendorDAL.GetByIdAsync(id));
         }
 
         public async Task<ResponseEntityList<ClientVendorDTO>> GetAllLite()
         {
             return new ResponseEntityList<ClientVendorDTO>()
             {
-                List = _mapper.Map<IEnumerable<ClientVendorDTO>>(_unitOfWork.ClientVendorDAL.GetAllLite().Result),
-                Total = _unitOfWork.ClientVendorDAL.GetAllLite().Result.Count()
+                List = _mapper.Map<IEnumerable<ClientVendorDTO>>(_unitOfWork.ClientVendorDAL.GetAllLiteAsync().Result),
+                Total = _unitOfWork.ClientVendorDAL.GetAllLiteAsync().Result.Count()
             };
         }
 
@@ -69,8 +69,8 @@ namespace DataService.Setup.Handlers
         {
             return new ResponseEntityList<ClientVendorDTO>()
             {
-                List = _mapper.Map<IEnumerable<ClientVendorDTO>>(_unitOfWork.ClientVendorDAL.GetAllLite().Result.Where(x => x.TypeId == typeId || x.TypeId == ClientVendorTypeEnum.All)),
-                Total = _unitOfWork.ClientVendorDAL.GetAllLite().Result.Count(x => x.TypeId == typeId)
+                List = _mapper.Map<IEnumerable<ClientVendorDTO>>(_unitOfWork.ClientVendorDAL.GetAllLiteAsync().Result.Where(x => x.TypeId == typeId || x.TypeId == ClientVendorTypeEnum.All)),
+                Total = _unitOfWork.ClientVendorDAL.GetAllLiteAsync().Result.Count(x => x.TypeId == typeId)
             };
         }
 
@@ -83,7 +83,7 @@ namespace DataService.Setup.Handlers
             UploadClientVendorImage(entityDTO);
             entityDTO.OppeningBalance = entityDTO.Debit - entityDTO.Credit;
             var entity = _mapper.Map<ClientVendor>(entityDTO);
-            await _unitOfWork.ClientVendorDAL.Add(entity);
+            await _unitOfWork.ClientVendorDAL.AddAsync(entity);
             await _unitOfWork.CompleteAsync();
             return entity.Id;
         }
@@ -91,15 +91,15 @@ namespace DataService.Setup.Handlers
         public async Task<long> Update(ClientVendorDTO entity)
         {
             UploadClientVendorImage(entity);
-            var result = await _unitOfWork.ClientVendorDAL.Update(_mapper.Map<ClientVendor>(entity));
+            var result = await _unitOfWork.ClientVendorDAL.UpdateAsync(_mapper.Map<ClientVendor>(entity));
             await _unitOfWork.CompleteAsync();
             return result;
         }
 
         public async Task<bool> Delete(long id)
         {
-            ClientVendor entity = await _unitOfWork.ClientVendorDAL.GetById(id);
-            var result = await _unitOfWork.ClientVendorDAL.Delete(entity);
+            ClientVendor entity = await _unitOfWork.ClientVendorDAL.GetByIdAsync(id);
+            var result = await _unitOfWork.ClientVendorDAL.DeleteAsync(entity);
             await _unitOfWork.CompleteAsync();
             return result;
         }

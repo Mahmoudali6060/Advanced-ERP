@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Purchases.DataAccessLayer
 {
-    public interface IPurchasesBillDetailDAL : ICRUDOperationsDAL<PurchasesBillDetail>
+    public interface IPurchasesBillDetailDAL : ICRUDOperationsAsyncDAL<PurchasesBillDetail>
     {
         Task<bool> AddRange(List<PurchasesBillDetail> list);
         Task<bool> DeleteRange(List<PurchasesBillDetail> list);

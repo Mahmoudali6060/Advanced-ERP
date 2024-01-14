@@ -28,7 +28,7 @@ namespace DataService.Setup.Handlers
         #region Query
         public async Task<ResponseEntityList<ProductDTO>> GetAll(ProductSearchDTO searchCriteriaDTO)
         {
-            var productList = await _unitOfWork.ProductDAL.GetAll();
+            var productList = await _unitOfWork.ProductDAL.GetAllAsync();
 
             #region Apply Filters
             productList = productList.OrderBy(x => x.Id);
@@ -84,16 +84,16 @@ namespace DataService.Setup.Handlers
 
         public async Task<ProductDTO> GetById(long id)
         {
-            var test = _mapper.Map<ProductDTO>(await _unitOfWork.ProductDAL.GetById(id));
-            return _mapper.Map<ProductDTO>(await _unitOfWork.ProductDAL.GetById(id));
+            var test = _mapper.Map<ProductDTO>(await _unitOfWork.ProductDAL.GetByIdAsync(id));
+            return _mapper.Map<ProductDTO>(await _unitOfWork.ProductDAL.GetByIdAsync(id));
         }
 
         public async Task<ResponseEntityList<ProductDTO>> GetAllLite()
         {
             return new ResponseEntityList<ProductDTO>()
             {
-                List = _mapper.Map<IEnumerable<ProductDTO>>(_unitOfWork.ProductDAL.GetAllLite().Result),
-                Total = _unitOfWork.ProductDAL.GetAllLite().Result.Count()
+                List = _mapper.Map<IEnumerable<ProductDTO>>(_unitOfWork.ProductDAL.GetAllLiteAsync().Result),
+                Total = _unitOfWork.ProductDAL.GetAllLiteAsync().Result.Count()
             };
         }
 
@@ -102,7 +102,7 @@ namespace DataService.Setup.Handlers
             return new ResponseEntityList<ProductDTO>()
             {
                 List = _mapper.Map<IEnumerable<ProductDTO>>(_unitOfWork.ProductDAL.GetAllLiteByCategoryId(categoryId).Result),
-                Total = _unitOfWork.ProductDAL.GetAllLite().Result.Count()
+                Total = _unitOfWork.ProductDAL.GetAllLiteAsync().Result.Count()
             };
         }
         #endregion
@@ -114,7 +114,7 @@ namespace DataService.Setup.Handlers
             var entity = _mapper.Map<Product>(entityDTO);
             entity.ProductTrackings = new List<ProductTracking>();
             entity.ProductTrackings.Add(GenerateProductTrackingList(entityDTO));
-            var result = await _unitOfWork.ProductDAL.Add(entity);
+            var result = await _unitOfWork.ProductDAL.AddAsync(entity);
             await _unitOfWork.CompleteAsync();
             return entity.Id;
         }
@@ -134,14 +134,14 @@ namespace DataService.Setup.Handlers
         {
             UploadImage(entity);
             SetProductTracking(entity);
-            var result = await _unitOfWork.ProductDAL.Update(_mapper.Map<Product>(entity));
+            var result = await _unitOfWork.ProductDAL.UpdateAsync(_mapper.Map<Product>(entity));
             await _unitOfWork.CompleteAsync();
             return result;
         }
 
         private void SetProductTracking(ProductDTO newProduct)
         {
-            var oldProduct = _unitOfWork.ProductDAL.GetById(newProduct.Id).Result;
+            var oldProduct = _unitOfWork.ProductDAL.GetByIdAsync(newProduct.Id).Result;
             if (oldProduct == null)
             {
                 ProductTracking productTracking = new ProductTracking()
@@ -152,7 +152,7 @@ namespace DataService.Setup.Handlers
                     NewData = newProduct.Price.ToString(),
                     ProductProcessTypeId = ProductProcessTypeEnum.ChangePrice
                 };
-                _unitOfWork.ProductTrackingDAL.Add(productTracking);
+                _unitOfWork.ProductTrackingDAL.AddAsync(productTracking);
             }
 
             if (oldProduct != null)
@@ -167,7 +167,7 @@ namespace DataService.Setup.Handlers
                         NewData = newProduct.Price.ToString(),
                         ProductProcessTypeId = ProductProcessTypeEnum.ChangePrice
                     };
-                    _unitOfWork.ProductTrackingDAL.Add(productTracking);
+                    _unitOfWork.ProductTrackingDAL.AddAsync(productTracking);
                 }
 
                 if (oldProduct.ActualQuantity != newProduct.ActualQuantity)
@@ -180,7 +180,7 @@ namespace DataService.Setup.Handlers
                         NewData = newProduct.ActualQuantity.ToString(),
                         ProductProcessTypeId = ProductProcessTypeEnum.ChangeQuantity
                     };
-                    _unitOfWork.ProductTrackingDAL.Add(productTracking);
+                    _unitOfWork.ProductTrackingDAL.AddAsync(productTracking);
                 }
             }
         }
@@ -198,8 +198,8 @@ namespace DataService.Setup.Handlers
 
         public async Task<bool> Delete(long id)
         {
-            Product entity = await _unitOfWork.ProductDAL.GetById(id);
-            var result = await _unitOfWork.ProductDAL.Delete(entity);
+            Product entity = await _unitOfWork.ProductDAL.GetByIdAsync(id);
+            var result = await _unitOfWork.ProductDAL.DeleteAsync(entity);
             await _unitOfWork.CompleteAsync();
             return result;
         }

@@ -31,7 +31,7 @@ namespace DataService.Setup.Handlers
         #region Query
         public async Task<ResponseEntityList<RepresentiveDTO>> GetAll(RepresentiveSearchDTO searchCriteriaDTO)
         {
-            var representiveList = await _unitOfWork.RepresentiveDAL.GetAll();
+            var representiveList = await _unitOfWork.RepresentiveDAL.GetAllAsync();
 
             #region Apply Filters
             representiveList = representiveList.OrderByDescending(x => x.Id);
@@ -57,15 +57,15 @@ namespace DataService.Setup.Handlers
 
         public async Task<RepresentiveDTO> GetById(long id)
         {
-            return _mapper.Map<RepresentiveDTO>(await _unitOfWork.RepresentiveDAL.GetById(id));
+            return _mapper.Map<RepresentiveDTO>(await _unitOfWork.RepresentiveDAL.GetByIdAsync(id));
         }
 
         public async Task<ResponseEntityList<RepresentiveDTO>> GetAllLite()
         {
             return new ResponseEntityList<RepresentiveDTO>()
             {
-                List = _mapper.Map<IEnumerable<RepresentiveDTO>>(_unitOfWork.RepresentiveDAL.GetAllLite().Result),
-                Total = _unitOfWork.RepresentiveDAL.GetAllLite().Result.Count()
+                List = _mapper.Map<IEnumerable<RepresentiveDTO>>(_unitOfWork.RepresentiveDAL.GetAllLiteAsync().Result),
+                Total = _unitOfWork.RepresentiveDAL.GetAllLiteAsync().Result.Count()
             };
         }
 
@@ -75,22 +75,22 @@ namespace DataService.Setup.Handlers
         public async Task<long> Add(RepresentiveDTO entityDTO)
         {
             var entity = _mapper.Map<Representive>(entityDTO);
-            await _unitOfWork.RepresentiveDAL.Add(entity);
+            await _unitOfWork.RepresentiveDAL.AddAsync(entity);
             await _unitOfWork.CompleteAsync();
             return entity.Id;
         }
 
         public async Task<long> Update(RepresentiveDTO entity)
         {
-            var result = await _unitOfWork.RepresentiveDAL.Update(_mapper.Map<Representive>(entity));
+            var result = await _unitOfWork.RepresentiveDAL.UpdateAsync(_mapper.Map<Representive>(entity));
             await _unitOfWork.CompleteAsync();
             return result;
         }
 
         public async Task<bool> Delete(long id)
         {
-            Representive entity = await _unitOfWork.RepresentiveDAL.GetById(id);
-            var result = await _unitOfWork.RepresentiveDAL.Delete(entity);
+            Representive entity = await _unitOfWork.RepresentiveDAL.GetByIdAsync(id);
+            var result = await _unitOfWork.RepresentiveDAL.DeleteAsync(entity);
             await _unitOfWork.CompleteAsync();
             return result;
         }

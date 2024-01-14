@@ -5,7 +5,7 @@ using Shared.DataAccessLayer.Contracts;
 
 namespace Setup.DataAccessLayer
 {
-    public interface ICountryDAL : ICRUDOperationsDAL<Country>
+    public interface ICountryDAL : ICRUDOperationsAsyncDAL<Country>
     {
     }
 }

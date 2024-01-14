@@ -15,17 +15,17 @@ namespace Sales.DataAccessLayer
         }
 
         #region Query
-        public async Task<IQueryable<SalesBillHeader>> GetAll()
+        public async Task<IQueryable<SalesBillHeader>> GetAllAsync()
         {
             return _appDbContext.SalesBillHeaders.Include(x => x.ClientVendor).Include(x => x.CreatedByProfile).Include(x => x.ModifiedByProfile).OrderByDescending(x => x.Id).AsQueryable();
         }
 
-        public async Task<IQueryable<SalesBillHeader>> GetAllLite()
+        public async Task<IQueryable<SalesBillHeader>> GetAllLiteAsync()
         {
             return _appDbContext.SalesBillHeaders.OrderByDescending(x => x.Date).AsQueryable();
         }
 
-        public async Task<SalesBillHeader> GetById(long id)
+        public async Task<SalesBillHeader> GetByIdAsync(long id)
         {
             var SalesBillHeader = _appDbContext.SalesBillHeaders.Include(x => x.ClientVendor).Include(x => x.SalesBillDetailList).Include(x => x.Treasury).SingleOrDefaultAsync(x => x.Id == id);
             return await SalesBillHeader;
@@ -46,21 +46,21 @@ namespace Sales.DataAccessLayer
 
         #region Command
 
-        public async Task<long> Add(SalesBillHeader entity)
+        public async Task<long> AddAsync(SalesBillHeader entity)
         {
             entity.Number = GenerateSequenceNumber();
             await _appDbContext.AddAsync(entity);
             return entity.Id;
         }
 
-        public async Task<long> Update(SalesBillHeader entity)
+        public async Task<long> UpdateAsync(SalesBillHeader entity)
         {
             _appDbContext.Entry(entity).State = EntityState.Modified;
             _appDbContext.Entry(entity).Property(x => x.Number).IsModified = false;
             return entity.Id;
         }
 
-        public async Task<bool> Delete(SalesBillHeader entity)
+        public async Task<bool> DeleteAsync(SalesBillHeader entity)
         {
             _appDbContext.SalesBillHeaders.Remove(entity);
             return true;
