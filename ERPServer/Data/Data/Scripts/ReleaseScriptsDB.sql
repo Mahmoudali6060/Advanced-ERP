@@ -75,5 +75,9 @@ ADD Number Nvarchar(500);
 
 End
 
-
+USE ERP_Beta
+GO
+BACKUP DATABASE ERP_Beta
+TO  DISK = N'D:\Programming\Backup_Dabase\ERP_Beta.bak'
+WITH CHECKSUM;
 
