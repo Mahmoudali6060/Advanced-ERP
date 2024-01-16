@@ -68,16 +68,26 @@ INSERT INTO [dbo].[RolePrivileges]
 End
 
 
-Begin  --13_1_2024 Published:False
+Begin  --13_1_2024 Published:True
 
 ALTER TABLE Treasuries
 ADD Number Nvarchar(500);
 
-End
 
 USE ERP_Beta
-GO
+
 BACKUP DATABASE ERP_Beta
 TO  DISK = N'D:\Programming\Backup_Dabase\ERP_Beta.bak'
 WITH CHECKSUM;
+End
+
+
+Begin  --15_1_2024 Published:False
+
+ALTER TABLE ClientVendors
+ADD CONSTRAINT UQ_ClientVendor_Name UNIQUE(FullName,TypeId);
+
+
+
+END
 

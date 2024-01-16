@@ -39,11 +39,6 @@ namespace Setup.DataAccessLayer
 
         public async Task<long> AddAsync(ClientVendor entity)
         {
-            var exsited = _appDbContext.ClientVendors.SingleOrDefault(x => x.FullName == entity.FullName);
-            if (exsited != null)
-            {
-                throw new Exception("Errors.DuplicatedFullName");
-            }
             entity.Code = GenerateSequenceNumber();
             _appDbContext.Entry(entity).State = EntityState.Added;
             return entity.Id;
