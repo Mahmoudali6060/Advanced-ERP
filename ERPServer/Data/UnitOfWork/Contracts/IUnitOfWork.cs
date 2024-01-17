@@ -46,6 +46,7 @@ namespace UnitOfWork.Contracts
 
         #region Accounting
         ITreasuryDAL TreasuryDAL { get; }
+        IAccountStatementDAL AccountStatementDAL { get; }
         #endregion
         Task CompleteAsync();
         public void Complete();

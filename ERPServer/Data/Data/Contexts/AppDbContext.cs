@@ -17,6 +17,7 @@ using System.Security.Claims;
 using System.Net;
 using Org.BouncyCastle.Asn1.Ocsp;
 using Data.Entities.Accouting;
+using IdentityModel;
 
 namespace Data.Contexts
 {
@@ -72,8 +73,10 @@ namespace Data.Contexts
         #endregion
 
         #region Accounting
+        public DbSet<AccountStatement> AccountStatements { get; set; }
         public DbSet<Treasury> Treasuries { get; set; }
         #endregion
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ClientVendor>()
@@ -89,10 +92,10 @@ namespace Data.Contexts
             value => JsonConvert.SerializeObject(value),
             serializedValue => JsonConvert.DeserializeObject<Dictionary<string, object>>(serializedValue));
 
-        
 
             modelBuilder.Entity<Product>().HasIndex(u => u.Name).IsUnique();
-
+            modelBuilder.Entity<ClientVendor>().HasIndex(p => new { p.FullName, p.TypeId }).IsUnique();
+           
             base.OnModelCreating(modelBuilder);
         }
 

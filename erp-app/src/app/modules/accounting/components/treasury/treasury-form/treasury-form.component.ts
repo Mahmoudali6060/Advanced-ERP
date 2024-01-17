@@ -9,7 +9,7 @@ import { HelperService } from 'src/app/shared/services/helper.service';
 import { SubjectService } from 'src/app/shared/services/subject.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { TreasuryDTO } from '../../../models/treasury.dto';
-import { TreasuryService } from '../../../services/treasury.service';
+import { AccountStatementService } from '../../../services/account-statement.service';
 import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 import { LabelValuePair } from 'src/app/shared/enums/label-value-pair';
 import { AccountTypeEnum } from 'src/app/shared/enums/account-type.enum';
@@ -17,6 +17,7 @@ import { PaymentMethodEnum } from 'src/app/shared/enums/payment-method.enum';
 import { TransactionTypeEnum } from 'src/app/shared/enums/transaction-type.enum';
 import { ClientVendorDTO, ClientVendorTypeEnum } from 'src/app/modules/setup/models/client-vendor.dto';
 import { ReportService } from 'src/app/modules/report/services/report.service';
+import { TreasuryService } from '../../../services/treasury.service';
 
 @Component({
 	selector: 'app-treasury-form',
@@ -173,19 +174,19 @@ export class TreasuryFormComponent {
 			// this.previousBalance = parseFloat((this.currentBalance - (clientVendor?.debit - clientVendor?.credit)).toFixed(2));
 
 			this.currentBalance = parseFloat((clientVendor?.debit - clientVendor?.credit).toFixed(2));
-			this.previousBalance = parseFloat((this.currentBalance + this.treasuryDTO?.debit + this.treasuryDTO?.credit).toFixed(2));
+			this.previousBalance = parseFloat((this.currentBalance + this.treasuryDTO?.outComing + this.treasuryDTO?.inComing).toFixed(2));
 
 		}
 		//Add
 		else {
 			this.previousBalance = parseFloat((clientVendor?.debit - clientVendor?.credit).toFixed(2));
-			this.currentBalance = parseFloat((this.previousBalance - this.treasuryDTO?.debit - this.treasuryDTO?.credit).toFixed(2));
+			this.currentBalance = parseFloat((this.previousBalance - this.treasuryDTO?.outComing - this.treasuryDTO?.inComing).toFixed(2));
 
 		}
 	}
 
 	onAmountsChange() {
-		this.currentBalance = parseFloat((this.previousBalance + this.treasuryDTO?.debit - this.treasuryDTO?.credit).toFixed(2));
+		this.currentBalance = parseFloat((this.previousBalance + this.treasuryDTO?.outComing - this.treasuryDTO?.inComing).toFixed(2));
 	}
 	saveAndPrint() {
 		this.save(true);

@@ -21,12 +21,12 @@ using Data.Contexts;
 
 namespace DataService.Accounting.Handlers
 {
-    public class TreasuryDSL : ITreasuryDSL
+    public class AccountStatementDSL : IAccountStatementDSL
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IFileManager _fileManager;
         private readonly IMapper _mapper;
-        public TreasuryDSL(IUnitOfWork unitOfWork, IFileManager fileManager, IMapper mapper)
+        public AccountStatementDSL(IUnitOfWork unitOfWork, IFileManager fileManager, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _fileManager = fileManager;
@@ -34,9 +34,9 @@ namespace DataService.Accounting.Handlers
         }
 
         #region Query
-        public async Task<ResponseEntityList<TreasuryDTO>> GetAll(TreasurySearchDTO searchCriteriaDTO)
+        public async Task<ResponseEntityList<AccountStatementDTO>> GetAll(AccountStatementSearchDTO searchCriteriaDTO)
         {
-            var treasuryList = await _unitOfWork.TreasuryDAL.GetAllWithIncludes(x => x.IsCancel == false, x => x.ClientVendor);
+            var treasuryList = await _unitOfWork.AccountStatementDAL.GetAllWithIncludes(x => x.IsCancel == false, x => x.ClientVendor);
             #region Apply Filters
             treasuryList = treasuryList.OrderByDescending(x => x.Id);
             treasuryList = ApplyFilert(treasuryList, searchCriteriaDTO);
@@ -49,8 +49,8 @@ namespace DataService.Accounting.Handlers
             #endregion
 
             #region Mapping and Return List
-            var treasuryDTOList = _mapper.Map<IEnumerable<TreasuryDTO>>(treasuryList);
-            return new ResponseEntityList<TreasuryDTO>
+            var treasuryDTOList = _mapper.Map<IEnumerable<AccountStatementDTO>>(treasuryList);
+            return new ResponseEntityList<AccountStatementDTO>
             {
                 List = treasuryDTOList,
                 Total = total,
@@ -59,14 +59,14 @@ namespace DataService.Accounting.Handlers
 
         }
 
-        public async Task<TreasuryGridDTO> GetAllForGrid(TreasurySearchDTO searchCriteriaDTO)
+        public async Task<AccountStatementGridDTO> GetAllForGrid(AccountStatementSearchDTO searchCriteriaDTO)
         {
-            var treasuryList = await _unitOfWork.TreasuryDAL.GetAllWithIncludes(x => x.IsCancel == false, x => x.ClientVendor);
+            var treasuryList = await _unitOfWork.AccountStatementDAL.GetAllWithIncludes(x => x.IsCancel == false, x => x.ClientVendor);
             #region Apply Filters
             treasuryList = treasuryList.OrderByDescending(x => x.Id);
             treasuryList = ApplyFilert(treasuryList, searchCriteriaDTO);
             int total = treasuryList.Count();
-            decimal balance = treasuryList.Sum(x => x.InComing - x.OutComing);
+            decimal balance = treasuryList.Sum(x => x.Debit - x.Credit);
             #endregion
 
             #region Apply Pagination
@@ -74,8 +74,8 @@ namespace DataService.Accounting.Handlers
             #endregion
 
             #region Mapping and Return List
-            var treasuryDTOList = _mapper.Map<IEnumerable<TreasuryDTO>>(treasuryList);
-            return new TreasuryGridDTO
+            var treasuryDTOList = _mapper.Map<IEnumerable<AccountStatementDTO>>(treasuryList);
+            return new AccountStatementGridDTO
             {
                 List = treasuryDTOList,
                 Total = total,
@@ -85,36 +85,36 @@ namespace DataService.Accounting.Handlers
 
         }
 
-        public async Task<TreasuryDTO> GetById(long id)
+        public async Task<AccountStatementDTO> GetById(long id)
         {
-            return _mapper.Map<TreasuryDTO>(await _unitOfWork.TreasuryDAL.GetByIdAsync(id));
+            return _mapper.Map<AccountStatementDTO>(await _unitOfWork.AccountStatementDAL.GetByIdAsync(id));
         }
 
-        public async Task<ResponseEntityList<TreasuryDTO>> GetAllLite()
+        public async Task<ResponseEntityList<AccountStatementDTO>> GetAllLite()
         {
-            return new ResponseEntityList<TreasuryDTO>()
+            return new ResponseEntityList<AccountStatementDTO>()
             {
-                List = _mapper.Map<IEnumerable<TreasuryDTO>>(_unitOfWork.TreasuryDAL.GetAllLiteAsync().Result),
-                Total = _unitOfWork.TreasuryDAL.GetAllLiteAsync().Result.Count()
+                List = _mapper.Map<IEnumerable<AccountStatementDTO>>(_unitOfWork.AccountStatementDAL.GetAllLiteAsync().Result),
+                Total = _unitOfWork.AccountStatementDAL.GetAllLiteAsync().Result.Count()
             };
         }
 
         #endregion
 
         #region Command
-        public async Task<long> Add(TreasuryDTO entityDTO)
+        public async Task<long> Add(AccountStatementDTO entityDTO)
         {
             entityDTO.Number = GenerateSequenceNumber();
-            var entity = _mapper.Map<Treasury>(entityDTO);
-            await _unitOfWork.TreasuryDAL.AddAsync(entity);
+            var entity = _mapper.Map<AccountStatement>(entityDTO);
+            await _unitOfWork.AccountStatementDAL.AddAsync(entity);
             #region Update Balance
             if (entityDTO.ClientVendorId.HasValue == true)
             {
                 var clientVendor = await _unitOfWork.ClientVendorDAL.GetByIdAsync(entityDTO.ClientVendorId.Value);
                 if (clientVendor != null)
                 {
-                    clientVendor.Debit += entity.InComing;
-                    clientVendor.Credit += entity.OutComing;
+                    clientVendor.Debit += entity.Debit;
+                    clientVendor.Credit += entity.Credit;
                     await _unitOfWork.ClientVendorDAL.UpdateAsync(clientVendor);
                 }
             }
@@ -124,18 +124,18 @@ namespace DataService.Accounting.Handlers
             return entity.Id;
         }
 
-        public async Task<long> Update(TreasuryDTO entity)
+        public async Task<long> Update(AccountStatementDTO entity)
         {
-            var oldEntity = await _unitOfWork.TreasuryDAL.GetByIdAsync(entity.Id);
-            var result = await _unitOfWork.TreasuryDAL.UpdateAsync(_mapper.Map<Treasury>(entity));
+            var oldEntity = await _unitOfWork.AccountStatementDAL.GetByIdAsync(entity.Id);
+            var result = await _unitOfWork.AccountStatementDAL.UpdateAsync(_mapper.Map<AccountStatement>(entity));
             #region Update Balance
             if (entity.ClientVendorId.HasValue == true)
             {
                 var clientVendor = await _unitOfWork.ClientVendorDAL.GetByIdAsync(entity.ClientVendorId.Value);
                 if (clientVendor != null)
                 {
-                    clientVendor.Debit += entity.InComing - oldEntity.InComing;
-                    clientVendor.Credit += entity.OutComing - oldEntity.OutComing;
+                    clientVendor.Debit += entity.Debit - oldEntity.Debit;
+                    clientVendor.Credit += entity.Credit - oldEntity.Credit;
                     await _unitOfWork.ClientVendorDAL.UpdateAsync(clientVendor);
                 }
             }
@@ -155,16 +155,16 @@ namespace DataService.Accounting.Handlers
 
         public async Task<bool> Delete(long id)
         {
-            Treasury entity = await _unitOfWork.TreasuryDAL.GetByIdAsync(id);
-            var result = await _unitOfWork.TreasuryDAL.DeleteAsync(entity);
+            AccountStatement entity = await _unitOfWork.AccountStatementDAL.GetByIdAsync(id);
+            var result = await _unitOfWork.AccountStatementDAL.DeleteAsync(entity);
             #region Update Balance
             if (entity.ClientVendorId.HasValue == true)
             {
                 var clientVendor = await _unitOfWork.ClientVendorDAL.GetByIdAsync(entity.ClientVendorId.Value);
                 if (clientVendor != null)
                 {
-                    clientVendor.Debit -= entity.InComing;
-                    clientVendor.Credit -= entity.OutComing;
+                    clientVendor.Debit -= entity.Debit;
+                    clientVendor.Credit -= entity.Credit;
                     await _unitOfWork.ClientVendorDAL.UpdateAsync(clientVendor);
                 }
             }
@@ -175,43 +175,43 @@ namespace DataService.Accounting.Handlers
         #endregion
 
         #region Helper Methods
-        private IQueryable<Treasury> ApplyFilert(IQueryable<Treasury> TreasuryList, TreasurySearchDTO searchCriteriaDTO)
+        private IQueryable<AccountStatement> ApplyFilert(IQueryable<AccountStatement> AccountStatementList, AccountStatementSearchDTO searchCriteriaDTO)
         {
             //Filter
             if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.Date))
             {
-                TreasuryList = TreasuryList.Where(x => x.Date.Date == DateTime.Parse(searchCriteriaDTO.Date));
+                AccountStatementList = AccountStatementList.Where(x => x.Date.Date == DateTime.Parse(searchCriteriaDTO.Date));
             }
 
             if (searchCriteriaDTO.AccountTypeId.HasValue)
             {
-                TreasuryList = TreasuryList.Where(x => x.AccountTypeId == searchCriteriaDTO.AccountTypeId);
+                AccountStatementList = AccountStatementList.Where(x => x.AccountTypeId == searchCriteriaDTO.AccountTypeId);
             }
 
             if (searchCriteriaDTO.ClientVendorId.HasValue)
             {
-                TreasuryList = TreasuryList.Where(x => x.ClientVendorId == searchCriteriaDTO.ClientVendorId);
+                AccountStatementList = AccountStatementList.Where(x => x.ClientVendorId == searchCriteriaDTO.ClientVendorId);
             }
 
 
 
             if (searchCriteriaDTO.PaymentMethodId.HasValue)
             {
-                TreasuryList = TreasuryList.Where(x => x.PaymentMethodId == searchCriteriaDTO.PaymentMethodId);
+                AccountStatementList = AccountStatementList.Where(x => x.PaymentMethodId == searchCriteriaDTO.PaymentMethodId);
             }
 
             if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.RefNo))
             {
-                TreasuryList = TreasuryList.Where(x => x.RefNo == searchCriteriaDTO.RefNo);
+                AccountStatementList = AccountStatementList.Where(x => x.RefNo == searchCriteriaDTO.RefNo);
             }
 
-            return TreasuryList;
+            return AccountStatementList;
         }
 
 
         private string GenerateSequenceNumber()
         {
-            var lastElement = _unitOfWork.TreasuryDAL.GetAllAsync().Result.OrderByDescending(x => x.Id).FirstOrDefault();
+            var lastElement = _unitOfWork.AccountStatementDAL.GetAllAsync().Result.OrderByDescending(x => x.Id).FirstOrDefault();
             if (lastElement == null)
             {
                 return "1000";

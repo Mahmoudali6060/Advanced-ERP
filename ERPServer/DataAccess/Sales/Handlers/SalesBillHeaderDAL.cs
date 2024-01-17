@@ -27,7 +27,7 @@ namespace Sales.DataAccessLayer
 
         public async Task<SalesBillHeader> GetByIdAsync(long id)
         {
-            var SalesBillHeader = _appDbContext.SalesBillHeaders.Include(x => x.ClientVendor).Include(x => x.SalesBillDetailList).Include(x => x.Treasury).SingleOrDefaultAsync(x => x.Id == id);
+            var SalesBillHeader = _appDbContext.SalesBillHeaders.Include(x => x.ClientVendor).Include(x => x.SalesBillDetailList).Include(x => x.AccountStatement).SingleOrDefaultAsync(x => x.Id == id);
             return await SalesBillHeader;
         }
 

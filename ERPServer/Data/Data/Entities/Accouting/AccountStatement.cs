@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Data.Entities.Accouting
 {
-    public class Treasury : AuditEntity
+    public class AccountStatement : AuditEntity
     {
         public string Number { get; set; }
         public DateTime Date { get; set; }
@@ -19,8 +19,8 @@ namespace Data.Entities.Accouting
         public long? ClientVendorId { get; set; }
         public string BeneficiaryName { get; set; }
         public PaymentMethodEnum? PaymentMethodId { get; set; }
-        public decimal InComing { get; set; }
-        public decimal OutComing { get; set; }
+        public decimal Debit { get; set; }
+        public decimal Credit { get; set; }
         public string RefNo { get; set; }
         public string Notes { get; set; }
         public bool IsCancel { get; set; }

@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { PaginationComponent } from 'src/app/shared/components/pagination/pagination.component';
 import { ConfigService } from 'src/app/shared/services/config.service';
 import { DialogService } from '../../../../../shared/services/confirmation-dialog.service';
-import { TreasuryService } from '../../../services/treasury.service';
+
 import { TreasuryDTO } from '../../../models/treasury.dto';
 import { TreasurySearchDTO } from '../../../models/treasury-search.dto';
 import { AlertService } from 'src/app/shared/services/alert.service';
@@ -16,6 +16,7 @@ import { TransactionTypeEnum } from 'src/app/shared/enums/transaction-type.enum'
 import { HelperService } from 'src/app/shared/services/helper.service';
 import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 import { ReportService } from 'src/app/modules/report/services/report.service';
+import { TreasuryService } from '../../../services/treasury.service';
 
 @Component({
 	selector: 'app-treasury-list',
@@ -134,8 +135,8 @@ export class TreasuryListComponent {
 		this.treasuryService.getAll(this.searchCriteriaDTO).subscribe((res: any) => {
 			this.treasuryList = res.list;
 			for (let item of this.treasuryList) {
-				this.incomingTotal += item.debit;
-				this.outcomingTotal += item.credit;
+				this.incomingTotal += item.outComing;
+				this.outcomingTotal += item.inComing;
 			}
 
 			setTimeout(() => {

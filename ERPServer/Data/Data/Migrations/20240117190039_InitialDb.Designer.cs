@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240116215339_InitialDB")]
-    partial class InitialDB
+    [Migration("20240117190039_InitialDb")]
+    partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Data.Entities.Accouting.Treasury", b =>
+            modelBuilder.Entity("Data.Entities.Accouting.AccountStatement", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,6 +82,82 @@ namespace Data.Migrations
 
                     b.Property<string>("Number")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PaymentMethodId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RefNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientVendorId");
+
+                    b.HasIndex("CreatedByProfileId");
+
+                    b.HasIndex("ModifiedByProfileId");
+
+                    b.ToTable("AccountStatements");
+                });
+
+            modelBuilder.Entity("Data.Entities.Accouting.Treasury", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<int>("AccountTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BeneficiaryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ClientVendorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatedByProfileId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CreatedByUsername")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("InComing")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsBilled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsCancel")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifiedByProfileId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ModifiedByUsername")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("OutComing")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("PaymentMethodId")
                         .HasColumnType("int");
@@ -165,6 +241,9 @@ namespace Data.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long?>("AccountStatementId")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("ClientVendorId")
                         .HasColumnType("bigint");
@@ -253,13 +332,12 @@ namespace Data.Migrations
                     b.Property<decimal>("TotalDiscount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<long?>("TreasuryId")
-                        .HasColumnType("bigint");
-
                     b.Property<decimal>("VatAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AccountStatementId");
 
                     b.HasIndex("ClientVendorId");
 
@@ -268,8 +346,6 @@ namespace Data.Migrations
                     b.HasIndex("CreatedByProfileId");
 
                     b.HasIndex("ModifiedByProfileId");
-
-                    b.HasIndex("TreasuryId");
 
                     b.ToTable("PurchasesBillHeader");
                 });
@@ -339,6 +415,9 @@ namespace Data.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long?>("AccountStatementId")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("ClientVendorId")
                         .HasColumnType("bigint");
@@ -430,13 +509,12 @@ namespace Data.Migrations
                     b.Property<decimal>("TotalDiscount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<long?>("TreasuryId")
-                        .HasColumnType("bigint");
-
                     b.Property<decimal>("VatAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AccountStatementId");
 
                     b.HasIndex("ClientVendorId");
 
@@ -445,8 +523,6 @@ namespace Data.Migrations
                     b.HasIndex("CreatedByProfileId");
 
                     b.HasIndex("ModifiedByProfileId");
-
-                    b.HasIndex("TreasuryId");
 
                     b.ToTable("SalesBillHeaders");
                 });
@@ -656,6 +732,10 @@ namespace Data.Migrations
                         .IsUnique()
                         .HasFilter("[FullName] IS NOT NULL");
 
+                    b.HasIndex("FullName", "TypeId")
+                        .IsUnique()
+                        .HasFilter("[FullName] IS NOT NULL");
+
                     b.ToTable("ClientVendors");
                 });
 
@@ -802,7 +882,6 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Price")
-                        .IsConcurrencyToken()
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("PurchasingPricePercentage")
@@ -1353,6 +1432,27 @@ namespace Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Data.Entities.Accouting.AccountStatement", b =>
+                {
+                    b.HasOne("Data.Entities.Setup.ClientVendor", "ClientVendor")
+                        .WithMany()
+                        .HasForeignKey("ClientVendorId");
+
+                    b.HasOne("Data.Entities.UserManagement.UserProfile", "CreatedByProfile")
+                        .WithMany()
+                        .HasForeignKey("CreatedByProfileId");
+
+                    b.HasOne("Data.Entities.UserManagement.UserProfile", "ModifiedByProfile")
+                        .WithMany()
+                        .HasForeignKey("ModifiedByProfileId");
+
+                    b.Navigation("ClientVendor");
+
+                    b.Navigation("CreatedByProfile");
+
+                    b.Navigation("ModifiedByProfile");
+                });
+
             modelBuilder.Entity("Data.Entities.Accouting.Treasury", b =>
                 {
                     b.HasOne("Data.Entities.Setup.ClientVendor", "ClientVendor")
@@ -1401,6 +1501,10 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.Purchases.PurchasesBillHeader", b =>
                 {
+                    b.HasOne("Data.Entities.Accouting.AccountStatement", "AccountStatement")
+                        .WithMany()
+                        .HasForeignKey("AccountStatementId");
+
                     b.HasOne("Data.Entities.Setup.ClientVendor", "ClientVendor")
                         .WithMany("PurchasesBillHeaderList")
                         .HasForeignKey("ClientVendorId")
@@ -1419,9 +1523,7 @@ namespace Data.Migrations
                         .WithMany()
                         .HasForeignKey("ModifiedByProfileId");
 
-                    b.HasOne("Data.Entities.Accouting.Treasury", "Treasury")
-                        .WithMany()
-                        .HasForeignKey("TreasuryId");
+                    b.Navigation("AccountStatement");
 
                     b.Navigation("ClientVendor");
 
@@ -1430,8 +1532,6 @@ namespace Data.Migrations
                     b.Navigation("CreatedByProfile");
 
                     b.Navigation("ModifiedByProfile");
-
-                    b.Navigation("Treasury");
                 });
 
             modelBuilder.Entity("Data.Entities.Sales.SalesBillDetail", b =>
@@ -1461,6 +1561,10 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.Sales.SalesBillHeader", b =>
                 {
+                    b.HasOne("Data.Entities.Accouting.AccountStatement", "AccountStatement")
+                        .WithMany()
+                        .HasForeignKey("AccountStatementId");
+
                     b.HasOne("Data.Entities.Setup.ClientVendor", "ClientVendor")
                         .WithMany("SalesBillHeaderList")
                         .HasForeignKey("ClientVendorId")
@@ -1479,9 +1583,7 @@ namespace Data.Migrations
                         .WithMany()
                         .HasForeignKey("ModifiedByProfileId");
 
-                    b.HasOne("Data.Entities.Accouting.Treasury", "Treasury")
-                        .WithMany()
-                        .HasForeignKey("TreasuryId");
+                    b.Navigation("AccountStatement");
 
                     b.Navigation("ClientVendor");
 
@@ -1490,8 +1592,6 @@ namespace Data.Migrations
                     b.Navigation("CreatedByProfile");
 
                     b.Navigation("ModifiedByProfile");
-
-                    b.Navigation("Treasury");
                 });
 
             modelBuilder.Entity("Data.Entities.Setup.AboutUs", b =>

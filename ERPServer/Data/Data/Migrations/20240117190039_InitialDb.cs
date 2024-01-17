@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class InitialDB : Migration
+    public partial class InitialDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -168,7 +168,7 @@ namespace Data.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -189,7 +189,7 @@ namespace Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,7 +209,7 @@ namespace Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -227,13 +227,13 @@ namespace Data.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -253,7 +253,7 @@ namespace Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -485,7 +485,7 @@ namespace Data.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -508,7 +508,7 @@ namespace Data.Migrations
                         column: x => x.RoleGroupId,
                         principalTable: "RoleGroups",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -570,6 +570,52 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AccountStatements",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AccountTypeId = table.Column<int>(type: "int", nullable: false),
+                    ClientVendorId = table.Column<long>(type: "bigint", nullable: true),
+                    BeneficiaryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PaymentMethodId = table.Column<int>(type: "int", nullable: true),
+                    Debit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Credit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    RefNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsCancel = table.Column<bool>(type: "bit", nullable: false),
+                    IsBilled = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedByProfileId = table.Column<long>(type: "bigint", nullable: true),
+                    CreatedByUsername = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedByProfileId = table.Column<long>(type: "bigint", nullable: true),
+                    ModifiedByUsername = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AccountStatements", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AccountStatements_ClientVendors_ClientVendorId",
+                        column: x => x.ClientVendorId,
+                        principalTable: "ClientVendors",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_AccountStatements_UserProfiles_CreatedByProfileId",
+                        column: x => x.CreatedByProfileId,
+                        principalTable: "UserProfiles",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_AccountStatements_UserProfiles_ModifiedByProfileId",
+                        column: x => x.ModifiedByProfileId,
+                        principalTable: "UserProfiles",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProductTrackings",
                 columns: table => new
                 {
@@ -596,7 +642,7 @@ namespace Data.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProductTrackings_UserProfiles_CreatedByProfileId",
                         column: x => x.CreatedByProfileId,
@@ -621,8 +667,8 @@ namespace Data.Migrations
                     ClientVendorId = table.Column<long>(type: "bigint", nullable: true),
                     BeneficiaryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PaymentMethodId = table.Column<int>(type: "int", nullable: true),
-                    Debit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Credit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    InComing = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    OutComing = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     RefNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsCancel = table.Column<bool>(type: "bit", nullable: false),
@@ -684,7 +730,7 @@ namespace Data.Migrations
                     RepresentiveId = table.Column<long>(type: "bigint", nullable: true),
                     ParentId = table.Column<long>(type: "bigint", nullable: true),
                     CompanyId = table.Column<long>(type: "bigint", nullable: true),
-                    TreasuryId = table.Column<long>(type: "bigint", nullable: true),
+                    AccountStatementId = table.Column<long>(type: "bigint", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -697,20 +743,20 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_PurchasesBillHeader", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_PurchasesBillHeader_AccountStatements_AccountStatementId",
+                        column: x => x.AccountStatementId,
+                        principalTable: "AccountStatements",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_PurchasesBillHeader_ClientVendors_ClientVendorId",
                         column: x => x.ClientVendorId,
                         principalTable: "ClientVendors",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PurchasesBillHeader_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_PurchasesBillHeader_Treasuries_TreasuryId",
-                        column: x => x.TreasuryId,
-                        principalTable: "Treasuries",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_PurchasesBillHeader_UserProfiles_CreatedByProfileId",
@@ -754,7 +800,7 @@ namespace Data.Migrations
                     IsReturned = table.Column<bool>(type: "bit", nullable: false),
                     ParentId = table.Column<long>(type: "bigint", nullable: true),
                     CompanyId = table.Column<long>(type: "bigint", nullable: true),
-                    TreasuryId = table.Column<long>(type: "bigint", nullable: true),
+                    AccountStatementId = table.Column<long>(type: "bigint", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -767,20 +813,20 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_SalesBillHeaders", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_SalesBillHeaders_AccountStatements_AccountStatementId",
+                        column: x => x.AccountStatementId,
+                        principalTable: "AccountStatements",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_SalesBillHeaders_ClientVendors_ClientVendorId",
                         column: x => x.ClientVendorId,
                         principalTable: "ClientVendors",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SalesBillHeaders_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_SalesBillHeaders_Treasuries_TreasuryId",
-                        column: x => x.TreasuryId,
-                        principalTable: "Treasuries",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_SalesBillHeaders_UserProfiles_CreatedByProfileId",
@@ -827,13 +873,13 @@ namespace Data.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PurchasesBillDetails_PurchasesBillHeader_PurchasesBillHeaderId",
                         column: x => x.PurchasesBillHeaderId,
                         principalTable: "PurchasesBillHeader",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -869,19 +915,34 @@ namespace Data.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SalesBillDetails_SalesBillHeaders_SalesBillHeaderId",
                         column: x => x.SalesBillHeaderId,
                         principalTable: "SalesBillHeaders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AboutUs_CompanyId",
                 table: "AboutUs",
                 column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccountStatements_ClientVendorId",
+                table: "AccountStatements",
+                column: "ClientVendorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccountStatements_CreatedByProfileId",
+                table: "AccountStatements",
+                column: "CreatedByProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccountStatements_ModifiedByProfileId",
+                table: "AccountStatements",
+                column: "ModifiedByProfileId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Advertisments_CompanyId",
@@ -950,6 +1011,13 @@ namespace Data.Migrations
                 filter: "[FullName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ClientVendors_FullName_TypeId",
+                table: "ClientVendors",
+                columns: new[] { "FullName", "TypeId" },
+                unique: true,
+                filter: "[FullName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ContactUs_CompanyId",
                 table: "ContactUs",
                 column: "CompanyId");
@@ -997,6 +1065,11 @@ namespace Data.Migrations
                 column: "PurchasesBillHeaderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PurchasesBillHeader_AccountStatementId",
+                table: "PurchasesBillHeader",
+                column: "AccountStatementId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PurchasesBillHeader_ClientVendorId",
                 table: "PurchasesBillHeader",
                 column: "ClientVendorId");
@@ -1015,11 +1088,6 @@ namespace Data.Migrations
                 name: "IX_PurchasesBillHeader_ModifiedByProfileId",
                 table: "PurchasesBillHeader",
                 column: "ModifiedByProfileId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PurchasesBillHeader_TreasuryId",
-                table: "PurchasesBillHeader",
-                column: "TreasuryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleGroups_CompanyId",
@@ -1047,6 +1115,11 @@ namespace Data.Migrations
                 column: "SalesBillHeaderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SalesBillHeaders_AccountStatementId",
+                table: "SalesBillHeaders",
+                column: "AccountStatementId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SalesBillHeaders_ClientVendorId",
                 table: "SalesBillHeaders",
                 column: "ClientVendorId");
@@ -1065,11 +1138,6 @@ namespace Data.Migrations
                 name: "IX_SalesBillHeaders_ModifiedByProfileId",
                 table: "SalesBillHeaders",
                 column: "ModifiedByProfileId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SalesBillHeaders_TreasuryId",
-                table: "SalesBillHeaders",
-                column: "TreasuryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_States_CompanyId",
@@ -1170,6 +1238,9 @@ namespace Data.Migrations
                 name: "Settings");
 
             migrationBuilder.DropTable(
+                name: "Treasuries");
+
+            migrationBuilder.DropTable(
                 name: "UnitOfMeasurements");
 
             migrationBuilder.DropTable(
@@ -1188,7 +1259,7 @@ namespace Data.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Treasuries");
+                name: "AccountStatements");
 
             migrationBuilder.DropTable(
                 name: "ClientVendors");

@@ -15,11 +15,11 @@ import { ClientVendorSearchCriteriaDTO } from 'src/app/modules/setup/models/clie
 import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 import { ReportService } from '../../../services/report.service';
 import { ClientVendorBalanceDTO } from 'src/app/modules/setup/models/client-vendor-balance.dto';
-import { TreasuryService } from 'src/app/modules/accounting/services/treasury.service';
+import { AccountStatementService } from 'src/app/modules/accounting/services/account-statement.service';
 import { TreasurySearchDTO } from 'src/app/modules/accounting/models/treasury-search.dto';
 import { AccountTypeEnum } from 'src/app/shared/enums/account-type.enum';
-import { TreasuryDTO } from 'src/app/modules/accounting/models/treasury.dto';
 import { PaymentMethodEnum } from 'src/app/shared/enums/payment-method.enum';
+import { AccountStatementDTO } from 'src/app/modules/accounting/models/account-statement-dto';
 
 @Component({
 	selector: 'app-account-statement-single-client',
@@ -32,7 +32,7 @@ export class AccountStatementSingleClientComponent {
 	clientList: Array<ClientVendorDTO>;
 	selectedClient: ClientVendorDTO = new ClientVendorDTO();
 	selectedClientId: number;
-	clientVendorBalanceList: Array<TreasuryDTO>;
+	clientVendorBalanceList: Array<AccountStatementDTO>;
 	currentBalance: number = 0;
 	paymentMethodEnum = PaymentMethodEnum
 	constructor(private clientVendorService: ClientVendorService,
@@ -41,7 +41,7 @@ export class AccountStatementSingleClientComponent {
 		private translate: TranslateService,
 		private _configService: ConfigService,
 		private reportService: ReportService,
-		private treasuryService: TreasuryService) {
+		private accountStatementService: AccountStatementService) {
 
 	}
 
@@ -75,7 +75,7 @@ export class AccountStatementSingleClientComponent {
 			searchCriteria.pageSize = 1000000;
 			searchCriteria.accountTypeId = AccountTypeEnum.Clients;
 			searchCriteria.clientVendorId = this.selectedClientId;
-			this.treasuryService.getAll(searchCriteria).subscribe((res: any) => {
+			this.accountStatementService.getAll(searchCriteria).subscribe((res: any) => {
 				this.clientVendorBalanceList = res.list;
 				if (isPrint)
 					setTimeout(() => {

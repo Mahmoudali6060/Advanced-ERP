@@ -132,10 +132,11 @@ namespace DataService.Sales.Handlers
             }
             #endregion
 
-            #region Add Sales and Treasury
+            #region Add Sales , AccountStatement and Treasury
             var salesBillHeader = _mapper.Map<SalesBillHeader>(entity);
             if (entity.IsTemp == false)
             {
+                salesBillHeader.AccountStatement = MapAccountStatement(entity);
                 salesBillHeader.Treasury = MapTreasury(entity);
             }
             var result = await _unitOfWork.SalesBillHeaderDAL.AddAsync(salesBillHeader);
@@ -169,6 +170,7 @@ namespace DataService.Sales.Handlers
 
         public async Task<long> Update(SalesBillHeaderDTO entity)
         {
+            AccountStatement addedAccountStatement = new AccountStatement();
             Treasury addedTreasury = new Treasury();
             var salesHeader = _mapper.Map<SalesBillHeader>(entity);
             var tempSalesBillDetailList = entity.SalesBillDetailList;
@@ -241,29 +243,56 @@ namespace DataService.Sales.Handlers
                 #endregion
 
 
+                #region Update AccountStatement
+
+                if (entity.AccountStatementId.HasValue)
+                {
+                    var accountStatement = await _unitOfWork.AccountStatementDAL.GetByIdAsync(entity.AccountStatementId.Value);
+                    accountStatement.PaymentMethodId = entity.PaymentMethodId;
+                    accountStatement.RefNo = entity.RefNo;
+                    accountStatement.Date = DateTime.Parse(entity.Date);
+                    if (entity.IsReturned)
+                    {
+                        accountStatement.Debit = entity.TotalAfterDiscount;
+                        accountStatement.Credit = entity.Paid;
+                    }
+                    else
+                    {
+                        accountStatement.Debit = entity.Paid;
+                        accountStatement.Credit = entity.TotalAfterDiscount;
+                    }
+                    await _unitOfWork.AccountStatementDAL.UpdateAsync(accountStatement);
+                }
+                else
+                {
+                    #region Add Sales and AccountStatement
+                    addedAccountStatement = MapAccountStatement(entity);
+                    await _unitOfWork.AccountStatementDAL.AddAsync(addedAccountStatement);
+                    #endregion
+                }
+                #endregion
+
                 #region Update Treasury
 
                 if (entity.TreasuryId.HasValue)
                 {
-                    var treasury = await _unitOfWork.TreasuryDAL.GetByIdAsync(entity.TreasuryId.Value);
-                    treasury.PaymentMethodId = entity.PaymentMethodId;
-                    treasury.RefNo = entity.RefNo;
-                    treasury.Date = DateTime.Parse(entity.Date);
+                    var accountStatement = await _unitOfWork.TreasuryDAL.GetByIdAsync(entity.TreasuryId.Value);
+                    accountStatement.PaymentMethodId = entity.PaymentMethodId;
+                    accountStatement.RefNo = entity.RefNo;
+                    accountStatement.Date = DateTime.Parse(entity.Date);
                     if (entity.IsReturned)
                     {
-                        treasury.Debit = entity.TotalAfterDiscount;
-                        treasury.Credit = entity.Paid;
+                        accountStatement.OutComing = entity.Paid;
                     }
                     else
                     {
-                        treasury.Debit = entity.Paid;
-                        treasury.Credit = entity.TotalAfterDiscount;
+                        accountStatement.InComing = entity.Paid;
                     }
-                    await _unitOfWork.TreasuryDAL.UpdateAsync(treasury);
+                    await _unitOfWork.TreasuryDAL.UpdateAsync(accountStatement);
                 }
                 else
                 {
-                    #region Add Sales and Treasury
+                    #region Add  Treasury
                     addedTreasury = MapTreasury(entity);
                     await _unitOfWork.TreasuryDAL.AddAsync(addedTreasury);
                     #endregion
@@ -274,6 +303,13 @@ namespace DataService.Sales.Handlers
             await _unitOfWork.CompleteAsync();
 
             #region Update TreauryId in SalesHeader
+            if (salesHeader.AccountStatementId == null && addedAccountStatement.Id > 0)
+            {
+                salesHeader.AccountStatementId = addedAccountStatement.Id;
+                await _unitOfWork.SalesBillHeaderDAL.UpdateAsync(salesHeader);
+                await _unitOfWork.CompleteAsync();
+            }
+
             if (salesHeader.TreasuryId == null && addedTreasury.Id > 0)
             {
                 salesHeader.TreasuryId = addedTreasury.Id;
@@ -321,6 +357,29 @@ namespace DataService.Sales.Handlers
                 }
                 #endregion
 
+                #region Update AccountStatement
+                if (entity.AccountStatementId.HasValue)
+                {
+                    var accountStatement = await _unitOfWork.AccountStatementDAL.GetByIdAsync(entity.AccountStatementId.Value);
+
+                    if (entity.IsReturned)
+                    {
+                        accountStatement.Debit += entity.TotalAfterDiscount;
+                        accountStatement.Credit += entity.Paid;
+                        //accountStatement.Notes = "فاتورة مرتجعات";
+                    }
+                    else
+                    {
+                        accountStatement.Debit -= entity.Paid;
+                        accountStatement.Credit -= entity.TotalAfterDiscount;
+                        //accountStatement.Notes = "فاتورة";
+                    }
+                    accountStatement.IsCancel = true;
+                    await _unitOfWork.AccountStatementDAL.UpdateAsync(accountStatement);
+                }
+                #endregion
+
+
                 #region Update Treasury
                 if (entity.TreasuryId.HasValue)
                 {
@@ -328,20 +387,17 @@ namespace DataService.Sales.Handlers
 
                     if (entity.IsReturned)
                     {
-                        treasury.Debit += entity.TotalAfterDiscount;
-                        treasury.Credit += entity.Paid;
-                        //treasury.Notes = "فاتورة مرتجعات";
+                        treasury.OutComing += entity.Paid;
                     }
                     else
                     {
-                        treasury.Debit -= entity.Paid;
-                        treasury.Credit -= entity.TotalAfterDiscount;
-                        //treasury.Notes = "فاتورة";
+                        treasury.InComing -= entity.Paid;
                     }
                     treasury.IsCancel = true;
                     await _unitOfWork.TreasuryDAL.UpdateAsync(treasury);
                 }
                 #endregion
+
             }
 
             #region Update SalesBillHeader
@@ -391,9 +447,9 @@ namespace DataService.Sales.Handlers
         }
 
 
-        private Treasury MapTreasury(SalesBillHeaderDTO entity)
+        private AccountStatement MapAccountStatement(SalesBillHeaderDTO entity)
         {
-            Treasury treasury = new Treasury()
+            AccountStatement accountStatement = new AccountStatement()
             {
                 Date = DateTime.Parse(entity.Date),
                 AccountTypeId = AccountTypeEnum.Clients,
@@ -407,22 +463,67 @@ namespace DataService.Sales.Handlers
 
             if (entity.IsReturned)
             {
-                treasury.Debit = entity.TotalAfterDiscount;
-                treasury.Credit = entity.Paid;
-                treasury.Notes = "فاتورة مرتجعات المبيعات";
+                accountStatement.Debit = entity.TotalAfterDiscount;
+                accountStatement.Credit = entity.Paid;
+                accountStatement.Notes = "فاتورة مرتجعات المبيعات";
 
             }
             else
             {
-                treasury.Debit = entity.Paid;
-                treasury.Credit = entity.TotalAfterDiscount;
-                treasury.Notes = "فاتورة مبيعات";
+                accountStatement.Debit = entity.Paid;
+                accountStatement.Credit = entity.TotalAfterDiscount;
+                accountStatement.Notes = "فاتورة مبيعات";
 
             }
 
-            return treasury;
+            return accountStatement;
         }
 
+        private Treasury MapTreasury(SalesBillHeaderDTO entity)
+        {
+            Treasury accountStatement = new Treasury()
+            {
+
+                Date = DateTime.Parse(entity.Date),
+                AccountTypeId = AccountTypeEnum.Clients,
+                ClientVendorId = entity.ClientVendorId,
+                BeneficiaryName = entity.ClientVendorName,
+                PaymentMethodId = entity.PaymentMethodId,
+                RefNo = entity.RefNo,
+                IsBilled = true,
+                Number = GenerateTreasurySequenceNumber()
+            };
+
+            if (entity.IsReturned)
+            {
+                accountStatement.InComing = 0;
+                accountStatement.OutComing = entity.Paid;
+                accountStatement.Notes = "فاتورة مرتجعات المبيعات";
+
+            }
+            else
+            {
+                accountStatement.InComing = entity.Paid;
+                accountStatement.OutComing = 0;
+                accountStatement.Notes = "فاتورة مبيعات";
+
+            }
+
+            return accountStatement;
+        }
+
+        private string GenerateTreasurySequenceNumber()
+        {
+            var lastElement = _unitOfWork.TreasuryDAL.GetAll().OrderByDescending(x => x.Id).FirstOrDefault();
+            if (lastElement == null)
+            {
+                return "1000";
+            }
+            int code = int.Parse(lastElement.Number) + 1;
+            return code.ToString();
+
+        }
+      
         #endregion
     }
 }

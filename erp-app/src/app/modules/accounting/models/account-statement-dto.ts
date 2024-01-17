@@ -3,7 +3,7 @@ import { PaymentMethodEnum } from "src/app/shared/enums/payment-method.enum";
 import { TransactionTypeEnum } from "src/app/shared/enums/transaction-type.enum";
 import { BaseDTO } from "src/app/shared/models/base-dto.model";
 
-export class TreasuryDTO extends BaseDTO {
+export class AccountStatementDTO extends BaseDTO {
 
     number: number;
     date: string | undefined;
@@ -12,8 +12,8 @@ export class TreasuryDTO extends BaseDTO {
     beneficiaryName: string | undefined;
     //transactionTypeId: TransactionTypeEnum;
     paymentMethodId: PaymentMethodEnum;
-    outComing: number = 0;
-    inComing: number = 0;
+    debit: number = 0;
+    credit: number = 0;
     refNo: string;
     notes: string;
     isBilled: boolean;

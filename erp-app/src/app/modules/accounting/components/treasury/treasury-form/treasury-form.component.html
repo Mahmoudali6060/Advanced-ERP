@@ -50,7 +50,7 @@
                                         <label for="previousBalance"
                                             class=" form-control-label">{{'General.PreviousBalance' |translate}}
                                             <span *ngIf="previousBalance!=0">
-                                                -{{(previousBalance>0?'General.Debit':'General.Credit')
+                                                -{{(previousBalance>0?'General.OutComing':'General.InComing')
                                                 |translate}}</span>
                                         </label>
                                         <input [disabled]="viewMode" [value]="previousBalance" type="text"
@@ -65,7 +65,7 @@
                                             class=" form-control-label">{{'General.CurrentBalance'
                                             |translate}}
                                             <span *ngIf="currentBalance!=0">
-                                                -{{(currentBalance>0?'General.Debit':'General.Credit')
+                                                -{{(currentBalance>0?'General.OutComing':'General.InComing')
                                                 |translate}}</span>
                                         </label>
                                         <input [disabled]="viewMode" [value]="currentBalance" type="text"
@@ -101,27 +101,27 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="debit" class=" form-control-label">
-                                            {{'General.Debit'|translate}} -{{'General.DebitDetails'|translate}} </label>
-                                        <input [disabled]="viewMode" [(ngModel)]="treasuryDTO.debit" type="number"
-                                            id="debit" class="form-control" #debit="ngModel"
-                                            [class.is-invalid]="debit.invalid && debit.touched"
-                                            [class.is-valid]="debit.valid" name="debit" id="debit" class="form-control"
+                                        <label for="outComing" class=" form-control-label">
+                                            {{'General.OutComing'|translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="treasuryDTO.outComing" type="number"
+                                            id="outComing" class="form-control" #outComing="ngModel"
+                                            [class.is-invalid]="outComing.invalid && outComing.touched"
+                                            [class.is-valid]="outComing.valid" name="outComing" id="outComing" class="form-control"
                                             aria-describedby="helpId" (change)="onAmountsChange()">
-                                        <small [hidden]="debit.valid || debit.untouched" id="helpId" class="text-muted"
+                                        <small [hidden]="outComing.valid || outComing.untouched" id="helpId" class="text-muted"
                                             [translate]="'Errors.ThisFieldIsRequired'"></small>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="credit" class=" form-control-label">{{'General.Credit'
-                                            |translate}}-{{'General.CreditDetails'|translate}} </label>
-                                        <input [disabled]="viewMode" [(ngModel)]="treasuryDTO.credit" type="number"
-                                            id="credit" class="form-control" #credit="ngModel"
-                                            [class.is-invalid]="credit.invalid && credit.touched"
-                                            [class.is-valid]="credit.valid" name="credit" id="credit"
+                                        <label for="inComing" class=" form-control-label">{{'General.InComing'
+                                            |translate}} </label>
+                                        <input [disabled]="viewMode" [(ngModel)]="treasuryDTO.inComing" type="number"
+                                            id="inComing" class="form-control" #inComing="ngModel"
+                                            [class.is-invalid]="inComing.invalid && inComing.touched"
+                                            [class.is-valid]="inComing.valid" name="inComing" id="inComing"
                                             class="form-control" aria-describedby="helpId" (change)="onAmountsChange()">
-                                        <!-- <small [hidden]="credit.valid || credit.untouched" id="helpId"
+                                        <!-- <small [hidden]="inComing.valid || inComing.untouched" id="helpId"
                                             class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small> -->
                                     </div>
                                 </div>
@@ -175,8 +175,8 @@
     <br>
     <br>
     <br>
-    <h2 class="text-center" *ngIf="treasuryDTO.debit>0"> إيصال إستلام نقدية</h2>
-    <h2 class="text-center" *ngIf="treasuryDTO.credit>0"> إيصال صرف نقدية</h2>
+    <h2 class="text-center" *ngIf="treasuryDTO.outComing>0"> إيصال إستلام نقدية</h2>
+    <h2 class="text-center" *ngIf="treasuryDTO.inComing>0"> إيصال صرف نقدية</h2>
     <!-- <h5 class="text-center">رقم:{{treasuryDTO.number}}</h5> -->
     <h6 class="text-center">التاريخ:{{treasuryDTO.date}}</h6>
     <h6 class="text-center" >رقم الإيصال: <span id="treasuryNumber"></span></h6>
@@ -188,19 +188,19 @@
         <div class="col-12">
             <table class="table-report" style="background-color: white !important;border: none !important" border="0">
 
-                <tr *ngIf="treasuryDTO.debit>0">
+                <tr *ngIf="treasuryDTO.inComing>0">
                     <td class="text-right"> استلمنا من السيد </td>
                     <td class="text-center text-bold"> {{treasuryDTO.beneficiaryName}} </td>
                     <td class="text-left">We received from</td>
                 </tr>
-                <tr *ngIf="treasuryDTO.credit>0">
+                <tr *ngIf="treasuryDTO.outComing>0">
                     <td class="text-right"> اصرفوا الى السيد </td>
                     <td class="text-center text-bold"> {{treasuryDTO.beneficiaryName}} </td>
                     <td class="text-left">Pay for</td>
                 </tr>
                 <tr>
                     <td class="text-right">مبلغ </td>
-                    <td class="text-center text-bold">{{ treasuryDTO.debit>0 ?treasuryDTO.debit:treasuryDTO.credit}}
+                    <td class="text-center text-bold">{{ treasuryDTO.outComing>0 ?treasuryDTO.outComing:treasuryDTO.inComing}}
                         جنيه مصري </td>
                     <td class="text-left">Amount</td>
                 </tr>

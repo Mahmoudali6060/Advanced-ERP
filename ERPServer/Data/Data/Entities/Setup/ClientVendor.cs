@@ -1,4 +1,5 @@
-﻿using Data.Entities.Purchases;
+﻿using Data.Entities.Accouting;
+using Data.Entities.Purchases;
 using Data.Entities.Sales;
 using Data.Entities.Shared;
 using Data.Entities.UserManagement;
@@ -31,7 +32,6 @@ namespace Data.Entities.Setup
         public virtual Company Company { get; set; }
         public virtual List<PurchasesBillHeader> PurchasesBillHeaderList { get; set; }
         public virtual List<SalesBillHeader> SalesBillHeaderList { get; set; }
-
-
+        public virtual List<AccountStatement> AccountStatementList { get; set; }
     }
 }

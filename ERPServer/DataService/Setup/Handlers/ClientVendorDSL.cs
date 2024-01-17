@@ -11,6 +11,8 @@ using DataService.Setup.Contracts;
 using System;
 using Shared.Enums;
 using Data.Contexts;
+using Data.Entities.Accouting;
+using Shared.Entities.Sales;
 
 namespace DataService.Setup.Handlers
 {
@@ -85,6 +87,7 @@ namespace DataService.Setup.Handlers
             UploadClientVendorImage(entityDTO);
             entityDTO.OppeningBalance = entityDTO.Debit - entityDTO.Credit;
             var entity = _mapper.Map<ClientVendor>(entityDTO);
+            entity.AccountStatementList = MapAccountStatement(entity);
             await _unitOfWork.ClientVendorDAL.AddAsync(entity);
             await _unitOfWork.CompleteAsync();
             return entity.Id;
@@ -149,6 +152,28 @@ namespace DataService.Setup.Handlers
             }
             int code = int.Parse(lastElement.Code) + 1;
             return code.ToString();
+        }
+
+
+        private List<AccountStatement> MapAccountStatement(ClientVendor entity)
+        {
+            List<AccountStatement> accountStatement = new List<AccountStatement>()
+            {
+                new AccountStatement()
+                {
+                     Date = DateTime.Now.Date,
+                     AccountTypeId =entity.TypeId==ClientVendorTypeEnum.Client? AccountTypeEnum.Clients:AccountTypeEnum.Vendors,
+                     BeneficiaryName = entity.FullName,
+                     //TransactionTypeId = TransactionTypeEnum.Incoming,
+                     PaymentMethodId = PaymentMethodEnum.Cash,
+                     //RefNo = entity.RefNo,
+                     IsBilled = true,
+                     Debit = entity.Debit,
+                     Credit = entity.Credit,
+                     Notes = "رصيد افتتاحي"
+                }
+            };
+            return accountStatement;
         }
 
         #endregion

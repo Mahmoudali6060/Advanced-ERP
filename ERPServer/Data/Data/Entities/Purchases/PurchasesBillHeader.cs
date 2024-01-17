@@ -42,6 +42,8 @@ namespace Data.Entities.Purchases
         public virtual List<PurchasesBillDetail> PurchasesBillDetailList { get; set; }
         public long? CompanyId { get; set; }
         public virtual Company Company { get; set; }
+        public long? AccountStatementId { get; set; }
+        public virtual AccountStatement AccountStatement { get; set; }
         public long? TreasuryId { get; set; }
         public virtual Treasury Treasury { get; set; }
     }

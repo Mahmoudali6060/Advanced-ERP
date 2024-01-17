@@ -113,6 +113,9 @@ namespace App.Helper
             #region Accouting
             services.AddTransient<ITreasuryDAL, TreasuryDAL>();
             services.AddTransient<ITreasuryDSL, TreasuryDSL>();
+
+            services.AddTransient<IAccountStatementDAL, AccountStatementDAL>();
+            services.AddTransient<IAccountStatementDSL, AccountStatementDSL>();
             #endregion
 
         }

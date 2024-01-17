@@ -35,6 +35,7 @@ namespace Shared.Entities.Sales
         public long ClientVendorId { get; set; }
         public string ClientVendorName { get; set; }
         public long? CompanyId { get; set; }
+        public long? AccountStatementId { get; set; }
         public long? TreasuryId { get; set; }
         public bool IsCancel { get; set; }
         public bool IsReturned { get; set; }

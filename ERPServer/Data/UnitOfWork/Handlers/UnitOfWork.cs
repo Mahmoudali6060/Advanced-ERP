@@ -61,6 +61,8 @@ namespace UnitOfWork.Handlers
 
         #region Accounting
         public ITreasuryDAL TreasuryDAL { get; private set; }
+        public IAccountStatementDAL AccountStatementDAL { get; private set; }
+
         #endregion
 
         public UnitofWork(AppDbContext context,
@@ -108,6 +110,7 @@ namespace UnitOfWork.Handlers
 
             #region Accounting 
             TreasuryDAL = new TreasuryDAL(_context);
+            AccountStatementDAL = new AccountStatementDAL(_context);
             #endregion
         }
 
