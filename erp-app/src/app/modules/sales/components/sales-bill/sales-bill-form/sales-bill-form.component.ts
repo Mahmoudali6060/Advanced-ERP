@@ -71,6 +71,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	hideBillnumber: boolean = false;
 	tempSalesBillDetailList: Array<SalesBillDetailsDTO> = new Array<SalesBillDetailsDTO>();
 	paymentMethodList: LabelValuePair[];
+	disableButton: boolean = false;
 
 	constructor(
 		private salesBillService: SalesBillService,
@@ -251,9 +252,11 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 				if (!item.discount) item.discount = 0;
 			}
 			if (!this.salesBillHeaderDTO.discount) this.salesBillHeaderDTO.discount = 0;
+			this.disableButton = true;
 			if (this.salesBillHeaderDTO.id) {
 				this.salesBillService.update(this.salesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
+					this.disableButton = false;
 					if (isPrint) {
 
 						this.print();
@@ -265,6 +268,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 				this.salesBillHeaderDTO.companyId = this.authService.loggedUserProfile?.companyId;
 				this.salesBillService.add(this.salesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
+					this.disableButton = false;
 					if (isPrint) {
 						this.getSalesBillById(res, isPrint);
 					}

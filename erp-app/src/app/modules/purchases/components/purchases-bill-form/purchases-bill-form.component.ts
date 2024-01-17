@@ -54,6 +54,7 @@ export class PurchasesBillFormComponent {
 	hideBillnumber: boolean = false;
 	tempPurchasesBillDetailList: PurchasesBillDetailsDTO[];
 	paymentMethodList: LabelValuePair[];
+	disableButton: boolean = false;
 
 	constructor(
 		private purchasesBillService: PurchasesBillService,
@@ -143,14 +144,14 @@ export class PurchasesBillFormComponent {
 				this.print();
 				this.back();
 			}
-			else{
+			else {
 				this.getAllProducts();
 				this.getAllVendors();
 				this.getAllRepresentives();
 				this.isTaxChange();
 				this.purchasesBillHeaderDTO.isReturned = this.isReturned;
 			}
-		
+
 
 		});
 	}
@@ -216,7 +217,7 @@ export class PurchasesBillFormComponent {
 			}
 		}
 
-		if (!purchasesBillDTO.paid) {
+		if (purchasesBillDTO.paid == null) {
 			this.toasterService.error(this.translate.instant("Errors.YouMustSetPaidAmount"));
 			return false;
 		}
@@ -249,9 +250,11 @@ export class PurchasesBillFormComponent {
 			}
 			if (!this.purchasesBillHeaderDTO.discount) this.purchasesBillHeaderDTO.discount = 0;
 
+			this.disableButton = true;
 			if (this.purchasesBillHeaderDTO.id) {
 				this.purchasesBillService.update(this.purchasesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
+					this.disableButton = false;
 					if (isPrint) {
 						this.print();
 					}
@@ -262,6 +265,7 @@ export class PurchasesBillFormComponent {
 				this.purchasesBillHeaderDTO.companyId = this.authService.loggedUserProfile?.companyId;
 				this.purchasesBillService.add(this.purchasesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
+					this.disableButton = false;
 					if (isPrint) {
 						this.getPurchasesBillById(res, isPrint);
 					}

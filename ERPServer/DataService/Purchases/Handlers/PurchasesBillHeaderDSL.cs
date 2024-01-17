@@ -9,19 +9,9 @@ using Shared.Entities.Purchases;
 using Data.Entities.Purchases;
 using DataService.Purchases.Contracts;
 using System;
-using Entities.Account;
-using Microsoft.EntityFrameworkCore;
-using MimeKit;
 using Shared.Entities.Setup;
 using Data.Entities.Accouting;
-using Shared.Entities.Purchases;
 using Shared.Enums;
-using Data.Entities.Purchases;
-using Shared.Entities.Purchases;
-using Data.Entities.Purchases;
-using Data.Entities.Purchases;
-using Data.Entities.Sales;
-using Data.Contexts;
 
 namespace DataService.Setup.Handlers
 {
@@ -41,7 +31,7 @@ namespace DataService.Setup.Handlers
         #region Query
         public async Task<ResponseEntityList<PurchasesBillHeaderDTO>> GetAll(PurchasesBillHeaderSearchDTO searchCriteriaDTO)
         {
-            var purchasesBillHeaderList = await _unitOfWork.PurchasesBillHeaderDAL.GetAllAsync();
+            var purchasesBillHeaderList = await _unitOfWork.PurchasesBillHeaderDAL.GetAllWithIncludes(null, x => x.ClientVendor,x => x.CreatedByProfile,x => x.ModifiedByProfile);
 
             #region Apply Filters
             purchasesBillHeaderList.OrderByDescending(x => x.Id);
@@ -66,7 +56,8 @@ namespace DataService.Setup.Handlers
 
         public async Task<PurchasesBillHeaderDTO> GetById(long id)
         {
-            var tt = _mapper.Map<PurchasesBillHeaderDTO>(await _unitOfWork.PurchasesBillHeaderDAL.GetByIdAsync(id));
+            var result = await _unitOfWork.PurchasesBillHeaderDAL.GetAllWithIncludes(x => x.Id == id, x => x.ClientVendor, x => x.PurchasesBillDetailList, x => x.Treasury);
+            var tt = _mapper.Map<PurchasesBillHeaderDTO>(result.ToList()[0]);
             return tt;
         }
 
@@ -131,13 +122,11 @@ namespace DataService.Setup.Handlers
                 {
 
                     var product = _unitOfWork.ProductDAL.GetById(item.ProductId);
-                    lock (product)
-                    {
-                        product.ActualQuantity = entity.IsReturned ? product.ActualQuantity - item.Quantity : product.ActualQuantity + item.Quantity;
-                        product.LastPurchasingPrice = item.PriceAfterDiscount;
-                        product.Price = product.Price;
-                        _unitOfWork.ProductDAL.Update(product);
-                    }
+
+                    product.ActualQuantity = entity.IsReturned ? product.ActualQuantity - item.Quantity : product.ActualQuantity + item.Quantity;
+                    product.LastPurchasingPrice = item.PriceAfterDiscount;
+                    product.Price = product.Price;
+                    _unitOfWork.ProductDAL.Update(product);
                 }
             }
             #endregion
@@ -149,33 +138,28 @@ namespace DataService.Setup.Handlers
             {
                 purchasesBillHeader.Treasury = MapTreasury(entity);
             }
-            lock (purchasesBillHeader)
-            {
-                var result = _unitOfWork.PurchasesBillHeaderDAL.Add(purchasesBillHeader);
-            }
+            var result = _unitOfWork.PurchasesBillHeaderDAL.Add(purchasesBillHeader);
             #endregion
 
             #region Update Balance
             if (entity.IsTemp == false)
             {
-                var clientVendor = _unitOfWork.ClientVendorDAL.GetByIdAsync(entity.ClientVendorId).Result;
-                lock (clientVendor)
-                {
-                    if (clientVendor != null)
-                    {
-                        if (entity.IsNewReturned)//Return Purchases Bill
-                        {
-                            clientVendor.Debit += entity.Paid;
-                            clientVendor.Credit += entity.TotalAfterDiscount;
-                        }
-                        else//Normal Purchases Bill
-                        {
-                            clientVendor.Debit += entity.TotalAfterDiscount;
-                            clientVendor.Credit += entity.Paid;
-                        }
+                var clientVendor = _unitOfWork.ClientVendorDAL.GetById(entity.ClientVendorId);
 
-                        _unitOfWork.ClientVendorDAL.UpdateAsync(clientVendor);
+                if (clientVendor != null)
+                {
+                    if (entity.IsNewReturned)//Return Purchases Bill
+                    {
+                        clientVendor.Debit += entity.Paid;
+                        clientVendor.Credit += entity.TotalAfterDiscount;
                     }
+                    else//Normal Purchases Bill
+                    {
+                        clientVendor.Debit += entity.TotalAfterDiscount;
+                        clientVendor.Credit += entity.Paid;
+                    }
+
+                    _unitOfWork.ClientVendorDAL.Update(clientVendor);
                 }
             }
             #endregion

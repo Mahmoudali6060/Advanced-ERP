@@ -10,6 +10,7 @@ using Data.Entities.Setup;
 using DataService.Setup.Contracts;
 using System;
 using Shared.Enums;
+using Data.Contexts;
 
 namespace DataService.Setup.Handlers
 {
@@ -80,6 +81,7 @@ namespace DataService.Setup.Handlers
         #region Command
         public async Task<long> Add(ClientVendorDTO entityDTO)
         {
+            entityDTO.Code = GenerateSequenceNumber();
             UploadClientVendorImage(entityDTO);
             entityDTO.OppeningBalance = entityDTO.Debit - entityDTO.Credit;
             var entity = _mapper.Map<ClientVendor>(entityDTO);
@@ -136,6 +138,19 @@ namespace DataService.Setup.Handlers
             }
             return true;
         }
+
+        private string GenerateSequenceNumber()
+        {
+            var lastElement = _unitOfWork.ClientVendorDAL.GetAll().OrderByDescending(p => p.Id)
+                       .FirstOrDefault();
+            if (lastElement == null)
+            {
+                return "1000";
+            }
+            int code = int.Parse(lastElement.Code) + 1;
+            return code.ToString();
+        }
+
         #endregion
     }
 }

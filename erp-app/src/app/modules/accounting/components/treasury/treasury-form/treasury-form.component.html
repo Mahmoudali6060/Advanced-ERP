@@ -149,11 +149,11 @@
                     </div>
                 </div>
                 <div class="flex-container p-3">
-                    <button *ngIf="!viewMode" (click)="saveAndPrint()" type="button"
+                    <button [disabled]="disableButton" *ngIf="!viewMode" (click)="saveAndPrint()" type="button"
                         class="btn btn-outline-success mr-1">
                         <i class="fa fa-print"></i>{{'General.SaveAndPrint' |translate}}
                     </button>
-                    <button *ngIf="!viewMode" (click)="save()" type="button" class="btn btn-outline-primary mr-1"
+                    <button [disabled]="disableButton" *ngIf="!viewMode" (click)="save()" type="button" class="btn btn-outline-primary mr-1"
                         [disabled]="frm.invalid">
                         <i class="fa fa-dot-circle-o"></i>{{'General.SaveChanges' |translate}}
                     </button>
@@ -179,7 +179,7 @@
     <h2 class="text-center" *ngIf="treasuryDTO.credit>0"> إيصال صرف نقدية</h2>
     <!-- <h5 class="text-center">رقم:{{treasuryDTO.number}}</h5> -->
     <h6 class="text-center">التاريخ:{{treasuryDTO.date}}</h6>
-    <h6 class="text-center">رقم الإيصال:{{treasuryDTO.id}}</h6>
+    <h6 class="text-center" >رقم الإيصال: <span id="treasuryNumber"></span></h6>
 
     <br>
     <br>

@@ -431,11 +431,11 @@
                     </div>
                 </div>
                 <div class="flex-container p-3">
-                    <button *ngIf="!viewMode" (click)="save(false,frm)" type="button"
+                    <button [disabled]="disableButton" appDisableDoubleClick *ngIf="!viewMode" (click)="save(false,frm)" type="button"
                         class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
                         <i class="fa fa-dot-circle-o"></i>{{'General.Save' |translate}}
                     </button>
-                    <button *ngIf="!viewMode" (click)="saveAndPrint()" type="button"
+                    <button [disabled]="disableButton" *ngIf="!viewMode" (click)="saveAndPrint()" type="button"
                         class="btn btn-outline-success mr-1">
                         <i class="fa fa-print"></i>{{'General.SaveAndPrint' |translate}}
                     </button>

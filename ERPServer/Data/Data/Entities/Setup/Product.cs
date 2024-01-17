@@ -1,5 +1,7 @@
 ﻿using Data.Entities.Shared;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Data.Entities.Setup
 {
@@ -7,8 +9,10 @@ namespace Data.Entities.Setup
     {
         public string Code { get; set; }
         public string BarCode { get; set; }
+
         public string Name { get; set; }
         public string ImageUrl { get; set; }
+       
         public decimal Price { get; set; }
         public decimal SellingPricePercentage { get; set; }//سعر البيع
         public decimal? LastSellingPrice { get; set; }//اخر سعر البيع 

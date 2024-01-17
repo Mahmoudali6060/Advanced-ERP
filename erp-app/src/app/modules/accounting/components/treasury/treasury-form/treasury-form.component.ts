@@ -35,6 +35,7 @@ export class TreasuryFormComponent {
 	paymentMethodEnum = PaymentMethodEnum;
 	currentBalance: number = 0;
 	previousBalance: number = 0;
+	disableButton: boolean = false;
 
 	constructor(
 		private treasuryService: TreasuryService,
@@ -125,9 +126,11 @@ export class TreasuryFormComponent {
 
 	save(isPrint?: boolean) {
 		if (this.validattion(this.treasuryDTO)) {
+			this.disableButton = true;
 			if (this.treasuryDTO.id) {
 				this.treasuryService.update(this.treasuryDTO).subscribe(res => {
 					this.toasterService.success("success");
+					this.disableButton = false;
 					if (isPrint) {
 						this.print();
 					}
@@ -137,6 +140,7 @@ export class TreasuryFormComponent {
 			else {
 				this.treasuryService.add(this.treasuryDTO).subscribe(res => {
 					this.toasterService.success("success");
+					this.disableButton = false;
 					if (isPrint) {
 						this.getTreasuryById(res, isPrint);
 					}
@@ -189,6 +193,8 @@ export class TreasuryFormComponent {
 	}
 
 	print() {
+		let number: any = document.getElementById('treasuryNumber');
+		number.innerHTML = this.treasuryDTO.number;
 		let div: any = document.getElementById('treasury-form');
 		this.reportService.print(this.translate.instant("Reports.TreasuryForm"), div);
 	}

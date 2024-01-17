@@ -98,6 +98,17 @@ export module Privileges {
 
     }
 
+    export module Accounting {//75
+
+        export enum Treasuries { // id = 76
+            View = 77,
+            Add = 78,
+            Edit = 79,
+            Delete = 80
+        }
+
+
+    }
     export module Reports {//62
 
         export enum AccountStatementAllClients { // id = 63

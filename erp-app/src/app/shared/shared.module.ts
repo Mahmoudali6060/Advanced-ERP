@@ -33,6 +33,7 @@ import { AuthService } from '../modules/authentication/services/auth.service';
 import { IfPrivilegeDirective } from './directives/if-privilege.directive';
 import { KendoUIControlsModule } from './modules/kendo-ui-controls.module';
 import { PendingChangesGuard } from './guards/pending-changes-guard.service';
+import { DisableDoubleClickDirective } from './directives/disable-double-click.directive';
 
 @NgModule({
 
@@ -72,7 +73,8 @@ import { PendingChangesGuard } from './guards/pending-changes-guard.service';
     LoaderComponent,
     ComboBoxComponent,
     IfPrivilegeDirective,
-    KendoUIControlsModule
+    KendoUIControlsModule,
+    DisableDoubleClickDirective
     // ModalBasicComponent
   ],
   schemas: [
@@ -85,6 +87,7 @@ import { PendingChangesGuard } from './guards/pending-changes-guard.service';
     LoaderComponent,
     ComboBoxComponent,
     IfPrivilegeDirective,
+    DisableDoubleClickDirective
 
   ],
   entryComponents: [

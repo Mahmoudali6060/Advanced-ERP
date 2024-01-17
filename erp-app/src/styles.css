@@ -345,6 +345,23 @@ i:hover {
     font-size: 14px;
 }
 
-.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked{
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
     background-color: #b5b8bb !important;
+}
+
+.k-state-disabled {
+    outline: none;
+    cursor: default;
+    opacity: .65;
+    -webkit-filter: grayscale(0.1);
+    filter: grayscale(0.1);
+    pointer-events: none;
+    box-shadow: none;
+}
+
+.disable-button {
+    pointer-events: none !important;
+    /* for "disabled" effect */
+    opacity: 0.9 !important;
+    background: #fff !important;
 }

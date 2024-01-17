@@ -27,6 +27,8 @@ namespace DataAccess.Shared.Handlers
             return _dbContext.Set<TEntity>().AsNoTracking();
         }
 
+       
+
         public async Task<IQueryable<TEntity>> GetAllWithIncludes(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includes)
         {
             IQueryable<TEntity> query = null;
@@ -42,6 +44,14 @@ namespace DataAccess.Shared.Handlers
             }
             return includes.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }
+
+        //public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includes)
+        //{
+        //    TEntity entity = _dbContext.Set<TEntity>()
+        //        .AsNoTracking()
+        //        .FirstOrDefault(predicate);
+        //    return includes.Aggregate(entity, (current, includeProperty) => current.Include(includeProperty));
+        //}
 
         public async Task<IQueryable<TEntity>> GetAllLiteAsync()
         {

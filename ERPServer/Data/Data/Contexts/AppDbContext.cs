@@ -89,10 +89,9 @@ namespace Data.Contexts
             value => JsonConvert.SerializeObject(value),
             serializedValue => JsonConvert.DeserializeObject<Dictionary<string, object>>(serializedValue));
 
-            //modelBuilder.Entity<Product>()
-            //         .HasOne(e => e.Category)
-            //         .WithMany(e => e.Products)
-            //         .OnDelete(DeleteBehavior.Restrict);
+        
+
+            modelBuilder.Entity<Product>().HasIndex(u => u.Name).IsUnique();
 
             base.OnModelCreating(modelBuilder);
         }

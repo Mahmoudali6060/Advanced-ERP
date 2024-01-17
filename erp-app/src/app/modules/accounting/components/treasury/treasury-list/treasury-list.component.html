@@ -146,6 +146,7 @@
             <table class="table table-data2">
                 <thead class="table-header-bc">
                     <tr>
+                        <th class="table-header-fc">{{'General.Number' |translate}}</th>
                         <th class="table-header-fc">{{'General.Date' |translate}}</th>
                         <th class="table-header-fc">{{'General.AccountType' |translate}}</th>
                         <th class="table-header-fc">{{'General.BeneficiaryName' |translate}}</th>
@@ -160,6 +161,7 @@
                 </thead>
                 <tbody>
                     <tr class="tr-shadow" *ngFor="let item of treasuryList">
+                        <td>{{item.number}}</td>
                         <td>{{item.date}}</td>
                         <td>
                             {{'AccountTypeEnum.'+accountTypeEnum[item.accountTypeId] |translate}}
@@ -169,7 +171,8 @@
                             {{'TransactionTypeEnum.'+transactionTypeEnum[item.transactionTypeId] |translate}}
                         </td> -->
                         <td>
-                            <span *ngIf="item.paymentMethodId>0"> {{'PaymentMethodEnum.'+paymentMethodEnum[item.paymentMethodId]
+                            <span *ngIf="item.paymentMethodId>0">
+                                {{'PaymentMethodEnum.'+paymentMethodEnum[item.paymentMethodId]
                                 |translate}}
                             </span>
                         </td>
