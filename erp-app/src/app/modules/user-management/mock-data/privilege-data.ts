@@ -60,6 +60,23 @@ export const PrivilegeDATA = [
     level: SideMenuLevelEnum.MainCategory,
     children: [
       {
+        id: SideMenuPageEnum.Companies,
+        name: 'Companies',
+        checked: false,
+        categoryId: SideMenuMainEnum.Setup,
+        level: SideMenuLevelEnum.Page,
+        children: [
+          {
+            id: Privileges.Setup.Companies.Edit,
+            name: 'Edit',
+            checked: false,
+            categoryId: SideMenuMainEnum.Setup,
+            level: SideMenuLevelEnum.Action,
+            children: []
+          },
+        ]
+      },
+      {
         id: SideMenuPageEnum.Categories,
         name: 'Categories',
         checked: false,

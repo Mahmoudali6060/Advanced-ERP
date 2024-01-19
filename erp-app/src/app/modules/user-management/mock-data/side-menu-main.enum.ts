@@ -10,6 +10,7 @@ export enum SideMenuMainEnum {
 
 export enum SideMenuPageEnum {
     DashboardPage = 2,
+    Companies = 100,
     Categories = 8,
     Products = 13,
     UnitOfMeasurements = 18,
@@ -17,11 +18,11 @@ export enum SideMenuPageEnum {
     Vendors = 28,
     Representives = 34,
     PurchasesBills = 40,
-    TempPurchasesBills = 76,
-    ReturnedPurchasesBills = 77,
+    TempPurchasesBills = 102,
+    ReturnedPurchasesBills = 103,
     SalesBills = 46,
-    TempSalesBills = 74,
-    ReturnedSalesBills = 75,
+    TempSalesBills = 104,
+    ReturnedSalesBills = 105,
     Users = 52,
     Roles = 57,
     Treasuries = 76,

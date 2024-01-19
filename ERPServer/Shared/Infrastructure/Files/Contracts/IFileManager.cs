@@ -9,5 +9,7 @@ namespace Infrastructure.Contracts
     {
         bool UploadFile(string fileName, FileStream file);
         bool UploadImageBase64(string filePath, string imageBase64);
+        bool RemoveFile(string fullFilePath);
+
     }
 }

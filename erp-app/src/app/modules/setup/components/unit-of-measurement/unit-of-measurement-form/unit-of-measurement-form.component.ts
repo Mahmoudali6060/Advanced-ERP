@@ -10,6 +10,7 @@ import { LabelValuePair } from 'src/app/shared/enums/label-value-pair';
 import { HelperService } from 'src/app/shared/services/helper.service';
 import { UnitOfMeasurementDTO } from '../../../models/unit-of-measurement.dto';
 import { UnitOfMeasurementService } from '../../../services/unit-of-measurement.service';
+import {Location} from '@angular/common';
 
 @Component({
 	selector: 'app-unit-of-measurement-form',
@@ -30,6 +31,7 @@ export class UnitOfMeasurementFormComponent {
 		private toasterService: ToastrService,
 		private _configService: ConfigService,
 		public helperService: HelperService,
+		private location: Location,
 		private router: Router) {
 	}
 

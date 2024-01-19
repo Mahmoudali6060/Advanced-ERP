@@ -58,6 +58,13 @@ export module Privileges {
             Delete = 38
         }
 
+        export enum Companies { // id = 100
+            View=101,
+            Add=102,
+            Edit = 103,
+            Delete=104
+        }
+
     }
 
     export module Sales {//39
@@ -69,14 +76,14 @@ export module Privileges {
             Delete = 44
         }
 
-        export enum TempSalesBills { // id = 40
+        export enum TempSalesBills { // id = 104
             View = 84,
             Add = 85,
             Edit = 86,
             Delete = 87
         }
 
-        export enum ReturnedSalesBills { // id = 40
+        export enum ReturnedSalesBills { // id = 105
             View = 88,
             Add = 89,
             Edit = 90,
@@ -94,14 +101,14 @@ export module Privileges {
             Delete = 50
         }
 
-        export enum TempPurchasesBills { // id = 40
+        export enum TempPurchasesBills { // id = 103
             View = 92,
             Add = 93,
             Edit = 94,
             Delete = 95
         }
 
-        export enum ReturnedPurchasesBills { // id = 40
+        export enum ReturnedPurchasesBills { // id = 102
             View = 96,
             Add = 97,
             Edit = 98,

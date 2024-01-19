@@ -128,46 +128,41 @@
                         <td>{{item.notes}}</td>
                         <td>
                             <div class="table-data-feature">
-                                <ng-template
-                                    *IfPrivilege="helperService.privileges.Purchases.PurchasesBills.View || helperService.privileges.Purchases.TempPurchasesBills.View">
-                                    <button *ngIf="!searchCriteriaDTO.isReturned" class="item ml-2"
-                                        data-toggle="tooltip" data-placement="top" title="" data-original-title="View"
-                                        [routerLink]="['/purchases-bill/purchases-bill-form-view/'+item.id]">
-                                        <i class="zmdi zmdi-eye"></i>
-                                    </button>
-                                </ng-template>
-                                <ng-template
-                                    *IfPrivilege="helperService.privileges.Purchases.PurchasesBills.Edit || helperService.privileges.Purchases.TempPurchasesBills.Edit">
+                                <button *ngIf="!searchCriteriaDTO.isReturned" class="item ml-2" data-toggle="tooltip"
+                                    data-placement="top" title="" data-original-title="View"
+                                    [routerLink]="['/purchases-bill/purchases-bill-form-view/'+item.id]">
+                                    <i class="zmdi zmdi-eye"></i>
+                                </button>
+                                <span
+                                    *IfPrivileges="[helperService.privileges.Purchases.PurchasesBills.Edit , helperService.privileges.Purchases.TempPurchasesBills.Edit]">
                                     <button *ngIf="!searchCriteriaDTO.isReturned" class="item ml-2"
                                         data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"
                                         [routerLink]="['/purchases-bill/purchases-bill-form/'+item.id]">
                                         <i class="zmdi zmdi-edit"></i>
                                     </button>
-                                </ng-template>
-                                <ng-template
-                                    *IfPrivilege="helperService.privileges.Purchases.ReturnedPurchasesBills.Edit">
+                                </span>
+                                <span *IfPrivilege="helperService.privileges.Purchases.ReturnedPurchasesBills.Edit">
                                     <button *ngIf="searchCriteriaDTO.isReturned" class="item ml-2" data-toggle="tooltip"
                                         data-placement="top" title="" data-original-title="Edit"
                                         [routerLink]="['/purchases-bill/purchases-bill-returned-form/'+item.id]">
                                         <i class="zmdi zmdi-edit"></i>
                                     </button>
-                                </ng-template>
-                                <ng-template
-                                    *IfPrivilege="helperService.privileges.Purchases.PurchasesBills.Delete || helperService.privileges.Purchases.ReturnedPurchasesBills.Delete || helperService.privileges.Purchases.TempPurchasesBills.Delete">
+                                </span>
+                                <span
+                                    *IfPrivileges="[helperService.privileges.Purchases.PurchasesBills.Delete , helperService.privileges.Purchases.ReturnedPurchasesBills.Delete , helperService.privileges.Purchases.TempPurchasesBills.Delete]">
                                     <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                         data-original-title="Delete" (click)="openConfirmationDialog(item)">
                                         <i class="zmdi zmdi-delete"></i>
                                     </button>
-                                </ng-template>
-                                <ng-template
-                                    *IfPrivilege="helperService.privileges.Purchases.ReturnedPurchasesBills.Add">
+                                </span>
+                                <span *IfPrivilege="helperService.privileges.Purchases.ReturnedPurchasesBills.Add">
                                     <button *ngIf="!searchCriteriaDTO.isReturned && !searchCriteriaDTO.isTemp"
                                         class="item ml-2" data-toggle="tooltip" type="button"
                                         title="{{'General.AddToReturnedBill' |translate}}"
                                         [routerLink]="['/purchases-bill/purchases-bill-new-returned-form/'+item.id]">
                                         <i class="fa fa-repeat"></i>
                                     </button>
-                                </ng-template>
+                                </span>
                             </div>
                         </td>
                     </tr>

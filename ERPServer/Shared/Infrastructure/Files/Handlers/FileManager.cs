@@ -70,5 +70,23 @@ namespace Infrastructure.Handlers
             }
         }
 
+        public bool RemoveFile(string fullFilePath)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(fullFilePath))
+                {
+                    File.Delete(fullFilePath);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return false;
+            }
+        }
+
     }
 }

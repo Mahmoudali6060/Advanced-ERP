@@ -31,6 +31,7 @@ export class CompanyFormComponent {
 		private route: ActivatedRoute,
 		private toasterService: ToastrService,
 		private _configService: ConfigService,
+		private location:Location,
 		private router: Router) {
 	}
 
@@ -61,6 +62,7 @@ export class CompanyFormComponent {
 	}
 
 	back() {
+		this.location.back();
 		this.router.navigateByUrl('setup/company-list');
 	}
 	validattion(companyDTO: CompanyDTO): boolean {

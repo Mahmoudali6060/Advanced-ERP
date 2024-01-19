@@ -107,7 +107,8 @@ namespace DataService.Setup.Handlers
         {
             if (entity.ImageBase64 != null)
             {
-                entity.ImageUrl = string.IsNullOrWhiteSpace(entity.ImageBase64) ? null : entity.Name + "_" + DateTime.Now.ToString("yyyy_MM_dd_HH_ss") + ".jpg";
+                _fileManager.RemoveFile("wwwroot/Images/Companies/" + entity.ImageUrl);
+                entity.ImageUrl = string.IsNullOrWhiteSpace(entity.ImageBase64) ? null : DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ssss") + ".jpg";
                 return _fileManager.UploadImageBase64("wwwroot/Images/Companies/" + entity.ImageUrl, entity.ImageBase64);
             }
             return true;

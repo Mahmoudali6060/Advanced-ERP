@@ -42,14 +42,14 @@ const routes: Routes = [
   { path: 'vendor-form', component: VendorFormComponent, canActivate: [AuthGuard],data: { privilegeId: Privileges.Setup.Vendors.Add } },
   { path: 'vendor-form/:id', component: VendorFormComponent , canActivate: [AuthGuard],data: { privilegeId: Privileges.Setup.Vendors.Edit }},
   
-  { path: 'company-list', component: CompanyListComponent },
-  { path: 'company-form', component: CompanyFormComponent},
-  { path: 'company-form/:id', component: CompanyFormComponent },
+  { path: 'company-list', component: CompanyListComponent,canActivate: [AuthGuard], data: { privilegeId: Privileges.Setup.Companies.View } },
+  { path: 'company-form', component: CompanyFormComponent,canActivate: [AuthGuard], data: { privilegeId: Privileges.Setup.Representives.Add }},
+  { path: 'company-form/:id', component: CompanyFormComponent,canActivate: [AuthGuard], data: { privilegeId: Privileges.Setup.Representives.Edit } },
   
   { path: 'representive-list', component: RepresentiveListComponent,canActivate: [AuthGuard], data: { privilegeId: Privileges.Setup.Representives.View } },
   { path: 'representive-form', component: RepresentiveFormComponent , canActivate: [AuthGuard],data: { privilegeId: Privileges.Setup.Representives.Add }},
   { path: 'representive-form/:id', component: RepresentiveFormComponent , canActivate: [AuthGuard],data: { privilegeId: Privileges.Setup.Representives.Add }},
-  
+
   { path: 'unit-of-measurement-list', component: UnitOfMeasurementListComponent , canActivate: [AuthGuard],data: { privilegeId: Privileges.Setup.UnitOfMeasurements.View }},
   { path: 'unit-of-measurement-form', component: UnitOfMeasurementFormComponent,canActivate: [AuthGuard], data: { privilegeId: Privileges.Setup.UnitOfMeasurements.Add } },
   { path: 'unit-of-measurement-form/:id', component: UnitOfMeasurementFormComponent, canActivate: [AuthGuard],data: { privilegeId: Privileges.Setup.UnitOfMeasurements.Edit } },

@@ -34,6 +34,7 @@ import { IfPrivilegeDirective } from './directives/if-privilege.directive';
 import { KendoUIControlsModule } from './modules/kendo-ui-controls.module';
 import { PendingChangesGuard } from './guards/pending-changes-guard.service';
 import { DisableDoubleClickDirective } from './directives/disable-double-click.directive';
+import { IfPrivilegesDirective } from './directives/if-privileges.directive';
 
 @NgModule({
 
@@ -73,6 +74,7 @@ import { DisableDoubleClickDirective } from './directives/disable-double-click.d
     LoaderComponent,
     ComboBoxComponent,
     IfPrivilegeDirective,
+    IfPrivilegesDirective,
     KendoUIControlsModule,
     DisableDoubleClickDirective
     // ModalBasicComponent
@@ -87,6 +89,7 @@ import { DisableDoubleClickDirective } from './directives/disable-double-click.d
     LoaderComponent,
     ComboBoxComponent,
     IfPrivilegeDirective,
+    IfPrivilegesDirective,
     DisableDoubleClickDirective
 
   ],

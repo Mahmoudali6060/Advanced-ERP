@@ -159,7 +159,8 @@
     "ClientPhoneNumber": "رقم هاتف العميل",
     "VendorPhoneNumber": "رقم هاتف المورد",
     "OutComing": "منصرف",
-    "InComing": "وارد"
+    "InComing": "وارد",
+    "EditCompanyData":"تعديل بيانات الشركة"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -578,6 +579,7 @@
     "AccountStatementSingleVendor": "كشف حساب المورد  (مُفَصَّل)",
     "ProductMinusQuantity": "المنتجات السالبة",
     "ProductLowQuantity": "المنتجات النواقص",
+    "Companies":"الشركات",
     "Users": "المستخدمين",
     "Roles": "الادوار",
     "Add": "إضافة",

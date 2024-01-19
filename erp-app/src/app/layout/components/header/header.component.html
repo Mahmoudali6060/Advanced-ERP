@@ -218,9 +218,9 @@
                                 <a href="#">
                                     <i class="zmdi zmdi-account"></i>Account</a>
                             </div> -->
-                            <div class="account-dropdown__item" [routerLink]="['/setup/company-form']">
-                                <a href="#">
-                                    <i class="zmdi zmdi-settings"></i>{{'General.GeneralSettings' | translate}}</a>
+                            <div *IfPrivilege="helperService.privileges.Setup.Companies.Edit" class="account-dropdown__item"   [routerLink]="['/setup/company-form/'+1]" >
+                                <a class="label">
+                                    <i class="zmdi zmdi-settings"></i>{{'General.EditCompanyData' | translate}}</a>
                             </div>
                             <!-- <div class="account-dropdown__item">
                                 <a href="#">
@@ -228,7 +228,7 @@
                             </div> -->
                         </div>
                         <div class="account-dropdown__body">
-                            <div class="account-dropdown__item">
+                            <div class="label account-dropdown__item">
                                 <app-change-langague>Change Language</app-change-langague>
                             </div>
                             <!-- <div class="account-dropdown__item">
