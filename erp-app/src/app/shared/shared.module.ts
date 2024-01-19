@@ -35,6 +35,7 @@ import { KendoUIControlsModule } from './modules/kendo-ui-controls.module';
 import { PendingChangesGuard } from './guards/pending-changes-guard.service';
 import { DisableDoubleClickDirective } from './directives/disable-double-click.directive';
 import { IfPrivilegesDirective } from './directives/if-privileges.directive';
+import { WhatsAppService } from './services/whatsApp.service';
 
 @NgModule({
 
@@ -110,7 +111,8 @@ import { IfPrivilegesDirective } from './directives/if-privileges.directive';
     StateService,
     CityService,
     PortService,
-    PendingChangesGuard
+    PendingChangesGuard,
+    WhatsAppService
 
   ],
 })

@@ -39,4 +39,12 @@ export class HttpHelperService {
             })
         });
     }
+
+    postWhatsUp(url: any, body: any) {
+        return this._http.post(url, body, {
+            headers: new HttpHeaders({
+                "Content-Type": "application/json"
+            })
+        });
+    }
 }
