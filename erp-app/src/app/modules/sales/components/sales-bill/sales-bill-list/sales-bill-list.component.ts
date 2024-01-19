@@ -9,6 +9,7 @@ import { SalesBillSearchCriteriaDTO } from '../../../models/sales-bill-search-cr
 import { SalesBillHeaderDTO } from '../../../models/sales-bill-header.dto';
 import { ClientVendorDTO, ClientVendorTypeEnum } from 'src/app/modules/setup/models/client-vendor.dto';
 import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
+import { HelperService } from 'src/app/shared/services/helper.service';
 
 @Component({
 	selector: 'app-sales-bill-list',
@@ -34,6 +35,7 @@ export class SalesBillListComponent {
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
 		private translate: TranslateService,
+		public helperService: HelperService,
 		private clientVendorService: ClientVendorService) {
 
 	}

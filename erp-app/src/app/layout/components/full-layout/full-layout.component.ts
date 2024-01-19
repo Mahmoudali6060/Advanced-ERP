@@ -13,7 +13,7 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
 })
 export class FullLayoutComponent implements OnInit {
 
-  constructor(private localStorageService:LocalStorageService,private translate: TranslateService,private helperService: HelperService ) {
+  constructor(private localStorageService:LocalStorageService,private translate: TranslateService,public helperService: HelperService ) {
     let userProfileDTO = this.localStorageService.getItem(LocalStorageItems.userProfile) as UserProfileDTO;
     if (userProfileDTO) {
       this.helperService.useLanguage(userProfileDTO.defaultLanguage);

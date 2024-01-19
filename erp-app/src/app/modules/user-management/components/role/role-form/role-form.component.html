@@ -56,7 +56,8 @@
                                                 name="inline-checkbox1" value="option1" class="">
                                             {{('Privileges.'+category.name) |translate }}
                                         </label>
-                                        <br><br>
+                                        <br>
+                                        <br>
                                         <div class="row">
                                             <div class="col-lg-12" *ngFor="let page of category.children">
                                                 <label for="page.id" class="form-check-label privilege-checkbox"
@@ -68,8 +69,7 @@
                                                 <br>
                                                 <div class="row privilege-checkbox">
                                                     <br>
-                                                    <br>
-                                                    <div class="col-lg-2 " *ngFor="let privilege of page.children">
+                                                    <div class="col-lg-3 " *ngFor="let privilege of page.children">
                                                         <label for="privilege.id " class="form-check-label"
                                                             (click)="select(privilege)">
                                                             <input [checked]="privilege.checked" type="checkbox"
@@ -78,6 +78,8 @@
                                                             {{('Privileges.'+privilege.name) |translate }}
                                                         </label>
                                                     </div>
+                                                    <br>
+                                                    <br>
                                                 </div>
                                             </div>
                                         </div>

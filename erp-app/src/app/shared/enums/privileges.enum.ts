@@ -24,7 +24,10 @@ export module Privileges {
             View = 14,
             Add = 15,
             Edit = 16,
-            Delete = 17
+            Delete = 17,
+            ChangePrice = 81,
+            ChangeQuantity = 82,
+            ViewProductTracking = 83
         }
 
         export enum UnitOfMeasurements { // id = 18
@@ -66,6 +69,20 @@ export module Privileges {
             Delete = 44
         }
 
+        export enum TempSalesBills { // id = 40
+            View = 84,
+            Add = 85,
+            Edit = 86,
+            Delete = 87
+        }
+
+        export enum ReturnedSalesBills { // id = 40
+            View = 88,
+            Add = 89,
+            Edit = 90,
+            Delete = 91
+        }
+
     }
 
     export module Purchases {//45
@@ -77,6 +94,19 @@ export module Privileges {
             Delete = 50
         }
 
+        export enum TempPurchasesBills { // id = 40
+            View = 92,
+            Add = 93,
+            Edit = 94,
+            Delete = 95
+        }
+
+        export enum ReturnedPurchasesBills { // id = 40
+            View = 96,
+            Add = 97,
+            Edit = 98,
+            Delete = 99
+        }
     }
 
     export module UserManagement {//51

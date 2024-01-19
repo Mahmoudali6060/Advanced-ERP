@@ -43,7 +43,7 @@ export class VendorListComponent {
 		private translate: TranslateService,
 		private _configService: ConfigService,
 		private SpinnerService: NgxSpinnerService,
-		private helperService: HelperService) {
+		public helperService: HelperService) {
 
 	}
 

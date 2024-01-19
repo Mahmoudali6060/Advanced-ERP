@@ -11,8 +11,8 @@
                 {{'General.TreasuryBalance'|translate}}: {{treasuryBalance}}
             </h3>
             <div class="table-data__tool-right">
-                <button [routerLink]="['/accounting/treasury-form']"
-                    class="au-btn au-btn-icon au-btn--black au-btn--small">
+                <button *IfPrivilege="helperService.privileges.Accounting.Treasuries.Add"
+                    [routerLink]="['/accounting/treasury-form']" class="au-btn au-btn-icon au-btn--black au-btn--small">
                     <i class="zmdi zmdi-plus"></i>{{'Treasury.AddTreasury' |translate}}
                 </button>
                 <button (click)="print()" type="button" class="btn btn-outline-success mr-1">
@@ -183,21 +183,19 @@
 
                         <td>
                             <div class="table-data-feature">
-                                <!-- <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
-                                    data-original-title="Edit" [routerLink]="['/accounting/treasury-form/'+item.id]">
-                                    <i class="zmdi zmdi-edit"></i>
-                                </button> -->
-                                <button *ngIf="!item.isBilled" class="item ml-2" data-toggle="tooltip"
-                                    data-placement="top" title="" data-original-title="View"
-                                    [routerLink]="['/accounting/treasury-form-view/'+item.id]">
-                                    <i class="zmdi zmdi-eye"></i>
-                                </button>
-                                <button *ngIf="!item.isBilled" class="item ml-2" data-toggle="tooltip"
-                                    data-placement="top" title="" data-original-title="Delete"
-                                    (click)="openConfirmationDialog(item)">
-                                    <i class="zmdi zmdi-delete"></i>
-                                </button>
-
+                                <ng-template *ngIf="!item.isBilled">
+                                    <button *IfPrivilege="helperService.privileges.Accounting.Treasuries.Edit"
+                                        class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                        data-original-title="View"
+                                        [routerLink]="['/accounting/treasury-form-view/'+item.id]">
+                                        <i class="zmdi zmdi-eye"></i>
+                                    </button>
+                                    <button *IfPrivilege="helperService.privileges.Accounting.Treasuries.Delete"
+                                        class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                        data-original-title="Delete" (click)="openConfirmationDialog(item)">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </button>
+                                </ng-template>
                             </div>
                         </td>
                     </tr>

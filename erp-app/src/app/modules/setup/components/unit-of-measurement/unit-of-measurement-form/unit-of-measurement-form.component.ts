@@ -29,7 +29,7 @@ export class UnitOfMeasurementFormComponent {
 		private route: ActivatedRoute,
 		private toasterService: ToastrService,
 		private _configService: ConfigService,
-		private helperService: HelperService,
+		public helperService: HelperService,
 		private router: Router) {
 	}
 

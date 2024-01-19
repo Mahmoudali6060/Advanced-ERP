@@ -40,6 +40,7 @@ export class PurchasesBillListComponent {
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
 		private translate: TranslateService,
+		public helperService: HelperService,
 		private clientVendorService: ClientVendorService) {
 
 	}

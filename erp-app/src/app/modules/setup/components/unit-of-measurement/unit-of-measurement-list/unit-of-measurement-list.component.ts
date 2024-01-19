@@ -33,7 +33,7 @@ export class UnitOfMeasurementListComponent {
 		private toastrService: ToastrService,
 		private translate: TranslateService,
 		private _configService: ConfigService,
-		private helperService: HelperService
+		public helperService: HelperService
 	) {
 
 	}

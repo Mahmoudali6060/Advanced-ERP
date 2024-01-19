@@ -25,7 +25,7 @@ export class RegisterComponent {
     private authService: AuthService,
     public translate: TranslateService,
     private localStorageService: LocalStorageService,
-    private helperService: HelperService,
+    public helperService: HelperService,
     private toasterService: ToastrService
   ) {
 

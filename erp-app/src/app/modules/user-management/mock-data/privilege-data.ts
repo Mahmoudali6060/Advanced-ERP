@@ -140,7 +140,32 @@ export const PrivilegeDATA = [
             categoryId: SideMenuMainEnum.Setup,
             level: SideMenuLevelEnum.Action,
             children: []
+          },
+          {
+            id: Privileges.Setup.Products.ChangePrice,
+            name: 'ChangePrice',
+            checked: false,
+            categoryId: SideMenuMainEnum.Setup,
+            level: SideMenuLevelEnum.Action,
+            children: []
+          },
+          {
+            id: Privileges.Setup.Products.ChangeQuantity,
+            name: 'ChangeQuantity',
+            checked: false,
+            categoryId: SideMenuMainEnum.Setup,
+            level: SideMenuLevelEnum.Action,
+            children: []
+          },
+          {
+            id: Privileges.Setup.Products.ViewProductTracking,
+            name: 'ViewProductTracking',
+            checked: false,
+            categoryId: SideMenuMainEnum.Setup,
+            level: SideMenuLevelEnum.Action,
+            children: []
           }
+
         ]
       },
       {
@@ -362,7 +387,92 @@ export const PrivilegeDATA = [
             children: []
           }
         ]
-      }
+      },
+      {
+        id: SideMenuPageEnum.TempPurchasesBills,
+        name: 'TempPurchasesBills',
+        checked: false,
+        categoryId: SideMenuMainEnum.Purchases,
+        level: SideMenuLevelEnum.Page,
+        children: [
+          {
+            id: Privileges.Purchases.TempPurchasesBills.View,
+            name: 'View',
+            checked: false,
+            categoryId: SideMenuMainEnum.Purchases,
+            level: SideMenuLevelEnum.Action,
+            children: []
+          },
+          {
+            id: Privileges.Purchases.TempPurchasesBills.Add,
+            name: 'Add',
+            checked: false,
+            categoryId: SideMenuMainEnum.Purchases,
+            level: SideMenuLevelEnum.Action,
+            children: []
+          },
+          {
+            id: Privileges.Purchases.TempPurchasesBills.Edit,
+            name: 'Edit',
+            checked: false,
+            categoryId: SideMenuMainEnum.Purchases,
+            level: SideMenuLevelEnum.Action,
+            children: []
+
+          },
+          {
+            id: Privileges.Purchases.TempPurchasesBills.Delete,
+            name: 'Delete',
+            checked: false,
+            categoryId: SideMenuMainEnum.Purchases,
+            level: SideMenuLevelEnum.Action,
+            children: []
+          }
+        ]
+      },
+      {
+        id: SideMenuPageEnum.ReturnedPurchasesBills,
+        name: 'ReturnedPurchasesBills',
+        checked: false,
+        categoryId: SideMenuMainEnum.Purchases,
+        level: SideMenuLevelEnum.Page,
+        children: [
+          {
+            id: Privileges.Purchases.ReturnedPurchasesBills.View,
+            name: 'View',
+            checked: false,
+            categoryId: SideMenuMainEnum.Purchases,
+            level: SideMenuLevelEnum.Action,
+            children: []
+          },
+          {
+            id: Privileges.Purchases.ReturnedPurchasesBills.Add,
+            name: 'Add',
+            checked: false,
+            categoryId: SideMenuMainEnum.Purchases,
+            level: SideMenuLevelEnum.Action,
+            children: []
+          },
+          {
+            id: Privileges.Purchases.ReturnedPurchasesBills.Edit,
+            name: 'Edit',
+            checked: false,
+            categoryId: SideMenuMainEnum.Purchases,
+            level: SideMenuLevelEnum.Action,
+            children: []
+
+          },
+          {
+            id: Privileges.Purchases.ReturnedPurchasesBills.Delete,
+            name: 'Delete',
+            checked: false,
+            categoryId: SideMenuMainEnum.Purchases,
+            level: SideMenuLevelEnum.Action,
+            children: []
+          }
+        ]
+      },
+   
 
     ]
   },
@@ -405,7 +515,91 @@ export const PrivilegeDATA = [
 
           },
           {
-            id: Privileges.Purchases.PurchasesBills.Delete,
+            id: Privileges.Sales.SalesBills.Delete,
+            name: 'Delete',
+            checked: false,
+            categoryId: SideMenuMainEnum.Sales,
+            level: SideMenuLevelEnum.Action,
+            children: []
+          }
+        ]
+      },
+      {
+        id: SideMenuPageEnum.TempSalesBills,
+        name: 'TempSalesBills',
+        checked: false,
+        categoryId: SideMenuMainEnum.Sales,
+        level: SideMenuLevelEnum.Page,
+        children: [
+          {
+            id: Privileges.Sales.TempSalesBills.View,
+            name: 'View',
+            checked: false,
+            categoryId: SideMenuMainEnum.Sales,
+            level: SideMenuLevelEnum.Action,
+            children: []
+          },
+          {
+            id: Privileges.Sales.TempSalesBills.Add,
+            name: 'Add',
+            checked: false,
+            categoryId: SideMenuMainEnum.Sales,
+            level: SideMenuLevelEnum.Action,
+            children: []
+          },
+          {
+            id: Privileges.Sales.TempSalesBills.Edit,
+            name: 'Edit',
+            checked: false,
+            categoryId: SideMenuMainEnum.Sales,
+            level: SideMenuLevelEnum.Action,
+            children: []
+
+          },
+          {
+            id: Privileges.Sales.TempSalesBills.Delete,
+            name: 'Delete',
+            checked: false,
+            categoryId: SideMenuMainEnum.Purchases,
+            level: SideMenuLevelEnum.Action,
+            children: []
+          }
+        ]
+      },
+      {
+        id: SideMenuPageEnum.ReturnedSalesBills,
+        name: 'ReturnedSalesBills',
+        checked: false,
+        categoryId: SideMenuMainEnum.Sales,
+        level: SideMenuLevelEnum.Page,
+        children: [
+          {
+            id: Privileges.Sales.ReturnedSalesBills.View,
+            name: 'View',
+            checked: false,
+            categoryId: SideMenuMainEnum.Sales,
+            level: SideMenuLevelEnum.Action,
+            children: []
+          },
+          {
+            id: Privileges.Sales.ReturnedSalesBills.Add,
+            name: 'Add',
+            checked: false,
+            categoryId: SideMenuMainEnum.Sales,
+            level: SideMenuLevelEnum.Action,
+            children: []
+          },
+          {
+            id: Privileges.Sales.ReturnedSalesBills.Edit,
+            name: 'Edit',
+            checked: false,
+            categoryId: SideMenuMainEnum.Sales,
+            level: SideMenuLevelEnum.Action,
+            children: []
+
+          },
+          {
+            id: Privileges.Sales.ReturnedSalesBills.Delete,
             name: 'Delete',
             checked: false,
             categoryId: SideMenuMainEnum.Purchases,
@@ -517,8 +711,8 @@ export const PrivilegeDATA = [
     level: SideMenuLevelEnum.MainCategory,
     children: [
       {
-        id: SideMenuPageEnum.Users,
-        name: 'Users',
+        id: SideMenuPageEnum.Treasuries,
+        name: 'Treasuries',
         checked: false,
         categoryId: SideMenuMainEnum.Accounting,
         level: SideMenuLevelEnum.Page,

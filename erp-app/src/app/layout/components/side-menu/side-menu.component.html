@@ -14,7 +14,7 @@
         <ng-container>
             <nav class="navbar-sidebar2">
                 <ul class="list-unstyled navbar__list">
-                    <li routerLinkActive="active">
+                    <li routerLinkActive="active" *IfPrivilege="helperService.privileges.Dashboard.DashboardPage.View">
                         <a [routerLink]="['/dashboard']">
                             <i class="fas fa-chart-bar"></i><span translate>SideMenu.Dashboard</span> </a>
                     </li>
@@ -26,34 +26,36 @@
                             </span>
                         </a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
-                            <li routerLinkActive="active">
+                            <li routerLinkActive="active" *IfPrivilege="helperService.privileges.Setup.Categories.View">
                                 <a [routerLink]="['/setup/category-list']">
                                     <i class="fa fa-envelope"></i><span translate>SideMenu.Categories</span></a>
                             </li>
-                            
-                            <li routerLinkActive="active">
+
+                            <li routerLinkActive="active" *IfPrivilege="helperService.privileges.Setup.Products.View">
                                 <a [routerLink]="['/setup/product-list-view']">
                                     <i class="fa fa-question-circle"></i><span translate>SideMenu.Products</span></a>
                             </li>
-                            <li routerLinkActive="active">
+                            <li routerLinkActive="active"
+                                *IfPrivilege="helperService.privileges.Setup.UnitOfMeasurements.View">
                                 <a [routerLink]="['/setup/unit-of-measurement-list']">
                                     <i class="fa fa-question-circle"></i><span
                                         translate>SideMenu.UnitOfMeasurements</span></a>
                             </li>
-                            <li routerLinkActive="active">
+                            <li routerLinkActive="active" *IfPrivilege="helperService.privileges.Setup.Clients.View">
                                 <a [routerLink]="['/setup/client-list']">
                                     <i class="fa fa-question-circle"></i><span translate>SideMenu.Clients</span></a>
                             </li>
-                            <li routerLinkActive="active">
+                            <li routerLinkActive="active" *IfPrivilege="helperService.privileges.Setup.Vendors.View">
                                 <a [routerLink]="['/setup/vendor-list']">
                                     <i class="fa fa-question-circle"></i><span translate>SideMenu.Vendors</span></a>
                             </li>
-                            <li routerLinkActive="active">
+                            <li routerLinkActive="active"
+                                *IfPrivilege="helperService.privileges.Setup.Representives.View">
                                 <a [routerLink]="['/setup/representive-list']">
                                     <i class="fa fa-question-circle"></i><span
                                         translate>SideMenu.Representives</span></a>
                             </li>
-                           
+
                         </ul>
                     </li>
                     <li class="has-sub">
@@ -64,7 +66,8 @@
                             </span>
                         </a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
-                            <li routerLinkActive="active">
+                            <li routerLinkActive="active"
+                                *IfPrivilege="helperService.privileges.Purchases.PurchasesBills.View">
                                 <a [routerLink]="['/purchases-bill/purchases-bill-list']">
                                     <i class="fa fa-envelope"></i><span translate>SideMenu.PurchasesBills</span></a>
                             </li>
@@ -78,7 +81,7 @@
                             </span>
                         </a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
-                            <li routerLinkActive="active">
+                            <li routerLinkActive="active" *IfPrivilege="helperService.privileges.Sales.SalesBills.View">
                                 <a [routerLink]="['/sales-bill/sales-bill-list']">
                                     <i class="fa fa-envelope"></i><span translate>SideMenu.SalesBills</span></a>
                             </li>
@@ -95,43 +98,20 @@
                             </span>
                         </a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
-                            <li routerLinkActive="active">
+                            <li routerLinkActive="active"
+                                *IfPrivilege="helperService.privileges.UserManagement.Users.View">
                                 <a [routerLink]="['/user/user-list']">
                                     <i class="fas fa-user"></i><span translate>SideMenu.UserList</span></a>
                             </li>
-                            <li routerLinkActive="active">
+                            <li routerLinkActive="active"
+                                *IfPrivilege="helperService.privileges.UserManagement.Roles.View">
                                 <a [routerLink]="['/user/role-list']">
                                     <i class="fas fa-user"></i><span translate>SideMenu.RoleList</span></a>
                             </li>
 
                         </ul>
                     </li>
-                    <!-- <li class="has-sub">
-                        <a class="js-arrow" href="#">
-                            <i class="fa fa-cog"></i> <span translate>SideMenu.Configurations</span>
-                            <span class="arrow">
-                                <i class="fas fa-angle-down"></i>
-                            </span>
-                        </a>
-                        <ul class="list-unstyled navbar__sub-list js-sub-list">
-                            <li routerLinkActive="active">
-                                <a [routerLink]="['/setup/company-list']">
-                                    <i class="fa fa-envelope"></i><span translate>SideMenu.Companies</span></a>
-                            </li>
-                            <li routerLinkActive="active">
-                                <a [routerLink]="['/configurations/contact-us-list']">
-                                    <i class="fa fa-envelope"></i><span translate>SideMenu.ContactUs</span></a>
-                            </li>
-                            <li routerLinkActive="active">
-                                <a [routerLink]="['/configurations/about-us']">
-                                    <i class="fa fa-question-circle"></i><span translate>SideMenu.AboutUs</span></a>
-                            </li>
-                            <li routerLinkActive="active">
-                                <a [routerLink]="['/configurations/advertisment']">
-                                    <i class="fa fa-file-image-o"></i><span translate>SideMenu.Advertisments</span></a>
-                            </li>
-                        </ul>
-                    </li> -->
+
                 </ul>
             </nav>
         </ng-container>

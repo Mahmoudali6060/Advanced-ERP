@@ -31,7 +31,7 @@ export class RoleFormComponent {
 		private toasterService: ToastrService,
 		private location: Location,
 		private _configService: ConfigService,
-		private helperService: HelperService,
+		public helperService: HelperService,
 		private translate: TranslateService,
 		private subjectService: SubjectService,
 		private localStorageService: LocalStorageService,

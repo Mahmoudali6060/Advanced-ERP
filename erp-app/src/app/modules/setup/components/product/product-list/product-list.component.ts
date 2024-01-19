@@ -50,6 +50,7 @@ export class ProductListComponent {
 		private translate: TranslateService,
 		private _configService: ConfigService,
 		private categoryService: CategoryService,
+		public helperService: HelperService,
 		private alertService: AlertService) {
 
 	}
@@ -65,7 +66,7 @@ export class ProductListComponent {
 		console.table("status", this.statusDDL);
 	}
 
-	
+
 	toggleFilter() {
 		this.searchCriteriaDTO = new ProductSearchCriteriaDTO();
 		this.showFilterControls = !this.showFilterControls;

@@ -63,7 +63,7 @@ export class PurchasesBillFormComponent {
 		private route: ActivatedRoute,
 		private toasterService: ToastrService,
 		private router: Router,
-		private helperService: HelperService,
+		public helperService: HelperService,
 		private translate: TranslateService,
 		private dialogService: DialogService,
 		private alertService: AlertService,

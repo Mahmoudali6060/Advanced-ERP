@@ -42,7 +42,7 @@ export class ProductTrackingComponent {
 	productProcessTypeEnum = ProductProcessTypeEnum;
 	productId: any;
 	constructor(private productService: ProductService,
-		private helperService: HelperService,
+		public helperService: HelperService,
 		private route: ActivatedRoute
 	) {
 

@@ -38,7 +38,7 @@ export class AccountStatementAllVendorsComponent {
 		private translate: TranslateService,
 		private _configService: ConfigService,
 		private SpinnerService: NgxSpinnerService,
-		private helperService: HelperService,
+		public helperService: HelperService,
 		private reportService: ReportService) {
 
 	}

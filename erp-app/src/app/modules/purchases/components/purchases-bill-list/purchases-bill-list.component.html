@@ -12,19 +12,22 @@
                     <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
             </div>
             <div class="table-data__tool-right" *ngIf="!isTemp && !isReturned">
-                <button [routerLink]="['/purchases-bill/purchases-bill-form']"
+                <button *IfPrivilege="helperService.privileges.Purchases.PurchasesBills.Add"
+                    [routerLink]="['/purchases-bill/purchases-bill-form']"
                     class="au-btn au-btn-icon au-btn--black au-btn--small">
                     <i class="zmdi zmdi-plus"></i>{{'Purchases.AddPurchasesBill' |translate}}
                 </button>
             </div>
             <div class="table-data__tool-right" *ngIf="isTemp">
-                <button [routerLink]="['/purchases-bill/purchases-bill-temp-form']"
+                <button *IfPrivilege="helperService.privileges.Purchases.TempPurchasesBills.Add"
+                    [routerLink]="['/purchases-bill/purchases-bill-temp-form']"
                     class="au-btn au-btn-icon au-btn--black au-btn--small">
                     <i class="zmdi zmdi-plus"></i>{{'Purchases.AddPurchasesBillTemp' |translate}}
                 </button>
             </div>
             <div class="table-data__tool-right" *ngIf="isReturned">
-                <button [routerLink]="['/purchases-bill/purchases-bill-new-returned-form']"
+                <button *IfPrivilege="helperService.privileges.Purchases.ReturnedPurchasesBills.Add"
+                    [routerLink]="['/purchases-bill/purchases-bill-new-returned-form']"
                     class="au-btn au-btn-icon au-btn--black au-btn--small">
                     <i class="zmdi zmdi-plus"></i>{{'General.AddBillReturnedForm' |translate}}
                 </button>
@@ -125,32 +128,46 @@
                         <td>{{item.notes}}</td>
                         <td>
                             <div class="table-data-feature">
-                                <button *ngIf="!searchCriteriaDTO.isReturned" class="item ml-2" data-toggle="tooltip"
-                                    data-placement="top" title="" data-original-title="View"
-                                    [routerLink]="['/purchases-bill/purchases-bill-form-view/'+item.id]">
-                                    <i class="zmdi zmdi-eye"></i>
-                                </button>
-
-                                <button *ngIf="!searchCriteriaDTO.isReturned" class="item ml-2" data-toggle="tooltip"
-                                    data-placement="top" title="" data-original-title="Edit"
-                                    [routerLink]="['/purchases-bill/purchases-bill-form/'+item.id]">
-                                    <i class="zmdi zmdi-edit"></i>
-                                </button>
-                                <button *ngIf="searchCriteriaDTO.isReturned" class="item ml-2" data-toggle="tooltip"
-                                    data-placement="top" title="" data-original-title="Edit"
-                                    [routerLink]="['/purchases-bill/purchases-bill-returned-form/'+item.id]">
-                                    <i class="zmdi zmdi-edit"></i>
-                                </button>
-                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
-                                    data-original-title="Delete" (click)="openConfirmationDialog(item)">
-                                    <i class="zmdi zmdi-delete"></i>
-                                </button>
-                                <button *ngIf="!searchCriteriaDTO.isReturned && !searchCriteriaDTO.isTemp"
-                                    class="item ml-2" data-toggle="tooltip" type="button"
-                                    title="{{'General.AddToReturnedBill' |translate}}"
-                                    [routerLink]="['/purchases-bill/purchases-bill-new-returned-form/'+item.id]">
-                                    <i class="fa fa-repeat"></i>
-                                </button>
+                                <ng-template
+                                    *IfPrivilege="helperService.privileges.Purchases.PurchasesBills.View || helperService.privileges.Purchases.TempPurchasesBills.View">
+                                    <button *ngIf="!searchCriteriaDTO.isReturned" class="item ml-2"
+                                        data-toggle="tooltip" data-placement="top" title="" data-original-title="View"
+                                        [routerLink]="['/purchases-bill/purchases-bill-form-view/'+item.id]">
+                                        <i class="zmdi zmdi-eye"></i>
+                                    </button>
+                                </ng-template>
+                                <ng-template
+                                    *IfPrivilege="helperService.privileges.Purchases.PurchasesBills.Edit || helperService.privileges.Purchases.TempPurchasesBills.Edit">
+                                    <button *ngIf="!searchCriteriaDTO.isReturned" class="item ml-2"
+                                        data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"
+                                        [routerLink]="['/purchases-bill/purchases-bill-form/'+item.id]">
+                                        <i class="zmdi zmdi-edit"></i>
+                                    </button>
+                                </ng-template>
+                                <ng-template
+                                    *IfPrivilege="helperService.privileges.Purchases.ReturnedPurchasesBills.Edit">
+                                    <button *ngIf="searchCriteriaDTO.isReturned" class="item ml-2" data-toggle="tooltip"
+                                        data-placement="top" title="" data-original-title="Edit"
+                                        [routerLink]="['/purchases-bill/purchases-bill-returned-form/'+item.id]">
+                                        <i class="zmdi zmdi-edit"></i>
+                                    </button>
+                                </ng-template>
+                                <ng-template
+                                    *IfPrivilege="helperService.privileges.Purchases.PurchasesBills.Delete || helperService.privileges.Purchases.ReturnedPurchasesBills.Delete || helperService.privileges.Purchases.TempPurchasesBills.Delete">
+                                    <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                        data-original-title="Delete" (click)="openConfirmationDialog(item)">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </button>
+                                </ng-template>
+                                <ng-template
+                                    *IfPrivilege="helperService.privileges.Purchases.ReturnedPurchasesBills.Add">
+                                    <button *ngIf="!searchCriteriaDTO.isReturned && !searchCriteriaDTO.isTemp"
+                                        class="item ml-2" data-toggle="tooltip" type="button"
+                                        title="{{'General.AddToReturnedBill' |translate}}"
+                                        [routerLink]="['/purchases-bill/purchases-bill-new-returned-form/'+item.id]">
+                                        <i class="fa fa-repeat"></i>
+                                    </button>
+                                </ng-template>
                             </div>
                         </td>
                     </tr>

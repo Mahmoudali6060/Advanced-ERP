@@ -16,7 +16,7 @@ import { UserProfileService } from 'src/app/modules/user-management/services/use
 export class ChangeLangagueComponent {
 
   constructor(public translate: TranslateService,
-    private helperService: HelperService,
+    public helperService: HelperService,
     private userProfileService: UserProfileService,
     private localStorageService: LocalStorageService) {
 

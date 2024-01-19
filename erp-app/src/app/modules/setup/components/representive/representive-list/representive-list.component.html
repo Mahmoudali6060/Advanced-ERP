@@ -8,7 +8,7 @@
                     <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
             </div>
             <div class="table-data__tool-right">
-                <button [routerLink]="['/setup/representive-form']"
+                <button *IfPrivilege="helperService.privileges.Setup.Representives.Add" [routerLink]="['/setup/representive-form']"
                     class="au-btn au-btn-icon au-btn--black au-btn--small">
                     <i class="zmdi zmdi-plus"></i>{{'Representive.AddRepresentive' |translate}}
                 </button>
@@ -116,11 +116,11 @@
                         </td>
                         <td>
                             <div class="table-data-feature">
-                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                <button  *IfPrivilege="helperService.privileges.Setup.Representives.Edit" class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Edit" [routerLink]="['/setup/representive-form/'+item.id]">
                                     <i class="zmdi zmdi-edit"></i>
                                 </button>
-                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                <button  *IfPrivilege="helperService.privileges.Setup.Representives.Delete" class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Delete" (click)="openConfirmationDialog(item)">
                                     <i class="zmdi zmdi-delete"></i>
                                 </button>

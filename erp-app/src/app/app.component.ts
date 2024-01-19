@@ -16,7 +16,7 @@ export class AppComponent {
   typeSelected: string;
   constructor(private primengConfig: PrimeNGConfig, private translate: TranslateService,
     private localStorageService: LocalStorageService,
-    private helperService: HelperService
+    public helperService: HelperService
   ) {
     this.typeSelected = 'ball-clip-rotate-multiple';
     let userProfileDTO = this.localStorageService.getItem(LocalStorageItems.userProfile) as UserProfileDTO;

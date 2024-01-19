@@ -7,7 +7,7 @@
                 <button class="au-btn-filter" (click)="toggleFilter()">
                     <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
             </div>
-            <div class="table-data__tool-right">
+            <div  *IfPrivilege="helperService.privileges.UserManagement.Roles.Add" class="table-data__tool-right">
                 <button [routerLink]="['/user/role-form']" class="au-btn au-btn-icon au-btn--black au-btn--small">
                     <i class="zmdi zmdi-plus"></i>{{'Role.AddRole' |translate}}
                 </button>
@@ -83,11 +83,11 @@
                         <td>
                             <div class="table-data-feature">
                               
-                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                <button *IfPrivilege="helperService.privileges.UserManagement.Roles.Edit" class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Edit" [routerLink]="['/user/role-form/'+item.id]">
                                     <i class="zmdi zmdi-edit"></i>
                                 </button>
-                                <button class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                <button *IfPrivilege="helperService.privileges.UserManagement.Roles.Delete" class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Delete" (click)="openConfirmationDialog(item)">
                                     <i class="zmdi zmdi-delete"></i>
                                 </button>

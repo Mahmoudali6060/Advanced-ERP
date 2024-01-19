@@ -14,11 +14,10 @@ export class AuthGuard implements CanActivate {
     private localStorageService: LocalStorageService, private authService: AuthGuardService) {
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    // const privilegeId = route.data['privilegeId'] as number;
-    // if (!privilegeId || (privilegeId && this.authService.isAuthorize(privilegeId)))
-    //   return true;
-    // return false;
-    return true;
+    const privilegeId = route.data['privilegeId'] as number;
+    if (!privilegeId || (privilegeId && this.authService.isAuthorize(privilegeId)))
+      return true;
+    return false;
   }
   // canActivate(
   //   next: ActivatedRouteSnapshot,

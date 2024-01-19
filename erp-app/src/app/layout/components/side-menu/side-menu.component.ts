@@ -28,7 +28,7 @@ export class SideMenuComponent implements OnInit {
     public authService: AuthService,
     private _configService: ConfigService,
     private router: Router,
-    private helperService: HelperService,
+    public helperService: HelperService,
     private userProfileService: UserProfileService,
     private subjectService: SubjectService,
     private localStorageService: LocalStorageService

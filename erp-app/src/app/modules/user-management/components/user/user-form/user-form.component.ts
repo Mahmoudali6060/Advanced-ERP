@@ -39,7 +39,7 @@ export class UserFormComponent {
 		private route: ActivatedRoute,
 		private toasterService: ToastrService,
 		private location: Location, private _configService: ConfigService,
-		private helperService: HelperService,
+		public helperService: HelperService,
 		public translate: TranslateService,
 		private subjectService: SubjectService,
 		private localStorageService: LocalStorageService,

@@ -44,7 +44,7 @@ export class TreasuryFormComponent {
 		private route: ActivatedRoute,
 		private toasterService: ToastrService,
 		private _configService: ConfigService,
-		private helperService: HelperService,
+		public helperService: HelperService,
 		private reportService: ReportService,
 		private translate: TranslateService,
 		private router: Router) {

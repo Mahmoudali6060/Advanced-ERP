@@ -42,6 +42,7 @@ export class CategoryListComponent {
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
 		public translate: TranslateService,
+		public helperService:HelperService,
 		private _configService: ConfigService,
 	) {
 

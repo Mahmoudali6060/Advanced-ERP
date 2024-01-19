@@ -53,7 +53,7 @@ export class ProfileComponent implements OnInit {
   productId: any;
   shippingLineProduct: ShippingLineProductDTO = new ShippingLineProductDTO();
   constructor(private subjectService: SubjectService,
-    private helperService: HelperService,
+    public helperService: HelperService,
     private userProfileService: UserProfileService,
     private _configService: ConfigService,
     private toasterService: ToastrService,

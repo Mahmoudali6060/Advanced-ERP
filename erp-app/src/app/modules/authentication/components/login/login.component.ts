@@ -28,7 +28,7 @@ export class LoginComponent {
   constructor(private router: Router,
     private authService: AuthService,
     private localStorageService: LocalStorageService,
-    private helperService: HelperService,
+    public helperService: HelperService,
     public translate: TranslateService,
     private toasterService: ToastrService) {
 

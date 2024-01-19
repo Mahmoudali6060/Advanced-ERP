@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit{
     private userProfileService:UserProfileService,
     private localStorageService:LocalStorageService,
     private _configService: ConfigService,
-    private helperService: HelperService,
+    public helperService: HelperService,
 
     ) {
   }

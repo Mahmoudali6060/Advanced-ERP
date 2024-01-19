@@ -46,7 +46,7 @@ export class TreasuryListComponent {
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
 		private translate: TranslateService,
-		private helperService: HelperService,
+		public helperService: HelperService,
 		private clientVendorService: ClientVendorService,
 		private reportService: ReportService) {
 
