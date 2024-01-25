@@ -143,47 +143,48 @@ namespace DataService.Setup.Handlers
         private void SetProductTracking(ProductDTO newProduct)
         {
             var oldProduct = _unitOfWork.ProductDAL.GetByIdAsync(newProduct.Id).Result;
-            if (oldProduct == null)
-            {
-                ProductTracking productTracking = new ProductTracking()
-                {
-                    ProductId = oldProduct.Id,
-                    Date = DateTime.Now,
-                    OldData = oldProduct.Price.ToString(),
-                    NewData = newProduct.Price.ToString(),
-                    ProductProcessTypeId = ProductProcessTypeEnum.ChangePrice
-                };
-                _unitOfWork.ProductTrackingDAL.AddAsync(productTracking);
-            }
+            //if (oldProduct == null)
+            //{
+            //    ProductTracking productTracking = new ProductTracking()
+            //    {
+            //        ProductId = oldProduct.Id,
+            //        Date = DateTime.Now,
+            //        OldData = oldProduct.Price.ToString(),
+            //        NewData = newProduct.Price.ToString(),
+            //        ProductProcessTypeId = ProductProcessTypeEnum.ChangePrice
+            //    };
+            //    _unitOfWork.ProductTrackingDAL.AddAsync(productTracking);
+            //}
 
-            if (oldProduct != null)
-            {
-                if (oldProduct.Price != newProduct.Price)
-                {
-                    ProductTracking productTracking = new ProductTracking()
-                    {
-                        ProductId = oldProduct.Id,
-                        Date = DateTime.Now,
-                        OldData = oldProduct.Price.ToString(),
-                        NewData = newProduct.Price.ToString(),
-                        ProductProcessTypeId = ProductProcessTypeEnum.ChangePrice
-                    };
-                    _unitOfWork.ProductTrackingDAL.AddAsync(productTracking);
-                }
+            //if (oldProduct != null)
+            //{
+            //    if (oldProduct.Price != newProduct.Price)
+            //    {
+            //        ProductTracking productTracking = new ProductTracking()
+            //        {
+            //            ProductId = oldProduct.Id,
+            //            Date = DateTime.Now,
+            //            OldData = oldProduct.Price.ToString(),
+            //            NewData = newProduct.Price.ToString(),
+            //            ProductProcessTypeId = ProductProcessTypeEnum.ChangePrice
+            //        };
+            //        _unitOfWork.ProductTrackingDAL.AddAsync(productTracking);
+            //    }
 
-                if (oldProduct.ActualQuantity != newProduct.ActualQuantity)
-                {
-                    ProductTracking productTracking = new ProductTracking()
-                    {
-                        ProductId = oldProduct.Id,
-                        Date = DateTime.Now,
-                        OldData = oldProduct.ActualQuantity.ToString(),
-                        NewData = newProduct.ActualQuantity.ToString(),
-                        ProductProcessTypeId = ProductProcessTypeEnum.ChangeQuantity
-                    };
-                    _unitOfWork.ProductTrackingDAL.AddAsync(productTracking);
-                }
-            }
+            //    if (oldProduct.ActualQuantity != newProduct.ActualQuantity)
+            //    {
+            //        ProductTracking productTracking = new ProductTracking()
+            //        {
+            //            ProductId = oldProduct.Id,
+            //            Date = DateTime.Now,
+            //            OldData = oldProduct.ActualQuantity.ToString(),
+            //            NewData = newProduct.ActualQuantity.ToString(),
+            //            ProductProcessTypeId = ProductProcessTypeEnum.ChangeQuantity
+            //        };
+            //        _unitOfWork.ProductTrackingDAL.AddAsync(productTracking);
+            //    }
+            //}
+     
         }
 
         public async Task<bool> UpdateAll(List<ProductDTO> entityList)

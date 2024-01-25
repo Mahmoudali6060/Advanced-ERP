@@ -8,14 +8,16 @@
                     <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
             </div>
             <div class="table-data__tool-right">
-                <button  *IfPrivilege="helperService.privileges.Setup.Products.Add" [routerLink]="['/setup/product-form']" class="au-btn au-btn-icon au-btn--black au-btn--small">
+                <button *IfPrivilege="helperService.privileges.Setup.Products.Add"
+                    [routerLink]="['/setup/product-form']" class="au-btn au-btn-icon au-btn--black au-btn--small">
                     <i class="zmdi zmdi-plus"></i>{{'Product.AddProduct' |translate}}
                 </button>
                 <button *ngIf="changePrice || changeQuantity" (click)="saveAll()"
                     class="au-btn au-btn-icon au-btn--blue au-btn--small">
                     <i class="zmdi zmdi-file"></i>{{'General.SaveAll' |translate}}
                 </button>
-                <button *ngIf="changePrice || changeQuantity" type="reset" class="btn btn-danger mr-1" (click)="reset()">
+                <button *ngIf="changePrice || changeQuantity" type="reset" class="btn btn-danger mr-1"
+                    (click)="reset()">
                     <i class="fa fa-ban"></i>{{'General.Cancel' |translate}}
                 </button>
             </div>
@@ -97,7 +99,8 @@
                         <th class="table-header-fc">{{'General.Category' |translate}}</th>
                         <th class="table-header-fc">{{'General.Code' |translate}}</th>
                         <th class="table-header-fc">{{'General.Name' |translate}}</th>
-                        <th class="table-header-fc">{{'General.Price' |translate}}</th>
+                        <th class="table-header-fc">{{'General.PurchasingPrice' |translate}}</th>
+                        <th class="table-header-fc">{{'General.SellingPrice' |translate}}</th>
                         <th class="table-header-fc">{{'Product.SellingPricePercentage' |translate}}</th>
                         <th class="table-header-fc">{{'Product.PurchasingPricePercentage' |translate}}</th>
                         <th class="table-header-fc">{{'General.ActualQuantity' |translate}}</th>
@@ -124,10 +127,16 @@
                         <td>{{item.code}}</td>
                         <td class="cell-width-26">{{item.name}}</td>
                         <td>
-                            <input *ngIf="changePrice;else readOnlyPrice" [(ngModel)]="item.price" type="number"
+                            <input *ngIf="changePrice;else readOnlyPrice" [(ngModel)]="item.purchasingPrice"
+                                type="number" class="form-control" [ngModelOptions]="{standalone: true}"
+                                (change)="item.isChanged=true">
+                            <ng-template #readOnlyPrice>{{item.purchasingPrice}}</ng-template>
+                        </td>
+                        <td>
+                            <input *ngIf="changePrice;else readOnlyPrice" [(ngModel)]="item.sellingPrice" type="number"
                                 class="form-control" [ngModelOptions]="{standalone: true}"
                                 (change)="item.isChanged=true">
-                            <ng-template #readOnlyPrice>{{item.price}}</ng-template>
+                            <ng-template #readOnlyPrice>{{item.sellingPrice}}</ng-template>
                         </td>
                         <td>
                             <input *ngIf="changePrice;else readOnlySellingPricePercentage"
@@ -150,17 +159,20 @@
                         </td>
                         <td *ngIf="viewMode">
                             <div class="table-data-feature">
-                                <button  *IfPrivilege="helperService.privileges.Setup.Products.Edit" class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
-                                    data-original-title="Edit" [routerLink]="['/setup/product-form/'+item.id]">
+                                <button *IfPrivilege="helperService.privileges.Setup.Products.Edit" class="item ml-2"
+                                    data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"
+                                    [routerLink]="['/setup/product-form/'+item.id]">
                                     <i class="zmdi zmdi-edit"></i>
                                 </button>
-                                <button *IfPrivilege="helperService.privileges.Setup.Products.ViewProductTracking" class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                <button *IfPrivilege="helperService.privileges.Setup.Products.ViewProductTracking"
+                                    class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Product History"
                                     [routerLink]="['/setup/product-tracking/'+item.id]">
                                     <i class="fa fa-list"></i>
                                 </button>
-                                <button *IfPrivilege="helperService.privileges.Setup.Products.Delete" class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
-                                    data-original-title="Delete" (click)="openConfirmationDialog(item)">
+                                <button *IfPrivilege="helperService.privileges.Setup.Products.Delete" class="item ml-2"
+                                    data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
+                                    (click)="openConfirmationDialog(item)">
                                     <i class="zmdi zmdi-delete"></i>
                                 </button>
 

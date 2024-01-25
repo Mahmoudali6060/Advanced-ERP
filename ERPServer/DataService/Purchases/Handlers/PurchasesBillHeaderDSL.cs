@@ -126,7 +126,7 @@ namespace DataService.Setup.Handlers
 
                     product.ActualQuantity = entity.IsReturned ? product.ActualQuantity - item.Quantity : product.ActualQuantity + item.Quantity;
                     product.LastPurchasingPrice = item.PriceAfterDiscount;
-                    product.Price = product.Price;
+                    product.PurchasingPrice = product.PurchasingPrice;
                     _unitOfWork.ProductDAL.Update(product);
                 }
             }
@@ -201,7 +201,7 @@ namespace DataService.Setup.Handlers
                     decimal quantity = exsitedPurchasesBillDetails != null ? exsitedPurchasesBillDetails.Quantity : item.Quantity;
                     var product = await _unitOfWork.ProductDAL.GetByIdAsync(item.ProductId);
                     product.ActualQuantity = entity.IsReturned == true ? product.ActualQuantity - quantity : product.ActualQuantity + quantity;
-                    product.Price = item.Price;
+                    product.PurchasingPrice = item.Price;
                     product.LastPurchasingPrice = item.PriceAfterDiscount;
                     await _unitOfWork.ProductDAL.UpdateAsync(product);
                 }
@@ -334,7 +334,7 @@ namespace DataService.Setup.Handlers
                 {
                     var product = await _unitOfWork.ProductDAL.GetByIdAsync(item.ProductId);
                     product.ActualQuantity = entity.IsReturned == true ? product.ActualQuantity + item.Quantity : product.ActualQuantity - item.Quantity;
-                    product.Price = item.Price;
+                    //product.PurchasingPrice = item.Price;
                     await _unitOfWork.ProductDAL.UpdateAsync(product);
                 }
                 #endregion

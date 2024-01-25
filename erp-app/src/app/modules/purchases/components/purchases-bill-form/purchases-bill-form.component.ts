@@ -319,7 +319,7 @@ export class PurchasesBillFormComponent {
 		let purchasesBillDetail = this.tempPurchasesBillDetailList?.find(x => x.productId == item.productId);
 
 		if (product) {
-			item.price = overrideOldData ? product.price : item.price;
+			item.price = overrideOldData ? product.purchasingPrice : item.price;
 			item.lastPurchasingPrice = product.lastPurchasingPrice;
 			item.discount = overrideOldData ? product.purchasingPricePercentage : item.discount;
 

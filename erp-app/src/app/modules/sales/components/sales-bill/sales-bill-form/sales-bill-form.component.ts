@@ -343,7 +343,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		let salesBillDetail = this.tempSalesBillDetailList?.find(x => x.productId == item.productId);
 
 		if (product) {
-			item.price = overrideOldData ? product.price : item.price;
+			item.price = overrideOldData ? product.sellingPrice : item.price;
 			item.lastPurchasingPrice = product.lastPurchasingPrice;
 			item.discount = overrideOldData ? product.sellingPricePercentage : item.discount;
 			item.actualQuantity = product.actualQuantity;

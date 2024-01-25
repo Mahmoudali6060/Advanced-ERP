@@ -88,7 +88,8 @@
                         <th class="table-header-fc">{{'General.Category' |translate}}</th>
                         <th class="table-header-fc">{{'General.Code' |translate}}</th>
                         <th class="table-header-fc">{{'General.Name' |translate}}</th>
-                        <th class="table-header-fc">{{'General.Price' |translate}}</th>
+                        <th class="table-header-fc">{{'General.SellingPrice' |translate}}</th>
+                        <th class="table-header-fc">{{'General.PurchasingPrice' |translate}}</th>
                         <th class="table-header-fc">{{'Product.SellingPricePercentage' |translate}}</th>
                         <th class="table-header-fc">{{'Product.PurchasingPricePercentage' |translate}}</th>
                         <th class="table-header-fc">{{'General.ActualQuantity' |translate}}</th>
@@ -114,7 +115,10 @@
                         <td>{{item.code}}</td>
                         <td class="cell-width-26">{{item.name}}</td>
                         <td>
-                            {{item.price}}
+                            {{item.sellingPrice}}
+                        </td>
+                        <td>
+                            {{item.purchasingPrice}}
                         </td>
                         <td>
                             {{item.sellingPricePercentage}}

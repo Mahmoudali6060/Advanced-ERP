@@ -87,14 +87,27 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="price" class=" form-control-label">{{'General.Price'
+                                        <label for="purchasingPrice" class=" form-control-label">{{'General.PurchasingPrice'
                                             |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="productDTO.price" type="text"
-                                            id="price" class="form-control" #price="ngModel"
-                                            [class.is-invalid]="price.invalid && price.touched"
-                                            [class.is-valid]="price.valid" required name="price" id="price"
+                                        <input [disabled]="viewMode" [(ngModel)]="productDTO.purchasingPrice" type="text"
+                                            id="purchasingPrice" class="form-control" #purchasingPrice="ngModel"
+                                            [class.is-invalid]="purchasingPrice.invalid && purchasingPrice.touched"
+                                            [class.is-valid]="purchasingPrice.valid" required name="purchasingPrice" id="purchasingPrice"
                                             class="form-control" aria-describedby="helpId">
-                                        <small [hidden]="price.valid || price.untouched" id="helpId" class="text-muted"
+                                        <small [hidden]="purchasingPrice.valid || purchasingPrice.untouched" id="helpId" class="text-muted"
+                                            [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="sellingPrice" class=" form-control-label">{{'General.SellingPrice'
+                                            |translate}}</label>
+                                        <input [disabled]="viewMode" [(ngModel)]="productDTO.sellingPrice" type="text"
+                                            id="sellingPrice" class="form-control" #sellingPrice="ngModel"
+                                            [class.is-invalid]="sellingPrice.invalid && sellingPrice.touched"
+                                            [class.is-valid]="sellingPrice.valid" required name="sellingPrice" id="sellingPrice"
+                                            class="form-control" aria-describedby="helpId">
+                                        <small [hidden]="sellingPrice.valid || sellingPrice.untouched" id="helpId" class="text-muted"
                                             [translate]="'Errors.ThisFieldIsRequired'"></small>
                                     </div>
                                 </div>

@@ -12,7 +12,8 @@ namespace Shared.Entities.Setup
         public string BarCode { get; set; }
         public string Name { get; set; }
         public string ImageUrl { get; set; }
-        public decimal Price { get; set; }
+        public decimal SellingPrice { get; set; }
+        public decimal PurchasingPrice { get; set; }
         public decimal SellingPricePercentage { get; set; }//سعر البيع
         public decimal? LastSellingPrice { get; set; }//اخر سعر البيع 
         public decimal PurchasingPricePercentage { get; set; }//سعر الشراء

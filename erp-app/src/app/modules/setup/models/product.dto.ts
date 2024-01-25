@@ -6,7 +6,8 @@ export class ProductDTO {
     name: string;
     barCode: string;
     imageUrl: string;
-    price: number;
+    purchasingPrice: number;
+    sellingPrice: number;
     sellingPricePercentage: number//سعر البيع
     lastSellingPrice: number;
     purchasingPricePercentage: number;//سعر الشراء

@@ -50,7 +50,7 @@
                                         <label for="previousBalance"
                                             class=" form-control-label">{{'General.PreviousBalance' |translate}}
                                             <span *ngIf="previousBalance!=0">
-                                                -{{(previousBalance>0?'General.OutComing':'General.InComing')
+                                                -{{(previousBalance>0?'General.Debit':'General.Credit')
                                                 |translate}}</span>
                                         </label>
                                         <input [disabled]="viewMode" [value]="previousBalance" type="text"
@@ -65,7 +65,7 @@
                                             class=" form-control-label">{{'General.CurrentBalance'
                                             |translate}}
                                             <span *ngIf="currentBalance!=0">
-                                                -{{(currentBalance>0?'General.OutComing':'General.InComing')
+                                                -{{(currentBalance>0?'General.Debit':'General.Credit')
                                                 |translate}}</span>
                                         </label>
                                         <input [disabled]="viewMode" [value]="currentBalance" type="text"
