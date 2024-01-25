@@ -41,7 +41,7 @@ export class PurchasesBillFormComponent {
 	representiveList: Array<RepresentiveDTO> = new Array<RepresentiveDTO>();
 	purchaseHeaderId: any;
 	searchProduct: any;
-	currentBalance: number = 0;
+	previousBalance: number = 0;
 	@Input() searchByNumber: boolean = false;
 	selectedVendor: ClientVendorDTO = new ClientVendorDTO();
 	vatPercentage: number = 0;
@@ -133,7 +133,6 @@ export class PurchasesBillFormComponent {
 	getAllRepresentives() {
 		this.representiveService.getAllLite().subscribe((res: any) => {
 			this.representiveList = res.list;
-			this.representiveList = this.representiveList.filter(x => x.representiveTypeId == RepresentiveTypeEnum.Purchases);
 		})
 	}
 
@@ -160,7 +159,7 @@ export class PurchasesBillFormComponent {
 		this.purchasesBillService.getByNumber(this.purchasesBillHeaderDTO.number).subscribe((res: any) => {
 			if (!res) {
 				this.purchasesBillHeaderDTO = new PurchasesBillHeaderDTO();
-				this.currentBalance = 0;
+				this.previousBalance = 0;
 				this.alertService.showError(this.translate.instant("Errors.NotFound"), this.translate.instant("Errors.Error"));
 				return;
 			}
@@ -187,13 +186,13 @@ export class PurchasesBillFormComponent {
 
 	back() {
 		this.purchasesBillHeaderDTO = new PurchasesBillHeaderDTO();
-
-		if (this.isTemp)
-			this.router.navigateByUrl('purchases-bill/purchases-bill-temp-list');
-		else if (this.isReturned)
-			this.router.navigateByUrl('purchases-bill/purchases-bill-returned-list');
-		else
-			this.router.navigateByUrl('purchases-bill/purchases-bill-list');
+		this.helperService.back();
+		// if (this.router.url.includes('temp'))
+		// 	this.router.navigateByUrl('purchases-bill/purchases-bill-temp-list');
+		// else if (this.router.url.includes('returned'))
+		// 	this.router.navigateByUrl('purchases-bill/purchases-bill-returned-list');
+		// else
+		// 	this.router.navigateByUrl('purchases-bill/purchases-bill-list');
 
 
 	}
@@ -386,7 +385,7 @@ export class PurchasesBillFormComponent {
 			let selectedVendor = this.vendorList.find(c => c.id == this.purchasesBillHeaderDTO.clientVendorId);
 			if (selectedVendor) {
 				this.selectedVendor = selectedVendor;
-				this.currentBalance = parseFloat((selectedVendor?.debit - selectedVendor?.credit).toFixed(2));
+				this.previousBalance = parseFloat((selectedVendor?.debit - selectedVendor?.credit).toFixed(2));
 			}
 		}
 	}

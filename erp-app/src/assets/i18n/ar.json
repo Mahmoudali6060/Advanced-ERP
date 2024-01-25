@@ -160,7 +160,8 @@
     "VendorPhoneNumber": "رقم هاتف المورد",
     "OutComing": "منصرف",
     "InComing": "وارد",
-    "EditCompanyData":"تعديل بيانات الشركة"
+    "EditCompanyData": "تعديل بيانات الشركة",
+    "Symbol": "الرمز"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -184,10 +185,13 @@
     "TotalRegisterationRequests": "إجمالي طلبات التسجيل",
     "TotalRequestsForEveryStatus": "إجمالي الطلبات لكل حالة"
   },
-  "ConfirmaionDialog": {
+  "DeleteConfirmaionDialog": {
     "Title": "التأكيد",
-    "Description": "هل تريد حذف هذا السجل؟",
-    "DeactiveUser": "هل تريد إلغاء تنشيط هذا المستخدم؟"
+    "Description": "هل تريد حذف هذا السجل؟"
+  },
+  "InCorectPriceConfirmaionDialog": {
+    "Title": "التأكيد",
+    "Description": "سعر البيع أقل من سعر الشراء \n هل تريد الاستمرار"
   },
   "Message": {
     "DeletedSuccessfully": "تم حذف هذا السجل بنجاح",
@@ -569,7 +573,7 @@
     "SalesBills": "فواتير المبيعات",
     "TempSalesBills": "عروض الأسعار",
     "ReturnedSalesBills": "مرتجعات المبيعات",
-    "Treasuries":"الخزينة",
+    "Treasuries": "الخزينة",
     "Accounting": "الحسابات",
     "Reports": "التقارير",
     "UserManagement": "اعدادات المستخدمين",
@@ -579,7 +583,7 @@
     "AccountStatementSingleVendor": "كشف حساب المورد  (مُفَصَّل)",
     "ProductMinusQuantity": "المنتجات السالبة",
     "ProductLowQuantity": "المنتجات النواقص",
-    "Companies":"الشركات",
+    "Companies": "الشركات",
     "Users": "المستخدمين",
     "Roles": "الادوار",
     "Add": "إضافة",
@@ -594,7 +598,10 @@
     "ViewCompany": "عرض الشركة "
   },
   "Reports": {
+    "ReportSalesBill": "عرض سعر (فاتورة)",
+    "TempSalesBill": "عرض سعر",
     "SalesBill": "فاتورة مبيعات",
+    "TempPurchasesBill": "أمر توريد",
     "ReturnedSalesBill": "فاتورة مرتجعات المبيعات ",
     "PurchasesBill": "فاتورة مشتريات",
     "ReturnedPurchasesBill": "فاتورة مرتجعات المشتريات",

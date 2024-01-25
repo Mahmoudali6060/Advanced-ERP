@@ -28,7 +28,7 @@ namespace DataService.Setup.Handlers
         #region Query
         public async Task<ResponseEntityList<ProductDTO>> GetAll(ProductSearchDTO searchCriteriaDTO)
         {
-            var productList = await _unitOfWork.ProductDAL.GetAllAsync();
+            var productList = await _unitOfWork.ProductDAL.GetAllWithIncludes(null, x => x.Category);
 
             #region Apply Filters
             productList = productList.OrderBy(x => x.Id);
@@ -112,6 +112,7 @@ namespace DataService.Setup.Handlers
         {
             UploadImage(entityDTO);
             var entity = _mapper.Map<Product>(entityDTO);
+            entity.Code = GenerateSequenceNumber();
             entity.ProductTrackings = new List<ProductTracking>();
             entity.ProductTrackings.Add(GenerateProductTrackingList(entityDTO));
             var result = await _unitOfWork.ProductDAL.AddAsync(entity);
@@ -249,6 +250,18 @@ namespace DataService.Setup.Handlers
                 return _fileManager.UploadImageBase64("wwwroot/Images/Products/" + entity.ImageUrl, entity.ImageBase64);
             }
             return true;
+        }
+
+        private string GenerateSequenceNumber()
+        {
+            var lastElement = _unitOfWork.ProductDAL.GetAllAsync().Result.OrderByDescending(x => x.Id).FirstOrDefault();
+            if (lastElement == null)
+            {
+                return "1000";
+            }
+            int code = int.Parse(lastElement.Code) + 1;
+            return code.ToString();
+
         }
         #endregion
     }

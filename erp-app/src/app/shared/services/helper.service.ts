@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageService } from './local-storage.service';
 import { Privileges } from '../enums/privileges.enum';
@@ -11,7 +11,10 @@ export class HelperService {
 
     privileges = Privileges;
     VATPercentage: number = 0.14;
-    constructor(private _datePipe: DatePipe, public translate: TranslateService, private localStorageService: LocalStorageService) {
+    constructor(private _datePipe: DatePipe,
+        public translate: TranslateService,
+        private localStorageService: LocalStorageService,
+        private location: Location) {
 
     }
 
@@ -19,8 +22,14 @@ export class HelperService {
     transformDate(date: any) {
         return this._datePipe.transform(date, "yyyy-MM-dd"); //whatever format you need. 
     }
+
     conveertDateToString(date: Date) {
         return (this._datePipe.transform(date, "yyyy-MM-dd"))?.toString(); //whatever format you need. 
+    }
+
+    conveertDateTimeToString(date: Date) {
+        let newDate = new Date(date.setHours(date.getHours() + 2));
+        return newDate.toISOString().slice(0, 16);;
     }
     useLanguage(language: string): void {
         const htmlTag = document.getElementsByTagName("html")[0] as HTMLHtmlElement;
@@ -91,4 +100,9 @@ export class HelperService {
     getRole() {
         return localStorage.getItem('role');
     }
+
+    back() {
+        this.location.back();
+    }
+
 }

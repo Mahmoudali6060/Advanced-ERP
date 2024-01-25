@@ -182,20 +182,19 @@
                         <td>{{item.notes}}</td>
 
                         <td>
-                            <div class="table-data-feature">
-                                <ng-template *ngIf="!item.isBilled">
-                                    <button *IfPrivilege="helperService.privileges.Accounting.Treasuries.Edit"
-                                        class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
-                                        data-original-title="View"
-                                        [routerLink]="['/accounting/treasury-form-view/'+item.id]">
-                                        <i class="zmdi zmdi-eye"></i>
-                                    </button>
-                                    <button *IfPrivilege="helperService.privileges.Accounting.Treasuries.Delete"
-                                        class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
-                                        data-original-title="Delete" (click)="openConfirmationDialog(item)">
-                                        <i class="zmdi zmdi-delete"></i>
-                                    </button>
-                                </ng-template>
+
+                            <div class="table-data-feature" *ngIf="!item.isBilled">
+                                <button *IfPrivilege="helperService.privileges.Accounting.Treasuries.Edit"
+                                    class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="View"
+                                    [routerLink]="['/accounting/treasury-form-view/'+item.id]">
+                                    <i class="zmdi zmdi-eye"></i>
+                                </button>
+                                <button *IfPrivilege="helperService.privileges.Accounting.Treasuries.Delete"
+                                    class="item ml-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="Delete" (click)="openConfirmationDialog(item)">
+                                    <i class="zmdi zmdi-delete"></i>
+                                </button>
                             </div>
                         </td>
                     </tr>

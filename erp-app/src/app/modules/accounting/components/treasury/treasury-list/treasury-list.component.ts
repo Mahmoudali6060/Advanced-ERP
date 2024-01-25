@@ -106,7 +106,7 @@ export class TreasuryListComponent {
 	}
 
 	public openConfirmationDialog(item: TreasuryDTO) {
-		this.confirmationDialogService.confirm(this.translate.instant("ConfirmaionDialog.Title"), this.translate.instant("ConfirmaionDialog.Description"))
+		this.confirmationDialogService.confirm(this.translate.instant("DeleteConfirmaionDialog.Title"), this.translate.instant("DeleteConfirmaionDialog.Description"))
 			.then((confirmed) => {
 				if (confirmed) {
 					this.delete(item.id);

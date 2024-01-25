@@ -12,6 +12,9 @@ export class ConfirmationDialogComponent {
   @Input() message: string | undefined;
   @Input() btnOkText: string | undefined;
   @Input() btnCancelText: string | undefined;
+  @Input() showOk: boolean | undefined = true;
+  @Input() showCancel: boolean | undefined = true;
+
 
   constructor(private activeModal: NgbActiveModal) { }
 

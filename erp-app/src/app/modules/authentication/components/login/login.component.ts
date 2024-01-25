@@ -60,7 +60,7 @@ export class LoginComponent {
         }
         else {
           //if (response.userTypeId === UserTypeEnum.Admin  ) {
-          this.router.navigate(["/dashboard"]);
+          this.router.navigate(["/setup/product-list-view"]);
           //} else {
           //this.router.navigate(["user/profile"]);
           //  }

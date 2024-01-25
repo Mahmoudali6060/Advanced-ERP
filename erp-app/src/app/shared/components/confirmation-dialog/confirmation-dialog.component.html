@@ -8,6 +8,6 @@
     {{ message }}
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="decline()">{{'General.Cancel'|translate }}</button>
-    <button type="button" class="btn btn-primary" (click)="accept()">{{'General.Ok'|translate }}</button>
+    <button *ngIf="showCancel" type="button" class="btn btn-danger" (click)="decline()">{{'General.Cancel'|translate }}</button>
+    <button *ngIf="showOk" type="button" class="btn btn-primary" (click)="accept()">{{'General.Ok'|translate }}</button>
 </div>

@@ -88,7 +88,7 @@ export class CategoryListComponent {
 	}
 
 	public openConfirmationDialog(item: CategoryDTO) {
-		this.confirmationDialogService.confirm(this.translate.instant("ConfirmaionDialog.Title"), this.translate.instant("ConfirmaionDialog.Description"))
+		this.confirmationDialogService.confirm(this.translate.instant("DeleteConfirmaionDialog.Title"), this.translate.instant("DeleteConfirmaionDialog.Description"))
 			.then((confirmed) => {
 				if (confirmed) {
 					this.delete(item.id);

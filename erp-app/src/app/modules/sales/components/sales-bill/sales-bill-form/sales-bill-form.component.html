@@ -62,14 +62,14 @@
                             </div>
                             <div class="col-lg-2">
                                 <div class="form-group">
-                                    <label for="currentBalance" class=" form-control-label">{{'General.CurrentBalance'
+                                    <label for="previousBalance" class=" form-control-label">{{'General.PreviousBalance'
                                         |translate}}
-                                        <span *ngIf="currentBalance!=0">
-                                            -{{(currentBalance>0?'General.Debit':'General.Credit')
+                                        <span *ngIf="previousBalance!=0">
+                                            -{{(previousBalance>0?'General.Debit':'General.Credit')
                                             |translate}}</span>
                                     </label>
-                                    <input [disabled]="viewMode" [value]="currentBalance" type="text"
-                                        id="currentBalance" class="form-control" readonly name="currentBalance"
+                                    <input [disabled]="viewMode" [value]="previousBalance" type="text"
+                                        id="previousBalance" class="form-control" readonly name="previousBalance"
                                         aria-describedby="helpId">
                                 </div>
                             </div>
@@ -190,7 +190,7 @@
                                                         </td>
                                                         <td>
                                                             <input [(ngModel)]="item.discount" type="number"
-                                                                class="form-control" (change)="updateTotal()"
+                                                                class="form-control" (change)="onDiscountChange(item)"
                                                                 [ngModelOptions]="{standalone: true}">
                                                         </td>
                                                         <td>
@@ -442,11 +442,11 @@
                 </div>
 
                 <div class="flex-container p-3">
-                    <button  [disabled]="disableButton" appDisableDoubleClick *ngIf="!viewMode" (click)="save(false,frm)" type="button"
-                        class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
+                    <button [disabled]="disableButton" appDisableDoubleClick *ngIf="!viewMode" (click)="save(false,frm)"
+                        type="button" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
                         <i class="fa fa-dot-circle-o"></i>{{'General.Save' |translate}}
                     </button>
-                    <button  [disabled]="disableButton" *ngIf="!viewMode" (click)="saveAndPrint()" type="button"
+                    <button [disabled]="disableButton" *ngIf="!viewMode" (click)="saveAndPrint()" type="button"
                         class="btn btn-outline-success mr-1">
                         <i class="fa fa-print"></i>{{'General.SaveAndPrint' |translate}}
                     </button>
@@ -473,7 +473,18 @@
     <div class="row">
 
         <div class="col-lg-12">
-            <br><br>
+            <br>
+            <br>
+            <br>
+
+            <h2 class="text-center" *ngIf="salesBillHeaderDTO.isReturned">{{'Reports.ReturnedSalesBill' |translate}}
+            </h2>
+            <h2 class="text-center" *ngIf="salesBillHeaderDTO.isTemp">{{'Reports.TempSalesBill' |translate}} </h2>
+            <h2 class="text-center" *ngIf="!salesBillHeaderDTO.isReturned && !salesBillHeaderDTO.isTemp">
+                {{'Reports.ReportSalesBill' |translate}} </h2>
+
+
+            <br>
 
             <table class="table-report" style="background-color: white !important" border="0">
                 <tr>
@@ -481,15 +492,7 @@
                     <td class="text-center text-bold"> {{selectedClient.fullName}}</td>
                     <td class="text-left">Client</td>
                 </tr>
-                <tr>
-                    <td class="text-right">الرصيد</td>
-                    <td class="text-center text-bold">{{currentBalance}}
-                        <span *ngIf="currentBalance!=0">
-                            {{(currentBalance>0?'General.Debit':'General.Credit')
-                            |translate}}</span>
-                    </td>
-                    <td class="text-left">Balance</td>
-                </tr>
+
                 <tr>
                     <td class="text-right">العنوان</td>
                     <td class="text-center text-bold">{{selectedClient.address}}</td>
@@ -592,6 +595,24 @@
                     <td class="text-right">المتبقي</td>
                     <td class="text-center text-bold">{{salesBillHeaderDTO.remaining}} </td>
                     <td class="text-left">Remaining</td>
+                </tr>
+                <tr>
+                    <td class="text-right">الرصيد السابق</td>
+                    <td class="text-center text-bold">{{previousBalance}}
+                        <!-- <span *ngIf="previousBalance!=0">
+                            {{(previousBalance>0?'General.Debit':'General.Credit')
+                            |translate}}</span> -->
+                    </td>
+                    <td class="text-left">PreviousBalance Balance</td>
+                </tr>
+                <tr>
+                    <td class="text-right">الرصيد الحالي</td>
+                    <td class="text-center text-bold">{{previousBalance-salesBillHeaderDTO.remaining}}
+                        <!-- <span *ngIf="previousBalance!=0">
+                            {{((previousBalance-salesBillHeaderDTO.remaining)>0?'General.Debit':'General.Credit')
+                            |translate}}</span> -->
+                    </td>
+                    <td class="text-left">Current Balance</td>
                 </tr>
             </table>
 

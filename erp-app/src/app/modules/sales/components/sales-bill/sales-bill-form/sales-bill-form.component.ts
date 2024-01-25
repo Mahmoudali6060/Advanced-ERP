@@ -51,7 +51,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	viewMode: boolean = false;
 	productList: Array<ProductDTO> = new Array<ProductDTO>();
 	clientList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
-	currentBalance: number = 0;
+	previousBalance: number = 0;
 	@Input() searchByNumber: boolean = false;
 	selectedClient: ClientVendorDTO = new ClientVendorDTO();
 	representiveList: Array<RepresentiveDTO> = new Array<RepresentiveDTO>();
@@ -155,7 +155,6 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	getAllRepresentives() {
 		this.representiveService.getAllLite().subscribe((res: any) => {
 			this.representiveList = res.list;
-			this.representiveList = this.representiveList.filter(x => x.representiveTypeId == RepresentiveTypeEnum.Sales);
 		})
 	}
 
@@ -192,12 +191,14 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 
 	back() {
 		this.salesBillHeaderDTO = new SalesBillHeaderDTO();
-		if (this.isTemp)
-			this.router.navigateByUrl('sales-bill/sales-bill-temp-list');
-		else if (this.isReturned)
-			this.router.navigateByUrl('sales-bill/sales-bill-returned-list');
-		else
-			this.router.navigateByUrl('sales-bill/sales-bill-list');
+		this.helperService.back();
+
+		// if (this.salesBillHeaderDTO.isTemp)
+		// 	this.router.navigateByUrl('sales-bill/sales-bill-temp-list');
+		// else if (this.salesBillHeaderDTO.isReturned)
+		// 	this.router.navigateByUrl('sales-bill/sales-bill-returned-list');
+		// else
+		// 	this.router.navigateByUrl('sales-bill/sales-bill-list');
 
 
 	}
@@ -394,7 +395,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			let selectedClient: any = this.clientList.find(c => c.id == this.salesBillHeaderDTO.clientVendorId);
 			if (selectedClient) {
 				this.selectedClient = selectedClient;
-				this.currentBalance = parseFloat((selectedClient?.debit - selectedClient?.credit).toFixed(2));
+				this.previousBalance = parseFloat((selectedClient?.debit - selectedClient?.credit).toFixed(2));
 			}
 		}
 	}
@@ -419,7 +420,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		this.salesBillService.getByNumber(this.salesBillHeaderDTO.number).subscribe((res: any) => {
 			if (!res) {
 				this.salesBillHeaderDTO = new SalesBillHeaderDTO();
-				this.currentBalance = 0;
+				this.previousBalance = 0;
 				this.alertService.showError(this.translate.instant("Errors.NotFound"), this.translate.instant("Errors.Error"));
 				return;
 			}
@@ -440,6 +441,28 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 					this.salesBillHeaderDTO.clientVendorId = clientVendor.id
 					this.getAllClients();
 				}
+			})
+			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+	}
+
+	onDiscountChange(item: SalesBillDetailsDTO) {
+		this.updateTotal();
+		if (item.priceAfterDiscount < item.lastPurchasingPrice) {
+			this.showInCorectPriceConfirmaionDialog(item);
+		}
+		// else {
+		// }
+	}
+
+	public showInCorectPriceConfirmaionDialog(item: SalesBillDetailsDTO) {
+		this.dialogService.confirm(this.translate.instant("InCorectPriceConfirmaionDialog.Title"), this.translate.instant("InCorectPriceConfirmaionDialog.Description"),undefined,undefined,'sm',false,true)
+			.then((confirmed) => {
+				// if (confirmed) {
+				// 	this.updateTotal();
+				// }
+				// else {
+				// 	item.priceAfterDiscount = item.lastPurchasingPrice;
+				// }
 			})
 			.catch(() => console.log('SalesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
 	}

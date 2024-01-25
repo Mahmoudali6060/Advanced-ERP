@@ -13,8 +13,11 @@ using System.Globalization;
 
 namespace Shared.Classes
 {
-    public static class Helper
+    public static class Utitlites
     {
+        public static string DateTimeFormat = "yyyy-MM-dd hh:mm tt";
+        public static string DateFormat = "yyyy-MM-dd";
+
         public static string SerializeObject(object obj)
         {
             return JsonConvert.SerializeObject(obj, Formatting.None,

@@ -5,6 +5,7 @@ using Data.Entities.Sales;
 using Data.Entities.Setup;
 using Data.Entities.UserManagement;
 using Entities.Account;
+using Shared.Classes;
 using Shared.Entities.Accouting;
 using Shared.Entities.Purchases;
 using Shared.Entities.Sales;
@@ -122,13 +123,13 @@ namespace App.Helper
 
             #region Accounting
             CreateMap<AccountStatement, AccountStatementDTO>()
-                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")))
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString(Utitlites.DateTimeFormat)))
                 .ForMember(dest => dest.BeneficiaryName, opt => opt.MapFrom(src => src.ClientVendor != null ? src.ClientVendor.FullName : src.BeneficiaryName));
 
             CreateMap<AccountStatementDTO, AccountStatement>();
 
             CreateMap<Treasury, TreasuryDTO>()
-               .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")))
+               .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString(Utitlites.DateTimeFormat)))
                .ForMember(dest => dest.BeneficiaryName, opt => opt.MapFrom(src => src.ClientVendor != null ? src.ClientVendor.FullName : src.BeneficiaryName));
 
             CreateMap<TreasuryDTO, Treasury>();

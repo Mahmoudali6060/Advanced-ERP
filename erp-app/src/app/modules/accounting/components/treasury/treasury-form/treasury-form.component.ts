@@ -55,7 +55,7 @@ export class TreasuryFormComponent {
 		this.paymentMethodList = this.helperService.enumSelector(PaymentMethodEnum);
 		this.transactionTypeList = this.helperService.enumSelector(TransactionTypeEnum);
 		this.treasuryDTO = new TreasuryDTO();
-		this.treasuryDTO.date = this.helperService.conveertDateToString(new Date());
+		this.treasuryDTO.date = this.helperService.conveertDateTimeToString(new Date());
 
 		const id = this.route.snapshot.paramMap.get('id');
 		if (id) {
@@ -84,6 +84,7 @@ export class TreasuryFormComponent {
 	getTreasuryById(treasuryId: any, isPrint?: boolean) {
 		this.treasuryService.getById(treasuryId).subscribe((res: any) => {
 			this.treasuryDTO = res;
+			this.treasuryDTO.date = this.helperService.conveertDateTimeToString(new Date(this.treasuryDTO.date));
 			if (isPrint) {
 				this.print();
 				this.back();
