@@ -7,7 +7,6 @@ namespace Shared.Entities.Accouting
     {
         public string Number { get; set; }
         public string Date { get; set; }
-        public AccountTypeEnum AccountTypeId { get; set; }
         public long? ClientVendorId { get; set; }
         public string BeneficiaryName { get; set; }
         public PaymentMethodEnum? PaymentMethodId { get; set; }

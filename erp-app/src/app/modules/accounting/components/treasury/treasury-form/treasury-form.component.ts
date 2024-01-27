@@ -175,19 +175,19 @@ export class TreasuryFormComponent {
 			// this.previousBalance = parseFloat((this.currentBalance - (clientVendor?.debit - clientVendor?.credit)).toFixed(2));
 
 			this.currentBalance = parseFloat((clientVendor?.debit - clientVendor?.credit).toFixed(2));
-			this.previousBalance = parseFloat((this.currentBalance + this.treasuryDTO?.outComing + this.treasuryDTO?.inComing).toFixed(2));
+			this.previousBalance = parseFloat((this.currentBalance + this.treasuryDTO?.inComing + this.treasuryDTO?.outComing).toFixed(2));
 
 		}
 		//Add
 		else {
 			this.previousBalance = parseFloat((clientVendor?.debit - clientVendor?.credit).toFixed(2));
-			this.currentBalance = parseFloat((this.previousBalance - this.treasuryDTO?.outComing - this.treasuryDTO?.inComing).toFixed(2));
+			this.currentBalance = parseFloat((this.previousBalance - this.treasuryDTO?.inComing - this.treasuryDTO?.outComing).toFixed(2));
 
 		}
 	}
 
 	onAmountsChange() {
-		this.currentBalance = parseFloat((this.previousBalance + this.treasuryDTO?.outComing - this.treasuryDTO?.inComing).toFixed(2));
+		this.currentBalance = parseFloat((this.previousBalance + this.treasuryDTO?.inComing - this.treasuryDTO?.outComing).toFixed(2));
 	}
 	saveAndPrint() {
 		this.save(true);

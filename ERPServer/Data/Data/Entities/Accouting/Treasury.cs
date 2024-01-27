@@ -26,6 +26,8 @@ namespace Data.Entities.Accouting
         public bool IsCancel { get; set; }
         public bool IsBilled { get; set; }
         public virtual ClientVendor ClientVendor { get; set; }
+        public virtual List<AccountStatement> AccountStatements { get; set; }
+
 
     }
 }

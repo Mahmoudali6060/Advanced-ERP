@@ -15,7 +15,6 @@ namespace Data.Entities.Accouting
     {
         public string Number { get; set; }
         public DateTime Date { get; set; }
-        public AccountTypeEnum AccountTypeId { get; set; }
         public long? ClientVendorId { get; set; }
         public string BeneficiaryName { get; set; }
         public PaymentMethodEnum? PaymentMethodId { get; set; }
@@ -25,6 +24,8 @@ namespace Data.Entities.Accouting
         public string Notes { get; set; }
         public bool IsCancel { get; set; }
         public bool IsBilled { get; set; }
+        public long? TreasuryId { get; set; }
+        public virtual Treasury Treasury { get; set; }
         public virtual ClientVendor ClientVendor { get; set; }
 
     }

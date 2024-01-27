@@ -85,7 +85,10 @@
                         <td>{{i+1}}</td>
                         <td>{{item.date}}</td>
                         <td>
-                            {{'PaymentMethodEnum.'+paymentMethodEnum[item.paymentMethodId] |translate}}
+                            <span *ngIf="item.paymentMethodId">
+                                {{'PaymentMethodEnum.'+paymentMethodEnum[item.paymentMethodId] |translate}}
+                            </span>
+
                         </td>
                         <td>{{item.debit}}</td>
                         <td>{{item.credit}}</td>

@@ -455,7 +455,6 @@ namespace DataService.Setup.Handlers
             AccountStatement accountStatement = new AccountStatement()
             {
                 Date = DateTime.Parse(entity.Date),
-                AccountTypeId = AccountTypeEnum.Vendors,
                 ClientVendorId = entity.ClientVendorId,
                 BeneficiaryName = entity.ClientVendorName,
                 //TransactionTypeId = TransactionTypeEnum.Incoming,

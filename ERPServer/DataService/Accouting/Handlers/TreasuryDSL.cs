@@ -106,8 +106,6 @@ namespace DataService.Accounting.Handlers
         {
             entityDTO.Number = GenerateSequenceNumber();
             var entity = _mapper.Map<Treasury>(entityDTO);
-            await _unitOfWork.TreasuryDAL.AddAsync(entity);
-            #region Update Balance
             if (entityDTO.ClientVendorId.HasValue == true)
             {
                 var clientVendor = await _unitOfWork.ClientVendorDAL.GetByIdAsync(entityDTO.ClientVendorId.Value);
@@ -117,7 +115,12 @@ namespace DataService.Accounting.Handlers
                     clientVendor.Credit += entity.OutComing;
                     await _unitOfWork.ClientVendorDAL.UpdateAsync(clientVendor);
                 }
+
+                entity.AccountStatements = MapAccountStatement(entityDTO);
             }
+            await _unitOfWork.TreasuryDAL.AddAsync(entity);
+            #region Update Balance
+
             #endregion
 
             await _unitOfWork.CompleteAsync();
@@ -156,7 +159,8 @@ namespace DataService.Accounting.Handlers
         public async Task<bool> Delete(long id)
         {
             Treasury entity = await _unitOfWork.TreasuryDAL.GetByIdAsync(id);
-            var result = await _unitOfWork.TreasuryDAL.DeleteAsync(entity);
+            entity.IsCancel = true;
+            var result = await _unitOfWork.TreasuryDAL.UpdateAsync(entity);
             #region Update Balance
             if (entity.ClientVendorId.HasValue == true)
             {
@@ -167,10 +171,18 @@ namespace DataService.Accounting.Handlers
                     clientVendor.Credit -= entity.OutComing;
                     await _unitOfWork.ClientVendorDAL.UpdateAsync(clientVendor);
                 }
+
+                var accountStatment = await _unitOfWork.AccountStatementDAL.Get(x => x.TreasuryId == entity.Id);
+                if (accountStatment != null)
+                {
+                    accountStatment.IsCancel = true;
+                    _unitOfWork.AccountStatementDAL.Update(accountStatment);
+                }
+
             }
             #endregion
             await _unitOfWork.CompleteAsync();
-            return result;
+            return result > 0;
         }
         #endregion
 
@@ -183,10 +195,10 @@ namespace DataService.Accounting.Handlers
                 TreasuryList = TreasuryList.Where(x => x.Date.Date == DateTime.Parse(searchCriteriaDTO.Date));
             }
 
-            if (searchCriteriaDTO.AccountTypeId.HasValue)
-            {
-                TreasuryList = TreasuryList.Where(x => x.AccountTypeId == searchCriteriaDTO.AccountTypeId);
-            }
+            //if (searchCriteriaDTO.AccountTypeId.HasValue)
+            //{
+            //    TreasuryList = TreasuryList.Where(x => x.AccountTypeId == searchCriteriaDTO.AccountTypeId);
+            //}
 
             if (searchCriteriaDTO.ClientVendorId.HasValue)
             {
@@ -220,7 +232,25 @@ namespace DataService.Accounting.Handlers
             return code.ToString();
 
         }
-      
+
+        private List<AccountStatement> MapAccountStatement(TreasuryDTO treasuryDTO)
+        {
+            return new List<AccountStatement>()
+            {
+                new AccountStatement(){
+                Date = DateTime.Now.Date,
+                ClientVendorId = treasuryDTO.ClientVendorId.Value,
+                BeneficiaryName = treasuryDTO.BeneficiaryName,
+                PaymentMethodId = treasuryDTO.PaymentMethodId,
+                IsBilled = true,
+                Debit = treasuryDTO.InComing,
+                Credit = treasuryDTO.OutComing,
+                Notes = treasuryDTO.Notes
+                }
+            };
+        }
+
+
         #endregion
 
     }

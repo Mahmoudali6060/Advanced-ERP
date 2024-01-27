@@ -162,9 +162,7 @@ namespace DataService.Setup.Handlers
                 new AccountStatement()
                 {
                      Date = DateTime.Now.Date,
-                     AccountTypeId =entity.TypeId==ClientVendorTypeEnum.Client? AccountTypeEnum.Clients:AccountTypeEnum.Vendors,
                      BeneficiaryName = entity.FullName,
-                     //TransactionTypeId = TransactionTypeEnum.Incoming,
                      PaymentMethodId = PaymentMethodEnum.Cash,
                      //RefNo = entity.RefNo,
                      IsBilled = true,

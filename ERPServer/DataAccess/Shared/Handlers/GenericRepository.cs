@@ -45,6 +45,23 @@ namespace DataAccess.Shared.Handlers
             return includes.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }
 
+        public async Task<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includes)
+        {
+            TEntity query = null;
+            if (predicate == null)
+            {
+                query = _dbContext.Set<TEntity>().SingleOrDefault();
+
+            }
+            else
+            {
+                query = _dbContext.Set<TEntity>().SingleOrDefault(predicate);
+
+            }
+            return query;
+            //return includes.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+        }
+
         //public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includes)
         //{
         //    TEntity entity = _dbContext.Set<TEntity>()

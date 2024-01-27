@@ -183,10 +183,6 @@ namespace DataService.Accounting.Handlers
                 AccountStatementList = AccountStatementList.Where(x => x.Date.Date == DateTime.Parse(searchCriteriaDTO.Date));
             }
 
-            if (searchCriteriaDTO.AccountTypeId.HasValue)
-            {
-                AccountStatementList = AccountStatementList.Where(x => x.AccountTypeId == searchCriteriaDTO.AccountTypeId);
-            }
 
             if (searchCriteriaDTO.ClientVendorId.HasValue)
             {

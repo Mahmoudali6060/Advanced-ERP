@@ -7,7 +7,6 @@ export class AccountStatementDTO extends BaseDTO {
 
     number: number;
     date: string | undefined;
-    accountTypeId: AccountTypeEnum;
     clientVendorId: number | null;
     beneficiaryName: string | undefined;
     //transactionTypeId: TransactionTypeEnum;

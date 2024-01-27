@@ -16,8 +16,8 @@ export class DialogService {
         modalRef.componentInstance.message = message;
         modalRef.componentInstance.btnOkText = btnOkText;
         modalRef.componentInstance.btnCancelText = btnCancelText;
-        modalRef.componentInstance.showOk = showOk;
-        modalRef.componentInstance.showCancel = showCancel;
+        modalRef.componentInstance.showOk = showOk != null ? showOk : true;
+        modalRef.componentInstance.showCancel = showCancel != null ? showCancel : true;
 
 
         return modalRef.result;

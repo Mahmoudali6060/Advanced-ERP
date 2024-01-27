@@ -7,7 +7,6 @@ namespace Shared.Entities.Accouting
     public class AccountStatementSearchDTO : Paging
     {
         public string Date { get; set; }
-        public AccountTypeEnum? AccountTypeId { get; set; }
         public long? ClientVendorId { get; set; }
         public TransactionTypeEnum? TransactionTypeId { get; set; }
         public PaymentMethodEnum? PaymentMethodId { get; set; }
