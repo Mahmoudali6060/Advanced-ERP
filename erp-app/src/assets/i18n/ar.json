@@ -25,6 +25,8 @@
     "Price": "سعر (الليستة)",
     "LastPurchasingPrice": "أخر سعر شراء",
     "LastSellingPrice": "أخر سعر بيع",
+    "SellingPrice": " سعر البيع",
+    "PurchasingPrice": "سعر الشراء",
     "Total": "الاجمالي",
     "Profit": "الربح",
     "Notes": "ملاحظات",
@@ -107,7 +109,6 @@
     "PreviousBalance": "الرصيد السابق",
     "Paid": "المدفوع",
     "Remaining": "المتبقي",
-    "SellingPrice": "سعر الشراء",
     "SaveAndPrint": "حفظ وطباعة",
     "AddressDetails": "العنوان تفصيلاً",
     "ContactPerson": "الشخص المسؤول",
@@ -161,7 +162,9 @@
     "OutComing": "منصرف",
     "InComing": "وارد",
     "EditCompanyData": "تعديل بيانات الشركة",
-    "Symbol": "الرمز"
+    "Symbol": "الرمز",
+    "SalesBillInstructions": "تعليمات فاتورة المبيعات",
+    "PurchasesBillInstructions": "تعليمات فاتورة المشتريات"
   },
   "Dashboard": {
     "overview": "نظرة عامة",
@@ -593,9 +596,11 @@
   },
   "Company": {
     "Title": "الشركات",
+    "CompanyBasicData": "بيانات الشركة الأساسية",
+    "BillsSettings": "إعدادات الفواتير",
     "AddCompany": "أضافة شركة جديدة",
-    "EditCompany": "تعديل الشركة",
-    "ViewCompany": "عرض الشركة "
+    "EditCompany": "تعديل  بيانات الشركة",
+    "ViewCompany": "عرض بيامات الشركة "
   },
   "Reports": {
     "ReportSalesBill": "عرض سعر (فاتورة)",

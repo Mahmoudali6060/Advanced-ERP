@@ -48,8 +48,14 @@ namespace App.Helper
             CreateMap<ClientVendor, ClientVendorDTO>();
             CreateMap<ClientVendorDTO, ClientVendor>();
 
-            CreateMap<Company, CompanyDTO>();
-            CreateMap<CompanyDTO, Company>();
+            CreateMap<Company, CompanyDTO>()
+                .ForMember(dest => dest.SettingDTO, opt => opt.MapFrom(src => src.Setting));
+            CreateMap<CompanyDTO, Company>()
+                .ForMember(dest => dest.Setting, opt => opt.MapFrom(src => src.SettingDTO));
+
+
+            CreateMap<Setting, SettingDTO>();
+            CreateMap<SettingDTO, Setting>();
 
             CreateMap<Representive, RepresentiveDTO>();
             CreateMap<RepresentiveDTO, Representive>();

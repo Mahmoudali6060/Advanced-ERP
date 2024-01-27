@@ -36,7 +36,7 @@ namespace DataService.Accounting.Handlers
         #region Query
         public async Task<ResponseEntityList<TreasuryDTO>> GetAll(TreasurySearchDTO searchCriteriaDTO)
         {
-            var treasuryList = await _unitOfWork.TreasuryDAL.GetAllWithIncludes(x => x.IsCancel == false, x => x.ClientVendor);
+            var treasuryList = await _unitOfWork.TreasuryDAL.GetAsync(x => x.IsCancel == false, x => x.ClientVendor);
             #region Apply Filters
             treasuryList = treasuryList.OrderByDescending(x => x.Id);
             treasuryList = ApplyFilert(treasuryList, searchCriteriaDTO);
@@ -61,7 +61,7 @@ namespace DataService.Accounting.Handlers
 
         public async Task<TreasuryGridDTO> GetAllForGrid(TreasurySearchDTO searchCriteriaDTO)
         {
-            var treasuryList = await _unitOfWork.TreasuryDAL.GetAllWithIncludes(x => x.IsCancel == false, x => x.ClientVendor);
+            var treasuryList = await _unitOfWork.TreasuryDAL.GetAsync(x => x.IsCancel == false, x => x.ClientVendor);
             #region Apply Filters
             treasuryList = treasuryList.OrderByDescending(x => x.Id);
             treasuryList = ApplyFilert(treasuryList, searchCriteriaDTO);
@@ -172,7 +172,7 @@ namespace DataService.Accounting.Handlers
                     await _unitOfWork.ClientVendorDAL.UpdateAsync(clientVendor);
                 }
 
-                var accountStatment = await _unitOfWork.AccountStatementDAL.Get(x => x.TreasuryId == entity.Id);
+                var accountStatment =  _unitOfWork.AccountStatementDAL.GetAsync(x => x.TreasuryId == entity.Id).Result.SingleOrDefault();
                 if (accountStatment != null)
                 {
                     accountStatment.IsCancel = true;

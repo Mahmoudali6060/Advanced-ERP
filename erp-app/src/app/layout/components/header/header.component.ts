@@ -20,7 +20,6 @@ export class HeaderComponent implements OnInit{
   role: any
   serverUrl: string;
   subscription: Subscription;
-  userProfile: UserProfileDTO;
   imageUrl: string;
   imageSrc: string;
   constructor(
@@ -37,23 +36,9 @@ export class HeaderComponent implements OnInit{
     this.serverUrl = this._configService.getServerUrl();
     this.role = this.helperService.getRole();
     console.log("role", this.role)
-    this.userProfile = this.localStorageService.getItem(LocalStorageItems.userProfile);
-    if (this.userProfile) this.getUserById(this.userProfile.id);
   }
-  getUserById(userId: number) {
-    this.userProfileService.getById(userId).subscribe((res: any) => {
-      this.userProfile = res;
-      if (res) {
-        this.imageUrl = this.userProfile.imageUrl;
-        this.serverUrl = this._configService.getServerUrl();
-        this.imageSrc = this.serverUrl + "wwwroot/Images/Users/" + this.userProfile.imageUrl;
-        if (!this.userProfile.imageUrl) {
-          this.imageSrc = "assets/images/icon/avatar-big-01.jpg";
-        }
-      }
-    })
 
-  }
+  
   public toggleSideMenu() {
 
     if (!$('body').hasClass('layout-fullwidth')) {

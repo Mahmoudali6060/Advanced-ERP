@@ -28,7 +28,7 @@ namespace DataService.Setup.Handlers
         #region Query
         public async Task<ResponseEntityList<ProductDTO>> GetAll(ProductSearchDTO searchCriteriaDTO)
         {
-            var productList = await _unitOfWork.ProductDAL.GetAllWithIncludes(null, x => x.Category);
+            var productList = await _unitOfWork.ProductDAL.GetAsync(null, x => x.Category);
 
             #region Apply Filters
             productList = productList.OrderBy(x => x.Id);

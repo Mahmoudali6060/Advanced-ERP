@@ -55,7 +55,8 @@ namespace DataService.Setup.Handlers
 
         public async Task<CompanyDTO> GetById(long id)
         {
-            return _mapper.Map<CompanyDTO>(await _unitOfWork.CompanyDAL.GetByIdAsync(id));
+            var company =  _unitOfWork.CompanyDAL.GetAsync(x => x.Id == id, x => x.Setting).Result.SingleOrDefault();
+            return _mapper.Map<CompanyDTO>(company);
         }
 
         public async Task<ResponseEntityList<CompanyDTO>> GetAllLite()

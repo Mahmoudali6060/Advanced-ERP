@@ -9,7 +9,7 @@ table {
 
 
 /* Zebra striping */
-.table-report  tr:nth-of-type(odd) {
+.table-report tr:nth-of-type(odd) {
     background: #eee !important;
 }
 
@@ -70,9 +70,11 @@ body {
 }
 
 .bottom-page {
-    font-size: 0.7em;
+    font-size: 20px;
+    margin: 5px;
+    font-family: auto;
 }
 
-.second-header{
+.second-header {
     font-size: 16px;
 }

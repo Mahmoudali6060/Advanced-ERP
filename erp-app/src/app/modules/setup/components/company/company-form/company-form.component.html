@@ -3,9 +3,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <strong *ngIf="!companyDTO.id">{{'Company.AddCompany' |translate}}</strong>
-                    <strong *ngIf="companyDTO.id && !viewMode">{{'Company.EditCompany' |translate}}</strong>
-                    <strong *ngIf="companyDTO.id  && viewMode ">{{'Company.ViewCompany' |translate}}</strong>
+                    <strong>{{'Company.CompanyBasicData' |translate}}</strong>
                 </div>
                 <div class="card-body card-block">
                     <div class="row">
@@ -46,8 +44,8 @@
                                         <input [disabled]="viewMode" [(ngModel)]="companyDTO.addressDetails" type="text"
                                             id="addressDetails" class="form-control" #addressDetails="ngModel"
                                             [class.is-invalid]="addressDetails.invalid && addressDetails.touched"
-                                            [class.is-valid]="addressDetails.valid" required
-                                            name="addressDetails" aria-describedby="helpId">
+                                            [class.is-valid]="addressDetails.valid" required name="addressDetails"
+                                            aria-describedby="helpId">
                                         <small [hidden]="addressDetails.valid || addressDetails.untouched" id="helpId"
                                             class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
                                     </div>
@@ -55,18 +53,15 @@
 
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="contactPerson"
-                                            class=" form-control-label">{{'General.ContactPerson'
+                                        <label for="contactPerson" class=" form-control-label">{{'General.ContactPerson'
                                             |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="companyDTO.contactPerson"
-                                            type="text" id="contactPerson" class="form-control"
-                                            #contactPerson="ngModel"
+                                        <input [disabled]="viewMode" [(ngModel)]="companyDTO.contactPerson" type="text"
+                                            id="contactPerson" class="form-control" #contactPerson="ngModel"
                                             [class.is-invalid]="contactPerson.invalid && contactPerson.touched"
-                                            [class.is-valid]="contactPerson.valid" 
-                                            name="contactPerson" aria-describedby="helpId">
-                                        <small [hidden]="contactPerson.valid || contactPerson.untouched"
-                                            id="helpId" class="text-muted"
-                                            [translate]="'Errors.ThisFieldIsRequired'"></small>
+                                            [class.is-valid]="contactPerson.valid" name="contactPerson"
+                                            aria-describedby="helpId">
+                                        <small [hidden]="contactPerson.valid || contactPerson.untouched" id="helpId"
+                                            class="text-muted" [translate]="'Errors.ThisFieldIsRequired'"></small>
                                     </div>
                                 </div>
 
@@ -79,26 +74,24 @@
                                             type="text" id="contactTelephone" class="form-control"
                                             #contactTelephone="ngModel"
                                             [class.is-invalid]="contactTelephone.invalid && contactTelephone.touched"
-                                            [class.is-valid]="contactTelephone.valid" 
-                                            name="contactTelephone" aria-describedby="helpId">
+                                            [class.is-valid]="contactTelephone.valid" name="contactTelephone"
+                                            aria-describedby="helpId">
                                         <small [hidden]="contactTelephone.valid || contactTelephone.untouched"
                                             id="helpId" class="text-muted"
                                             [translate]="'Errors.ThisFieldIsRequired'"></small>
                                     </div>
                                 </div>
 
-                                 <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="websiteLink"
-                                            class=" form-control-label">{{'General.WebsiteLink'
+                                        <label for="websiteLink" class=" form-control-label">{{'General.WebsiteLink'
                                             |translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="companyDTO.websiteLink"
-                                            type="text" id="websiteLink" class="form-control"
-                                            #websiteLink="ngModel"
+                                        <input [disabled]="viewMode" [(ngModel)]="companyDTO.websiteLink" type="text"
+                                            id="websiteLink" class="form-control" #websiteLink="ngModel"
                                             [class.is-invalid]="websiteLink.invalid && websiteLink.touched"
-                                            [class.is-valid]="websiteLink.valid" 
-                                            name="websiteLink" aria-describedby="helpId">
-                                       
+                                            [class.is-valid]="websiteLink.valid" name="websiteLink"
+                                            aria-describedby="helpId">
+
                                     </div>
                                 </div>
 
@@ -126,15 +119,47 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex-container p-3">
-                    <button type="submit" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
-                        <i class="fa fa-dot-circle-o"></i>{{'General.SaveChanges' |translate}}
-                    </button>
-                    <button type="reset" class="btn btn-danger mr-1" (click)="back()">
-                        <i class="fa fa-ban"></i>{{'General.Back' |translate}}
-                    </button>
+            </div>
 
+            <div class="card">
+                <div class="card-header">
+                    <strong>{{'Company.BillsSettings' |translate}}</strong>
                 </div>
+                <div class="card-body card-block">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="salesBillInstructions"
+                                    class=" form-control-label">{{'General.SalesBillInstructions'
+                                    |translate}}</label>
+                                <textarea [disabled]="viewMode" [(ngModel)]="salesBillInstructions"
+                                    [ngModelOptions]="{standalone: true}" class="form-control" rows="5"
+                                    aria-describedby="helpId"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="purchasesBillInstructions"
+                                    class=" form-control-label">{{'General.PurchasesBillInstructions'
+                                    |translate}}</label>
+                                <textarea [disabled]="viewMode" [(ngModel)]="purchasesBillInstructions"
+                                    [ngModelOptions]="{standalone: true}" class="form-control" rows="5"
+                                    aria-describedby="helpId"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-container p-3">
+                <button type="submit" class="btn btn-outline-primary mr-1" [disabled]="frm.invalid">
+                    <i class="fa fa-dot-circle-o"></i>{{'General.SaveChanges' |translate}}
+                </button>
+                <button type="reset" class="btn btn-danger mr-1" (click)="back()">
+                    <i class="fa fa-ban"></i>{{'General.Back' |translate}}
+                </button>
+
             </div>
         </div>
     </form>

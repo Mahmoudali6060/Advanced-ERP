@@ -19,6 +19,7 @@ namespace Shared.Entities.Setup
         public string ContactTelephone { get; set; }
         public string WebsiteLink { get; set; }
         public string AddressDetails { get; set; }
+        public SettingDTO SettingDTO { get; set; }
 
     }
 }

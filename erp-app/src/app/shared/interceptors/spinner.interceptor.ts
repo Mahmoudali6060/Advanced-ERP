@@ -19,14 +19,14 @@ export class SpinnerInterceptor implements HttpInterceptor {
         return next.handle(req)
             .pipe(tap(
                 event => {
-                    this.spinner.hide();
+                    this.spinner?.hide();
                   //  console.log(event)
                 },
                // error => console.log(error)
 
             ), finalize(() => {
                 this.count--;
-                if (this.count == 0) this.spinner.hide()
+                if (this.count == 0) this.spinner?.hide()
             })
             );
     }

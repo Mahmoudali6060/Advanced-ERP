@@ -49,7 +49,9 @@ export class AuthService {
     return this._httpHelperService.post(this.createCompleteRoute(route), body);
   }
 
-  updateLoggedUserProfile() {
+  updateLoggedUserProfile(userProfile: any) {
+    this.localStorageService.removeItem(LocalStorageItems.userProfile);
+    this.localStorageService.setItem(LocalStorageItems.userProfile, userProfile);
     this.loggedUserProfile = this.localStorageService.getItem(LocalStorageItems.userProfile);
 
   }

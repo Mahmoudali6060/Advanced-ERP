@@ -72,7 +72,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	tempSalesBillDetailList: Array<SalesBillDetailsDTO> = new Array<SalesBillDetailsDTO>();
 	paymentMethodList: LabelValuePair[];
 	disableButton: boolean = false;
-
+	instructions: string;
 	constructor(
 		private salesBillService: SalesBillService,
 		private productService: ProductService,
@@ -85,7 +85,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		private translate: TranslateService,
 		private dialogService: DialogService,
 		private alertService: AlertService,
-		private authService: AuthService,
+		public authService: AuthService,
 		private reportService: ReportService,
 		private representiveService: RepresentiveService,
 		private location: Location
@@ -231,6 +231,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	}
 
 	save(isPrint: boolean, form?: NgForm) {
+		
 		if (this.isTransfereToBill == true)
 			this.salesBillHeaderDTO.isTemp = false;
 
@@ -455,7 +456,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	}
 
 	public showInCorectPriceConfirmaionDialog(item: SalesBillDetailsDTO) {
-		this.dialogService.confirm(this.translate.instant("InCorectPriceConfirmaionDialog.Title"), this.translate.instant("InCorectPriceConfirmaionDialog.Description"),undefined,undefined,'sm',false,true)
+		this.dialogService.confirm(this.translate.instant("InCorectPriceConfirmaionDialog.Title"), this.translate.instant("InCorectPriceConfirmaionDialog.Description"), undefined, undefined, 'sm', false, true)
 			.then((confirmed) => {
 				// if (confirmed) {
 				// 	this.updateTotal();

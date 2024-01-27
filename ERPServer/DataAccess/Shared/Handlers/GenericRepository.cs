@@ -27,9 +27,7 @@ namespace DataAccess.Shared.Handlers
             return _dbContext.Set<TEntity>().AsNoTracking();
         }
 
-       
-
-        public async Task<IQueryable<TEntity>> GetAllWithIncludes(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includes)
+        public async Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includes)
         {
             IQueryable<TEntity> query = null;
             if (predicate == null)
@@ -45,31 +43,6 @@ namespace DataAccess.Shared.Handlers
             return includes.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }
 
-        public async Task<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includes)
-        {
-            TEntity query = null;
-            if (predicate == null)
-            {
-                query = _dbContext.Set<TEntity>().SingleOrDefault();
-
-            }
-            else
-            {
-                query = _dbContext.Set<TEntity>().SingleOrDefault(predicate);
-
-            }
-            return query;
-            //return includes.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
-        }
-
-        //public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includes)
-        //{
-        //    TEntity entity = _dbContext.Set<TEntity>()
-        //        .AsNoTracking()
-        //        .FirstOrDefault(predicate);
-        //    return includes.Aggregate(entity, (current, includeProperty) => current.Include(includeProperty));
-        //}
-
         public async Task<IQueryable<TEntity>> GetAllLiteAsync()
         {
             return _dbContext.Set<TEntity>().AsNoTracking();
@@ -82,7 +55,6 @@ namespace DataAccess.Shared.Handlers
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
-
 
         public async Task<long> AddAsync(TEntity entity)
         {

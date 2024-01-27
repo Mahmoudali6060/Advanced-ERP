@@ -32,7 +32,7 @@ namespace DataService.Setup.Handlers
         #region Query
         public async Task<ResponseEntityList<PurchasesBillHeaderDTO>> GetAll(PurchasesBillHeaderSearchDTO searchCriteriaDTO)
         {
-            var purchasesBillHeaderList = await _unitOfWork.PurchasesBillHeaderDAL.GetAllWithIncludes(null, x => x.ClientVendor, x => x.CreatedByProfile, x => x.ModifiedByProfile);
+            var purchasesBillHeaderList = await _unitOfWork.PurchasesBillHeaderDAL.GetAsync(null, x => x.ClientVendor, x => x.CreatedByProfile, x => x.ModifiedByProfile);
 
             #region Apply Filters
             purchasesBillHeaderList.OrderByDescending(x => x.Id);
@@ -57,7 +57,7 @@ namespace DataService.Setup.Handlers
 
         public async Task<PurchasesBillHeaderDTO> GetById(long id)
         {
-            var result = await _unitOfWork.PurchasesBillHeaderDAL.GetAllWithIncludes(x => x.Id == id, x => x.ClientVendor, x => x.PurchasesBillDetailList, x => x.AccountStatement);
+            var result = await _unitOfWork.PurchasesBillHeaderDAL.GetAsync(x => x.Id == id, x => x.ClientVendor, x => x.PurchasesBillDetailList, x => x.AccountStatement);
             var tt = _mapper.Map<PurchasesBillHeaderDTO>(result.ToList()[0]);
             return tt;
         }

@@ -16,6 +16,7 @@ namespace Data.Entities.Setup
         public string ContactPerson { get; set; }
         public string ContactTelephone { get; set; }
         public string WebsiteLink { get; set; }
+        public Setting Setting { get; set; }
 
 
     }

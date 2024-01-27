@@ -40,7 +40,6 @@ namespace Data.Contexts
         #region Setup 
         public DbSet<Advertisment> Advertisments { get; set; }
         public DbSet<Company> Companies { get; set; }
-        public DbSet<Settings> Settings { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<City> Cities { get; set; }
@@ -52,7 +51,7 @@ namespace Data.Contexts
         public DbSet<ClientVendor> ClientVendors { get; set; }
         public DbSet<Representive> Representives { get; set; }
         public DbSet<UnitOfMeasurement> UnitOfMeasurements { get; set; }
-
+        public DbSet<Setting> Settings { get; set; }
 
         #endregion
 
@@ -95,7 +94,7 @@ namespace Data.Contexts
 
             modelBuilder.Entity<Product>().HasIndex(u => u.Name).IsUnique();
             modelBuilder.Entity<ClientVendor>().HasIndex(p => new { p.FullName, p.TypeId }).IsUnique();
-           
+
             base.OnModelCreating(modelBuilder);
         }
 

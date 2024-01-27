@@ -42,11 +42,10 @@ export class RegisterComponent {
       if (response) {
         this.localStorageService.setItem(LocalStorageItems.token, response.token);
         this.localStorageService.setItem(LocalStorageItems.email, response.email);
-        this.localStorageService.setItem(LocalStorageItems.userProfile, response);
         this.localStorageService.setItem(LocalStorageItems.role, response.role);
         this.localStorageService.setItem(LocalStorageItems.lang, response.defaultLanguage);
         this.helperService.useLanguage(response.defaultLanguage);
-        this.authService.updateLoggedUserProfile();
+        this.authService.updateLoggedUserProfile(response);
         this.router.navigate(["/resetPassword", response.email]);
       }
       else {

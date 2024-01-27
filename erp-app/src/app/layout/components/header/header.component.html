@@ -223,9 +223,10 @@
                                     <i class="zmdi zmdi-account"></i>Account</a>
                             </div> -->
                             <div *IfPrivilege="helperService.privileges.Setup.Companies.Edit"
-                                class="account-dropdown__item" [routerLink]="['/setup/company-form/'+1]">
+                                class="account-dropdown__item"
+                                [routerLink]="['/setup/company-form/'+authService.loggedUserProfile?.companyId]">
                                 <a class="label">
-                                    <i class="zmdi zmdi-settings"></i>{{'General.EditCompanyData' | translate}}</a>
+                                    <i class="zmdi zmdi-settings"></i>{{'General.GeneralSettings' | translate}}</a>
                             </div>
                             <!-- <div class="account-dropdown__item">
                                 <a href="#">

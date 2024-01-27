@@ -36,7 +36,7 @@ namespace DataService.Accounting.Handlers
         #region Query
         public async Task<ResponseEntityList<AccountStatementDTO>> GetAll(AccountStatementSearchDTO searchCriteriaDTO)
         {
-            var treasuryList = await _unitOfWork.AccountStatementDAL.GetAllWithIncludes(x => x.IsCancel == false, x => x.ClientVendor);
+            var treasuryList = await _unitOfWork.AccountStatementDAL.GetAsync(x => x.IsCancel == false, x => x.ClientVendor);
             #region Apply Filters
             treasuryList = treasuryList.OrderByDescending(x => x.Id);
             treasuryList = ApplyFilert(treasuryList, searchCriteriaDTO);
@@ -61,7 +61,7 @@ namespace DataService.Accounting.Handlers
 
         public async Task<AccountStatementGridDTO> GetAllForGrid(AccountStatementSearchDTO searchCriteriaDTO)
         {
-            var treasuryList = await _unitOfWork.AccountStatementDAL.GetAllWithIncludes(x => x.IsCancel == false, x => x.ClientVendor);
+            var treasuryList = await _unitOfWork.AccountStatementDAL.GetAsync(x => x.IsCancel == false, x => x.ClientVendor);
             #region Apply Filters
             treasuryList = treasuryList.OrderByDescending(x => x.Id);
             treasuryList = ApplyFilert(treasuryList, searchCriteriaDTO);

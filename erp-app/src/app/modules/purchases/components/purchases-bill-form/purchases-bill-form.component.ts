@@ -67,7 +67,7 @@ export class PurchasesBillFormComponent {
 		private translate: TranslateService,
 		private dialogService: DialogService,
 		private alertService: AlertService,
-		private authService: AuthService,
+		public authService: AuthService,
 		private reportService: ReportService,
 		private representiveService: RepresentiveService) {
 	}

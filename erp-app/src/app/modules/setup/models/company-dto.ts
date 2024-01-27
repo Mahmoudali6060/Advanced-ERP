@@ -1,3 +1,4 @@
+import { SettingDTO } from "./settings-dto";
 
 export class CompanyDTO {
     id: number;
@@ -9,4 +10,5 @@ export class CompanyDTO {
     contactPerson: string;
     contactTelephone: string;
     websiteLink: string;
+    settingDTO: SettingDTO=new SettingDTO();
 }

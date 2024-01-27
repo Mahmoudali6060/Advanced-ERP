@@ -13,9 +13,7 @@ namespace Shared.DataAccessLayer.Contracts
     public interface IGenericRepository<TEntity> : ICRUDOperationsAsyncDAL<TEntity>, ICRUDOperationsDAL<TEntity>
            where TEntity : class
     {
-        Task<IQueryable<TEntity>> GetAllWithIncludes(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes);
-        Task<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includes);
-
+        Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes);
 
     }
 }
