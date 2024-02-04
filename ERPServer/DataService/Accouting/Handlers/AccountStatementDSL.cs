@@ -38,7 +38,7 @@ namespace DataService.Accounting.Handlers
         {
             var treasuryList = await _unitOfWork.AccountStatementDAL.GetAsync(x => x.IsCancel == false, x => x.ClientVendor);
             #region Apply Filters
-            treasuryList = treasuryList.OrderByDescending(x => x.Id);
+            treasuryList = treasuryList.OrderBy(x => x.Id);
             treasuryList = ApplyFilert(treasuryList, searchCriteriaDTO);
             int total = treasuryList.Count();
 
@@ -63,7 +63,7 @@ namespace DataService.Accounting.Handlers
         {
             var treasuryList = await _unitOfWork.AccountStatementDAL.GetAsync(x => x.IsCancel == false, x => x.ClientVendor);
             #region Apply Filters
-            treasuryList = treasuryList.OrderByDescending(x => x.Id);
+            treasuryList = treasuryList.OrderBy(x => x.Id);
             treasuryList = ApplyFilert(treasuryList, searchCriteriaDTO);
             int total = treasuryList.Count();
             decimal balance = treasuryList.Sum(x => x.Debit - x.Credit);
@@ -207,7 +207,7 @@ namespace DataService.Accounting.Handlers
 
         private string GenerateSequenceNumber()
         {
-            var lastElement = _unitOfWork.AccountStatementDAL.GetAllAsync().Result.OrderByDescending(x => x.Id).FirstOrDefault();
+            var lastElement = _unitOfWork.AccountStatementDAL.GetAllAsync().Result.OrderBy(x => x.Id).FirstOrDefault();
             if (lastElement == null)
             {
                 return "1000";

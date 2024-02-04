@@ -34,7 +34,7 @@ namespace DataService.Setup.Handlers
             var representiveList = await _unitOfWork.RepresentiveDAL.GetAllAsync();
 
             #region Apply Filters
-            representiveList = representiveList.OrderByDescending(x => x.Id);
+            representiveList = representiveList.OrderBy(x => x.Id);
             representiveList = ApplyFilert(representiveList, searchCriteriaDTO);
             int total = representiveList.Count();
 

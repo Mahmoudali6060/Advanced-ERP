@@ -44,12 +44,12 @@ namespace Purchases.DataAccessLayer
     //    #region Query
     //    public async Task<IQueryable<PurchasesBillHeader>> GetAllAsync()
     //    {
-    //        return _appDbContext.PurchasesBillHeaders.Include(x => x.ClientVendor).Include(x => x.CreatedByProfile).Include(x => x.ModifiedByProfile).OrderByDescending(x => x.Date).ThenBy(x => x.Id).AsQueryable();
+    //        return _appDbContext.PurchasesBillHeaders.Include(x => x.ClientVendor).Include(x => x.CreatedByProfile).Include(x => x.ModifiedByProfile).OrderBy(x => x.Date).ThenBy(x => x.Id).AsQueryable();
     //    }
 
     //    public async Task<IQueryable<PurchasesBillHeader>> GetAllLiteAsync()
     //    {
-    //        return _appDbContext.PurchasesBillHeaders.OrderByDescending(x => x.Date).AsQueryable();
+    //        return _appDbContext.PurchasesBillHeaders.OrderBy(x => x.Date).AsQueryable();
     //    }
 
     //    public async Task<PurchasesBillHeader> GetByIdAsync(long id)
@@ -100,7 +100,7 @@ namespace Purchases.DataAccessLayer
     //    {
 
 
-    //        var lastElement = _appDbContext.PurchasesBillHeaders.OrderByDescending(p => p.Id)
+    //        var lastElement = _appDbContext.PurchasesBillHeaders.OrderBy(p => p.Id)
     //                   .FirstOrDefault();
     //        if (lastElement == null)
     //        {

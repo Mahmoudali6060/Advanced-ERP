@@ -39,7 +39,7 @@ namespace DataService.Sales.Handlers
             var salesBillHeaderList = await _unitOfWork.SalesBillHeaderDAL.GetAllAsync();
 
             #region Apply Filters
-            salesBillHeaderList.OrderByDescending(x => x.Id);
+            salesBillHeaderList.OrderBy(x => x.Id);
             salesBillHeaderList = ApplyFilert(salesBillHeaderList, searchCriteriaDTO);
             int total = salesBillHeaderList.Count();
             #endregion
@@ -513,7 +513,7 @@ namespace DataService.Sales.Handlers
 
         private string GenerateTreasurySequenceNumber()
         {
-            var lastElement = _unitOfWork.TreasuryDAL.GetAll().OrderByDescending(x => x.Id).FirstOrDefault();
+            var lastElement = _unitOfWork.TreasuryDAL.GetAll().OrderBy(x => x.Id).FirstOrDefault();
             if (lastElement == null)
             {
                 return "1000";
