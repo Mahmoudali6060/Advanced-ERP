@@ -191,14 +191,14 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 
 	back() {
 		this.salesBillHeaderDTO = new SalesBillHeaderDTO();
-		this.helperService.back();
+		//this.helperService.back();
 
-		// if (this.salesBillHeaderDTO.isTemp)
-		// 	this.router.navigateByUrl('sales-bill/sales-bill-temp-list');
-		// else if (this.salesBillHeaderDTO.isReturned)
-		// 	this.router.navigateByUrl('sales-bill/sales-bill-returned-list');
-		// else
-		// 	this.router.navigateByUrl('sales-bill/sales-bill-list');
+		if (this.router.url.includes('sales-bill-temp-form'))
+			this.router.navigateByUrl('sales-bill/sales-bill-temp-list');
+		else if  (this.router.url.includes('sales-bill-new-returned-form') || this.router.url.includes('sales-bill-returned-form'))
+			this.router.navigateByUrl('sales-bill/sales-bill-returned-list');
+		else if  (this.router.url.includes('sales-bill-form'))
+			this.router.navigateByUrl('sales-bill/sales-bill-list');
 
 
 	}
@@ -231,7 +231,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	}
 
 	save(isPrint: boolean, form?: NgForm) {
-		
+
 		if (this.isTransfereToBill == true)
 			this.salesBillHeaderDTO.isTemp = false;
 
@@ -378,7 +378,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
 			item.subTotal = parseFloat((item.priceAfterDiscount * item.quantity).toFixed(2));
 			this.salesBillHeaderDTO.total += item.subTotal;
-			this.salesBillHeaderDTO.profit += (item.subTotal - (item.lastPurchasingPrice * item.quantity));
+			this.salesBillHeaderDTO.profit += (item.subTotal - parseFloat((item.lastPurchasingPrice * item.quantity).toFixed(2)));
 			//}
 		}
 		this.salesBillHeaderDTO.totalAfterDiscount = parseFloat((this.salesBillHeaderDTO.total - this.salesBillHeaderDTO.discount).toFixed(2));
@@ -387,6 +387,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		this.salesBillHeaderDTO.totalAfterVAT = this.salesBillHeaderDTO.totalAfterDiscount + this.salesBillHeaderDTO.vatAmount + this.salesBillHeaderDTO.taxAmount;
 		this.salesBillHeaderDTO.totalAmount = this.salesBillHeaderDTO.totalAfterVAT + this.salesBillHeaderDTO.otherExpenses;
 		this.salesBillHeaderDTO.remaining = parseFloat(((this.salesBillHeaderDTO.paid ?? 0) - this.salesBillHeaderDTO.totalAmount).toFixed(2));
+		this.salesBillHeaderDTO.profit = this.salesBillHeaderDTO.profit - this.salesBillHeaderDTO.discount;
 	}
 
 

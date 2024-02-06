@@ -59,7 +59,7 @@ export class LoginComponent {
         }
         else {
           //if (response.userTypeId === UserTypeEnum.Admin  ) {
-          this.router.navigate(["/setup/product-list-view"]);
+          this.router.navigate(["/dashboard"]);
           //} else {
           //this.router.navigate(["user/profile"]);
           //  }

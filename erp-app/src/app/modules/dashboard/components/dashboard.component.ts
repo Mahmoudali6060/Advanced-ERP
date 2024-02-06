@@ -11,6 +11,8 @@ import { UserProfileDTO } from '../../user-management/models/user-profile.dto';
 import { UserTypeEnum } from '../../user-management/models/user-type-enum';
 import { UserProfileService } from '../../user-management/services/user.service';
 import { CompanyService } from '../../user-management/services/company.service';
+import { ConfigService } from 'src/app/shared/services/config.service';
+import { AuthService } from '../../authentication/services/auth.service';
 declare var jQuery: any;
 
 @Component({
@@ -42,13 +44,19 @@ export class DashboardComponent {
 	waitingForOriginalBL: any;
 	userProfile: UserProfileDTO = new UserProfileDTO();
 	userTypeEnum = UserTypeEnum;
+	serverUrl: string;
 
 	constructor(private userProfileService: UserProfileService,
 		private datepipe: DatePipe,
-		private companyService: CompanyService, private translate: TranslateService, private localStorageService: LocalStorageService) {
+		private companyService: CompanyService,
+		private translate: TranslateService,
+		private localStorageService: LocalStorageService,
+		public authService: AuthService,
+		private _configService: ConfigService) {
 
 	}
 	ngOnInit() {
+		this.serverUrl = this._configService.getServerUrl();
 		this.userProfile = this.localStorageService.getItem(LocalStorageItems.userProfile);
 		this.getAllUsers();
 		this.getAllCompanyTotalDetails();

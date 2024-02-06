@@ -186,14 +186,13 @@ export class PurchasesBillFormComponent {
 
 	back() {
 		this.purchasesBillHeaderDTO = new PurchasesBillHeaderDTO();
-		this.helperService.back();
-		// if (this.router.url.includes('temp'))
-		// 	this.router.navigateByUrl('purchases-bill/purchases-bill-temp-list');
-		// else if (this.router.url.includes('returned'))
-		// 	this.router.navigateByUrl('purchases-bill/purchases-bill-returned-list');
-		// else
-		// 	this.router.navigateByUrl('purchases-bill/purchases-bill-list');
 
+		if (this.router.url.includes('purchases-bill-temp-form'))
+			this.router.navigateByUrl('purchases-bill/purchases-bill-temp-list');
+		else if (this.router.url.includes('purchases-bill-new-returned-form') || this.router.url.includes('purchases-bill-returned-form'))
+			this.router.navigateByUrl('purchases-bill/purchases-bill-returned-list');
+		else if (this.router.url.includes('purchases-bill-form'))
+			this.router.navigateByUrl('purchases-bill/purchases-bill-list');
 
 	}
 
