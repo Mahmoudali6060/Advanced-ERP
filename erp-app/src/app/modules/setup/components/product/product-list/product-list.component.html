@@ -7,7 +7,14 @@
                 <button class="au-btn-filter" (click)="toggleFilter()">
                     <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
             </div>
-            <div class="table-data__tool-right">
+            <div class="table-data__tool-right row">
+                <div *ngIf="changePrice">
+                    <label for="changeListPrice" class=" form-control-label">{{'General.ChangeListPriceOnly'
+                        |translate}}</label>
+                    <p-inputSwitch [ngModelOptions]="{standalone: true}" name="changeListPrice" class="input-switch"
+                        [(ngModel)]="changeListPrice"></p-inputSwitch>
+                </div>
+
                 <button *IfPrivilege="helperService.privileges.Setup.Products.Add"
                     [routerLink]="['/setup/product-form']" class="au-btn au-btn-icon au-btn--black au-btn--small">
                     <i class="zmdi zmdi-plus"></i>{{'Product.AddProduct' |translate}}
@@ -20,6 +27,7 @@
                     (click)="reset()">
                     <i class="fa fa-ban"></i>{{'General.Cancel' |translate}}
                 </button>
+
             </div>
 
         </div>
@@ -99,8 +107,9 @@
                         <th class="table-header-fc">{{'General.Category' |translate}}</th>
                         <th class="table-header-fc">{{'General.Code' |translate}}</th>
                         <th class="table-header-fc">{{'General.Name' |translate}}</th>
-                        <th class="table-header-fc">{{'General.PurchasingPrice' |translate}}</th>
-                        <th class="table-header-fc">{{'General.SellingPrice' |translate}}</th>
+                        <th class="table-header-fc" *ngIf="changeListPrice">{{'General.Price' |translate}}</th>
+                        <th class="table-header-fc" *ngIf="!changeListPrice">{{'General.PurchasingPrice' |translate}}</th>
+                        <th class="table-header-fc" *ngIf="!changeListPrice">{{'General.SellingPrice' |translate}}</th>
                         <th class="table-header-fc">{{'Product.SellingPricePercentage' |translate}}</th>
                         <th class="table-header-fc">{{'Product.PurchasingPricePercentage' |translate}}</th>
                         <th class="table-header-fc">{{'General.ActualQuantity' |translate}}</th>
@@ -126,13 +135,19 @@
                         <td>{{item.categoryName}}</td>
                         <td>{{item.code}}</td>
                         <td class="cell-width-26">{{item.name}}</td>
-                        <td>
+                        <td *ngIf="changeListPrice">
                             <input *ngIf="changePrice;else readOnlyPrice" [(ngModel)]="item.purchasingPrice"
                                 type="number" class="form-control" [ngModelOptions]="{standalone: true}"
                                 (change)="item.isChanged=true">
                             <ng-template #readOnlyPrice>{{item.purchasingPrice}}</ng-template>
                         </td>
-                        <td>
+                        <td *ngIf="!changeListPrice">
+                            <input *ngIf="changePrice;else readOnlyPrice" [(ngModel)]="item.purchasingPrice"
+                                type="number" class="form-control" [ngModelOptions]="{standalone: true}"
+                                (change)="item.isChanged=true">
+                            <ng-template #readOnlyPrice>{{item.purchasingPrice}}</ng-template>
+                        </td>
+                        <td *ngIf="!changeListPrice">
                             <input *ngIf="changePrice;else readOnlyPrice" [(ngModel)]="item.sellingPrice" type="number"
                                 class="form-control" [ngModelOptions]="{standalone: true}"
                                 (change)="item.isChanged=true">

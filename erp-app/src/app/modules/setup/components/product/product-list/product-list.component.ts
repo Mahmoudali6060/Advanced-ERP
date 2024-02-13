@@ -43,7 +43,7 @@ export class ProductListComponent {
 	@Input() viewMode: boolean = false;
 	@Input() changePrice: boolean = false;
 	@Input() changeQuantity: boolean = false;
-
+	changeListPrice: boolean = false;
 	constructor(private productService: ProductService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
@@ -93,10 +93,18 @@ export class ProductListComponent {
 
 	saveAll() {
 		let changedProducts = this.productList.filter(x => x.isChanged == true);
+		this.setDefaultPrices(changedProducts);
 		this.productService.updateAll(changedProducts).subscribe(res => {
 			if (res)
 				this.alertService.showSuccess("Success", "Success");
 		});
+	}
+	setDefaultPrices(changedProducts: ProductDTO[]) {
+		if (this.changeListPrice) {
+			for (let item of changedProducts) {
+				item.sellingPrice = item.purchasingPrice;
+			}
+		}
 	}
 	search() {
 		this.getAllProducts();
