@@ -384,7 +384,7 @@ export class PurchasesBillFormComponent {
 			let selectedVendor = this.vendorList.find(c => c.id == this.purchasesBillHeaderDTO.clientVendorId);
 			if (selectedVendor) {
 				this.selectedVendor = selectedVendor;
-				this.previousBalance = parseFloat((selectedVendor?.debit - selectedVendor?.credit).toFixed(2));
+				this.previousBalance = parseFloat((selectedVendor?.debit - selectedVendor?.credit +this.purchasesBillHeaderDTO.remaining).toFixed(2));
 			}
 		}
 	}

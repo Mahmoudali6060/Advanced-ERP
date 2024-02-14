@@ -92,7 +92,7 @@ namespace DataService.Sales.Handlers
                     {
                         Date = s.Date.ToString("yyyy-MM-dd"),
                         Debit = s.Paid,
-                        Credit = -s.TotalAfterDiscount,
+                        Credit = -s.TotalAmount,
                         Details = "General.BillNo",
                         Number = s.Number,
                         RefId = s.Id,
@@ -150,13 +150,13 @@ namespace DataService.Sales.Handlers
                 {
                     if (entity.IsNewReturned)//Return Sales Bill
                     {
-                        clientVendor.Debit += entity.TotalAfterDiscount;
+                        clientVendor.Debit += entity.TotalAmount;
                         clientVendor.Credit += entity.Paid;
                     }
                     else//Normal Sales Bill
                     {
                         clientVendor.Debit += entity.Paid;
-                        clientVendor.Credit += entity.TotalAfterDiscount;
+                        clientVendor.Credit += entity.TotalAmount;
                     }
 
                     await _unitOfWork.ClientVendorDAL.UpdateAsync(clientVendor);
@@ -214,20 +214,20 @@ namespace DataService.Sales.Handlers
                     //if (entity.IsNewReturned == true)
                     //{
                     //    existedClientVendor.Debit -= entity.Paid;
-                    //    existedClientVendor.Credit -= entity.TotalAfterDiscount;
+                    //    existedClientVendor.Credit -= entity.TotalAmount;
                     //}
 
                     //Convert Temp To Sales Bill
                     if (entity.IsTemp == false && exsitedSalesHeader.IsTemp == true)
                     {
                         existedClientVendor.Debit += entity.Paid;
-                        existedClientVendor.Credit += entity.TotalAfterDiscount;
+                        existedClientVendor.Credit += entity.TotalAmount;
                     }
 
                     //Edit Return Bill
                     else if (entity.IsReturned)
                     {
-                        existedClientVendor.Debit += entity.TotalAfterDiscount - exsitedSalesHeader.TotalAfterDiscount;
+                        existedClientVendor.Debit += entity.TotalAmount - exsitedSalesHeader.TotalAmount;
                         existedClientVendor.Credit += entity.Paid - exsitedSalesHeader.Paid;
                     }
 
@@ -235,7 +235,7 @@ namespace DataService.Sales.Handlers
                     else//Normal Sales Bill
                     {
                         existedClientVendor.Debit += entity.Paid - exsitedSalesHeader.Paid;
-                        existedClientVendor.Credit += entity.TotalAfterDiscount - exsitedSalesHeader.TotalAfterDiscount;
+                        existedClientVendor.Credit += entity.TotalAmount - exsitedSalesHeader.TotalAmount;
                     }
 
                     await _unitOfWork.ClientVendorDAL.UpdateAsync(existedClientVendor);
@@ -253,13 +253,13 @@ namespace DataService.Sales.Handlers
                     accountStatement.Date = DateTime.Parse(entity.Date);
                     if (entity.IsReturned)
                     {
-                        accountStatement.Debit = entity.TotalAfterDiscount;
+                        accountStatement.Debit = entity.TotalAmount;
                         accountStatement.Credit = entity.Paid;
                     }
                     else
                     {
                         accountStatement.Debit = entity.Paid;
-                        accountStatement.Credit = entity.TotalAfterDiscount;
+                        accountStatement.Credit = entity.TotalAmount;
                     }
                     await _unitOfWork.AccountStatementDAL.UpdateAsync(accountStatement);
                 }
@@ -344,13 +344,13 @@ namespace DataService.Sales.Handlers
                 {
                     if (entity.IsReturned == true)
                     {
-                        clientVendor.Debit -= entity.TotalAfterDiscount;
+                        clientVendor.Debit -= entity.TotalAmount;
                         clientVendor.Credit -= entity.Paid;
                     }
                     else
                     {
                         clientVendor.Debit -= entity.Paid;
-                        clientVendor.Credit -= entity.TotalAfterDiscount;
+                        clientVendor.Credit -= entity.TotalAmount;
                     }
 
                     await _unitOfWork.ClientVendorDAL.UpdateAsync(clientVendor);
@@ -364,14 +364,14 @@ namespace DataService.Sales.Handlers
 
                     if (entity.IsReturned)
                     {
-                        accountStatement.Debit += entity.TotalAfterDiscount;
+                        accountStatement.Debit += entity.TotalAmount;
                         accountStatement.Credit += entity.Paid;
                         //accountStatement.Notes = "فاتورة مرتجعات";
                     }
                     else
                     {
                         accountStatement.Debit -= entity.Paid;
-                        accountStatement.Credit -= entity.TotalAfterDiscount;
+                        accountStatement.Credit -= entity.TotalAmount;
                         //accountStatement.Notes = "فاتورة";
                     }
                     accountStatement.IsCancel = true;
@@ -462,7 +462,7 @@ namespace DataService.Sales.Handlers
 
             if (entity.IsReturned)
             {
-                accountStatement.Debit = entity.TotalAfterDiscount;
+                accountStatement.Debit = entity.TotalAmount;
                 accountStatement.Credit = entity.Paid;
                 accountStatement.Notes = "فاتورة مرتجعات المبيعات";
 
@@ -470,7 +470,7 @@ namespace DataService.Sales.Handlers
             else
             {
                 accountStatement.Debit = entity.Paid;
-                accountStatement.Credit = entity.TotalAfterDiscount;
+                accountStatement.Credit = entity.TotalAmount;
                 accountStatement.Notes = "فاتورة مبيعات";
 
             }

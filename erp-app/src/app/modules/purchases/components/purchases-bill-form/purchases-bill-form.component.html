@@ -463,12 +463,12 @@
             <br>
             <br>
 
-            <h2 class="text-center" *ngIf="purchasesBillHeaderDTO.isReturned">{{'Reports.ReturnedPurchasesBill'
+            <h2 class="text-center report-title" *ngIf="purchasesBillHeaderDTO.isReturned">{{'Reports.ReturnedPurchasesBill'
                 |translate}}
             </h2>
-            <h2 class="text-center" *ngIf="purchasesBillHeaderDTO.isTemp">{{'Reports.TempPurchasesBill' |translate}}
+            <h2 class="text-center report-title" *ngIf="purchasesBillHeaderDTO.isTemp">{{'Reports.TempPurchasesBill' |translate}}
             </h2>
-            <h2 class="text-center" *ngIf="!purchasesBillHeaderDTO.isReturned && !purchasesBillHeaderDTO.isTemp">
+            <h2 class="text-center report-title" *ngIf="!purchasesBillHeaderDTO.isReturned && !purchasesBillHeaderDTO.isTemp">
                 {{'Reports.PurchasesBill' |translate}} </h2>
 
 
@@ -555,24 +555,40 @@
                     <td class="text-center text-bold">{{purchasesBillHeaderDTO.total}} </td>
                     <td class="text-left">Total</td>
                 </tr>
-                <tr>
-                    <td class="text-right">النقل</td>
-                    <td class="text-center text-bold">{{purchasesBillHeaderDTO.otherExpenses}}</td>
-                    <td class="text-left">OtherExpenses</td>
-                </tr>
+
                 <tr>
                     <td class="text-right">الخصومات</td>
                     <td class="text-center text-bold">{{purchasesBillHeaderDTO.discount}}</td>
                     <td class="text-left">Discount</td>
                 </tr>
-            </table>
-        </div>
-        <div class="col-6">
-            <table class="table-report" style="background-color: white !important" border="0">
                 <tr>
                     <td class="text-right">الإجمالي بعد الخصم</td>
                     <td class="text-center text-bold">{{purchasesBillHeaderDTO.totalAfterDiscount}}</td>
                     <td class="text-left">Toal After Discount</td>
+                </tr>
+                <tr>
+                    <td class="text-right">مصاريف أخرى</td>
+                    <td class="text-center text-bold">{{purchasesBillHeaderDTO.otherExpenses}}</td>
+                    <td class="text-left">Other Expenses</td>
+                </tr>
+                <tr>
+                    <td class="text-right"> المبلغ المطلوب دفعه</td>
+                    <td class="text-center text-bold">{{purchasesBillHeaderDTO.totalAmount}}</td>
+                    <td class="text-left">Total Amount</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-6">
+            <table class="table-report" style="background-color: white !important" border="0">
+
+                <tr>
+                    <td class="text-right">الرصيد السابق</td>
+                    <td class="text-center text-bold">{{previousBalance}}
+                        <!-- <span *ngIf="previousBalance!=0">
+                            {{(previousBalance>0?'General.Debit':'General.Credit')
+                            |translate}}</span> -->
+                    </td>
+                    <td class="text-left">Previous Balance</td>
                 </tr>
                 <tr>
                     <td class="text-right">المدفوع</td>
@@ -584,15 +600,7 @@
                     <td class="text-center text-bold">{{purchasesBillHeaderDTO.remaining}} </td>
                     <td class="text-left">Remaining</td>
                 </tr>
-                <tr>
-                    <td class="text-right">الرصيد السابق</td>
-                    <td class="text-center text-bold">{{previousBalance}}
-                        <!-- <span *ngIf="previousBalance!=0">
-                            {{(previousBalance>0?'General.Debit':'General.Credit')
-                            |translate}}</span> -->
-                    </td>
-                    <td class="text-left">Previous Balance</td>
-                </tr>
+               
                 <tr>
                     <td class="text-right">الرصيد الحالي</td>
                     <td class="text-center text-bold">{{previousBalance-purchasesBillHeaderDTO.remaining}}
@@ -613,6 +621,7 @@
     <br>
     <br>
 
-    <pre class="bottom-page text-right">{{authService.loggedUserProfile?.companyDTO?.settingDTO?.purchasesBillInstructions}}</pre>
-   
+    <pre
+        class="bottom-page text-right">{{authService.loggedUserProfile?.companyDTO?.settingDTO?.purchasesBillInstructions}}</pre>
+
 </div>

@@ -387,7 +387,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		this.salesBillHeaderDTO.totalAfterVAT = this.salesBillHeaderDTO.totalAfterDiscount + this.salesBillHeaderDTO.vatAmount + this.salesBillHeaderDTO.taxAmount;
 		this.salesBillHeaderDTO.totalAmount = this.salesBillHeaderDTO.totalAfterVAT + this.salesBillHeaderDTO.otherExpenses;
 		this.salesBillHeaderDTO.remaining = parseFloat(((this.salesBillHeaderDTO.paid ?? 0) - this.salesBillHeaderDTO.totalAmount).toFixed(2));
-		this.salesBillHeaderDTO.profit = this.salesBillHeaderDTO.profit - this.salesBillHeaderDTO.discount;
+		this.salesBillHeaderDTO.profit = this.salesBillHeaderDTO.profit - this.salesBillHeaderDTO.discount-this.salesBillHeaderDTO.otherExpenses;
 	}
 
 
@@ -397,7 +397,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			let selectedClient: any = this.clientList.find(c => c.id == this.salesBillHeaderDTO.clientVendorId);
 			if (selectedClient) {
 				this.selectedClient = selectedClient;
-				this.previousBalance = parseFloat((selectedClient?.debit - selectedClient?.credit).toFixed(2));
+				this.previousBalance = parseFloat((selectedClient?.debit - selectedClient?.credit -this.salesBillHeaderDTO.remaining).toFixed(2));
 			}
 		}
 	}

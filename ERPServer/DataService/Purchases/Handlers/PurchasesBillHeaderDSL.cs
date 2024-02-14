@@ -13,6 +13,7 @@ using Shared.Entities.Setup;
 using Data.Entities.Accouting;
 using Shared.Enums;
 using Shared.Entities.Sales;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataService.Setup.Handlers
 {
@@ -98,7 +99,7 @@ namespace DataService.Setup.Handlers
                     clientVendorBalanceList.Add(new ClientVendorBalanceDTO()
                     {
                         Date = s.Date.ToString("yyyy-MM-dd"),
-                        Debit = s.TotalAfterDiscount,
+                        Debit = s.TotalAmount,
                         Credit = -s.Paid,
                         Details = "General.BillNo",
                         Number = s.Number,
@@ -153,11 +154,11 @@ namespace DataService.Setup.Handlers
                     if (entity.IsNewReturned)//Return Purchases Bill
                     {
                         clientVendor.Debit += entity.Paid;
-                        clientVendor.Credit += entity.TotalAfterDiscount;
+                        clientVendor.Credit += entity.TotalAmount;
                     }
                     else//Normal Purchases Bill
                     {
-                        clientVendor.Debit += entity.TotalAfterDiscount;
+                        clientVendor.Debit += entity.TotalAmount;
                         clientVendor.Credit += entity.Paid;
                     }
 
@@ -218,7 +219,7 @@ namespace DataService.Setup.Handlers
                     //Convert Temp To Purchases Bill
                     if (entity.IsTemp == false && exsitedPurchasesHeader.IsTemp == true)
                     {
-                        existedClientVendor.Debit += entity.TotalAfterDiscount;
+                        existedClientVendor.Debit += entity.TotalAmount;
                         existedClientVendor.Credit += entity.Paid;
                     }
 
@@ -226,13 +227,13 @@ namespace DataService.Setup.Handlers
                     else if (entity.IsReturned)
                     {
                         existedClientVendor.Debit += entity.Paid - exsitedPurchasesHeader.Paid;
-                        existedClientVendor.Credit += entity.TotalAfterDiscount - exsitedPurchasesHeader.TotalAfterDiscount;
+                        existedClientVendor.Credit += entity.TotalAmount - exsitedPurchasesHeader.TotalAmount;
                     }
 
 
                     else//Eidt Normal Purchases Bill
                     {
-                        existedClientVendor.Debit += entity.TotalAfterDiscount - exsitedPurchasesHeader.TotalAfterDiscount;
+                        existedClientVendor.Debit += entity.TotalAmount - exsitedPurchasesHeader.TotalAmount;
                         existedClientVendor.Credit += entity.Paid - exsitedPurchasesHeader.Paid;
                     }
 
@@ -253,11 +254,11 @@ namespace DataService.Setup.Handlers
                     if (entity.IsReturned)
                     {
                         accountStatement.Debit = entity.Paid;
-                        accountStatement.Credit = entity.TotalAfterDiscount;
+                        accountStatement.Credit = entity.TotalAmount;
                     }
                     else
                     {
-                        accountStatement.Debit = entity.TotalAfterDiscount;
+                        accountStatement.Debit = entity.TotalAmount;
                         accountStatement.Credit = entity.Paid;
                     }
                     await _unitOfWork.AccountStatementDAL.UpdateAsync(accountStatement);
@@ -325,7 +326,7 @@ namespace DataService.Setup.Handlers
 
         public async Task<bool> Delete(long id)
         {
-            PurchasesBillHeader entity = await _unitOfWork.PurchasesBillHeaderDAL.GetByIdAsync(id);
+            PurchasesBillHeader entity = await _unitOfWork.PurchasesBillHeaderDAL.GetAsync(x => x.Id == id, x => x.PurchasesBillDetailList).Result.SingleOrDefaultAsync();
             entity.ClientVendor = null;//To remove tracking
             if (entity.IsTemp == false)
             {
@@ -347,11 +348,11 @@ namespace DataService.Setup.Handlers
                     if (entity.IsReturned == true)
                     {
                         clientVendor.Debit -= entity.Paid;
-                        clientVendor.Credit -= entity.TotalAfterDiscount;
+                        clientVendor.Credit -= entity.TotalAmount;
                     }
                     else
                     {
-                        clientVendor.Debit -= entity.TotalAfterDiscount;
+                        clientVendor.Debit -= entity.TotalAmount;
                         clientVendor.Credit -= entity.Paid;
                     }
 
@@ -367,12 +368,12 @@ namespace DataService.Setup.Handlers
                     if (entity.IsReturned)
                     {
                         accountStatement.Debit += entity.Paid;
-                        accountStatement.Credit += entity.TotalAfterDiscount;
+                        accountStatement.Credit += entity.TotalAmount;
                         //accountStatement.Notes = "فاتورة مرتجعات";
                     }
                     else
                     {
-                        accountStatement.Debit -= entity.TotalAfterDiscount;
+                        accountStatement.Debit -= entity.TotalAmount;
                         accountStatement.Credit -= entity.Paid;
                         //accountStatement.Notes = "فاتورة";
                     }
@@ -467,13 +468,13 @@ namespace DataService.Setup.Handlers
             if (entity.IsReturned)
             {
                 accountStatement.Debit = entity.Paid;
-                accountStatement.Credit = entity.TotalAfterDiscount;
+                accountStatement.Credit = entity.TotalAmount;
                 accountStatement.Notes = "فاتورة مرتجعات المشتريات";
 
             }
             else
             {
-                accountStatement.Debit = entity.TotalAfterDiscount;
+                accountStatement.Debit = entity.TotalAmount;
                 accountStatement.Credit = entity.Paid;
                 accountStatement.Notes = "فاتورة مشتريات";
 

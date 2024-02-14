@@ -40,9 +40,9 @@ export class ReportService {
                           <img width="100" src="${this.serverUrl}wwwroot/Images/Companies/${this.authService.loggedUserProfile.companyDTO.imageUrl}" class="logo">
                         </div>
                         <div class="col-lg-12">
-                          <h1 class="display-4 text-center">El Bawab</h1>
-                          <p class="second-header text-center"><strong>Mall Misr</strong></p>
-                          <p class="second-header text-center"><strong>Tel:01023236718</strong></p>
+                          <h1 class="display-4 text-center">${this.authService.loggedUserProfile?.companyDTO.name}</h1>
+                          <p class="second-header text-center"><strong>${this.authService.loggedUserProfile?.companyDTO.addressDetails}</strong></p>
+                          <p class="second-header text-center"><strong>Tel:${this.authService.loggedUserProfile?.companyDTO.contactTelephone}</strong></p>
                         </div>
                     </div>`;
     html += printedDiv?.innerHTML;

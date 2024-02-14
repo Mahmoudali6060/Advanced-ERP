@@ -78,3 +78,8 @@ body {
 .second-header {
     font-size: 16px;
 }
+
+.report-title{
+    text-decoration: underline;
+    font-weight: bold;
+}

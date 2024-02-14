@@ -164,7 +164,8 @@
     "EditCompanyData": "تعديل بيانات الشركة",
     "Symbol": "الرمز",
     "SalesBillInstructions": "تعليمات فاتورة المبيعات",
-    "PurchasesBillInstructions": "تعليمات فاتورة المشتريات"
+    "PurchasesBillInstructions": "تعليمات فاتورة المشتريات",
+    "ChangeListPriceOnly":"تغيير سعر الليستة فقط"
   },
   "Dashboard": {
     "overview": "نظرة عامة",

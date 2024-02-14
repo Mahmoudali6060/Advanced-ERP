@@ -477,10 +477,10 @@
             <br>
             <br>
 
-            <h2 class="text-center" *ngIf="salesBillHeaderDTO.isReturned">{{'Reports.ReturnedSalesBill' |translate}}
+            <h2 class="text-center report-title" *ngIf="salesBillHeaderDTO.isReturned">{{'Reports.ReturnedSalesBill' |translate}}
             </h2>
-            <h2 class="text-center" *ngIf="salesBillHeaderDTO.isTemp">{{'Reports.TempSalesBill' |translate}} </h2>
-            <h2 class="text-center" *ngIf="!salesBillHeaderDTO.isReturned && !salesBillHeaderDTO.isTemp">
+            <h2 class="text-center report-title" *ngIf="salesBillHeaderDTO.isTemp">{{'Reports.TempSalesBill' |translate}} </h2>
+            <h2 class="text-center report-title" *ngIf="!salesBillHeaderDTO.isReturned && !salesBillHeaderDTO.isTemp">
                 {{'Reports.ReportSalesBill' |translate}} </h2>
 
 
@@ -568,23 +568,35 @@
                     <td class="text-left">Total</td>
                 </tr>
                 <tr>
-                    <td class="text-right">النقل</td>
-                    <td class="text-center text-bold">{{salesBillHeaderDTO.otherExpenses}}</td>
-                    <td class="text-left">OtherExpenses</td>
-                </tr>
-                <tr>
                     <td class="text-right">الخصومات</td>
                     <td class="text-center text-bold">{{salesBillHeaderDTO.discount}}</td>
                     <td class="text-left">Discount</td>
+                </tr>
+                <tr>
+                    <td class="text-right">الإجمالي بعد الخصم</td>
+                    <td class="text-center text-bold">{{salesBillHeaderDTO.totalAfterDiscount}}</td>
+                    <td class="text-left">Toal After Discount</td>
+                </tr>
+                <tr>
+                    <td class="text-right">مصاريف أخرى</td>
+                    <td class="text-center text-bold">{{salesBillHeaderDTO.otherExpenses}}</td>
+                    <td class="text-left">Other Expenses</td>
+                </tr>
+                <tr>
+                    <td class="text-right"> المبلغ المطلوب دفعه</td>
+                    <td class="text-center text-bold">{{salesBillHeaderDTO.totalAmount}}</td>
+                    <td class="text-left">Total Amount</td>
                 </tr>
             </table>
         </div>
         <div class="col-6">
             <table class="table-report" style="background-color: white !important" border="0">
+               
                 <tr>
-                    <td class="text-right">الإجمالي بعد الخصم</td>
-                    <td class="text-center text-bold">{{salesBillHeaderDTO.totalAfterDiscount}}</td>
-                    <td class="text-left">Toal After Discount</td>
+                    <td class="text-right">الرصيد السابق</td>
+                    <td class="text-center text-bold">{{previousBalance}}
+                    </td>
+                    <td class="text-left">Previous Balance Balance</td>
                 </tr>
                 <tr>
                     <td class="text-right">المدفوع</td>
@@ -596,18 +608,10 @@
                     <td class="text-center text-bold">{{salesBillHeaderDTO.remaining}} </td>
                     <td class="text-left">Remaining</td>
                 </tr>
-                <tr>
-                    <td class="text-right">الرصيد السابق</td>
-                    <td class="text-center text-bold">{{previousBalance}}
-                        <!-- <span *ngIf="previousBalance!=0">
-                            {{(previousBalance>0?'General.Debit':'General.Credit')
-                            |translate}}</span> -->
-                    </td>
-                    <td class="text-left">PreviousBalance Balance</td>
-                </tr>
+               
                 <tr>
                     <td class="text-right">الرصيد الحالي</td>
-                    <td class="text-center text-bold">{{previousBalance-salesBillHeaderDTO.remaining}}
+                    <td class="text-center text-bold">{{previousBalance+ salesBillHeaderDTO.remaining}}
                         <!-- <span *ngIf="previousBalance!=0">
                             {{((previousBalance-salesBillHeaderDTO.remaining)>0?'General.Debit':'General.Credit')
                             |translate}}</span> -->
