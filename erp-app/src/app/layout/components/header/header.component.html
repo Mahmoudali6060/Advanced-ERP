@@ -162,10 +162,15 @@
                                     <i class="fa fa-file"></i><span
                                         translate>Reports.AccountStatementForSingleVendor</span></a>
                             </li>
+                            <li *IfPrivilege="helperService.privileges.Setup.Products.View ">
+                                <a [routerLink]="['/report/product-list-report']">
+                                    <i class="fa fa-file"></i><span translate>Reports.ProductListReport</span></a>
+                            </li>
                             <li *IfPrivilege="helperService.privileges.Reports.ProductMinusQuantity.View">
                                 <a [routerLink]="['/report/product-list-minus-report']">
                                     <i class="fa fa-file"></i><span translate>Reports.MinusProducts</span></a>
                             </li>
+                         
                             <li *IfPrivilege="helperService.privileges.Reports.ProductLowQuantity.View">
                                 <a [routerLink]="['/report/product-list-low-quantity-report']">
                                     <i class="fa fa-file"></i><span translate>Reports.LowQuantityProducts</span></a>

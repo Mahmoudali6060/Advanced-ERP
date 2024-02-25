@@ -32,6 +32,11 @@ export class ProductListReportComponent {
 	recordsPerPage: number = 5;
 	showFilterControls: boolean = false;
 	categoryList: Array<CategoryDTO> = new Array<CategoryDTO>();
+	sellingPriceTotal: number;
+	purchasingPriceTotal: number;
+	sellingPricePercentageTotal: number;
+	purchasingPricePercentageTotal: number;
+	actualQuantityTotal: number;
 
 	constructor(private productService: ProductService,
 		private _configService: ConfigService,
@@ -52,7 +57,25 @@ export class ProductListReportComponent {
 			this.total = res.total;
 
 			this.serverUrl = this._configService.getServerUrl();
+			this.setTotalsSummary();
 		});
+	}
+	setTotalsSummary() {
+		this.sellingPriceTotal = 0;
+		this.purchasingPriceTotal = 0;
+		this.sellingPricePercentageTotal = 0;
+		this.purchasingPricePercentageTotal = 0;
+		this.actualQuantityTotal = 0;
+
+		for (let item of this.productList) {
+			this.sellingPriceTotal += item.sellingPrice;
+			this.purchasingPriceTotal += item.purchasingPrice;
+			this.sellingPricePercentageTotal += item.sellingPricePercentage;
+			this.purchasingPricePercentageTotal += item.purchasingPricePercentage;
+			this.actualQuantityTotal += item.actualQuantity;
+		}
+
+
 	}
 
 	getAllCategories() {

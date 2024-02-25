@@ -599,6 +599,7 @@
     "AccountStatementForSingleClient": "كشف حساب العميل(مُفَصَّل)",
     "AccountStatementForAllVendors": "كشف حسابات الموردين(مُجمَل)",
     "AccountStatementForSingleVendor": "كشف حساب المورد  (مُفَصَّل)",
+    "ProductListReport":"جرد المنتجات",
     "MinusProducts": "المنتجات السالبة",
     "LowQuantityProducts": "المنتجات النواقص"
   },
