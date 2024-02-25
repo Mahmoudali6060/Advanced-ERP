@@ -78,6 +78,8 @@ namespace App.Helper
             services.AddTransient<IUnitOfMeasurementDAL, UnitOfMeasurementDAL>();
             services.AddTransient<IUnitOfMeasurementDSL, UnitOfMeasurementDSL>();
 
+            services.AddTransient<IDashboardDSL, DashboardDSL>();
+
             #endregion
 
             #region User Management

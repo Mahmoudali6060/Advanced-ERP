@@ -165,29 +165,13 @@
     "Symbol": "الرمز",
     "SalesBillInstructions": "تعليمات فاتورة المبيعات",
     "PurchasesBillInstructions": "تعليمات فاتورة المشتريات",
-    "ChangeListPriceOnly":"تغيير سعر الليستة فقط"
+    "ChangeListPriceOnly": "تغيير سعر الليستة فقط"
   },
   "Dashboard": {
-    "overview": "نظرة عامة",
-    "users": "المستخدمين",
-    "TotalRequestApproved": "الموافق عليها",
-    "TotalRequestInProgress": "قيد التنفيذ",
-    "TotalRequestClosed": "المغلقة",
-    "RecentRequests": "الطلبات الحديثة",
-    "AllUsers": "المستخدمين",
-    "ReadMore": "المزيد",
-    "ShippingLines": "مسؤول الشحن",
-    "Importer/Exporter": "العملاء",
-    "Requests": "الطلبات",
-    "ShippingOffers": "عروض الشحن",
-    "Selectsuitableoffertorequest": "اختر عرض شحن مناسب للطلب",
-    "AllOffers": "جميع العروض",
-    "ShippingRequests": "طلبات الشحن",
-    "Youcanviewrequests": "يمكنك عرض الطلبات",
-    "TotalShippingRequests": "إجمالي طلبات الشحن",
-    "RegisterationRequests": "طلبات التسجيل",
-    "TotalRegisterationRequests": "إجمالي طلبات التسجيل",
-    "TotalRequestsForEveryStatus": "إجمالي الطلبات لكل حالة"
+    "ClientsCount": "عدد العملاء",
+    "ProductsCount":"عدد المنتجات",
+    "UsersCount":"عدد المستخدمين",
+    "VendorsCount":"عدد الموردين"
   },
   "DeleteConfirmaionDialog": {
     "Title": "التأكيد",

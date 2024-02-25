@@ -4,6 +4,7 @@ import { DashboardComponent } from './components/dashboard.component';
 import { SharedModule } from '../../shared/shared.module';
 import { AuthGuardService } from 'src/app/shared/guards/auth-guard.service';
 import {ChartModule} from 'primeng/chart';
+import { DashboardService } from './services/dashboard.service';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import {ChartModule} from 'primeng/chart';
     DashboardComponent
   ],
   providers: [
-    AuthGuardService
+    DashboardService
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

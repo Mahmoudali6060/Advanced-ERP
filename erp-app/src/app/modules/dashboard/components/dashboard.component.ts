@@ -13,6 +13,9 @@ import { UserProfileService } from '../../user-management/services/user.service'
 import { CompanyService } from '../../user-management/services/company.service';
 import { ConfigService } from 'src/app/shared/services/config.service';
 import { AuthService } from '../../authentication/services/auth.service';
+import { DashboardDTO } from '../models/dashboard-dto';
+import { DashboardService } from '../services/dashboard.service';
+import { DashboardSearchDTO } from '../models/dashboard-search-dto';
 declare var jQuery: any;
 
 @Component({
@@ -21,56 +24,26 @@ declare var jQuery: any;
 	styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-	searchCriteriaDTO: UserProfileSearchCriteriaDTO = new UserProfileSearchCriteriaDTO();
-	@ViewChild(PaginationComponent) paginationComponent: PaginationComponent;
 
-	totalUsers: any;
-	totalRequests: number;
-	baseRequestList: any;
-	totalInprogress: number;
-	inprogress: boolean;
-	noOfRequests: number = 0;
-	totalTrucksProvider: number;
-	companyTotalDetails: CompanyTotalDetails = new CompanyTotalDetails();
-	totalOffers: any;
-	dataWithStatus: any;
-	dataWithTypes: any;
-	chartOptions: any;
-	waitingForCorrection: any;
-	approved: any;
-	closed: any;
-	waitingForBL: any;
-	waitingForPaymnet: any;
-	waitingForOriginalBL: any;
-	userProfile: UserProfileDTO = new UserProfileDTO();
-	userTypeEnum = UserTypeEnum;
-	serverUrl: string;
+	dashboardDTO: DashboardDTO = new DashboardDTO();
+	dashboardSearchDTO: DashboardSearchDTO = new DashboardSearchDTO();
 
-	constructor(private userProfileService: UserProfileService,
-		private datepipe: DatePipe,
-		private companyService: CompanyService,
-		private translate: TranslateService,
-		private localStorageService: LocalStorageService,
+
+	constructor(
 		public authService: AuthService,
-		private _configService: ConfigService) {
+		private dashboardService: DashboardService) {
 
 	}
 	ngOnInit() {
-		this.serverUrl = this._configService.getServerUrl();
-		this.userProfile = this.localStorageService.getItem(LocalStorageItems.userProfile);
-		this.getAllUsers();
-		this.getAllCompanyTotalDetails();
-	}
-	getAllUsers() {
-		this.userProfileService.getAll(this.searchCriteriaDTO).subscribe((res: any) => {
-			this.totalUsers = res.total;
-		});
+		this.getDashboard();
 	}
 
-	getAllCompanyTotalDetails() {
-		this.companyService.GetAllCompanyTotalDetails().subscribe((res: CompanyTotalDetails) => {
-			this.companyTotalDetails = res
+
+	getDashboard() {
+		this.dashboardService.getDashboard(this.dashboardSearchDTO).subscribe((res: any) => {
+			this.dashboardDTO = res;
 		})
 	}
+
 
 }
