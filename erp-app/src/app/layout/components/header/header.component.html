@@ -28,6 +28,10 @@
                                 <a [routerLink]="['/setup/product-list-view']">
                                     <i class="fa fa-question-circle"></i><span translate>SideMenu.ProductList</span></a>
                             </li>
+                            <!--<li *IfPrivilege="helperService.privileges.Setup.Products.Add">
+                                <a [routerLink]="['/setup/add-bulk-products']">
+                                    <i class="fa fa-question-circle"></i><span translate>SideMenu.AddBulkProducts</span></a>
+                            </li>-->
                             <li *IfPrivilege="helperService.privileges.Setup.Products.ChangePrice">
                                 <a [routerLink]="['/setup/product-list-change-price']">
                                     <i class="fa fa-question-circle"></i><span translate>SideMenu.ChangePrice</span></a>

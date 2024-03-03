@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- DATA TABLE -->
+        <h3 class="title-5 m-b-35">{{'Product.Title' |translate}}</h3>
+        <div class="table-data__tool">
+            <div class="table-data__tool-right row">
+                <button (click)="saveAll()" class="au-btn au-btn-icon au-btn--blue au-btn--small">
+                    <i class="zmdi zmdi-file"></i>{{'General.SaveAll' |translate}}
+                </button>
+                <button type="reset" class="btn btn-danger mr-1" (click)="reset()">
+                    <i class="fa fa-ban"></i>{{'General.Cancel' |translate}}
+                </button>
+            </div>
+        </div>
+
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2">
+                <thead class="table-header-bc">
+                    <tr>
+                        <th class="table-header-fc">{{'General.Category' |translate}}</th>
+                        <th class="table-header-fc">{{'General.Name' |translate}}</th>
+                        <th class="table-header-fc" *ngIf="changeListPrice">{{'General.Price' |translate}}</th>
+                        <th class="table-header-fc" *ngIf="!changeListPrice">{{'General.PurchasingPrice' |translate}}
+                        </th>
+                        <th class="table-header-fc" *ngIf="!changeListPrice">{{'General.SellingPrice' |translate}}</th>
+                        <th class="table-header-fc">{{'Product.SellingPricePercentage' |translate}}</th>
+                        <th class="table-header-fc">{{'Product.PurchasingPricePercentage' |translate}}</th>
+                        <th class="table-header-fc">{{'General.ActualQuantity' |translate}}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tr-shadow" *ngFor="let item of productList">
+                        <td>
+                            <input [(ngModel)]="item.purchasingPrice" type="text" class="form-control"
+                                [ngModelOptions]="{standalone: true}" (change)="item.isChanged=true">
+                        </td>
+                        <td class="cell-width-26">
+                            <input [(ngModel)]="item.purchasingPrice" type="text" class="form-control"
+                            [ngModelOptions]="{standalone: true}" (change)="item.isChanged=true">
+                        </td>
+                        <td>
+                            <input [(ngModel)]="item.purchasingPrice" type="number" class="form-control"
+                                [ngModelOptions]="{standalone: true}" (change)="item.isChanged=true">
+                        </td>
+                       
+                        <td>
+                            <input [(ngModel)]="item.sellingPrice" type="number" class="form-control"
+                                [ngModelOptions]="{standalone: true}" (change)="item.isChanged=true">
+                        </td>
+                        <td>
+                            <input [(ngModel)]="item.sellingPricePercentage" type="number" class="form-control"
+                                [ngModelOptions]="{standalone: true}" (change)="item.isChanged=true">
+                        </td>
+                        <td>
+                            <input [(ngModel)]="item.purchasingPricePercentage" type="number" class="form-control"
+                                [ngModelOptions]="{standalone: true}" (change)="item.isChanged=true">
+                        </td>
+                        <td>
+                            <input [(ngModel)]="item.actualQuantity" type="number" class="form-control"
+                                [ngModelOptions]="{standalone: true}" (change)="item.isChanged=true">
+                        </td>
+                        <td>
+                            <div class="table-data-feature">
+                                <button  class="item ml-2"
+                                    data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
+                                    (click)="openConfirmationDialog(item)">
+                                    <i class="zmdi zmdi-delete"></i>
+                                </button>
+
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <!-- END DATA TABLE -->
+    </div>
+</div>
