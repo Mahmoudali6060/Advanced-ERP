@@ -78,7 +78,7 @@ namespace DataService.Sales.Handlers
                 var clientVendor = salesBillHeaderList[0].ClientVendor;
                 //Set initial Oppening Balance
                 ClientVendorBalanceDTO clientVendorBalanceDTO = new ClientVendorBalanceDTO();
-                clientVendorBalanceDTO.Date = clientVendor.Created.ToString("yyyy-MM-dd");
+                clientVendorBalanceDTO.Date = clientVendor.Created.Value.ToString("yyyy-MM-dd");
                 if (clientVendor.OppeningBalance > 0)
                     clientVendorBalanceDTO.Debit = clientVendor.OppeningBalance;
                 else
