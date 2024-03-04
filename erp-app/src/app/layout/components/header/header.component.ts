@@ -11,11 +11,12 @@ import { ConfigService } from 'src/app/shared/services/config.service';
 import { HelperService } from 'src/app/shared/services/helper.service';
 import { UserProfileService } from 'src/app/modules/user-management/services/user.service';
 import { UserProfileDTO } from 'src/app/modules/user-management/models/user-profile.dto';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html'
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit {
   profile: UserProfileDTO;
   role: any
   serverUrl: string;
@@ -25,12 +26,14 @@ export class HeaderComponent implements OnInit{
   constructor(
     public authService: AuthService,
     private router: Router,
-    private userProfileService:UserProfileService,
-    private localStorageService:LocalStorageService,
+    private userProfileService: UserProfileService,
+    private localStorageService: LocalStorageService,
     private _configService: ConfigService,
     public helperService: HelperService,
+    private titleService: Title,
+    public translate: TranslateService
 
-    ) {
+  ) {
   }
   ngOnInit(): void {
     this.serverUrl = this._configService.getServerUrl();
@@ -38,7 +41,12 @@ export class HeaderComponent implements OnInit{
     console.log("role", this.role)
   }
 
-  
+
+  public gotToURL(url: string, title: string) {
+    this.router.navigateByUrl(url);
+    this.titleService.setTitle(this.translate.instant(title));
+  }
+
   public toggleSideMenu() {
 
     if (!$('body').hasClass('layout-fullwidth')) {
@@ -67,7 +75,7 @@ export class HeaderComponent implements OnInit{
 
   //#region Open Modal
   public openBackupModal(id?: number) {
-    
+
   }
   //#endregion
 

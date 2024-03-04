@@ -190,11 +190,16 @@ namespace DataService.Accounting.Handlers
         private IQueryable<Treasury> ApplyFilert(IQueryable<Treasury> TreasuryList, TreasurySearchDTO searchCriteriaDTO)
         {
             //Filter
-            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.Date))
+
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.DateFrom))
             {
-                TreasuryList = TreasuryList.Where(x => x.Date.Date == DateTime.Parse(searchCriteriaDTO.Date));
+                TreasuryList = TreasuryList.Where(x => x.Date.Date >= DateTime.Parse(searchCriteriaDTO.DateFrom).Date);
             }
 
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.DateTo))
+            {
+                TreasuryList = TreasuryList.Where(x => x.Date.Date <= DateTime.Parse(searchCriteriaDTO.DateTo).Date);
+            }
             //if (searchCriteriaDTO.AccountTypeId.HasValue)
             //{
             //    TreasuryList = TreasuryList.Where(x => x.AccountTypeId == searchCriteriaDTO.AccountTypeId);
@@ -223,7 +228,7 @@ namespace DataService.Accounting.Handlers
 
         private string GenerateSequenceNumber()
         {
-            var lastElement = _unitOfWork.TreasuryDAL.GetAllAsync().Result.OrderBy(x => x.Id).FirstOrDefault();
+            var lastElement = _unitOfWork.TreasuryDAL.GetAllAsync().Result.OrderByDescending(x => x.Id).FirstOrDefault();
             if (lastElement == null)
             {
                 return "1000";

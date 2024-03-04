@@ -21,28 +21,28 @@
                             <span class="bot-line"></span><span translate>SideMenu.Products</span></a>
                         <ul class="header3-sub-list list-unstyled">
                             <li *IfPrivilege="helperService.privileges.Setup.Categories.View">
-                                <a [routerLink]="['/setup/category-list']">
+                                <a (click)="gotToURL('/setup/category-list','SideMenu.Categories')">
                                     <i class="fa fa-envelope"></i><span translate>SideMenu.Categories</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Setup.Products.View">
-                                <a [routerLink]="['/setup/product-list-view']">
+                                <a (click)="gotToURL('/setup/product-list-view','SideMenu.ProductList')">
                                     <i class="fa fa-question-circle"></i><span translate>SideMenu.ProductList</span></a>
                             </li>
                             <!--<li *IfPrivilege="helperService.privileges.Setup.Products.Add">
-                                <a [routerLink]="['/setup/add-bulk-products']">
+                                <a  (click)="gotToURL('/setup/add-bulk-products']">
                                     <i class="fa fa-question-circle"></i><span translate>SideMenu.AddBulkProducts</span></a>
                             </li>-->
                             <li *IfPrivilege="helperService.privileges.Setup.Products.ChangePrice">
-                                <a [routerLink]="['/setup/product-list-change-price']">
+                                <a (click)="gotToURL('/setup/product-list-change-price','SideMenu.ChangePrice')">
                                     <i class="fa fa-question-circle"></i><span translate>SideMenu.ChangePrice</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Setup.Products.ChangeQuantity">
-                                <a [routerLink]="['/setup/product-list-change-quantity']">
+                                <a (click)="gotToURL('/setup/product-list-change-quantity','SideMenu.ChangeQuantity')">
                                     <i class="fa fa-question-circle"></i><span
                                         translate>SideMenu.ChangeQuantity</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Setup.Products.ViewProductTracking">
-                                <a [routerLink]="['/setup/product-tracking']">
+                                <a (click)="gotToURL('/setup/product-tracking','SideMenu.ProductTrackingTitle')">
                                     <i class="fa fa-list-alt"></i><span
                                         translate>SideMenu.ProductTrackingTitle</span></a>
                             </li>
@@ -56,7 +56,7 @@
                             <span class="bot-line"></span><span translate>SideMenu.Accounting</span></a>
                         <ul class="header3-sub-list list-unstyled">
                             <li *IfPrivilege="helperService.privileges.Accounting.Treasuries.View">
-                                <a [routerLink]="['/accounting/treasury-list']">
+                                <a (click)="gotToURL('/accounting/treasury-list','SideMenu.Treasury')">
                                     <i class="fa fa-question-circle"></i><span translate>SideMenu.Treasury</span></a>
                             </li>
                         </ul>
@@ -68,35 +68,37 @@
                         <ul class="header3-sub-list list-unstyled">
 
                             <!-- <li>
-                                <a [routerLink]="['/sales-bill/sales-bill-search']">
+                                <a  (click)="gotToURL('/sales-bill/sales-bill-search']">
                                     <i class="fas fa-shopping-basket"></i><span
                                         translate>Sales.SearchSalesBill</span></a>
                             </li> -->
                             <li *IfPrivilege="helperService.privileges.Sales.SalesBills.Add">
-                                <a [routerLink]="['/sales-bill/sales-bill-form']">
+                                <a (click)="gotToURL('/sales-bill/sales-bill-form','Sales.AddSalesBill')">
                                     <i class="fas fa-shopping-basket"></i><span translate>Sales.AddSalesBill</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Sales.SalesBills.View">
-                                <a [routerLink]="['/sales-bill/sales-bill-list']">
+                                <a (click)="gotToURL('/sales-bill/sales-bill-list','SideMenu.SalesBills')">
                                     <i class="fas fa-shopping-basket"></i><span translate>SideMenu.SalesBills</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Sales.TempSalesBills.Add">
-                                <a [routerLink]="['/sales-bill/sales-bill-temp-form']">
+                                <a (click)="gotToURL('/sales-bill/sales-bill-temp-form','Sales.AddSalesBillTemp')">
                                     <i class="fas fa-shopping-basket"></i><span
                                         translate>Sales.AddSalesBillTemp</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Sales.TempSalesBills.View">
-                                <a [routerLink]="['/sales-bill/sales-bill-temp-list']">
+                                <a (click)="gotToURL('/sales-bill/sales-bill-temp-list','Sales.SalesBillsTempTitle')">
                                     <i class="fas fa-shopping-basket"></i><span
                                         translate>Sales.SalesBillsTempTitle</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Sales.ReturnedSalesBills.Add">
-                                <a [routerLink]="['/sales-bill/sales-bill-new-returned-form']">
+                                <a
+                                    (click)="gotToURL('/sales-bill/sales-bill-new-returned-form','General.AddBillReturnedForm')">
                                     <i class="fas fa-shopping-basket"></i><span
                                         translate>General.AddBillReturnedForm</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Sales.ReturnedSalesBills.View">
-                                <a [routerLink]="['/sales-bill/sales-bill-returned-list']">
+                                <a
+                                    (click)="gotToURL('/sales-bill/sales-bill-returned-list','General.BillsSalesReturnedList')">
                                     <i class="fas fa-shopping-basket"></i><span
                                         translate>General.BillsSalesReturnedList</span></a>
                             </li>
@@ -109,32 +111,37 @@
                         <ul class="header3-sub-list list-unstyled">
 
                             <li *IfPrivilege="helperService.privileges.Purchases.PurchasesBills.Add">
-                                <a [routerLink]="['/purchases-bill/purchases-bill-form']">
-                                    <i class="zmdi zmdi-shopping-cart"></i><span
+                                <a
+                                    (click)="gotToURL('/purchases-bill/purchases-bill-form','Purchases.AddPurchasesBill')">
+                                    <i class=" zmdi zmdi-shopping-cart"></i><span
                                         translate>Purchases.AddPurchasesBill</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Purchases.PurchasesBills.View">
-                                <a [routerLink]="['/purchases-bill/purchases-bill-list']">
+                                <a (click)="gotToURL('/purchases-bill/purchases-bill-list','SideMenu.PurchasesBills')">
                                     <i class="zmdi zmdi-shopping-cart"></i><span
                                         translate>SideMenu.PurchasesBills</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Purchases.TempPurchasesBills.Add">
-                                <a [routerLink]="['/purchases-bill/purchases-bill-temp-form']">
+                                <a
+                                    (click)="gotToURL('/purchases-bill/purchases-bill-temp-form','Purchases.AddPurchasesBillTemp')">
                                     <i class="zmdi zmdi-shopping-cart"></i><span
                                         translate>Purchases.AddPurchasesBillTemp</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Purchases.TempPurchasesBills.View">
-                                <a [routerLink]="['/purchases-bill/purchases-bill-temp-list']">
+                                <a
+                                    (click)="gotToURL('/purchases-bill/purchases-bill-temp-list','Purchases.PurchasesBillsTempTitle')">
                                     <i class="zmdi zmdi-shopping-cart"></i><span
                                         translate>Purchases.PurchasesBillsTempTitle</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Purchases.ReturnedPurchasesBills.Add">
-                                <a [routerLink]="['/purchases-bill/purchases-bill-new-returned-form']">
+                                <a
+                                    (click)="gotToURL('/purchases-bill/purchases-bill-new-returned-form','AddBillReturnedForm')">
                                     <i class="fas fa-shopping-basket"></i><span
                                         translate>General.AddBillReturnedForm</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Purchases.ReturnedPurchasesBills.View">
-                                <a [routerLink]="['/purchases-bill/purchases-bill-returned-list']">
+                                <a
+                                    (click)="gotToURL('/purchases-bill/purchases-bill-returned-list','General.BillsPurchasesReturnedList')">
                                     <i class="fas fa-shopping-basket"></i><span
                                         translate>General.BillsPurchasesReturnedList</span></a>
                             </li>
@@ -147,36 +154,41 @@
                             <span class="bot-line"></span><span translate>SideMenu.Reports</span></a>
                         <ul class="header3-sub-list list-unstyled">
                             <li *IfPrivilege="helperService.privileges.Reports.AccountStatementAllClients.View">
-                                <a [routerLink]="['/report/account-statement-all-clients']">
+                                <a
+                                    (click)="gotToURL('/report/account-statement-all-clients','Reports.AccountStatementForAllClients')">
                                     <i class="fa fa-file"></i><span
                                         translate>Reports.AccountStatementForAllClients</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Reports.AccountStatementSingleClient.View">
-                                <a [routerLink]="['/report/account-statement-single-client']">
+                                <a
+                                    (click)="gotToURL('/report/account-statement-single-client','Reports.AccountStatementForSingleClient')">
                                     <i class="fa fa-file"></i><span
                                         translate>Reports.AccountStatementForSingleClient</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Reports.AccountStatementAllVendors.View">
-                                <a [routerLink]="['/report/account-statement-all-vendors']">
+                                <a
+                                    (click)="gotToURL('/report/account-statement-all-vendors','Reports.AccountStatementForAllVendors')">
                                     <i class="fa fa-file"></i><span
                                         translate>Reports.AccountStatementForAllVendors</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Reports.AccountStatementSingleVendor.View">
-                                <a [routerLink]="['/report/account-statement-single-vendor']">
+                                <a
+                                    (click)="gotToURL('/report/account-statement-single-vendor','Reports.AccountStatementForSingleVendor')">
                                     <i class="fa fa-file"></i><span
                                         translate>Reports.AccountStatementForSingleVendor</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Setup.Products.View ">
-                                <a [routerLink]="['/report/product-list-report']">
+                                <a (click)="gotToURL('/report/product-list-report','Reports.ProductListReport')">
                                     <i class="fa fa-file"></i><span translate>Reports.ProductListReport</span></a>
                             </li>
                             <li *IfPrivilege="helperService.privileges.Reports.ProductMinusQuantity.View">
-                                <a [routerLink]="['/report/product-list-minus-report']">
+                                <a (click)="gotToURL('/report/product-list-minus-report','Reports.MinusProducts')">
                                     <i class="fa fa-file"></i><span translate>Reports.MinusProducts</span></a>
                             </li>
-                         
+
                             <li *IfPrivilege="helperService.privileges.Reports.ProductLowQuantity.View">
-                                <a [routerLink]="['/report/product-list-low-quantity-report']">
+                                <a
+                                    (click)="gotToURL('/report/product-list-low-quantity-report','Reports.LowQuantityProducts')">
                                     <i class="fa fa-file"></i><span translate>Reports.LowQuantityProducts</span></a>
                             </li>
 
@@ -233,9 +245,12 @@
                             </div> -->
                             <div *IfPrivilege="helperService.privileges.Setup.Companies.Edit"
                                 class="account-dropdown__item"
-                                [routerLink]="['/setup/company-form/'+authService.loggedUserProfile?.companyId]">
+                                (click)="gotToURL('/setup/company-form/'+authService.loggedUserProfile?.companyId,'General.GeneralSettings')">
                                 <a class="label">
-                                    <i class="zmdi zmdi-settings"></i>{{'General.GeneralSettings' | translate}}</a>
+                                    <i class="zmdi zmdi-settings"></i>
+                                    <span translate>
+                                        General.GeneralSettings</span>
+                                </a>
                             </div>
                             <!-- <div class="account-dropdown__item">
                                 <a href="#">

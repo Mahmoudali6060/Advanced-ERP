@@ -144,7 +144,7 @@ namespace DataService.Setup.Handlers
 
         private string GenerateSequenceNumber()
         {
-            var lastElement = _unitOfWork.ClientVendorDAL.GetAll().OrderBy(p => p.Id)
+            var lastElement = _unitOfWork.ClientVendorDAL.GetAll().OrderByDescending(p => p.Id)
                        .FirstOrDefault();
             if (lastElement == null)
             {

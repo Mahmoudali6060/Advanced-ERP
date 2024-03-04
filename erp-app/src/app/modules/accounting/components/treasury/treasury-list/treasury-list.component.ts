@@ -60,7 +60,7 @@ export class TreasuryListComponent {
 	}
 
 	toggleFilter() {
-		this.searchCriteriaDTO = new TreasurySearchDTO();
+		// this.searchCriteriaDTO = new TreasurySearchDTO();
 		this.showFilterControls = !this.showFilterControls;
 	}
 

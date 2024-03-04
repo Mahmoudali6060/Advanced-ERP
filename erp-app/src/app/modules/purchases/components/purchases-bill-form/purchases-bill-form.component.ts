@@ -215,7 +215,7 @@ export class PurchasesBillFormComponent {
 			}
 		}
 
-		if (purchasesBillDTO.paid == null) {
+		if (!this.purchasesBillHeaderDTO.isTemp && purchasesBillDTO.paid == null) {
 			this.toasterService.error(this.translate.instant("Errors.YouMustSetPaidAmount"));
 			return false;
 		}
@@ -349,11 +349,15 @@ export class PurchasesBillFormComponent {
 
 	updateTotal() {
 		this.purchasesBillHeaderDTO.total = 0;
+		let total = 0;
 		for (let item of this.purchasesBillHeaderDTO.purchasesBillDetailList) {
 			//if (!this.purchasesBillHeaderDTO.isReturned || (this.purchasesBillHeaderDTO.isReturned && item.isReturned)) {
 			item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
 			item.subTotal = parseFloat((item.priceAfterDiscount * item.quantity).toFixed(2));
 			this.purchasesBillHeaderDTO.total += item.subTotal;
+			total += parseFloat(item.subTotal.toFixed(2));
+			this.purchasesBillHeaderDTO.total = parseFloat(total.toFixed(2));
+
 			//}
 
 		}
@@ -384,7 +388,7 @@ export class PurchasesBillFormComponent {
 			let selectedVendor = this.vendorList.find(c => c.id == this.purchasesBillHeaderDTO.clientVendorId);
 			if (selectedVendor) {
 				this.selectedVendor = selectedVendor;
-				this.previousBalance = parseFloat((selectedVendor?.debit - selectedVendor?.credit +this.purchasesBillHeaderDTO.remaining).toFixed(2));
+				this.previousBalance = parseFloat((selectedVendor?.debit - selectedVendor?.credit + this.purchasesBillHeaderDTO.remaining).toFixed(2));
 			}
 		}
 	}

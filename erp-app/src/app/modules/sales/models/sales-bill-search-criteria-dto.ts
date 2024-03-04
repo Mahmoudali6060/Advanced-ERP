@@ -3,7 +3,9 @@ import { PagingDTO } from "src/app/shared/models/paging-dto";
 export class SalesBillSearchCriteriaDTO extends PagingDTO {
     number: string;
     clientVendorId: string;
-    date: string;
+    representiveId: number;
+    dateFrom: string | undefined;
+    dateTo: string | undefined;
     isActive: boolean;
     isTemp: boolean = false;
     isReturned: boolean = false;

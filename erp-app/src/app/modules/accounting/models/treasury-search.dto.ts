@@ -4,6 +4,8 @@ import { PagingDTO } from "src/app/shared/models/paging-dto";
 
 export class TreasurySearchDTO extends PagingDTO {
     date: string;
+    dateFrom: string | undefined;
+    dateTo: string | undefined;
     accountTypeId: AccountTypeEnum | null;
     clientVendorId: number | null;
     transactionTypeId: AccountTypeEnum | null;
@@ -12,5 +14,5 @@ export class TreasurySearchDTO extends PagingDTO {
     refNo: string;
     bankAccountNo: string;
     checkNo: string;
-    beneficiaryName:string;
+    beneficiaryName: string;
 }

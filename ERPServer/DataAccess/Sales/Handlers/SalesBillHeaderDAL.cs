@@ -48,7 +48,7 @@ namespace Sales.DataAccessLayer
 
         public async Task<long> AddAsync(SalesBillHeader entity)
         {
-            entity.Number = GenerateSequenceNumber();
+            //entity.Number = GenerateSequenceNumber();
             await _appDbContext.AddAsync(entity);
             return entity.Id;
         }
@@ -73,7 +73,7 @@ namespace Sales.DataAccessLayer
         {
             lock (this)
             {
-                var lastElement = _appDbContext.SalesBillHeaders.OrderBy(p => p.Id)
+                var lastElement = _appDbContext.SalesBillHeaders.OrderByDescending(p => p.Id)
                       .FirstOrDefault();
                 if (lastElement == null)
                 {

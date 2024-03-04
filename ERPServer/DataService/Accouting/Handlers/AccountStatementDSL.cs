@@ -207,7 +207,7 @@ namespace DataService.Accounting.Handlers
 
         private string GenerateSequenceNumber()
         {
-            var lastElement = _unitOfWork.AccountStatementDAL.GetAllAsync().Result.OrderBy(x => x.Id).FirstOrDefault();
+            var lastElement = _unitOfWork.AccountStatementDAL.GetAllAsync().Result.OrderByDescending(x => x.Id).FirstOrDefault();
             if (lastElement == null)
             {
                 return "1000";

@@ -59,7 +59,7 @@ namespace Setup.DataAccessLayer
         #region Helper
         private string GenerateSequenceNumber()
         {
-            var lastElement = _appDbContext.Categories.OrderBy(p => p.Id)
+            var lastElement = _appDbContext.Categories.OrderByDescending(p => p.Id)
                        .FirstOrDefault();
             if (lastElement == null)
             {

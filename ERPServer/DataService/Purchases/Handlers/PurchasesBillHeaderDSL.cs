@@ -126,8 +126,8 @@ namespace DataService.Setup.Handlers
                     var product = _unitOfWork.ProductDAL.GetById(item.ProductId);
 
                     product.ActualQuantity = entity.IsReturned ? product.ActualQuantity - item.Quantity : product.ActualQuantity + item.Quantity;
+                    product.PurchasingPrice = item.Price;
                     product.LastPurchasingPrice = item.PriceAfterDiscount;
-                    product.PurchasingPrice = product.PurchasingPrice;
                     _unitOfWork.ProductDAL.Update(product);
                 }
             }
@@ -428,9 +428,19 @@ namespace DataService.Setup.Handlers
                 purchasesBillHeaderList = purchasesBillHeaderList.Where(x => x.ClientVendorId == searchCriteriaDTO.VendorId);
             }
 
-            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.Date))
+            if (searchCriteriaDTO.RepresentiveId.HasValue)
             {
-                purchasesBillHeaderList = purchasesBillHeaderList.Where(x => x.Date.Date == DateTime.Parse(searchCriteriaDTO.Date).Date);
+                purchasesBillHeaderList = purchasesBillHeaderList.Where(x => x.RepresentiveId == searchCriteriaDTO.RepresentiveId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.DateFrom))
+            {
+                purchasesBillHeaderList = purchasesBillHeaderList.Where(x => x.Date.Date >= DateTime.Parse(searchCriteriaDTO.DateFrom).Date);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.DateTo))
+            {
+                purchasesBillHeaderList = purchasesBillHeaderList.Where(x => x.Date.Date <= DateTime.Parse(searchCriteriaDTO.DateTo).Date);
             }
 
             if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.PersonPhoneNumber))
@@ -469,14 +479,14 @@ namespace DataService.Setup.Handlers
             {
                 accountStatement.Debit = entity.Paid;
                 accountStatement.Credit = entity.TotalAmount;
-                accountStatement.Notes = "فاتورة مرتجعات المشتريات";
+                accountStatement.Notes = "فاتورة مرتجعات المشتريات" + "(" + entity.Number + ")";
 
             }
             else
             {
                 accountStatement.Debit = entity.TotalAmount;
                 accountStatement.Credit = entity.Paid;
-                accountStatement.Notes = "فاتورة مشتريات";
+                accountStatement.Notes = "فاتورة مشتريات" + "(" + entity.Number + ")";
 
             }
 
@@ -501,14 +511,14 @@ namespace DataService.Setup.Handlers
             {
                 treasury.InComing = entity.Paid;
                 treasury.OutComing = 0;
-                treasury.Notes = "فاتورة مرتجعات المشتريات";
+                treasury.Notes = "فاتورة مرتجعات المشتريات" + "(" + entity.Number + ")";
 
             }
             else
             {
                 treasury.InComing = 0;
                 treasury.OutComing = entity.Paid;
-                treasury.Notes = "فاتورة مشتريات";
+                treasury.Notes = "فاتورة مشتريات" + "(" + entity.Number + ")";
 
             }
 
@@ -525,7 +535,7 @@ namespace DataService.Setup.Handlers
 
         private string GenerateSequenceNumber()
         {
-            var lastElement = _unitOfWork.PurchasesBillHeaderDAL.GetAll().OrderBy(x => x.Id).FirstOrDefault();
+            var lastElement = _unitOfWork.PurchasesBillHeaderDAL.GetAll().OrderByDescending(x => x.Id).FirstOrDefault();
             if (lastElement == null)
             {
                 return "1000";
@@ -537,7 +547,7 @@ namespace DataService.Setup.Handlers
 
         private string GenerateTreasurySequenceNumber()
         {
-            var lastElement = _unitOfWork.TreasuryDAL.GetAll().OrderBy(x => x.Id).FirstOrDefault();
+            var lastElement = _unitOfWork.TreasuryDAL.GetAll().OrderByDescending(x => x.Id).FirstOrDefault();
             if (lastElement == null)
             {
                 return "1000";

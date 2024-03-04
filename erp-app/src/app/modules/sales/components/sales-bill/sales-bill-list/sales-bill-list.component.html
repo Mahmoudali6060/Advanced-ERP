@@ -54,10 +54,19 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <label class="form-label" for="date">{{'General.Date'|translate}}</label>
-                                        <input [(ngModel)]="searchCriteriaDTO.date" type="date" id="date"
-                                            class="form-control" #date="ngModel" name="date"
-                                            [value]="searchCriteriaDTO.date" aria-describedby="helpId">
+                                        <label class="form-label" for="dateFrom">{{'General.DateFrom'|translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.dateFrom" type="date" id="dateFrom"
+                                            class="form-control" #dateFrom="ngModel" name="dateFrom"
+                                            [value]="searchCriteriaDTO.dateFrom" aria-describedby="helpId">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="dateTo">{{'General.DateTo'|translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.dateTo" type="date" id="dateTo"
+                                            class="form-control" #dateTo="ngModel" name="dateTo"
+                                            [value]="searchCriteriaDTO.dateTo" aria-describedby="helpId">
 
                                     </div>
                                 </div>
@@ -83,6 +92,21 @@
                                         <input [(ngModel)]="searchCriteriaDTO.personPhoneNumber" type="text"
                                             id="personPhoneNumber" class="form-control" #personPhoneNumber="ngModel"
                                             name="personPhoneNumber">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <label class="form-label"
+                                        for="representiveId">{{'General.Representive'|translate}}</label>
+                                    <div class="input-group">
+                                        <ng-select name="representiveId" id="representiveId" class="ng-select-custom"
+                                            [(ngModel)]="searchCriteriaDTO.representiveId">
+                                            <ng-option value=" null"
+                                                disabled>{{'General.SelectRepresentive'|translate}}</ng-option>
+                                            <ng-option *ngFor="let item of representiveList" [value]="item.id">
+                                                {{item.fullName}}
+                                            </ng-option>
+                                        </ng-select>
                                     </div>
                                 </div>
                             </div>

@@ -21,6 +21,8 @@
     "Address": "العنوان ",
     "Name": "الاسم",
     "Date": "التاريخ",
+    "DateFrom": "التاريخ من",
+    "DateTo": "التاريخ إلى",
     "Weight": "الوزن",
     "Price": "سعر (الليستة)",
     "LastPurchasingPrice": "أخر سعر شراء",

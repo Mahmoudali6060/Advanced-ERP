@@ -31,12 +31,22 @@
                         <div class="col-lg-12">
 
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label class="form-label" for="date">{{'General.Date'|translate}}</label>
-                                        <input [disabled]="viewMode" [(ngModel)]="searchCriteriaDTO.date" type="date"
-                                            id="date" class="form-control" #date="ngModel" name="date"
-                                            aria-describedby="helpId">
+                                        <label class="form-label" for="dateFrom">{{'General.DateFrom'|translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.dateFrom" type="date" id="dateFrom"
+                                            class="form-control" #dateFrom="ngModel" name="dateFrom"
+                                            [value]="searchCriteriaDTO.dateFrom" aria-describedby="helpId">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="dateTo">{{'General.DateTo'|translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.dateTo" type="date" id="dateTo"
+                                            class="form-control" #dateTo="ngModel" name="dateTo"
+                                            [value]="searchCriteriaDTO.dateTo" aria-describedby="helpId">
+
                                     </div>
                                 </div>
 

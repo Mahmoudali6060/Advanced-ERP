@@ -18,6 +18,7 @@ using Data.Entities.Accouting;
 using Data.Entities.Setup;
 using Shared.Enums;
 using System.Diagnostics;
+using Data.Contexts;
 
 namespace DataService.Sales.Handlers
 {
@@ -133,6 +134,7 @@ namespace DataService.Sales.Handlers
             #endregion
 
             #region Add Sales , AccountStatement and Treasury
+            entity.Number = GenerateSequenceNumber();
             var salesBillHeader = _mapper.Map<SalesBillHeader>(entity);
             if (entity.IsTemp == false)
             {
@@ -424,10 +426,21 @@ namespace DataService.Sales.Handlers
                 salesBillHeaderList = salesBillHeaderList.Where(x => x.ClientVendorId == searchCriteriaDTO.ClientVendorId);
             }
 
-            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.Date))
+            if (searchCriteriaDTO.RepresentiveId.HasValue)
             {
-                salesBillHeaderList = salesBillHeaderList.Where(x => x.Date.Date == DateTime.Parse(searchCriteriaDTO.Date).Date);
+                salesBillHeaderList = salesBillHeaderList.Where(x => x.RepresentiveId == searchCriteriaDTO.RepresentiveId);
             }
+
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.DateFrom))
+            {
+                salesBillHeaderList = salesBillHeaderList.Where(x => x.Date.Date >= DateTime.Parse(searchCriteriaDTO.DateFrom).Date);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.DateTo))
+            {
+                salesBillHeaderList = salesBillHeaderList.Where(x => x.Date.Date <= DateTime.Parse(searchCriteriaDTO.DateTo).Date);
+            }
+
 
             if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.PersonPhoneNumber))
             {
@@ -464,14 +477,15 @@ namespace DataService.Sales.Handlers
             {
                 accountStatement.Debit = entity.TotalAmount;
                 accountStatement.Credit = entity.Paid;
-                accountStatement.Notes = "فاتورة مرتجعات المبيعات";
+                accountStatement.Notes = "فاتورة مرتجعات المبيعات" + "(" + entity.Number + ")";
+
 
             }
             else
             {
                 accountStatement.Debit = entity.Paid;
                 accountStatement.Credit = entity.TotalAmount;
-                accountStatement.Notes = "فاتورة مبيعات";
+                accountStatement.Notes = "فاتورة مبيعات" + "(" + entity.Number + ")";
 
             }
 
@@ -497,14 +511,14 @@ namespace DataService.Sales.Handlers
             {
                 accountStatement.InComing = 0;
                 accountStatement.OutComing = entity.Paid;
-                accountStatement.Notes = "فاتورة مرتجعات المبيعات";
+                accountStatement.Notes = "فاتورة مرتجعات المبيعات" + "(" + entity.Number + ")";
 
             }
             else
             {
                 accountStatement.InComing = entity.Paid;
                 accountStatement.OutComing = 0;
-                accountStatement.Notes = "فاتورة مبيعات";
+                accountStatement.Notes = "فاتورة مبيعات" + "(" + entity.Number + ")";
 
             }
 
@@ -513,7 +527,7 @@ namespace DataService.Sales.Handlers
 
         private string GenerateTreasurySequenceNumber()
         {
-            var lastElement = _unitOfWork.TreasuryDAL.GetAll().OrderBy(x => x.Id).FirstOrDefault();
+            var lastElement = _unitOfWork.TreasuryDAL.GetAll().OrderByDescending(x => x.Id).FirstOrDefault();
             if (lastElement == null)
             {
                 return "1000";
@@ -522,7 +536,25 @@ namespace DataService.Sales.Handlers
             return code.ToString();
 
         }
-      
+
+        private string GenerateSequenceNumber()
+        {
+            lock (this)
+            {
+
+                var lastElement = _unitOfWork.SalesBillHeaderDAL.GetAllAsync().Result.OrderByDescending(x => x.Id).FirstOrDefault();
+
+                if (lastElement == null)
+                {
+                    return "1000";
+                }
+                int code = int.Parse(lastElement.Number) + 1;
+                return code.ToString();
+            }
+
+        }
+
+
         #endregion
     }
 }

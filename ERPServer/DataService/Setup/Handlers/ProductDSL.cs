@@ -255,7 +255,7 @@ namespace DataService.Setup.Handlers
 
         private string GenerateSequenceNumber()
         {
-            var lastElement = _unitOfWork.ProductDAL.GetAllAsync().Result.OrderBy(x => x.Id).FirstOrDefault();
+            var lastElement = _unitOfWork.ProductDAL.GetAllAsync().Result.OrderByDescending(x => x.Id).FirstOrDefault();
             if (lastElement == null)
             {
                 return "1000";

@@ -27,7 +27,7 @@
                     </div>
                     <div class="card-body card-block">
                         <div class="row">
-                            <div class="col-lg-2" *ngIf="!hideBillnumber">
+                            <div class="col-lg-4" *ngIf="!hideBillnumber">
                                 <div class="form-group">
                                     <label for="number" class=" form-control-label">{{'General.BillNumber'
                                         |translate}}</label>
@@ -43,7 +43,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-3">
+                            <div class="col-lg-5" [ngClass]="{'disabled':salesBillHeaderDTO?.id!=null}">
                                 <label class="form-label" for="clientId">{{'General.Client'|translate}}</label>
                                 <div class="input-group">
                                     <ng-select name="clientId" id="clientId" class="ng-select-custom"
@@ -60,7 +60,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for="previousBalance" class=" form-control-label">{{'General.PreviousBalance'
                                         |translate}}
@@ -74,7 +74,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-2">
+                            <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-label" for="date">{{'General.Date'|translate}}</label>
                                     <input [disabled]="viewMode" [(ngModel)]="salesBillHeaderDTO.date" type="date"
@@ -84,7 +84,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-3">
+                            <div class="col-lg-5">
                                 <label class="form-label"
                                     for="representiveId">{{'General.Representive'|translate}}</label>
                                 <div class="input-group">
@@ -103,7 +103,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        <br>
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="row">
@@ -375,7 +375,7 @@
                                                 aria-describedby="helpId">
                                         </div>
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-2" *ngIf="!salesBillHeaderDTO.isTemp">
                                         <div class="form-group">
                                             <label for="otherExpenses"
                                                 class=" form-control-label">{{'General.OtherExpenses'
@@ -397,7 +397,7 @@
                                                 readonly name="totalAmount" aria-describedby="helpId">
                                         </div>
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-2" *ngIf="!salesBillHeaderDTO.isTemp">
                                         <div class="form-group">
                                             <label for="paid" class=" form-control-label">{{'General.Paid'
                                                 |translate}}</label>
@@ -407,7 +407,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-2" *ngIf="!salesBillHeaderDTO.isTemp">
                                         <div class="form-group">
                                             <label for="remaining" class=" form-control-label">{{'General.Remaining'
                                                 |translate}}</label>
@@ -416,7 +416,7 @@
                                                 readonly name="remaining" aria-describedby="helpId">
                                         </div>
                                     </div>
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-2" *ngIf="!salesBillHeaderDTO.isTemp">
                                         <div class="form-group">
                                             <label for="profit" class=" form-control-label">{{'General.Profit'
                                                 |translate}}</label>
@@ -477,9 +477,11 @@
             <br>
             <br>
 
-            <h2 class="text-center report-title" *ngIf="salesBillHeaderDTO.isReturned">{{'Reports.ReturnedSalesBill' |translate}}
+            <h2 class="text-center report-title" *ngIf="salesBillHeaderDTO.isReturned">{{'Reports.ReturnedSalesBill'
+                |translate}}
             </h2>
-            <h2 class="text-center report-title" *ngIf="salesBillHeaderDTO.isTemp">{{'Reports.TempSalesBill' |translate}} </h2>
+            <h2 class="text-center report-title" *ngIf="salesBillHeaderDTO.isTemp">{{'Reports.TempSalesBill'
+                |translate}} </h2>
             <h2 class="text-center report-title" *ngIf="!salesBillHeaderDTO.isReturned && !salesBillHeaderDTO.isTemp">
                 {{'Reports.ReportSalesBill' |translate}} </h2>
 
@@ -589,9 +591,9 @@
                 </tr>
             </table>
         </div>
-        <div class="col-6">
+        <div class="col-6" *ngIf="!salesBillHeaderDTO.isTemp">
             <table class="table-report" style="background-color: white !important" border="0">
-               
+
                 <tr>
                     <td class="text-right">الرصيد السابق</td>
                     <td class="text-center text-bold">{{previousBalance}}
@@ -608,7 +610,7 @@
                     <td class="text-center text-bold">{{salesBillHeaderDTO.remaining}} </td>
                     <td class="text-left">Remaining</td>
                 </tr>
-               
+
                 <tr>
                     <td class="text-right">الرصيد الحالي</td>
                     <td class="text-center text-bold">{{previousBalance+ salesBillHeaderDTO.remaining}}
@@ -629,6 +631,7 @@
     <br>
     <br>
 
-    <pre class="bottom-page text-right">{{authService.loggedUserProfile?.companyDTO?.settingDTO?.salesBillInstructions}}</pre>
-   
+    <pre
+        class="bottom-page text-right">{{authService.loggedUserProfile?.companyDTO?.settingDTO?.salesBillInstructions}}</pre>
+
 </div>

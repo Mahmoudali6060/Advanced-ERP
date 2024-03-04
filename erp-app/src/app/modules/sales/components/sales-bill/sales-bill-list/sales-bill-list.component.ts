@@ -10,6 +10,8 @@ import { SalesBillHeaderDTO } from '../../../models/sales-bill-header.dto';
 import { ClientVendorDTO, ClientVendorTypeEnum } from 'src/app/modules/setup/models/client-vendor.dto';
 import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 import { HelperService } from 'src/app/shared/services/helper.service';
+import { RepresentiveDTO } from 'src/app/modules/setup/models/representive.dto';
+import { RepresentiveService } from 'src/app/modules/setup/services/representive.service';
 
 @Component({
 	selector: 'app-sales-bill-list',
@@ -30,13 +32,15 @@ export class SalesBillListComponent {
 	@Input() isTemp: boolean = false;
 	@Input() isReturned: boolean = false;
 	clientList: Array<ClientVendorDTO> = new Array<ClientVendorDTO>();
+	representiveList: Array<RepresentiveDTO> = new Array<RepresentiveDTO>();
 
 	constructor(private productService: SalesBillService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
 		private translate: TranslateService,
 		public helperService: HelperService,
-		private clientVendorService: ClientVendorService) {
+		private clientVendorService: ClientVendorService,
+		private representiveService: RepresentiveService) {
 
 	}
 
@@ -44,6 +48,7 @@ export class SalesBillListComponent {
 		this.searchCriteriaDTO.isTemp = this.isTemp;
 		this.searchCriteriaDTO.isReturned = this.isReturned;
 		this.getAllClients();
+		this.getAllRepresentives();
 		this.search();
 		this.statusDDL = [
 			{ label: "All", value: '' },
@@ -58,8 +63,15 @@ export class SalesBillListComponent {
 			this.clientList = res.list;
 		})
 	}
+
+	getAllRepresentives() {
+		this.representiveService.getAllLite().subscribe((res: any) => {
+			this.representiveList = res.list;
+		})
+	}
+
 	toggleFilter() {
-		this.searchCriteriaDTO = new SalesBillSearchCriteriaDTO();
+		//this.searchCriteriaDTO = new SalesBillSearchCriteriaDTO();
 		this.showFilterControls = !this.showFilterControls;
 	}
 

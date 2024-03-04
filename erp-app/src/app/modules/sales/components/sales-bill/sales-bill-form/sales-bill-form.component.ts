@@ -195,9 +195,9 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 
 		if (this.router.url.includes('sales-bill-temp-form'))
 			this.router.navigateByUrl('sales-bill/sales-bill-temp-list');
-		else if  (this.router.url.includes('sales-bill-new-returned-form') || this.router.url.includes('sales-bill-returned-form'))
+		else if (this.router.url.includes('sales-bill-new-returned-form') || this.router.url.includes('sales-bill-returned-form'))
 			this.router.navigateByUrl('sales-bill/sales-bill-returned-list');
-		else if  (this.router.url.includes('sales-bill-form'))
+		else if (this.router.url.includes('sales-bill-form'))
 			this.router.navigateByUrl('sales-bill/sales-bill-list');
 
 
@@ -221,7 +221,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			}
 		}
 
-		if (salesBillDTO.paid == null) {
+		if (!this.salesBillHeaderDTO.isTemp && salesBillDTO.paid == null) {
 			this.toasterService.error(this.translate.instant("Errors.YouMustSetPaidAmount"));
 			return false;
 		}
@@ -372,12 +372,15 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 
 	updateTotal() {
 		this.salesBillHeaderDTO.total = 0;
+		var total = 0;
 		this.salesBillHeaderDTO.profit = 0;
 		for (let item of this.salesBillHeaderDTO.salesBillDetailList) {
 			//if (!this.salesBillHeaderDTO.isReturned || (this.salesBillHeaderDTO.isReturned && item.isReturned)) {
 			item.priceAfterDiscount = parseFloat((item.price - (item.discount / 100) * item.price).toFixed(2));
 			item.subTotal = parseFloat((item.priceAfterDiscount * item.quantity).toFixed(2));
-			this.salesBillHeaderDTO.total += item.subTotal;
+			total += parseFloat(item.subTotal.toFixed(2));
+			this.salesBillHeaderDTO.total = parseFloat(total.toFixed(2));
+
 			this.salesBillHeaderDTO.profit += (item.subTotal - parseFloat((item.lastPurchasingPrice * item.quantity).toFixed(2)));
 			//}
 		}
@@ -387,7 +390,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		this.salesBillHeaderDTO.totalAfterVAT = this.salesBillHeaderDTO.totalAfterDiscount + this.salesBillHeaderDTO.vatAmount + this.salesBillHeaderDTO.taxAmount;
 		this.salesBillHeaderDTO.totalAmount = this.salesBillHeaderDTO.totalAfterVAT + this.salesBillHeaderDTO.otherExpenses;
 		this.salesBillHeaderDTO.remaining = parseFloat(((this.salesBillHeaderDTO.paid ?? 0) - this.salesBillHeaderDTO.totalAmount).toFixed(2));
-		this.salesBillHeaderDTO.profit = this.salesBillHeaderDTO.profit - this.salesBillHeaderDTO.discount-this.salesBillHeaderDTO.otherExpenses;
+		this.salesBillHeaderDTO.profit = this.salesBillHeaderDTO.profit - this.salesBillHeaderDTO.discount - this.salesBillHeaderDTO.otherExpenses;
 	}
 
 
@@ -397,7 +400,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			let selectedClient: any = this.clientList.find(c => c.id == this.salesBillHeaderDTO.clientVendorId);
 			if (selectedClient) {
 				this.selectedClient = selectedClient;
-				this.previousBalance = parseFloat((selectedClient?.debit - selectedClient?.credit -this.salesBillHeaderDTO.remaining).toFixed(2));
+				this.previousBalance = parseFloat((selectedClient?.debit - selectedClient?.credit - this.salesBillHeaderDTO.remaining).toFixed(2));
 			}
 		}
 	}
