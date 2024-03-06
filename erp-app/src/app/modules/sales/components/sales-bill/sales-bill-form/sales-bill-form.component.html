@@ -155,7 +155,12 @@
                                                                         [title]="product.name">{{product.code}} -
                                                                         {{product.name}}</ng-option>
                                                                 </ng-select>
-
+                                                                <div *ngIf="salesBillHeaderDTO.isTemp"
+                                                                    class="input-group-addon" data-toggle="tooltip"
+                                                                    data-placement="top" title="Add Product"
+                                                                    (click)="showProductFormPopUp(item)">
+                                                                    <i class="fa fa-plus-square"></i>
+                                                                </div>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -631,7 +636,18 @@
     <br>
     <br>
 
-    <pre
-        class="bottom-page text-right">{{authService.loggedUserProfile?.companyDTO?.settingDTO?.salesBillInstructions}}</pre>
+    <div class="row">
+        <div class="col-lg-9">
+            <pre class="bottom-page text-right">{{authService.loggedUserProfile?.companyDTO?.settingDTO?.salesBillInstructions}}
+        </pre>
+        </div>
+        <div class="col-lg-3">
+            <pre class="bottom-page text-right">{{salesBillHeaderDTO.notes}}
+            </pre>
+        </div>
+    </div>
+
+
+   
 
 </div>

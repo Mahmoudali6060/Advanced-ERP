@@ -30,6 +30,7 @@ import { ComponentCanDeactivate } from 'src/app/shared/guards/pending-changes-gu
 import { Observable } from 'rxjs';
 import { LabelValuePair } from 'src/app/shared/enums/label-value-pair';
 import { PaymentMethodEnum } from 'src/app/shared/enums/payment-method.enum';
+import { PurchasesBillDetailsDTO } from 'src/app/modules/purchases/models/purchases-bill-details.dto';
 
 @Component({
 	selector: 'app-sales-bill-form',
@@ -142,6 +143,18 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			}
 			this.setPurchaseDetailsDefaultData();
 		})
+	}
+
+
+	showProductFormPopUp(item: SalesBillDetailsDTO) {
+		this.dialogService.show("sm", ProductFormPopupComponent)
+			.then((product) => {
+				if (product) {
+					item.productId = product.id;
+					this.getAllProducts();
+				}
+			})
+			.catch(() => console.log('PurchasesBill dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
 	}
 
 	getAllClients() {
