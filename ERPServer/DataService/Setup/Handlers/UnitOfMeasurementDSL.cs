@@ -34,7 +34,7 @@ namespace DataService.Setup.Handlers
             var unitOfMeasurementList = await _unitOfWork.UnitOfMeasurementDAL.GetAllAsync();
 
             #region Apply Filters
-            unitOfMeasurementList = unitOfMeasurementList.OrderBy(x => x.Id);
+            unitOfMeasurementList = unitOfMeasurementList.OrderByDescending(x => x.Id);
             unitOfMeasurementList = ApplyFilert(unitOfMeasurementList, searchCriteriaDTO);
             int total = unitOfMeasurementList.Count();
             #endregion

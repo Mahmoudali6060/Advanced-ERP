@@ -31,7 +31,7 @@ namespace DataService.Setup.Handlers
             var productList = await _unitOfWork.ProductDAL.GetAsync(null, x => x.Category);
 
             #region Apply Filters
-            productList = productList.OrderBy(x => x.Id);
+            productList = productList.OrderByDescending(x => x.Id);
             productList = ApplyFilert(productList, searchCriteriaDTO);
             int total = productList.Count();
             #endregion

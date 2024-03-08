@@ -38,7 +38,7 @@ namespace DataService.Accounting.Handlers
         {
             var treasuryList = await _unitOfWork.AccountStatementDAL.GetAsync(x => x.IsCancel == false, x => x.ClientVendor);
             #region Apply Filters
-            treasuryList = treasuryList.OrderBy(x => x.Id);
+            treasuryList = treasuryList.OrderByDescending(x => x.Id);
             treasuryList = ApplyFilert(treasuryList, searchCriteriaDTO);
             int total = treasuryList.Count();
 
@@ -63,7 +63,7 @@ namespace DataService.Accounting.Handlers
         {
             var treasuryList = await _unitOfWork.AccountStatementDAL.GetAsync(x => x.IsCancel == false, x => x.ClientVendor);
             #region Apply Filters
-            treasuryList = treasuryList.OrderBy(x => x.Id);
+            treasuryList = treasuryList.OrderByDescending(x => x.Id);
             treasuryList = ApplyFilert(treasuryList, searchCriteriaDTO);
             int total = treasuryList.Count();
             decimal balance = treasuryList.Sum(x => x.Debit - x.Credit);

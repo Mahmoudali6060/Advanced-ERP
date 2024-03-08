@@ -34,7 +34,7 @@ namespace DataService.Setup.Handlers
             var userProfileList = await _unitOfWork.ClientVendorDAL.GetAllAsync();
 
             #region Apply Filters
-            userProfileList = userProfileList.OrderBy(x => x.FullName);
+            userProfileList = userProfileList.OrderByDescending(x => x.FullName);
             userProfileList = ApplyFilert(userProfileList, searchCriteriaDTO);
             int total = userProfileList.Count();
             #endregion

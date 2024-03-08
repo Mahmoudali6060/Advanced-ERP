@@ -40,7 +40,7 @@ namespace DataService.Sales.Handlers
             var salesBillHeaderList = await _unitOfWork.SalesBillHeaderDAL.GetAllAsync();
 
             #region Apply Filters
-            salesBillHeaderList.OrderBy(x => x.Id);
+            salesBillHeaderList.OrderByDescending(x => x.Id);
             salesBillHeaderList = ApplyFilert(salesBillHeaderList, searchCriteriaDTO);
             int total = salesBillHeaderList.Count();
             #endregion

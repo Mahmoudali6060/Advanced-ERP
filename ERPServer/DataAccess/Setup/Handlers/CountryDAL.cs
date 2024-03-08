@@ -17,12 +17,12 @@ namespace Setup.DataAccessLayer
         #region Query
         public async Task<IQueryable<Country>> GetAllAsync()
         {
-            return _appDbContext.Countries.OrderBy(x => x.Name).AsQueryable();
+            return _appDbContext.Countries.OrderByDescending(x => x.Name).AsQueryable();
         }
 
         public async Task<IQueryable<Country>> GetAllLiteAsync()
         {
-            return _appDbContext.Countries.OrderBy(x => x.Name).AsQueryable();
+            return _appDbContext.Countries.OrderByDescending(x => x.Name).AsQueryable();
         }
 
         public async Task<Country> GetByIdAsync(long id)

@@ -21,12 +21,12 @@ namespace Purchases.DataAccessLayer
         #region Query
         public async Task<IQueryable<PurchasesBillDetail>> GetAllAsync()
         {
-            return _appDbContext.PurchasesBillDetails.OrderBy(x => x.Id).AsQueryable();
+            return _appDbContext.PurchasesBillDetails.OrderByDescending(x => x.Id).AsQueryable();
         }
 
         public async Task<IQueryable<PurchasesBillDetail>> GetAllLiteAsync()
         {
-            return _appDbContext.PurchasesBillDetails.OrderBy(x => x.Id).AsQueryable();
+            return _appDbContext.PurchasesBillDetails.OrderByDescending(x => x.Id).AsQueryable();
         }
 
         public async Task<PurchasesBillDetail> GetByIdAsync(long id)

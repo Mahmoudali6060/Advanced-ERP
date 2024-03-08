@@ -17,12 +17,12 @@ namespace Sales.DataAccessLayer
         #region Query
         public async Task<IQueryable<SalesBillHeader>> GetAllAsync()
         {
-            return _appDbContext.SalesBillHeaders.Include(x => x.ClientVendor).Include(x => x.CreatedByProfile).Include(x => x.ModifiedByProfile).OrderBy(x => x.Id).AsQueryable();
+            return _appDbContext.SalesBillHeaders.Include(x => x.ClientVendor).Include(x => x.CreatedByProfile).Include(x => x.ModifiedByProfile).OrderByDescending(x => x.Id).AsQueryable();
         }
 
         public async Task<IQueryable<SalesBillHeader>> GetAllLiteAsync()
         {
-            return _appDbContext.SalesBillHeaders.OrderBy(x => x.Date).AsQueryable();
+            return _appDbContext.SalesBillHeaders.OrderByDescending(x => x.Date).AsQueryable();
         }
 
         public async Task<SalesBillHeader> GetByIdAsync(long id)

@@ -19,7 +19,7 @@ namespace Setup.DataAccessLayer
 
         public async Task<IQueryable<ProductTracking>> GetProductTrackingByProductId(long productId)
         {
-            return _dbContext.ProductTrackings.Where(x => x.ProductId == productId).OrderBy(x => x.Date).AsQueryable();
+            return _dbContext.ProductTrackings.Where(x => x.ProductId == productId).OrderByDescending(x => x.Date).AsQueryable();
         }
     }
 }
