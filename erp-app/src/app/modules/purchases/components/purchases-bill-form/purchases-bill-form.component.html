@@ -391,7 +391,7 @@
                                                 name="totalAmount" aria-describedby="helpId">
                                         </div>
                                     </div>
-                                    <div class="col-lg-2"  *ngIf="!purchasesBillHeaderDTO.isTemp">
+                                    <div class="col-lg-2" *ngIf="!purchasesBillHeaderDTO.isTemp">
                                         <div class="form-group">
                                             <label for="paid" class=" form-control-label">{{'General.Paid'
                                                 |translate}}</label>
@@ -411,7 +411,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-2" >
+                                    <div class="col-lg-2">
                                         <div class="form-group">
                                             <label for="notes" class=" form-control-label">{{'General.Notes'
                                                 |translate}}</label>
@@ -541,7 +541,7 @@
                 </td>
                 <td>{{item.productCode}} {{item.productName}}</td>
                 <td>{{item.quantity}}</td>
-                <td>{{item.price}}</td>
+                <td>{{item.priceAfterDiscount}}</td>
                 <td>{{item.subTotal}}</td>
             </tr>
 
@@ -587,7 +587,7 @@
                 <tr>
                     <td class="text-right">الرصيد السابق</td>
                     <td class="text-center text-bold">{{previousBalance}}
-                       
+
                     </td>
                     <td class="text-left">Previous Balance</td>
                 </tr>
@@ -605,7 +605,7 @@
                 <tr>
                     <td class="text-right">الرصيد الحالي</td>
                     <td class="text-center text-bold">{{previousBalance-purchasesBillHeaderDTO.remaining}}
-                       
+
                     </td>
                     <td class="text-left">Current Balance</td>
                 </tr>
@@ -620,7 +620,21 @@
     <br>
     <br>
 
-    <pre
-        class="bottom-page text-right">{{authService.loggedUserProfile?.companyDTO?.settingDTO?.purchasesBillInstructions}}</pre>
+    <table>
+        <tr>
+            <td>
+                <pre class="bottom-page text-right">{{authService.loggedUserProfile?.companyDTO?.settingDTO?.purchasesBillInstructions}}
+            </pre>
+
+            </td>
+            <td>
+                <pre class="bottom-page text-right none-border">
+                        ملاحظات:
+                        {{purchasesBillHeaderDTO?.notes}}
+                        </pre>
+            </td>
+        </tr>
+
+    </table>
 
 </div>

@@ -342,7 +342,7 @@ i:hover {
 }
 
 .table-data2.table tbody td {
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
@@ -370,4 +370,8 @@ i:hover {
 .text h5
 {
     color: white;
+}
+
+.section__content--p30{
+    padding: 0 5px !important;
 }

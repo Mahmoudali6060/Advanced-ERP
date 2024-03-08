@@ -172,7 +172,7 @@ namespace DataService.Accounting.Handlers
                     await _unitOfWork.ClientVendorDAL.UpdateAsync(clientVendor);
                 }
 
-                var accountStatment =  _unitOfWork.AccountStatementDAL.GetAsync(x => x.TreasuryId == entity.Id).Result.SingleOrDefault();
+                var accountStatment = _unitOfWork.AccountStatementDAL.GetAsync(x => x.TreasuryId == entity.Id).Result.SingleOrDefault();
                 if (accountStatment != null)
                 {
                     accountStatment.IsCancel = true;
@@ -200,17 +200,20 @@ namespace DataService.Accounting.Handlers
             {
                 TreasuryList = TreasuryList.Where(x => x.Date.Date <= DateTime.Parse(searchCriteriaDTO.DateTo).Date);
             }
-            //if (searchCriteriaDTO.AccountTypeId.HasValue)
-            //{
-            //    TreasuryList = TreasuryList.Where(x => x.AccountTypeId == searchCriteriaDTO.AccountTypeId);
-            //}
+            if (searchCriteriaDTO.AccountTypeId.HasValue)
+            {
+                TreasuryList = TreasuryList.Where(x => x.AccountTypeId == searchCriteriaDTO.AccountTypeId);
+            }
 
             if (searchCriteriaDTO.ClientVendorId.HasValue)
             {
                 TreasuryList = TreasuryList.Where(x => x.ClientVendorId == searchCriteriaDTO.ClientVendorId);
             }
 
-
+            if (!string.IsNullOrEmpty(searchCriteriaDTO.BeneficiaryName))
+            {
+                TreasuryList = TreasuryList.Where(x => x.BeneficiaryName.Contains(searchCriteriaDTO.BeneficiaryName));
+            }
 
             if (searchCriteriaDTO.PaymentMethodId.HasValue)
             {

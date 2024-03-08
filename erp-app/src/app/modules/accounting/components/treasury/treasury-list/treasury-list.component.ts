@@ -123,6 +123,7 @@ export class TreasuryListComponent {
 	onAccountTypeChange() {
 		if (this.searchCriteriaDTO.accountTypeId == AccountTypeEnum.Clients || this.searchCriteriaDTO.accountTypeId == AccountTypeEnum.Vendors) {
 			this.getAllClientVendors();
+			this.searchCriteriaDTO.beneficiaryName = "";
 		}
 
 	}

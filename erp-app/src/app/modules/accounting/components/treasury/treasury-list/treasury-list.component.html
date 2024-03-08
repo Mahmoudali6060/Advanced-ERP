@@ -77,7 +77,7 @@
                                     </ng-select>
                                 </div>
                                 <div class="col-md-4"
-                                    *ngIf="searchCriteriaDTO.accountTypeId && (searchCriteriaDTO.accountTypeId !=accountTypeEnum.Vendors || searchCriteriaDTO.accountTypeId !=accountTypeEnum.Vendors)">
+                                    *ngIf="searchCriteriaDTO.accountTypeId && (searchCriteriaDTO.accountTypeId !=accountTypeEnum.Vendors && searchCriteriaDTO.accountTypeId !=accountTypeEnum.Clients)">
                                     <div class="form-group">
                                         <label for="beneficiaryName"
                                             class=" form-control-label">{{'General.BeneficiaryName'

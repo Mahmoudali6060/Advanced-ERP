@@ -79,7 +79,11 @@ body {
     font-size: 24px;
 }
 
-.report-title{
+.report-title {
     text-decoration: underline;
     font-weight: bold;
+}
+
+.none-border {
+    border: none;
 }

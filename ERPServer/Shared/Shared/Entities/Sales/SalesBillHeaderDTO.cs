@@ -44,6 +44,7 @@ namespace Shared.Entities.Sales
         public PaymentMethodEnum? PaymentMethodId { get; set; }
         public string RefNo { get; set; }
         public virtual List<SalesBillDetailDTO> SalesBillDetailList { get; set; }
+        public virtual List<SalesBillDetailDTO> RemovedSalesBillDetailList { get; set; }
 
     }
 }

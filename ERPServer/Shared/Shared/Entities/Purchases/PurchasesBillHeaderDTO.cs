@@ -44,6 +44,7 @@ namespace Shared.Entities.Purchases
         public string RefNo { get; set; }
 
         public virtual List<PurchasesBillDetailDTO> PurchasesBillDetailList { get; set; }
+        public virtual List<PurchasesBillDetailDTO> RemovedPurchasesBillDetailList { get; set; }
 
     }
 }

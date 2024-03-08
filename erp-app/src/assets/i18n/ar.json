@@ -167,13 +167,14 @@
     "Symbol": "الرمز",
     "SalesBillInstructions": "تعليمات فاتورة المبيعات",
     "PurchasesBillInstructions": "تعليمات فاتورة المشتريات",
-    "ChangeListPriceOnly": "تغيير سعر الليستة فقط"
+    "ChangeListPriceOnly": "تغيير سعر الليستة فقط",
+    "ShowProductWithoutPrice": "عرض المنتجات بدون أسعار"
   },
   "Dashboard": {
     "ClientsCount": "عدد العملاء",
-    "ProductsCount":"عدد المنتجات",
-    "UsersCount":"عدد المستخدمين",
-    "VendorsCount":"عدد الموردين"
+    "ProductsCount": "عدد المنتجات",
+    "UsersCount": "عدد المستخدمين",
+    "VendorsCount": "عدد الموردين"
   },
   "DeleteConfirmaionDialog": {
     "Title": "التأكيد",
@@ -601,7 +602,7 @@
     "AccountStatementForSingleClient": "كشف حساب العميل(مُفَصَّل)",
     "AccountStatementForAllVendors": "كشف حسابات الموردين(مُجمَل)",
     "AccountStatementForSingleVendor": "كشف حساب المورد  (مُفَصَّل)",
-    "ProductListReport":"جرد المنتجات",
+    "ProductListReport": "جرد المنتجات",
     "MinusProducts": "المنتجات السالبة",
     "LowQuantityProducts": "المنتجات النواقص"
   },

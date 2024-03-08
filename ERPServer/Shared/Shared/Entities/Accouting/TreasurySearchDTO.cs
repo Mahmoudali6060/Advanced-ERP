@@ -12,9 +12,10 @@ namespace Shared.Entities.Accouting
         public long? ClientVendorId { get; set; }
         public TransactionTypeEnum? TransactionTypeId { get; set; }
         public PaymentMethodEnum? PaymentMethodId { get; set; }
-        public string RefNo { get; set; }
         public string BankAccountNo { get; set; }
+        public string RefNo { get; set; }
         public string CheckNo { get; set; }
         public string Notes { get; set; }
+        public string BeneficiaryName { get; set; }
     }
 }

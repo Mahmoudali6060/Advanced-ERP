@@ -199,7 +199,7 @@ namespace DataService.Setup.Handlers
                 foreach (var item in tempPurchasesBillDetailList)
                 {
                     var exsitedPurchasesBillDetails = exsitedPurchasesBillDetailList.SingleOrDefault(x => x.Id == item.Id && x.ProductId == item.ProductId);
-                    decimal quantity = exsitedPurchasesBillDetails != null ? exsitedPurchasesBillDetails.Quantity : item.Quantity;
+                    decimal quantity = exsitedPurchasesBillDetails != null ? item.Quantity - exsitedPurchasesBillDetails.Quantity : item.Quantity;
                     var product = await _unitOfWork.ProductDAL.GetByIdAsync(item.ProductId);
                     product.ActualQuantity = entity.IsReturned == true ? product.ActualQuantity - quantity : product.ActualQuantity + quantity;
                     product.PurchasingPrice = item.Price;
@@ -251,15 +251,19 @@ namespace DataService.Setup.Handlers
                     accountStatement.RefNo = entity.RefNo;
                     accountStatement.Date = DateTime.Parse(entity.Date);
 
+
                     if (entity.IsReturned)
                     {
                         accountStatement.Debit = entity.Paid;
                         accountStatement.Credit = entity.TotalAmount;
+                        accountStatement.Notes = "فاتورة مرتجعات المشتريات" + "(" + entity.Number + ")" + " " + entity.Notes;
+
                     }
                     else
                     {
                         accountStatement.Debit = entity.TotalAmount;
                         accountStatement.Credit = entity.Paid;
+                        accountStatement.Notes = "فاتورة مشتريات" + "(" + entity.Number + ")" + " " + entity.Notes;
                     }
                     await _unitOfWork.AccountStatementDAL.UpdateAsync(accountStatement);
                 }
@@ -283,10 +287,13 @@ namespace DataService.Setup.Handlers
                     if (entity.IsReturned)
                     {
                         treasury.InComing = entity.Paid;
+                        treasury.Notes = "فاتورة مرتجعات المشتريات" + "(" + entity.Number + ")" + " " + entity.Notes;
+
                     }
                     else
                     {
                         treasury.OutComing = entity.Paid;
+                        treasury.Notes = "فاتورة المشتريات" + "(" + entity.Number + ")" + " " + entity.Notes;
                     }
                     await _unitOfWork.TreasuryDAL.UpdateAsync(treasury);
                 }
@@ -321,6 +328,21 @@ namespace DataService.Setup.Handlers
 
             #endregion
 
+            #region Update Removed Products 
+            if (!entity.IsTemp)
+            {
+                if (entity.RemovedPurchasesBillDetailList != null && entity.RemovedPurchasesBillDetailList.Count() > 0)
+                {
+                    foreach (var item in entity.RemovedPurchasesBillDetailList)
+                    {
+                        var product = await _unitOfWork.ProductDAL.GetByIdAsync(item.ProductId);
+                        product.ActualQuantity = entity.IsReturned == true ? product.ActualQuantity + item.Quantity : product.ActualQuantity - item.Quantity;
+                        await _unitOfWork.ProductDAL.UpdateAsync(product);
+                    }
+                }
+                await _unitOfWork.CompleteAsync();
+            }
+            #endregion
             return result;
         }
 
@@ -479,14 +501,14 @@ namespace DataService.Setup.Handlers
             {
                 accountStatement.Debit = entity.Paid;
                 accountStatement.Credit = entity.TotalAmount;
-                accountStatement.Notes = "فاتورة مرتجعات المشتريات" + "(" + entity.Number + ")";
+                accountStatement.Notes = "فاتورة مرتجعات المشتريات" + "(" + entity.Number + ")" + " " + entity.Notes;
 
             }
             else
             {
                 accountStatement.Debit = entity.TotalAmount;
                 accountStatement.Credit = entity.Paid;
-                accountStatement.Notes = "فاتورة مشتريات" + "(" + entity.Number + ")";
+                accountStatement.Notes = "فاتورة مشتريات" + "(" + entity.Number + ")" + " " + entity.Notes;
 
             }
 
@@ -511,14 +533,14 @@ namespace DataService.Setup.Handlers
             {
                 treasury.InComing = entity.Paid;
                 treasury.OutComing = 0;
-                treasury.Notes = "فاتورة مرتجعات المشتريات" + "(" + entity.Number + ")";
+                treasury.Notes = "فاتورة مرتجعات المشتريات" + "(" + entity.Number + ")" + " " + entity.Notes;
 
             }
             else
             {
                 treasury.InComing = 0;
                 treasury.OutComing = entity.Paid;
-                treasury.Notes = "فاتورة مشتريات" + "(" + entity.Number + ")";
+                treasury.Notes = "فاتورة مشتريات" + "(" + entity.Number + ")" + " " + entity.Notes;
 
             }
 

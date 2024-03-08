@@ -74,6 +74,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	paymentMethodList: LabelValuePair[];
 	disableButton: boolean = false;
 	instructions: string;
+	showProductWithoutPrice: boolean = false;
 	constructor(
 		private salesBillService: SalesBillService,
 		private productService: ProductService,
@@ -298,6 +299,10 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	public deleteRow(event: any, item: SalesBillDetailsDTO) {
 		this.salesBillHeaderDTO.salesBillDetailList = this.salesBillHeaderDTO.salesBillDetailList.filter(x => x.index != item.index);
 		this.updateTotal();
+		if (this.salesBillHeaderDTO.id) {
+			if (!this.salesBillHeaderDTO.removedSalesBillDetailList) this.salesBillHeaderDTO.removedSalesBillDetailList = [];
+			this.salesBillHeaderDTO.removedSalesBillDetailList.push(item);
+		}
 	}
 
 	addNewRow() {

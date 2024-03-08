@@ -279,6 +279,10 @@ export class PurchasesBillFormComponent {
 	public deleteRow(event: any, item: PurchasesBillDetailsDTO) {
 		this.purchasesBillHeaderDTO.purchasesBillDetailList = this.purchasesBillHeaderDTO.purchasesBillDetailList.filter(x => x.index != item.index);
 		this.updateTotal();
+		if (this.purchasesBillHeaderDTO.id) {
+			if (!this.purchasesBillHeaderDTO.removedPurchasesBillDetailList) this.purchasesBillHeaderDTO.removedPurchasesBillDetailList = [];
+			this.purchasesBillHeaderDTO.removedPurchasesBillDetailList.push(item);
+		}
 	}
 
 	addNewRow() {

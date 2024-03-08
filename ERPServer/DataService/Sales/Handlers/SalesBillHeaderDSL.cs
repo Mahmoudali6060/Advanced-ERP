@@ -192,12 +192,14 @@ namespace DataService.Sales.Handlers
 
             if (entity.IsTemp == false)
             {
+
+
                 #region Update Product 
 
                 foreach (var item in tempSalesBillDetailList)
                 {
                     var exsitedSalesBillDetails = exsitedSalesBillDetailList.SingleOrDefault(x => x.Id == item.Id && x.ProductId == item.ProductId);
-                    decimal quantity = exsitedSalesBillDetails != null ? exsitedSalesBillDetails.Quantity : item.Quantity;
+                    decimal quantity = exsitedSalesBillDetails != null ? item.Quantity - exsitedSalesBillDetails.Quantity : item.Quantity;
                     var product = await _unitOfWork.ProductDAL.GetByIdAsync(item.ProductId);
                     product.ActualQuantity = entity.IsReturned == true ? product.ActualQuantity + quantity : product.ActualQuantity - quantity;
                     product.SellingPrice = item.Price;
@@ -257,11 +259,13 @@ namespace DataService.Sales.Handlers
                     {
                         accountStatement.Debit = entity.TotalAmount;
                         accountStatement.Credit = entity.Paid;
+                        accountStatement.Notes = "فاتورة مرتجعات المبيعات" + "(" + entity.Number + ")" + " " + entity.Notes;
                     }
                     else
                     {
                         accountStatement.Debit = entity.Paid;
                         accountStatement.Credit = entity.TotalAmount;
+                        accountStatement.Notes = "فاتورة المبيعات" + "(" + entity.Number + ")" + " " + entity.Notes;
                     }
                     await _unitOfWork.AccountStatementDAL.UpdateAsync(accountStatement);
                 }
@@ -278,19 +282,21 @@ namespace DataService.Sales.Handlers
 
                 if (entity.TreasuryId.HasValue)
                 {
-                    var accountStatement = await _unitOfWork.TreasuryDAL.GetByIdAsync(entity.TreasuryId.Value);
-                    accountStatement.PaymentMethodId = entity.PaymentMethodId;
-                    accountStatement.RefNo = entity.RefNo;
-                    accountStatement.Date = DateTime.Parse(entity.Date);
+                    var treasury = await _unitOfWork.TreasuryDAL.GetByIdAsync(entity.TreasuryId.Value);
+                    treasury.PaymentMethodId = entity.PaymentMethodId;
+                    treasury.RefNo = entity.RefNo;
+                    treasury.Date = DateTime.Parse(entity.Date);
                     if (entity.IsReturned)
                     {
-                        accountStatement.OutComing = entity.Paid;
+                        treasury.OutComing = entity.Paid;
+                        treasury.Notes = "فاتورة مرتجعات المبيعات" + "(" + entity.Number + ")" + " " + entity.Notes;
                     }
                     else
                     {
-                        accountStatement.InComing = entity.Paid;
+                        treasury.InComing = entity.Paid;
+                        treasury.Notes = "فاتورة مبيعات" + "(" + entity.Number + ")" + " " + entity.Notes;
                     }
-                    await _unitOfWork.TreasuryDAL.UpdateAsync(accountStatement);
+                    await _unitOfWork.TreasuryDAL.UpdateAsync(treasury);
                 }
                 else
                 {
@@ -320,6 +326,21 @@ namespace DataService.Sales.Handlers
             }
             #endregion
 
+            #region Update Removed Products 
+            if (!entity.IsTemp)
+            {
+                if (entity.RemovedSalesBillDetailList != null && entity.RemovedSalesBillDetailList.Count() > 0)
+                {
+                    foreach (var item in entity.RemovedSalesBillDetailList)
+                    {
+                        var product = await _unitOfWork.ProductDAL.GetByIdAsync(item.ProductId);
+                        product.ActualQuantity = entity.IsReturned == true ? product.ActualQuantity - item.Quantity : product.ActualQuantity + item.Quantity;
+                        await _unitOfWork.ProductDAL.UpdateAsync(product);
+                    }
+                }
+                await _unitOfWork.CompleteAsync();
+            }
+            #endregion
             return result;
         }
 
@@ -477,16 +498,13 @@ namespace DataService.Sales.Handlers
             {
                 accountStatement.Debit = entity.TotalAmount;
                 accountStatement.Credit = entity.Paid;
-                accountStatement.Notes = "فاتورة مرتجعات المبيعات" + "(" + entity.Number + ")";
-
-
+                accountStatement.Notes = "فاتورة مرتجعات المبيعات" + "(" + entity.Number + ")" + " " + entity.Notes;
             }
             else
             {
                 accountStatement.Debit = entity.Paid;
                 accountStatement.Credit = entity.TotalAmount;
-                accountStatement.Notes = "فاتورة مبيعات" + "(" + entity.Number + ")";
-
+                accountStatement.Notes = "فاتورة مبيعات" + "(" + entity.Number + ")" + " " + entity.Notes;
             }
 
             return accountStatement;
@@ -511,15 +529,14 @@ namespace DataService.Sales.Handlers
             {
                 accountStatement.InComing = 0;
                 accountStatement.OutComing = entity.Paid;
-                accountStatement.Notes = "فاتورة مرتجعات المبيعات" + "(" + entity.Number + ")";
+                accountStatement.Notes = "فاتورة مرتجعات المبيعات" + "(" + entity.Number + ")" + " " + entity.Notes;
 
             }
             else
             {
                 accountStatement.InComing = entity.Paid;
                 accountStatement.OutComing = 0;
-                accountStatement.Notes = "فاتورة مبيعات" + "(" + entity.Number + ")";
-
+                accountStatement.Notes = "فاتورة مبيعات" + "(" + entity.Number + ")" + " " + entity.Notes;
             }
 
             return accountStatement;
