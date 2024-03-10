@@ -14,7 +14,7 @@ namespace Shared.DataAccessLayer.Contracts
         IQueryable<TEntity> GetAllLite();
         TEntity GetById(long id);
         long Add(TEntity entity);
-        long Update(TEntity entity);
+        long Update(TEntity entity, bool? isTracked = true);
         bool Delete(TEntity entity);
 
     }

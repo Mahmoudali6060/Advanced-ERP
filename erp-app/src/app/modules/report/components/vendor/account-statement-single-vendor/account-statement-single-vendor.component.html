@@ -93,8 +93,17 @@
                         <td>{{item.debit}}</td>
                         <td>{{item.credit}}</td>
                         <td>{{item.refNo}}</td>
-                        <td>{{item.notes}}</td>
+                      
+                        <td>
+                            <a *ngIf="item.billId && item.billType==billType.Sales"
+                                [routerLink]="['/sales-bill/sales-bill-form-view/'+item.billId]">
+                                {{item.notes}}</a>
+                            <a *ngIf="item.billId && item.billType==billType.Purchases"
+                                [routerLink]="['/purchases-bill/purchases-bill-form-view/'+item.billId]">
+                                {{item.notes}}</a>
+                            <span *ngIf="!item.billId"> {{item.notes}}</span>
 
+                        </td>
                     </tr>
                 </tbody>
 

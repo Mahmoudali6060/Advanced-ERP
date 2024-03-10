@@ -1,5 +1,6 @@
 ﻿using Data.Contexts;
 using Data.Entities.Shared;
+using IdentityServer4.Models;
 using Microsoft.EntityFrameworkCore;
 using Shared.DataAccessLayer.Contracts;
 using System;
@@ -62,11 +63,7 @@ namespace DataAccess.Shared.Handlers
             return entity.Id;
         }
 
-        public async Task<long> UpdateAsync(TEntity entity)
-        {
-            _dbContext.Set<TEntity>().Update(entity);
-            return entity.Id;
-        }
+
 
         public async Task<bool> DeleteAsync(TEntity entity)
         {
@@ -98,11 +95,23 @@ namespace DataAccess.Shared.Handlers
             return entity.Id;
         }
 
-        public long Update(TEntity entity)
+        public async Task<long> UpdateAsync(TEntity entity)
         {
             _dbContext.Set<TEntity>().Update(entity);
             return entity.Id;
         }
+
+        public long Update(TEntity entity, bool? isTracked)
+        {
+            if (isTracked == false)
+            {
+                _dbContext.ChangeTracker.Clear();
+            }
+            _dbContext.Set<TEntity>().Update(entity);
+            return entity.Id;
+        }
+
+
 
         public bool Delete(TEntity entity)
         {
@@ -111,7 +120,10 @@ namespace DataAccess.Shared.Handlers
             return true;
         }
 
-    
+
+
+
+
     }
 
 }

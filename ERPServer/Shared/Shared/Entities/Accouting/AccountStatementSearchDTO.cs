@@ -14,5 +14,6 @@ namespace Shared.Entities.Accouting
         public string BankAccountNo { get; set; }
         public string CheckNo { get; set; }
         public string Notes { get; set; }
+        public long? RepresentiveId { get; set; }
     }
 }

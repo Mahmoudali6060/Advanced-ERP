@@ -1,25 +1,37 @@
 <div class="row">
     <div class="col-md-12">
         <!-- DATA TABLE -->
-        <h3 class="title-5 m-b-35">{{'Reports.AccountStatementForSingleClient' |translate}}</h3>
-
+        <h3 class="title-5 m-b-35">{{'Reports.AccountStatementRepresentive' |translate}}</h3>
         <!--Filters-->
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">{{'General.Filters'|translate}}</div>
                     <div class="card-body">
-
                         <div class="row">
                             <div class="col-lg-3">
                                 <label class="form-label" for="clientId">{{'General.Client'|translate}}</label>
                                 <ng-select name="clientId" id="clientId" class="ng-select-custom"
-                                    [(ngModel)]="selectedClientId" (change)="onClientChange()">
+                                    [(ngModel)]="selectedClientId">
                                     <ng-option value=" null" disabled>{{'General.SelectClient'|translate}}</ng-option>
                                     <ng-option *ngFor="let item of clientList" [value]="item.id">
                                         {{item.fullName}}
                                     </ng-option>
                                 </ng-select>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="form-label"
+                                    for="representiveId">{{'General.Representive'|translate}}</label>
+                                <div class="input-group">
+                                    <ng-select name="representiveId" id="representiveId" class="ng-select-custom"
+                                        [(ngModel)]="selectedRepresentiveId" (change)="onRepresentiveChange()">
+                                        <ng-option value=" null"
+                                            disabled>{{'General.SelectRepresentive'|translate}}</ng-option>
+                                        <ng-option *ngFor="let item of representiveList" [value]="item.id">
+                                            {{item.fullName}}
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
                             </div>
                             <div class="col-lg-3">
                                 <button (click)="getAllByClientId()"
@@ -33,9 +45,7 @@
                                     {{'General.Print' |translate}}
                                 </button>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -47,25 +57,19 @@
                 <div class="col-lg-12">
                     <table class="table">
                         <tr>
-                            <td class="text-right">العميل</td>
-                            <td class="text-center text-bold"> {{selectedClient.fullName}}</td>
-                            <td class="text-left">Client</td>
-                        </tr>
-                        <tr>
-                            <td class="text-right">الرصيد</td>
-                            <td class="text-center text-bold">{{currentBalance}}</td>
-                            <td class="text-left">Balance</td>
+                            <td class="text-right">المندوب</td>
+                            <td class="text-center text-bold"> {{selectedRepresentive.fullName}}</td>
+                            <td class="text-left">Representive</td>
                         </tr>
                     </table>
                 </div>
-
-
             </div>
             <br>
             <table class="table-report table table-data2">
                 <thead class="table-header-bc">
                     <tr>
                         <th>#</th>
+                        <th class="table-header-fc">{{'General.BeneficiaryName' |translate}}</th>
                         <th class="table-header-fc">{{'General.Date' |translate}}</th>
                         <th class="table-header-fc">{{'General.PaymentMethod' |translate}}</th>
                         <th class="table-header-fc">{{'General.Debit' |translate}}</th>
@@ -77,6 +81,7 @@
                 <tbody>
                     <tr class="tr-shadow" *ngFor="let item of clientVendorBalanceList;let i=index;">
                         <td>{{i+1}}</td>
+                        <td>{{item.beneficiaryName}}</td>
                         <td>{{item.date}}</td>
                         <td>
                             <span *ngIf="item.paymentMethodId">
@@ -94,14 +99,10 @@
                                 [routerLink]="['/purchases-bill/purchases-bill-form-view/'+item.billId]">
                                 {{item.notes}}</a>
                             <span *ngIf="!item.billId"> {{item.notes}}</span>
-
                         </td>
-
                     </tr>
                 </tbody>
-
             </table>
-
         </div>
         <!-- END DATA TABLE -->
     </div>

@@ -169,6 +169,16 @@ namespace DataService.Setup.Handlers
 
             _unitOfWork.Complete();
 
+            #region Set BillId to AccountStatment
+            if (purchasesBillHeader.AccountStatementId.HasValue)
+            {
+                var accountStatement = _unitOfWork.AccountStatementDAL.GetById(purchasesBillHeader.AccountStatementId.Value);
+                accountStatement.BillId = purchasesBillHeader.Id;
+                _unitOfWork.AccountStatementDAL.Update(accountStatement, false);
+                _unitOfWork.Complete();
+            }
+            #endregion
+
             return purchasesBillHeader.Id;
         }
 
@@ -250,7 +260,7 @@ namespace DataService.Setup.Handlers
                     accountStatement.PaymentMethodId = entity.PaymentMethodId;
                     accountStatement.RefNo = entity.RefNo;
                     accountStatement.Date = DateTime.Parse(entity.Date);
-
+                    accountStatement.RepresentiveId = entity.RepresentiveId;
 
                     if (entity.IsReturned)
                     {
@@ -391,6 +401,7 @@ namespace DataService.Setup.Handlers
                     {
                         accountStatement.Debit += entity.Paid;
                         accountStatement.Credit += entity.TotalAmount;
+
                         //accountStatement.Notes = "فاتورة مرتجعات";
                     }
                     else
@@ -493,8 +504,9 @@ namespace DataService.Setup.Handlers
                 //TransactionTypeId = TransactionTypeEnum.Incoming,
                 PaymentMethodId = entity.PaymentMethodId,
                 RefNo = entity.RefNo,
-                IsBilled = true
-
+                IsBilled = true,
+                RepresentiveId = entity.RepresentiveId,
+                BillType = BillTypeEnum.Purchases
             };
 
             if (entity.IsReturned)

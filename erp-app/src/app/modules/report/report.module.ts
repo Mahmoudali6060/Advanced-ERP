@@ -16,6 +16,7 @@ import { ProductService } from '../setup/services/product.service';
 import { ProductListLowQuantityReportComponent } from './components/product/product-list-low-quantity-report/product-list-low-quantity-report.component';
 import { AccountStatementService } from '../accounting/services/account-statement.service';
 import { CategoryService } from '../setup/services/category.service';
+import { AccountStatementRepresentiveComponent } from './components/representive/account-statement-representive/account-statement-representive.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { CategoryService } from '../setup/services/category.service';
     AccountStatementSingleVendorComponent,
     ProductListReportComponent,
     ProductListMinusReportComponent,
-    ProductListLowQuantityReportComponent
+    ProductListLowQuantityReportComponent,
+    AccountStatementRepresentiveComponent
   ],
   providers: [
     ReportService,

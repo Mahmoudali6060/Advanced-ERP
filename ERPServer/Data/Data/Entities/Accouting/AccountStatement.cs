@@ -25,6 +25,9 @@ namespace Data.Entities.Accouting
         public bool IsCancel { get; set; }
         public bool IsBilled { get; set; }
         public long? TreasuryId { get; set; }
+        public long? BillId { get; set; }
+        public long? RepresentiveId { get; set; }
+        public BillTypeEnum? BillType { get; set; }
         public virtual Treasury Treasury { get; set; }
         public virtual ClientVendor ClientVendor { get; set; }
 

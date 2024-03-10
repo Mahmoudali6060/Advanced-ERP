@@ -373,5 +373,7 @@ i:hover {
 }
 
 .section__content--p30{
-    padding: 0 5px !important;
+    padding: 0 15px !important;
+    margin-left: 0px !important;
+    /* margin-left: -15px !important; */
 }

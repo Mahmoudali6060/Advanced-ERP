@@ -26,21 +26,24 @@ import { AccountStatementSearchDTO } from 'src/app/modules/accounting/models/acc
 import { BillTypeEnum } from 'src/app/shared/enums/bill-type.enum';
 
 @Component({
-	selector: 'app-account-statement-single-client',
-	templateUrl: './account-statement-single-client.component.html',
-	styleUrls: ['./account-statement-single-client.component.css']
+	selector: 'app-account-statement-representive',
+	templateUrl: './account-statement-representive.component.html',
+	styleUrls: ['./account-statement-representive.component.css']
 
 
 })
-export class AccountStatementSingleClientComponent {
+export class AccountStatementRepresentiveComponent {
 	clientList: Array<ClientVendorDTO>;
 	selectedClient: ClientVendorDTO = new ClientVendorDTO();
+	selectedRepresentive: RepresentiveDTO = new RepresentiveDTO();
 	selectedClientId: number;
-	selectedClientRepresentiveId: number;
+	selectedRepresentiveId: number;
 	clientVendorBalanceList: Array<AccountStatementDTO>;
 	currentBalance: number = 0;
 	paymentMethodEnum = PaymentMethodEnum
 	billType = BillTypeEnum;
+	representiveList: Array<RepresentiveDTO> = new Array<RepresentiveDTO>();
+
 	constructor(private clientVendorService: ClientVendorService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
@@ -54,17 +57,16 @@ export class AccountStatementSingleClientComponent {
 
 	ngOnInit() {
 		this.getAllClients();
+		this.getAllRepresentives();
 	}
 
-	onClientChange() {
-		if (this.selectedClientId) {
-			let selectedClient: any = this.clientList.find(c => c.id == this.selectedClientId);
-			if (selectedClient) {
-				this.selectedClient = selectedClient;
-				this.currentBalance = this.selectedClient.debit - this.selectedClient.credit;
+	onRepresentiveChange() {
+		if (this.selectedRepresentiveId) {
+			let selectedRepresentive: any = this.representiveList.find(c => c.id == this.selectedRepresentiveId);
+			if (selectedRepresentive) {
+				this.selectedRepresentive = selectedRepresentive;
 			}
 		}
-
 	}
 
 
@@ -74,20 +76,26 @@ export class AccountStatementSingleClientComponent {
 		})
 	}
 
+	getAllRepresentives() {
+		this.representiveService.getAllLite().subscribe((res: any) => {
+			this.representiveList = res.list;
+		})
+	}
+
 
 	getAllByClientId(isPrint?: boolean) {
 		// if (this.selectedClientId) {
-			let searchCriteria: AccountStatementSearchDTO = new AccountStatementSearchDTO();
-			searchCriteria.pageSize = 1000000;
-			searchCriteria.clientVendorId = this.selectedClientId;
-			searchCriteria.representiveId = this.selectedClientRepresentiveId;
-			this.accountStatementService.getAll(searchCriteria).subscribe((res: any) => {
-				this.clientVendorBalanceList = res.list;
-				if (isPrint)
-					setTimeout(() => {
-						this.print();
-					}, 300);
-			});
+		let searchCriteria: AccountStatementSearchDTO = new AccountStatementSearchDTO();
+		searchCriteria.pageSize = 1000000;
+		searchCriteria.clientVendorId = this.selectedClientId;
+		searchCriteria.representiveId = this.selectedRepresentiveId;
+		this.accountStatementService.getAll(searchCriteria).subscribe((res: any) => {
+			this.clientVendorBalanceList = res.list;
+			if (isPrint)
+				setTimeout(() => {
+					this.print();
+				}, 300);
+		});
 		// }
 		// else {
 		// 	this.selectedClient = new ClientVendorDTO();

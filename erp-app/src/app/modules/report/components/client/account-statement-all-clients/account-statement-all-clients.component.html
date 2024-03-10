@@ -91,7 +91,7 @@
         <!--End Filters-->
 
         <div class="table-responsive table-responsive-data2" id="accountStatementAllClients">
-            <table class="table-report table table-data2" >
+            <table class="table-report table table-data2">
                 <thead class="table-header-bc">
                     <tr>
                         <th class="table-header-fc">{{'General.Code' |translate}}</th>
@@ -110,12 +110,14 @@
                         <td>{{item.debit-item.credit}}</td>
                         <td>{{item.phoneNumber1}} | {{item.phoneNumber2}}</td>
                         <td>{{item.address}}</td>
-                        <td>{{item.notes}}</td>
+                        <td>
+                            <span> {{item.notes}}</span>
+                        </td>
                     </tr>
                 </tbody>
 
             </table>
-         
+
         </div>
         <!-- END DATA TABLE -->
     </div>

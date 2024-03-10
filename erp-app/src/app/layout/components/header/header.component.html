@@ -177,6 +177,14 @@
                                     <i class="fa fa-file"></i><span
                                         translate>Reports.AccountStatementForSingleVendor</span></a>
                             </li>
+                            <li *IfPrivilege="helperService.privileges.Reports.AccountStatementRepresentive.View">
+                                <a
+                                    (click)="gotToURL('/report/account-statement-representive','Reports.AccountStatementRepresentive')">
+                                    <i class="fa fa-file"></i><span
+                                        translate>Reports.AccountStatementRepresentive</span></a>
+                            </li>
+
+                            
                             <li *IfPrivilege="helperService.privileges.Setup.Products.View ">
                                 <a (click)="gotToURL('/report/product-list-report','Reports.ProductListReport')">
                                     <i class="fa fa-file"></i><span translate>Reports.ProductListReport</span></a>

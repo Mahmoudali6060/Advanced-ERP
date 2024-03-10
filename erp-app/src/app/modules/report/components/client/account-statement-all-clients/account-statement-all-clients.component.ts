@@ -14,6 +14,7 @@ import { ClientVendorDTO, ClientVendorTypeEnum } from 'src/app/modules/setup/mod
 import { ClientVendorSearchCriteriaDTO } from 'src/app/modules/setup/models/client-vendor-search-criteria-dto';
 import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 import { ReportService } from '../../../services/report.service';
+import { BillTypeEnum } from 'src/app/shared/enums/bill-type.enum';
 
 @Component({
 	selector: 'app-account-statement-all-clients',
@@ -36,7 +37,6 @@ export class AccountStatementAllClientsComponent {
 	cityList: Array<CityModel> = new Array<CityModel>();
 	statusList: Array<string> | Boolean
 	statusDDL: any;
-
 	constructor(private clientVendorService: ClientVendorService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,

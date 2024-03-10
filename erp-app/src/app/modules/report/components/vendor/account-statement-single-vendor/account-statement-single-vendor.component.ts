@@ -22,6 +22,7 @@ import { AccountTypeEnum } from 'src/app/shared/enums/account-type.enum';
 import { TreasurySearchDTO } from 'src/app/modules/accounting/models/treasury-search.dto';
 import { AccountStatementService } from 'src/app/modules/accounting/services/account-statement.service';
 import { AccountStatementDTO } from 'src/app/modules/accounting/models/account-statement-dto';
+import { BillTypeEnum } from 'src/app/shared/enums/bill-type.enum';
 
 @Component({
 	selector: 'app-account-statement-single-vendor',
@@ -37,6 +38,7 @@ export class AccountStatementSingleVendorComponent {
 	clientVendorBalanceList: Array<AccountStatementDTO>;
 	currentBalance: number = 0;
 	paymentMethodEnum = PaymentMethodEnum;
+	billType = BillTypeEnum;
 
 	constructor(private clientVendorService: ClientVendorService,
 		private confirmationDialogService: DialogService,

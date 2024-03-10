@@ -164,6 +164,10 @@ export module Privileges {
             View = 70,
         }
 
+        export enum AccountStatementRepresentive { // id = 110
+            View = 111,
+        }
+
         export enum ProductLowQuantity { // id = 71
             View = 72,
         }

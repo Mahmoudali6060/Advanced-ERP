@@ -1,4 +1,5 @@
 import { AccountTypeEnum } from "src/app/shared/enums/account-type.enum";
+import { BillTypeEnum } from "src/app/shared/enums/bill-type.enum";
 import { PaymentMethodEnum } from "src/app/shared/enums/payment-method.enum";
 import { TransactionTypeEnum } from "src/app/shared/enums/transaction-type.enum";
 import { BaseDTO } from "src/app/shared/models/base-dto.model";
@@ -16,4 +17,6 @@ export class AccountStatementDTO extends BaseDTO {
     refNo: string;
     notes: string;
     isBilled: boolean;
+    billId: number;
+    billType: BillTypeEnum;
 }

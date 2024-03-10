@@ -847,6 +847,23 @@ export const PrivilegeDATA = [
         ]
       },
       {
+        id: SideMenuPageEnum.AccountStatementRepresentive,
+        name: 'AccountStatementRepresentive',
+        checked: false,
+        categoryId: SideMenuMainEnum.Reports,
+        level: SideMenuLevelEnum.Page,
+        children: [
+          {
+            id: Privileges.Reports.AccountStatementRepresentive.View,
+            name: 'View',
+            checked: false,
+            categoryId: SideMenuMainEnum.Reports,
+            level: SideMenuLevelEnum.Action,
+            children: []
+          }
+        ]
+      },
+      {
         id: SideMenuPageEnum.ProductMinusQuantity,
         name: 'ProductMinusQuantity',
         checked: false,

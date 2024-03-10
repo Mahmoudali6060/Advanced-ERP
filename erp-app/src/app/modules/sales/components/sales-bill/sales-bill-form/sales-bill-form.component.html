@@ -627,10 +627,9 @@
 
                 <tr>
                     <td class="text-right">الرصيد الحالي</td>
-                    <td class="text-center text-bold">{{previousBalance+ salesBillHeaderDTO.remaining}}
-                        <!-- <span *ngIf="previousBalance!=0">
-                            {{((previousBalance-salesBillHeaderDTO.remaining)>0?'General.Debit':'General.Credit')
-                            |translate}}</span> -->
+                    <td class="text-center text-bold">
+                      <span *ngIf="!salesBillHeaderDTO.isReturned">{{previousBalance+ salesBillHeaderDTO.remaining}}</span>  
+                      <span *ngIf="salesBillHeaderDTO.isReturned">{{previousBalance- salesBillHeaderDTO.remaining}}</span>  
                     </td>
                     <td class="text-left">Current Balance</td>
                 </tr>

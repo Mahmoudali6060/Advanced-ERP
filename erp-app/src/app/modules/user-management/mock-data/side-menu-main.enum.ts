@@ -30,6 +30,7 @@ export enum SideMenuPageEnum {
     AccountStatementSingleClient = 65,
     AccountStatementAllVendors = 67,
     AccountStatementSingleVendor = 69,
+    AccountStatementRepresentive = 80,
     ProductLowQuantity = 71,
     ProductMinusQuantity = 73
 }

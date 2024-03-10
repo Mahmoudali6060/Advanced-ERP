@@ -188,9 +188,10 @@ namespace DataService.Accounting.Handlers
             {
                 AccountStatementList = AccountStatementList.Where(x => x.ClientVendorId == searchCriteriaDTO.ClientVendorId);
             }
-
-
-
+            if (searchCriteriaDTO.RepresentiveId.HasValue)
+            {
+                AccountStatementList = AccountStatementList.Where(x => x.RepresentiveId == searchCriteriaDTO.RepresentiveId);
+            }
             if (searchCriteriaDTO.PaymentMethodId.HasValue)
             {
                 AccountStatementList = AccountStatementList.Where(x => x.PaymentMethodId == searchCriteriaDTO.PaymentMethodId);
@@ -216,7 +217,7 @@ namespace DataService.Accounting.Handlers
             return code.ToString();
 
         }
-      
+
         #endregion
 
     }

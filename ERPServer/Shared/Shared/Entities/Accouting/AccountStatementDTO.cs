@@ -16,6 +16,9 @@ namespace Shared.Entities.Accouting
         public string Notes { get; set; }
         public bool IsCancel { get; set; }
         public bool IsBilled { get; set; }
+        public long? BillId { get; set; }
+        public long? RepresentiveId { get; set; }
+        public BillTypeEnum? BillType { get; set; }
 
     }
 }

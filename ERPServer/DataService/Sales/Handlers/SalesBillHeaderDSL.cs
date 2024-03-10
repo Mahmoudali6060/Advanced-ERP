@@ -19,6 +19,7 @@ using Data.Entities.Setup;
 using Shared.Enums;
 using System.Diagnostics;
 using Data.Contexts;
+using Data.Entities.Purchases;
 
 namespace DataService.Sales.Handlers
 {
@@ -166,7 +167,17 @@ namespace DataService.Sales.Handlers
             }
             #endregion
 
-            await _unitOfWork.CompleteAsync();
+            _unitOfWork.Complete();
+
+            #region Set BillId to AccountStatment
+            if (salesBillHeader.AccountStatementId.HasValue)
+            {
+                var accountStatement = _unitOfWork.AccountStatementDAL.GetById(salesBillHeader.AccountStatementId.Value);
+                accountStatement.BillId = salesBillHeader.Id;
+                _unitOfWork.AccountStatementDAL.Update(accountStatement, false);
+                _unitOfWork.Complete();
+            }
+            #endregion
             return salesBillHeader.Id;
         }
 
@@ -255,6 +266,8 @@ namespace DataService.Sales.Handlers
                     accountStatement.PaymentMethodId = entity.PaymentMethodId;
                     accountStatement.RefNo = entity.RefNo;
                     accountStatement.Date = DateTime.Parse(entity.Date);
+                    accountStatement.RepresentiveId = entity.RepresentiveId;
+
                     if (entity.IsReturned)
                     {
                         accountStatement.Debit = entity.TotalAmount;
@@ -491,7 +504,9 @@ namespace DataService.Sales.Handlers
                 //TransactionTypeId = TransactionTypeEnum.Incoming,
                 PaymentMethodId = entity.PaymentMethodId,
                 RefNo = entity.RefNo,
-                IsBilled = true
+                IsBilled = true,
+                RepresentiveId = entity.RepresentiveId,
+                BillType = BillTypeEnum.Sales
             };
 
             if (entity.IsReturned)
@@ -522,7 +537,8 @@ namespace DataService.Sales.Handlers
                 PaymentMethodId = entity.PaymentMethodId,
                 RefNo = entity.RefNo,
                 IsBilled = true,
-                Number = GenerateTreasurySequenceNumber()
+                Number = GenerateTreasurySequenceNumber(),
+
             };
 
             if (entity.IsReturned)

@@ -604,7 +604,8 @@
     "AccountStatementForSingleVendor": "كشف حساب المورد  (مُفَصَّل)",
     "ProductListReport": "جرد المنتجات",
     "MinusProducts": "المنتجات السالبة",
-    "LowQuantityProducts": "المنتجات النواقص"
+    "LowQuantityProducts": "المنتجات النواقص",
+    "AccountStatementRepresentive":"تقرير المناديب"
   },
   "RepresentiveTypeEnum": {
     "Sales": "المبيعات",

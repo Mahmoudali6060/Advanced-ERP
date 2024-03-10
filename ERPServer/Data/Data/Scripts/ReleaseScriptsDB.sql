@@ -68,7 +68,7 @@ INSERT INTO [dbo].[RolePrivileges]
 End
 
 
-Begin  --13_1_2024 Published:True
+Begin  --->>>>13_1_2024 Published:True
 
 ALTER TABLE Treasuries
 ADD Number Nvarchar(500);
@@ -82,12 +82,31 @@ WITH CHECKSUM;
 End
 
 
-Begin  --15_1_2024 Published:False
+Begin  -->>>>15_1_2024 Published:True
 
 ALTER TABLE ClientVendors
 ADD CONSTRAINT UQ_ClientVendor_Name UNIQUE(FullName,TypeId);
 
-
-
 END
+
+
+--->>>>>3_9_2024 Published:False
+
+ALTER TABLE AccountStatements
+ADD BillId BigInt Null
+
+ALTER TABLE AccountStatements
+ADD RepresentiveId BigInt Null
+
+
+ALTER TABLE AccountStatements
+ADD BillType Int Null
+
+
+---Backup Script
+DECLARE @SQLStatement VARCHAR(2000) 
+SET @SQLStatement = 'D:\Programming\Backup_Dabase\ERP_Beta_' + CONVERT(nvarchar(30), GETDATE(), 105) +'.bak' 
+BACKUP DATABASE [ERP_Beta] TO  DISK = @SQLStatement
+
+
 

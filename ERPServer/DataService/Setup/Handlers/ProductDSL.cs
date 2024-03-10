@@ -92,7 +92,7 @@ namespace DataService.Setup.Handlers
         {
             return new ResponseEntityList<ProductDTO>()
             {
-                List = _mapper.Map<IEnumerable<ProductDTO>>(_unitOfWork.ProductDAL.GetAllLiteAsync().Result),
+                List = _mapper.Map<IEnumerable<ProductDTO>>(_unitOfWork.ProductDAL.GetAllLiteAsync().Result.Where(x => x.IsActive == true)),
                 Total = _unitOfWork.ProductDAL.GetAllLiteAsync().Result.Count()
             };
         }
@@ -101,7 +101,7 @@ namespace DataService.Setup.Handlers
         {
             return new ResponseEntityList<ProductDTO>()
             {
-                List = _mapper.Map<IEnumerable<ProductDTO>>(_unitOfWork.ProductDAL.GetAllLiteByCategoryId(categoryId).Result),
+                List = _mapper.Map<IEnumerable<ProductDTO>>(_unitOfWork.ProductDAL.GetAllLiteByCategoryId(categoryId).Result.Where(x => x.IsActive == true)),
                 Total = _unitOfWork.ProductDAL.GetAllLiteAsync().Result.Count()
             };
         }
@@ -184,7 +184,7 @@ namespace DataService.Setup.Handlers
             //        _unitOfWork.ProductTrackingDAL.AddAsync(productTracking);
             //    }
             //}
-     
+
         }
 
         public async Task<bool> UpdateAll(List<ProductDTO> entityList)
