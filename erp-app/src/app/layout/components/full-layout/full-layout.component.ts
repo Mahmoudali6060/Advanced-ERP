@@ -13,16 +13,17 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
 })
 export class FullLayoutComponent implements OnInit {
 
-  constructor(private localStorageService:LocalStorageService,private translate: TranslateService,public helperService: HelperService ) {
+  isSideMenuHidden: boolean = false;
+  constructor(private localStorageService: LocalStorageService, private translate: TranslateService, public helperService: HelperService) {
     let userProfileDTO = this.localStorageService.getItem(LocalStorageItems.userProfile) as UserProfileDTO;
     if (userProfileDTO) {
       this.helperService.useLanguage(userProfileDTO.defaultLanguage);
     }
     else {
-       translate.setDefaultLang('en');
-       translate.currentLang = 'en';
+      translate.setDefaultLang('en');
+      translate.currentLang = 'en';
     }
-   }
+  }
 
   ngOnInit() {
     this.slideToggle();
@@ -123,6 +124,40 @@ export class FullLayoutComponent implements OnInit {
         console.log(error);
       }
     })(jQuery);
+  }
+
+  showSideMenu() {
+    this.isSideMenuHidden = false;
+    let elemenet = document.getElementById("menu-sidebar2");
+    if (elemenet) {
+      elemenet.classList.add('show-side-menu');
+      elemenet.classList.remove('hide-side-menu');
+    }
+
+    let pageContainerElemenet = document.getElementById("page-container2");
+    if (pageContainerElemenet) {
+      pageContainerElemenet.classList.add('min-page-containter');
+      pageContainerElemenet.classList.remove('max-page-containter');
+    }
+
+  }
+
+  hideSideMenu() {
+    this.isSideMenuHidden = true;
+    let elemenet = document.getElementById("menu-sidebar2");
+    if (elemenet) {
+      elemenet.classList.add('hide-side-menu');
+      elemenet.classList.remove('show-side-menu');
+    }
+
+    let pageContainerElemenet = document.getElementById("page-container2");
+    if (pageContainerElemenet) {
+      pageContainerElemenet.classList.add('max-page-containter');
+      pageContainerElemenet.classList.remove('min-page-containter');
+    }
+
+
+
   }
 
 }

@@ -3,8 +3,9 @@
 <app-header></app-header>
 <app-side-menu></app-side-menu>
 
-<div class="page-container2">
-
+<div class="page-container2" id="page-container2">
+  <span class="btn-hide-side-menu">  <i  class="fa fa-times"*ngIf="!isSideMenuHidden" (click)="hideSideMenu()"></i></span>
+    <i class="fa fa-bars" *ngIf="isSideMenuHidden" (click)="showSideMenu()"></i>
     <!-- MAIN CONTENT-->
     <div class="main-content page-container3">
         <div class="section__content section__content--p30">

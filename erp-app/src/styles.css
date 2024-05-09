@@ -367,13 +367,35 @@ i:hover {
 }
 
 
-.text h5
-{
+.text h5 {
     color: white;
 }
 
-.section__content--p30{
+.section__content--p30 {
     padding: 0 15px !important;
     margin-left: 0px !important;
     /* margin-left: -15px !important; */
+}
+
+.hide-side-menu {
+    width: 0px !important;
+}
+
+
+.show-side-menu {
+    width: 310px !important;
+}
+
+.min-page-containter {
+    padding-right: 310px !important;
+}
+
+.max-page-containter {
+    padding-right: 0px !important;
+}
+
+.btn-hide-side-menu {
+    left: 15px;
+    position: relative;
+    z-index: 1000;
 }
