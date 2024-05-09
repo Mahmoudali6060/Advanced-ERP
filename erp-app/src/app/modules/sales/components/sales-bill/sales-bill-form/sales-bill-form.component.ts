@@ -510,7 +510,11 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		let billNumber: any = document.getElementById('billNumber');
 		billNumber.innerHTML = this.salesBillHeaderDTO.number;
 		let div: any = document.getElementById('salesBill');
-		this.reportService.print(this.translate.instant("Reports.SalesBill"), div);
+		let title: string;
+		if (this.salesBillHeaderDTO.isTemp) title = this.translate.instant("Reports.TempSalesBill");
+		else if (this.salesBillHeaderDTO.isReturned) title = this.translate.instant("Reports.ReturnedSalesBill");
+		else title = this.translate.instant("Reports.SalesBill");
+		this.reportService.print(title, div);
 	}
 
 }

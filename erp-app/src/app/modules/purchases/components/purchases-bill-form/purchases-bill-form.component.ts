@@ -433,7 +433,12 @@ export class PurchasesBillFormComponent {
 		let billNumber: any = document.getElementById('billNumber');
 		billNumber.innerHTML = this.purchasesBillHeaderDTO.number;
 		let div: any = document.getElementById('purchasesBill');
-		this.reportService.print(this.translate.instant("Reports.PurchasesBill"), div);
+
+		let title: string;
+		if (this.purchasesBillHeaderDTO.isTemp) title = this.translate.instant("Reports.TempPurchasesBill");
+		else if (this.purchasesBillHeaderDTO.isReturned) title = this.translate.instant("Reports.ReturnedPurchasesBill");
+		else title = this.translate.instant("Reports.PurchasesBill");
+		this.reportService.print(title, div);
 	}
 
 }
