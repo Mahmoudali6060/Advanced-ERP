@@ -14,8 +14,10 @@ import { AccountStatementRepresentiveComponent } from './components/representive
 const routes: Routes = [
   { path: 'account-statement-all-clients', component: AccountStatementAllClientsComponent, canActivate: [AuthGuard], data: { privilegeId: Privileges.Reports.AccountStatementAllClients.View } },
   { path: 'account-statement-single-client', component: AccountStatementSingleClientComponent, canActivate: [AuthGuard], data: { privilegeId: Privileges.Reports.AccountStatementSingleClient.View } },
+  { path: 'account-statement-single-client/:clientId', component: AccountStatementSingleClientComponent, canActivate: [AuthGuard], data: { privilegeId: Privileges.Reports.AccountStatementSingleClient.View } },
   { path: 'account-statement-all-vendors', component: AccountStatementAllVendorsComponent, canActivate: [AuthGuard], data: { privilegeId: Privileges.Reports.AccountStatementAllVendors.View } },
   { path: 'account-statement-single-vendor', component: AccountStatementSingleVendorComponent, canActivate: [AuthGuard], data: { privilegeId: Privileges.Reports.AccountStatementSingleVendor.View } },
+  { path: 'account-statement-single-vendor/:vendorId', component: AccountStatementSingleVendorComponent, canActivate: [AuthGuard], data: { privilegeId: Privileges.Reports.AccountStatementSingleVendor.View } },
   { path: 'account-statement-representive', component: AccountStatementRepresentiveComponent, canActivate: [AuthGuard], data: { privilegeId: Privileges.Reports.AccountStatementRepresentive.View } },
   { path: 'product-list-report', component: ProductListReportComponent, canActivate: [AuthGuard], data: { privilegeId: Privileges.Setup.Products.View } },
   { path: 'product-list-minus-report', component: ProductListMinusReportComponent, canActivate: [AuthGuard], data: { privilegeId: Privileges.Reports.ProductMinusQuantity.View } },

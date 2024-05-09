@@ -24,6 +24,7 @@ import { RepresentiveDTO } from 'src/app/modules/setup/models/representive.dto';
 import { RepresentiveService } from 'src/app/modules/setup/services/representive.service';
 import { AccountStatementSearchDTO } from 'src/app/modules/accounting/models/account-statement-search.dto';
 import { BillTypeEnum } from 'src/app/shared/enums/bill-type.enum';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-account-statement-single-client',
@@ -48,7 +49,9 @@ export class AccountStatementSingleClientComponent {
 		private _configService: ConfigService,
 		private reportService: ReportService,
 		private representiveService: RepresentiveService,
-		private accountStatementService: AccountStatementService) {
+		private accountStatementService: AccountStatementService,
+		private route: ActivatedRoute,
+	) {
 
 	}
 
@@ -71,23 +74,29 @@ export class AccountStatementSingleClientComponent {
 	getAllClients() {
 		this.clientVendorService.getAllLiteByTypeId(ClientVendorTypeEnum.Client).subscribe((res: any) => {
 			this.clientList = res.list;
+			let clientId = this.route.snapshot.paramMap.get('clientId');
+			if (clientId) {
+				this.selectedClientId = parseInt(clientId);
+				this.getAllByClientId(false);
+				this.onClientChange();
+			}
 		})
 	}
 
 
 	getAllByClientId(isPrint?: boolean) {
 		// if (this.selectedClientId) {
-			let searchCriteria: AccountStatementSearchDTO = new AccountStatementSearchDTO();
-			searchCriteria.pageSize = 1000000;
-			searchCriteria.clientVendorId = this.selectedClientId;
-			searchCriteria.representiveId = this.selectedClientRepresentiveId;
-			this.accountStatementService.getAll(searchCriteria).subscribe((res: any) => {
-				this.clientVendorBalanceList = res.list;
-				if (isPrint)
-					setTimeout(() => {
-						this.print();
-					}, 300);
-			});
+		let searchCriteria: AccountStatementSearchDTO = new AccountStatementSearchDTO();
+		searchCriteria.pageSize = 1000000;
+		searchCriteria.clientVendorId = this.selectedClientId;
+		searchCriteria.representiveId = this.selectedClientRepresentiveId;
+		this.accountStatementService.getAll(searchCriteria).subscribe((res: any) => {
+			this.clientVendorBalanceList = res.list;
+			if (isPrint)
+				setTimeout(() => {
+					this.print();
+				}, 300);
+		});
 		// }
 		// else {
 		// 	this.selectedClient = new ClientVendorDTO();

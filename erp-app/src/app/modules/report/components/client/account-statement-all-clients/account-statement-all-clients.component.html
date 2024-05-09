@@ -106,7 +106,9 @@
                 <tbody>
                     <tr class="tr-shadow" *ngFor="let item of clientList">
                         <td>{{item.code}}</td>
-                        <td>{{item.fullName}}</td>
+                        <td>
+                            <a [routerLink]="['/report/account-statement-single-client/'+item.id]"> {{item.fullName}}</a>
+                        </td>
                         <td>{{item.debit-item.credit}}</td>
                         <td>{{item.phoneNumber1}} | {{item.phoneNumber2}}</td>
                         <td>{{item.address}}</td>

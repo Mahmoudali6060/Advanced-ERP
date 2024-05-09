@@ -23,6 +23,7 @@ import { TreasurySearchDTO } from 'src/app/modules/accounting/models/treasury-se
 import { AccountStatementService } from 'src/app/modules/accounting/services/account-statement.service';
 import { AccountStatementDTO } from 'src/app/modules/accounting/models/account-statement-dto';
 import { BillTypeEnum } from 'src/app/shared/enums/bill-type.enum';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-account-statement-single-vendor',
@@ -46,7 +47,9 @@ export class AccountStatementSingleVendorComponent {
 		private translate: TranslateService,
 		private _configService: ConfigService,
 		private reportService: ReportService,
-		private accountStatementService: AccountStatementService) {
+		private accountStatementService: AccountStatementService,
+		private route: ActivatedRoute,
+	) {
 
 	}
 
@@ -71,6 +74,12 @@ export class AccountStatementSingleVendorComponent {
 	getAllVendors() {
 		this.clientVendorService.getAllLiteByTypeId(ClientVendorTypeEnum.Vendor).subscribe((res: any) => {
 			this.vendorList = res.list;
+			let vendorId = this.route.snapshot.paramMap.get('vendorId');
+			if (vendorId) {
+				this.selectedVendorId = parseInt(vendorId);
+				this.getAllByVendorId(false);
+				this.onClientChange();
+			}
 		})
 	}
 
