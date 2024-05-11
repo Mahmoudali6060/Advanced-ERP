@@ -183,6 +183,16 @@ namespace DataService.Accounting.Handlers
                 AccountStatementList = AccountStatementList.Where(x => x.Date.Date == DateTime.Parse(searchCriteriaDTO.Date));
             }
 
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.DateFrom))
+            {
+                AccountStatementList = AccountStatementList.Where(x => x.Date.Date >= DateTime.Parse(searchCriteriaDTO.DateFrom).Date);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.DateTo))
+            {
+                AccountStatementList = AccountStatementList.Where(x => x.Date.Date <= DateTime.Parse(searchCriteriaDTO.DateTo).Date);
+            }
+
 
             if (searchCriteriaDTO.ClientVendorId.HasValue)
             {

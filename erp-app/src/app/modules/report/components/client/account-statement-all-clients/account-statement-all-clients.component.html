@@ -22,6 +22,24 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
+                                        <label class="form-label" for="dateFrom">{{'General.DateFrom'|translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.dateFrom" type="date" id="dateFrom"
+                                            class="form-control" #dateFrom="ngModel" name="dateFrom"
+                                            [value]="searchCriteriaDTO.dateFrom" aria-describedby="helpId">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="dateTo">{{'General.DateTo'|translate}}</label>
+                                        <input [(ngModel)]="searchCriteriaDTO.dateTo" type="date" id="dateTo"
+                                            class="form-control" #dateTo="ngModel" name="dateTo"
+                                            [value]="searchCriteriaDTO.dateTo" aria-describedby="helpId">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
                                         <label class="form-label"
                                             for="form3Example3c">{{'General.Status'|translate}}</label>
                                         <ng-select name="drivers" id="drivers" [(ngModel)]="searchCriteriaDTO.isActive">

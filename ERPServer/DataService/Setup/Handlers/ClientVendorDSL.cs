@@ -115,6 +115,16 @@ namespace DataService.Setup.Handlers
         {
             clientList = clientList.Where(x => x.TypeId == searchCriteriaDTO.TypeId || x.TypeId == ClientVendorTypeEnum.All);
 
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.DateFrom))
+            {
+                clientList = clientList.Where(x => x.AccountStatementList.All(y => y.Date.Date >= DateTime.Parse(searchCriteriaDTO.DateFrom).Date));
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.DateTo))
+            {
+                clientList = clientList.Where(x => x.AccountStatementList.All(y => y.Date.Date <= DateTime.Parse(searchCriteriaDTO.DateTo).Date));
+            }
+
             if (searchCriteriaDTO.IsActive.HasValue)
             {
                 clientList = clientList.Where(x => x.IsActive == searchCriteriaDTO.IsActive);

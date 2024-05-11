@@ -40,6 +40,8 @@ export class AccountStatementSingleVendorComponent {
 	currentBalance: number = 0;
 	paymentMethodEnum = PaymentMethodEnum;
 	billType = BillTypeEnum;
+	searchDateFrom: string | undefined;
+	searchDateTo: string | undefined;
 
 	constructor(private clientVendorService: ClientVendorService,
 		private confirmationDialogService: DialogService,
@@ -89,6 +91,9 @@ export class AccountStatementSingleVendorComponent {
 			searchCriteria.pageSize = 1000000;
 			searchCriteria.accountTypeId = AccountTypeEnum.Vendors;
 			searchCriteria.clientVendorId = this.selectedVendorId;
+			searchCriteria.dateFrom = this.searchDateFrom;
+		searchCriteria.dateTo = this.searchDateTo;
+
 			this.accountStatementService.getAll(searchCriteria).subscribe((res: any) => {
 				this.clientVendorBalanceList = res.list;
 				if (isPrint)

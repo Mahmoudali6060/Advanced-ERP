@@ -5,6 +5,8 @@ import { PagingDTO } from "src/app/shared/models/paging-dto";
 export class AccountStatementSearchDTO extends PagingDTO {
     number: string;
     date: string;
+    dateFrom: string | undefined;
+    dateTo: string | undefined;
     clientVendorId: number | null;
     beneficiaryName: string;
     paymentMethodId: PaymentMethodEnum | null;

@@ -8,6 +8,8 @@ namespace Shared.Entities.Setup
 {
     public class ClientVendorSearchDTO : Paging
     {
+        public string DateFrom { get; set; }
+        public string DateTo { get; set; }
         public bool? IsActive { get; set; }
         public string Code { get; set; }
         public string FullName { get; set; }

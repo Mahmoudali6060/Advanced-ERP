@@ -10,10 +10,10 @@
                     <div class="card-header">{{'General.Filters'|translate}}</div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
 
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <label class="form-label"
                                             for="selectedVendorId">{{'General.Vendor'|translate}}</label>
                                         <ng-select name="selectedVendorId" id="selectedVendorId"
@@ -27,12 +27,29 @@
                                         </ng-select>
                                     </div>
                                     <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label class="form-label" for="dateFrom">{{'General.DateFrom'|translate}}</label>
+                                            <input [(ngModel)]="searchDateFrom" type="date" 
+                                                class="form-control" #dateFrom="ngModel"
+                                                [value]="searchDateFrom" aria-describedby="helpId">
+    
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label class="form-label" for="dateTo">{{'General.DateTo'|translate}}</label>
+                                            <input [(ngModel)]="searchDateTo" type="date" id="dateTo"
+                                                class="form-control" #dateTo="ngModel" name="dateTo"
+                                                [value]="searchDateTo" aria-describedby="helpId">
+    
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
                                         <button (click)="getAllByVendorId()"
                                             class="au-btn au-btn-icon au-btn--blue au-btn--small btn-search mt-4">
                                             <i class="zmdi zmdi-search"></i>{{'General.Search'|translate}}
                                         </button>
-                                    </div>
-                                    <div class="col-lg-3">
+                                    
                                         <button (click)="searchAndPrint()" type="button"
                                             class="au-btn au-btn-icon btn btn-outline-success au-btn--small btn-search mt-4">
                                            {{'General.Print' |translate}}

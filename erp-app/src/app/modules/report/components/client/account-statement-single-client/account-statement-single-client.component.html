@@ -21,17 +21,37 @@
                                     </ng-option>
                                 </ng-select>
                             </div>
+                              <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="dateFrom">{{'General.DateFrom'|translate}}</label>
+                                        <input [(ngModel)]="searchDateFrom" type="date" 
+                                            class="form-control" #dateFrom="ngModel"
+                                            [value]="searchDateFrom" aria-describedby="helpId">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="dateTo">{{'General.DateTo'|translate}}</label>
+                                        <input [(ngModel)]="searchDateTo" type="date" id="dateTo"
+                                            class="form-control" #dateTo="ngModel" name="dateTo"
+                                            [value]="searchDateTo" aria-describedby="helpId">
+
+                                    </div>
+                                </div>
                             <div class="col-lg-3">
+                                <span>
                                 <button (click)="getAllByClientId()"
                                     class="au-btn au-btn-icon au-btn--blue au-btn--small btn-search mt-4">
                                     <i class="zmdi zmdi-search"></i>{{'General.Search'|translate}}
                                 </button>
-                            </div>
-                            <div class="col-lg-3">
+                            </span>
+                            <span>
                                 <button (click)="searchAndPrint()" type="button"
                                     class="au-btn au-btn-icon au-btn--green au-btn--small btn-search mt-4">
                                     {{'General.Print' |translate}}
                                 </button>
+                            </span>
                             </div>
 
                         </div>
