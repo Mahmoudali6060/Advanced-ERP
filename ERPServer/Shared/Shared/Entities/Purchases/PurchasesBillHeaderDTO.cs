@@ -42,7 +42,7 @@ namespace Shared.Entities.Purchases
         public long? ParentId { get; set; }
         public PaymentMethodEnum? PaymentMethodId { get; set; }
         public string RefNo { get; set; }
-
+        public bool ChangeProductPriceFromPurchases { get; set; }
         public virtual List<PurchasesBillDetailDTO> PurchasesBillDetailList { get; set; }
         public virtual List<PurchasesBillDetailDTO> RemovedPurchasesBillDetailList { get; set; }
 

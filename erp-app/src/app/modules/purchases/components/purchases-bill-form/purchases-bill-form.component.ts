@@ -75,6 +75,7 @@ export class PurchasesBillFormComponent {
 	ngOnInit() {
 		this.purchasesBillHeaderDTO.isTemp = this.isTemp;
 		this.purchasesBillHeaderDTO.isReturned = this.isReturned;
+		this.purchasesBillHeaderDTO.paymentMethodId = PaymentMethodEnum.Cash;
 		this.paymentMethodList = this.helperService.enumSelector(PaymentMethodEnum);
 
 
@@ -249,6 +250,8 @@ export class PurchasesBillFormComponent {
 			if (!this.purchasesBillHeaderDTO.discount) this.purchasesBillHeaderDTO.discount = 0;
 
 			this.disableButton = true;
+			this.purchasesBillHeaderDTO.changeProductPriceFromPurchases = this.authService.loggedUserProfile?.companyDTO?.settingDTO?.changeProductPriceFromPurchases;
+
 			if (this.purchasesBillHeaderDTO.id) {
 				this.purchasesBillService.update(this.purchasesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
@@ -324,8 +327,12 @@ export class PurchasesBillFormComponent {
 		if (product) {
 			item.price = overrideOldData ? product.purchasingPrice : item.price;
 			item.lastPurchasingPrice = product.lastPurchasingPrice;
-			item.discount = overrideOldData ? product.purchasingPricePercentage : item.discount;
-
+			if (this.purchasesBillHeaderDTO.isReturned) {
+				item.discount = purchasesBillDetail?.discount ?? 0;
+			}
+			else {
+				item.discount = overrideOldData ? product.purchasingPricePercentage : item.discount;
+			}
 			item.actualQuantity = product.actualQuantity;
 			item.productName = product.name;
 			item.productCode = product.code;

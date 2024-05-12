@@ -166,9 +166,12 @@
     "EditCompanyData": "تعديل بيانات الشركة",
     "Symbol": "الرمز",
     "SalesBillInstructions": "تعليمات فاتورة المبيعات",
+    "ChangeProductPriceFromSales":"تغيير سعر ليستة الأصناف من فواتير المبيعات",
+    "ChangeProductPriceFromPurchases":"تغيير سعر ليستة الأصناف من فواتير المشتريات",
     "PurchasesBillInstructions": "تعليمات فاتورة المشتريات",
     "ChangeListPriceOnly": "تغيير سعر الليستة فقط",
-    "ShowProductWithoutPrice": "عرض المنتجات بدون أسعار"
+    "ShowProductWithoutPrice": "عرض المنتجات بدون أسعار",
+    "AccountStatus": "حالة الحساب"
   },
   "Dashboard": {
     "ClientsCount": "عدد العملاء",
@@ -605,7 +608,7 @@
     "ProductListReport": "جرد المنتجات",
     "MinusProducts": "المنتجات السالبة",
     "LowQuantityProducts": "المنتجات النواقص",
-    "AccountStatementRepresentive":"تقرير المناديب"
+    "AccountStatementRepresentive": "تقرير المناديب"
   },
   "RepresentiveTypeEnum": {
     "Sales": "المبيعات",
@@ -641,5 +644,10 @@
   "TransactionTypeEnum": {
     "Incoming": "وارد",
     "Outcoming": "صادر"
+  },
+  "AccountStatusEnum": {
+    "All": "الكل",
+    "Debit": "دائن(له)",
+    "Credit": "مدين(عليه)"
   }
 }

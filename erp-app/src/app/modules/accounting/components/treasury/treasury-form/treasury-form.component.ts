@@ -55,6 +55,7 @@ export class TreasuryFormComponent {
 		this.paymentMethodList = this.helperService.enumSelector(PaymentMethodEnum);
 		this.transactionTypeList = this.helperService.enumSelector(TransactionTypeEnum);
 		this.treasuryDTO = new TreasuryDTO();
+		this.treasuryDTO.paymentMethodId = PaymentMethodEnum.Cash;
 		this.treasuryDTO.date = this.helperService.conveertDateTimeToString(new Date());
 
 		const id = this.route.snapshot.paramMap.get('id');

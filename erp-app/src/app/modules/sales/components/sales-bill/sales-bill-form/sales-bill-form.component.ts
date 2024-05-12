@@ -97,6 +97,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 
 	ngOnInit() {
 		this.paymentMethodList = this.helperService.enumSelector(PaymentMethodEnum);
+		this.salesBillHeaderDTO.paymentMethodId = PaymentMethodEnum.Cash;
 		this.salesBillHeaderDTO.isTemp = this.isTemp;
 		this.salesBillHeaderDTO.isReturned = this.isReturned;
 
@@ -269,6 +270,8 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			}
 			if (!this.salesBillHeaderDTO.discount) this.salesBillHeaderDTO.discount = 0;
 			this.disableButton = true;
+			this.salesBillHeaderDTO.changeProductPriceFromSales = this.authService.loggedUserProfile?.companyDTO?.settingDTO?.changeProductPriceFromSales;
+
 			if (this.salesBillHeaderDTO.id) {
 				this.salesBillService.update(this.salesBillHeaderDTO).subscribe(res => {
 					this.toasterService.success("success");
@@ -359,12 +362,17 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		}
 
 		let product = this.productList.find(x => x.id == item.productId);
-		let salesBillDetail = this.tempSalesBillDetailList?.find(x => x.productId == item.productId);
+		var salesBillDetail = this.tempSalesBillDetailList?.find(x => x.productId == item.productId);
 
 		if (product) {
 			item.price = overrideOldData ? product.sellingPrice : item.price;
 			item.lastPurchasingPrice = product.lastPurchasingPrice;
-			item.discount = overrideOldData ? product.sellingPricePercentage : item.discount;
+			if (this.salesBillHeaderDTO.isReturned) {
+				item.discount = salesBillDetail?.discount ?? 0;
+			}
+			else {
+				item.discount = overrideOldData ? product.sellingPricePercentage : item.discount;
+			}
 			item.actualQuantity = product.actualQuantity;
 			item.sellingPrice = (product.lastPurchasingPrice - (product.sellingPricePercentage / 100) * product.lastPurchasingPrice);
 			item.productName = product.name;

@@ -126,7 +126,10 @@ namespace DataService.Setup.Handlers
                     var product = _unitOfWork.ProductDAL.GetById(item.ProductId);
 
                     product.ActualQuantity = entity.IsReturned ? product.ActualQuantity - item.Quantity : product.ActualQuantity + item.Quantity;
-                    product.PurchasingPrice = item.Price;
+                    if (entity.ChangeProductPriceFromPurchases == true)
+                    {
+                        product.PurchasingPrice = item.Price;
+                    }
                     product.LastPurchasingPrice = item.PriceAfterDiscount;
                     _unitOfWork.ProductDAL.Update(product);
                 }
@@ -212,7 +215,10 @@ namespace DataService.Setup.Handlers
                     decimal quantity = exsitedPurchasesBillDetails != null ? item.Quantity - exsitedPurchasesBillDetails.Quantity : item.Quantity;
                     var product = await _unitOfWork.ProductDAL.GetByIdAsync(item.ProductId);
                     product.ActualQuantity = entity.IsReturned == true ? product.ActualQuantity - quantity : product.ActualQuantity + quantity;
-                    product.PurchasingPrice = item.Price;
+                    if (entity.ChangeProductPriceFromPurchases == true)
+                    {
+                        product.PurchasingPrice = item.Price;
+                    }
                     product.LastPurchasingPrice = item.PriceAfterDiscount;
                     await _unitOfWork.ProductDAL.UpdateAsync(product);
                 }
@@ -505,6 +511,7 @@ namespace DataService.Setup.Handlers
                 PaymentMethodId = entity.PaymentMethodId,
                 RefNo = entity.RefNo,
                 IsBilled = true,
+                BillId = entity.Id,
                 RepresentiveId = entity.RepresentiveId,
                 BillType = BillTypeEnum.Purchases
             };

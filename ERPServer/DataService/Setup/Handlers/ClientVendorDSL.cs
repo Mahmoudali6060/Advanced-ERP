@@ -120,6 +120,11 @@ namespace DataService.Setup.Handlers
                 clientList = clientList.Where(x => x.AccountStatementList.All(y => y.Date.Date >= DateTime.Parse(searchCriteriaDTO.DateFrom).Date));
             }
 
+            if (searchCriteriaDTO.AccountStatusId != AccountStatusEnum.All)
+            {
+                clientList = clientList.Where(x => (searchCriteriaDTO.AccountStatusId == AccountStatusEnum.Debit && x.Debit > x.Credit) || (searchCriteriaDTO.AccountStatusId == AccountStatusEnum.Credit && x.Debit < x.Credit));
+            }
+
             if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.DateTo))
             {
                 clientList = clientList.Where(x => x.AccountStatementList.All(y => y.Date.Date <= DateTime.Parse(searchCriteriaDTO.DateTo).Date));

@@ -12,6 +12,8 @@ namespace Data.Entities.Setup
         public long CompanyId { get; set; }
         public string SalesBillInstructions { get; set; }
         public string PurchasesBillInstructions { get; set; }
+        public bool ChangeProductPriceFromSales { get; set; }
+        public bool ChangeProductPriceFromPurchases { get; set; }
         public virtual Company Company { get; set; }
 
     }

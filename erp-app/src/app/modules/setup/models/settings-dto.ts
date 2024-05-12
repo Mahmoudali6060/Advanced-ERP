@@ -4,4 +4,7 @@ export class SettingDTO {
     companyId: number;
     salesBillInstructions: string = '';
     purchasesBillInstructions: string = '';
+    changeProductPriceFromSales: boolean;
+    changeProductPriceFromPurchases: boolean;
+
 }

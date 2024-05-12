@@ -604,8 +604,8 @@
 
                 <tr>
                     <td class="text-right">الرصيد الحالي</td>
-                    <span *ngIf="!purchasesBillHeaderDTO.isReturned">{{previousBalance- purchasesBillHeaderDTO.remaining}}</span>  
-                    <span *ngIf="purchasesBillHeaderDTO.isReturned">{{previousBalance+ purchasesBillHeaderDTO.remaining}}</span>  
+                    <td class="text-center text-bold" *ngIf="!purchasesBillHeaderDTO.isReturned">{{previousBalance- purchasesBillHeaderDTO.remaining}}</td>  
+                    <td class="text-center text-bold" *ngIf="purchasesBillHeaderDTO.isReturned">{{previousBalance+ purchasesBillHeaderDTO.remaining}}</td>  
                     <td class="text-left">Current Balance</td>
                 </tr>
             </table>

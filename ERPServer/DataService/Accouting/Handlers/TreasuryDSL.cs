@@ -246,7 +246,7 @@ namespace DataService.Accounting.Handlers
             return new List<AccountStatement>()
             {
                 new AccountStatement(){
-                Date = DateTime.Now.Date,
+                Date =DateTime.Parse(treasuryDTO.Date) ,
                 ClientVendorId = treasuryDTO.ClientVendorId.Value,
                 BeneficiaryName = treasuryDTO.BeneficiaryName,
                 PaymentMethodId = treasuryDTO.PaymentMethodId,

@@ -33,6 +33,7 @@ export class SalesBillHeaderDTO extends AuditDTO {
     refNo: string;
     salesBillDetailList: Array<SalesBillDetailsDTO> = Array<SalesBillDetailsDTO>();
     removedSalesBillDetailList: Array<SalesBillDetailsDTO> = Array<SalesBillDetailsDTO>();
+	changeProductPriceFromSales: boolean;
 
 
 }

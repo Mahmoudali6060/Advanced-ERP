@@ -52,6 +52,18 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
+                                        <label class="form-label"
+                                            for="form3Example3c">{{'General.AccountStatus'|translate}}</label>
+                                        <ng-select  name="accountStatusId" id="accountStatusId"
+                                            [(ngModel)]="searchCriteriaDTO.accountStatusId">
+                                            <ng-option *ngFor="let item of accountStatusList" [value]="item.value">
+                                                {{'AccountStatusEnum.'+item.label |translate}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
                                         <label for="code" class=" form-control-label">{{'General.Code'
                                             |translate}}</label>
                                         <input [(ngModel)]="searchCriteriaDTO.code" type="text" id="code"

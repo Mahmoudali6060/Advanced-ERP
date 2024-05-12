@@ -1,5 +1,6 @@
 import { PagingDTO } from "src/app/shared/models/paging-dto";
 import { ClientVendorTypeEnum } from "./client-vendor.dto";
+import { AccountStatusEnum } from "src/app/shared/enums/account-status.enum";
 
 export class ClientVendorSearchCriteriaDTO extends PagingDTO {
     id: number;
@@ -7,6 +8,7 @@ export class ClientVendorSearchCriteriaDTO extends PagingDTO {
     dateTo: string | undefined;
     code: string;
     isActive: boolean;
+    accountStatusId: AccountStatusEnum;
     fullName: string;
     address: string;
     phone: string;

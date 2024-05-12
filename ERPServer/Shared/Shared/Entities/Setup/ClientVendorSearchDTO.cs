@@ -20,5 +20,8 @@ namespace Shared.Entities.Setup
         public string Notes { get; set; }
         public string IdNumber { get; set; }
         public ClientVendorTypeEnum TypeId { get; set; }
+        public AccountStatusEnum AccountStatusId { get; set; }
+
+        
     }
 }

@@ -15,6 +15,8 @@ import { ClientVendorSearchCriteriaDTO } from 'src/app/modules/setup/models/clie
 import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 import { ReportService } from '../../../services/report.service';
 import { BillTypeEnum } from 'src/app/shared/enums/bill-type.enum';
+import { AccountStatusEnum } from 'src/app/shared/enums/account-status.enum';
+import { LabelValuePair } from 'src/app/shared/enums/label-value-pair';
 
 @Component({
 	selector: 'app-account-statement-all-clients',
@@ -37,6 +39,8 @@ export class AccountStatementAllClientsComponent {
 	cityList: Array<CityModel> = new Array<CityModel>();
 	statusList: Array<string> | Boolean
 	statusDDL: any;
+	accountStatusList: LabelValuePair[];
+
 	constructor(private clientVendorService: ClientVendorService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
@@ -50,6 +54,9 @@ export class AccountStatementAllClientsComponent {
 
 	ngOnInit() {
 		this.searchCriteriaDTO.pageSize = 1000000;//To get All data 
+		this.searchCriteriaDTO.accountStatusId = AccountStatusEnum.All;
+		this.accountStatusList = this.helperService.enumSelector(AccountStatusEnum);
+
 		this.search();
 		this.statusDDL = [
 			{ label: "All", value: '' },
@@ -62,6 +69,7 @@ export class AccountStatementAllClientsComponent {
 	toggleFilter() {
 		this.searchCriteriaDTO = new ClientVendorSearchCriteriaDTO();
 		this.showFilterControls = !this.showFilterControls;
+		this.searchCriteriaDTO.accountStatusId = AccountStatusEnum.All;
 	}
 
 	getAllClients() {
@@ -76,7 +84,8 @@ export class AccountStatementAllClientsComponent {
 	search() {
 		this.getAllClients();
 	}
-	
+
+
 	onPageChange(event: any) {
 		this.searchCriteriaDTO.page = event;
 		this.getAllClients();

@@ -31,4 +31,5 @@ export class PurchasesBillHeaderDTO extends AuditDTO {
     isNewReturned: boolean = false;
     paymentMethodId: PaymentMethodEnum;
     refNo: string;
+	changeProductPriceFromPurchases: boolean;
 }

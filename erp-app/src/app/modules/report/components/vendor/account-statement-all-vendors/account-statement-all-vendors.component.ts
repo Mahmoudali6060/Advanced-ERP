@@ -14,6 +14,8 @@ import { ClientVendorDTO, ClientVendorTypeEnum } from 'src/app/modules/setup/mod
 import { ClientVendorSearchCriteriaDTO } from 'src/app/modules/setup/models/client-vendor-search-criteria-dto';
 import { ClientVendorService } from 'src/app/modules/setup/services/client-vendor.service';
 import { ReportService } from '../../../services/report.service';
+import { LabelValuePair } from 'src/app/shared/enums/label-value-pair';
+import { AccountStatusEnum } from 'src/app/shared/enums/account-status.enum';
 
 @Component({
 	selector: 'app-account-statement-all-vendors',
@@ -31,6 +33,7 @@ export class AccountStatementAllVendorsComponent {
 	total: number;
 	statusList: Array<string> | Boolean
 	statusDDL: any;
+	accountStatusList: LabelValuePair[];
 
 	constructor(private clientVendorService: ClientVendorService,
 		private confirmationDialogService: DialogService,
@@ -45,6 +48,8 @@ export class AccountStatementAllVendorsComponent {
 
 	ngOnInit() {
 		this.searchCriteriaDTO.pageSize = 1000000;//To get All data 
+		this.searchCriteriaDTO.accountStatusId = AccountStatusEnum.All;
+		this.accountStatusList = this.helperService.enumSelector(AccountStatusEnum);
 		this.search();
 		this.statusDDL = [
 			{ label: "All", value: '' },
@@ -57,6 +62,7 @@ export class AccountStatementAllVendorsComponent {
 	toggleFilter() {
 		this.searchCriteriaDTO = new ClientVendorSearchCriteriaDTO();
 		this.showFilterControls = !this.showFilterControls;
+		this.searchCriteriaDTO.accountStatusId = AccountStatusEnum.All;
 	}
 
 	getAllVendors() {

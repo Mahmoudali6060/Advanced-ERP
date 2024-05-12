@@ -128,7 +128,11 @@ namespace DataService.Sales.Handlers
                     var product = await _unitOfWork.ProductDAL.GetByIdAsync(item.ProductId);
                     product.ActualQuantity = entity.IsReturned ? product.ActualQuantity + item.Quantity : product.ActualQuantity - item.Quantity;
                     product.LastSellingPrice = item.PriceAfterDiscount;
-                    product.SellingPrice = item.Price;
+                   
+                    if (entity.ChangeProductPriceFromSales == true)
+                    {
+                        product.SellingPrice = item.Price;
+                    }
                     await _unitOfWork.ProductDAL.UpdateAsync(product);
                 }
             }
@@ -198,6 +202,7 @@ namespace DataService.Sales.Handlers
             }
             await _unitOfWork.SalesBillDetailDAL.AddRange(_mapper.Map<List<SalesBillDetail>>(entity.SalesBillDetailList));
             salesHeader.SalesBillDetailList = null;
+
             var result = await _unitOfWork.SalesBillHeaderDAL.UpdateAsync(salesHeader);
             #endregion
 
@@ -213,7 +218,10 @@ namespace DataService.Sales.Handlers
                     decimal quantity = exsitedSalesBillDetails != null ? item.Quantity - exsitedSalesBillDetails.Quantity : item.Quantity;
                     var product = await _unitOfWork.ProductDAL.GetByIdAsync(item.ProductId);
                     product.ActualQuantity = entity.IsReturned == true ? product.ActualQuantity + quantity : product.ActualQuantity - quantity;
-                    product.SellingPrice = item.Price;
+                    if (entity.ChangeProductPriceFromSales == true)
+                    {
+                        product.SellingPrice = item.Price;
+                    }
                     product.LastSellingPrice = item.PriceAfterDiscount;
                     await _unitOfWork.ProductDAL.UpdateAsync(product);
                 }
@@ -505,6 +513,7 @@ namespace DataService.Sales.Handlers
                 PaymentMethodId = entity.PaymentMethodId,
                 RefNo = entity.RefNo,
                 IsBilled = true,
+                BillId = entity.Id,
                 RepresentiveId = entity.RepresentiveId,
                 BillType = BillTypeEnum.Sales
             };

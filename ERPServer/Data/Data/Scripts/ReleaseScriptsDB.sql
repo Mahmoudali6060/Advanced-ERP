@@ -110,3 +110,12 @@ BACKUP DATABASE [ERP_Beta] TO  DISK = @SQLStatement
 
 
 
+----12_5_2024 Publiched:False
+ALTER TABLE Settings
+ADD ChangeProductPriceFromSales bit 
+
+ALTER TABLE Settings
+ADD ChangeProductPriceFromPurchases bit 
+
+
+
