@@ -75,6 +75,8 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	disableButton: boolean = false;
 	instructions: string;
 	showProductWithoutPrice: boolean = false;
+	tempDate: string | undefined;
+
 	constructor(
 		private salesBillService: SalesBillService,
 		private productService: ProductService,
@@ -176,6 +178,8 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	getSalesBillById(salesBillId: any, isPrint?: boolean) {
 		this.salesBillService.getById(salesBillId).subscribe((res: any) => {
 			this.salesBillHeaderDTO = res;
+			this.tempDate = this.salesBillHeaderDTO.date;
+
 			if (isPrint) {
 				this.print();
 				this.back();
@@ -233,6 +237,12 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 					this.toasterService.error(this.translate.instant("Errors.YouMustSelectProducts"));
 					return false;
 				}
+
+				// let duplicatedProduct = this.salesBillHeaderDTO.salesBillDetailList.filter(x => x.productId == item.productId);
+				// if (duplicatedProduct.length > 1) {
+				// 	this.alertService.showError(this.translate.instant("Errors.DuplicatedSelectedProduct"), this.translate.instant("Errors.Error"));
+				// 	return false;
+				// }
 			}
 		}
 
@@ -381,6 +391,16 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			if (salesBillDetail)
 				item.selledQuantity = salesBillDetail.quantity;
 			this.updateTotal();
+		}
+	}
+
+	onTransfereToBillChange() {
+		debugger;
+		if (this.isTransfereToBill) {
+			this.salesBillHeaderDTO.date = this.helperService.conveertDateToString(new Date());
+		}
+		else {
+			this.salesBillHeaderDTO.date = this.tempDate;
 		}
 	}
 

@@ -55,6 +55,7 @@ export class PurchasesBillFormComponent {
 	tempPurchasesBillDetailList: PurchasesBillDetailsDTO[];
 	paymentMethodList: LabelValuePair[];
 	disableButton: boolean = false;
+	tempDate: string | undefined;
 
 	constructor(
 		private purchasesBillService: PurchasesBillService,
@@ -140,6 +141,7 @@ export class PurchasesBillFormComponent {
 	getPurchasesBillById(purchasesBillId: any, isPrint?: boolean) {
 		this.purchasesBillService.getById(purchasesBillId).subscribe((res: any) => {
 			this.purchasesBillHeaderDTO = res;
+			this.tempDate = this.purchasesBillHeaderDTO.date;
 			if (isPrint) {
 				this.print();
 				this.back();
@@ -344,6 +346,16 @@ export class PurchasesBillFormComponent {
 		}
 	}
 
+
+
+	onTransfereToBillChange() {
+		if (this.isTransfereToBill) {
+			this.purchasesBillHeaderDTO.date = this.helperService.conveertDateToString(new Date());
+		}
+		else {
+			this.purchasesBillHeaderDTO.date = this.tempDate;
+		}
+	}
 
 
 	isTaxChange() {

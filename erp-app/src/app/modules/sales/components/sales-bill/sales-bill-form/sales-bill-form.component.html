@@ -43,7 +43,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-5" [ngClass]="{'disabled':salesBillHeaderDTO?.id!=null}">
+                            <div class="col-lg-5" [ngClass]="{'disabled':salesBillHeaderDTO?.id!=null && !salesBillHeaderDTO?.isTemp }">
                                 <label class="form-label" for="clientId">{{'General.Client'|translate}}</label>
                                 <div class="input-group">
                                     <ng-select name="clientId" id="clientId" class="ng-select-custom"
@@ -147,7 +147,7 @@
                                                         <td class="cell-width-35">
                                                             <div class="input-group">
                                                                 <ng-select [(ngModel)]="item.productId"
-                                                                    class="ng-select-custom text-font-size-md"
+                                                                    class="product-list ng-select-custom text-font-size-md"
                                                                     [ngModelOptions]="{standalone: true}"
                                                                     (change)="onProductChange(item,$event)">
                                                                     <ng-option *ngFor="let product of productList"
@@ -288,7 +288,7 @@
                                             class=" form-control-label">{{'General.TransfereToBill'
                                             |translate}}</label>
                                         <p-inputSwitch id="isTransfereToBill" [(ngModel)]="isTransfereToBill"
-                                            name="isTransfereToBill" class="input-switch"
+                                            name="isTransfereToBill" class="input-switch" (onChange)="onTransfereToBillChange()"
                                             [ngModelOptions]="{standalone: true}"></p-inputSwitch>
                                     </div>
                                 </div>

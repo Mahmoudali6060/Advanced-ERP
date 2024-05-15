@@ -43,7 +43,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-5" [ngClass]="{'disabled':purchasesBillHeaderDTO?.id!=null}">
+                            <div class="col-lg-5" [ngClass]="{'disabled':purchasesBillHeaderDTO?.id!=null && !purchasesBillHeaderDTO?.isTemp}">
                                 <label class="form-label" for="vendorId">{{'General.Vendor'|translate}}</label>
                                 <div class="input-group">
                                     <ng-select name="vendorId" id="vendorId" class="ng-select-custom"
@@ -268,7 +268,7 @@
                                             class=" form-control-label">{{'General.TransfereToBill'
                                             |translate}}</label>
                                         <p-inputSwitch id="isTransfereToBill" [(ngModel)]="isTransfereToBill"
-                                            name="isTransfereToBill" class="input-switch"
+                                            name="isTransfereToBill" class="input-switch" (onChange)="onTransfereToBillChange()"
                                             [ngModelOptions]="{standalone: true}"></p-inputSwitch>
                                     </div>
                                 </div>
