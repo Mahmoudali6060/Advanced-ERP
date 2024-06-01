@@ -179,7 +179,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		this.salesBillService.getById(salesBillId).subscribe((res: any) => {
 			this.salesBillHeaderDTO = res;
 			this.tempDate = this.salesBillHeaderDTO.date;
-
+			this.tempSalesBillDetailList = this.salesBillHeaderDTO.salesBillDetailList;
 			if (isPrint) {
 				this.print();
 				this.back();
@@ -375,6 +375,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 		var salesBillDetail = this.tempSalesBillDetailList?.find(x => x.productId == item.productId);
 
 		if (product) {
+			debugger;
 			item.price = overrideOldData ? product.sellingPrice : item.price;
 			item.lastPurchasingPrice = product.lastPurchasingPrice;
 			if (this.salesBillHeaderDTO.isReturned) {

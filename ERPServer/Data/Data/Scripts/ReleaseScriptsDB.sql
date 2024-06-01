@@ -90,7 +90,7 @@ ADD CONSTRAINT UQ_ClientVendor_Name UNIQUE(FullName,TypeId);
 END
 
 
---->>>>>3_9_2024 Published:False
+--->>>>>3_9_2024 Published:True
 
 ALTER TABLE AccountStatements
 ADD BillId BigInt Null
@@ -110,7 +110,7 @@ BACKUP DATABASE [ERP_Beta] TO  DISK = @SQLStatement
 
 
 
-----12_5_2024 Publiched:False
+----12_5_2024 Publiched:True
 ALTER TABLE Settings
 ADD ChangeProductPriceFromSales bit 
 
