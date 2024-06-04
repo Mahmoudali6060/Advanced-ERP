@@ -23,7 +23,7 @@ export class HelperService {
         return this._datePipe.transform(date, "yyyy-MM-dd"); //whatever format you need. 
     }
 
-    conveertDateToString(date: Date) {
+    conveertDateToString(date: Date):any {
         return (this._datePipe.transform(date, "yyyy-MM-dd"))?.toString(); //whatever format you need. 
     }
 

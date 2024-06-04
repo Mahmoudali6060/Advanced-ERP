@@ -75,7 +75,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-label" for="date">{{'General.Date'|translate}}</label>
-                                    <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.date" type="date"
+                                    <input [disabled]="viewMode" [(ngModel)]="purchasesBillHeaderDTO.date" type="datetime-local"
                                         id="date" class="form-control" #date="ngModel" name="date"
                                         [value]="purchasesBillHeaderDTO.date" aria-describedby="helpId">
 

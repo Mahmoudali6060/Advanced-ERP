@@ -6,7 +6,7 @@ export class PurchasesBillHeaderDTO extends AuditDTO {
     id: number | null;
     number: string;
     isActive: boolean;
-    date: string | undefined;
+    date: string ;
     clientVendorId: number | null;
     clientVendorName: string;
     notes: string;

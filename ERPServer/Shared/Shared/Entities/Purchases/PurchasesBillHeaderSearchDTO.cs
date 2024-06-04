@@ -9,7 +9,7 @@ namespace Data.Entities.Purchases
         public string DateFrom { get; set; }
         public string DateTo { get; set; }
         public string Notes { get; set; }
-        public long? VendorId { get; set; }
+        public long? ClientVendorId { get; set; }
         public bool? IsTemp { get; set; }
         public bool? IsReturned { get; set; }
         public string PersonPhoneNumber { get; set; }

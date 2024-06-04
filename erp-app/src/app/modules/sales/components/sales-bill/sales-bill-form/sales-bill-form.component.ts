@@ -75,7 +75,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	disableButton: boolean = false;
 	instructions: string;
 	showProductWithoutPrice: boolean = false;
-	tempDate: string | undefined;
+	tempDate: string;
 
 	constructor(
 		private salesBillService: SalesBillService,
@@ -180,6 +180,8 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			this.salesBillHeaderDTO = res;
 			this.tempDate = this.salesBillHeaderDTO.date;
 			this.tempSalesBillDetailList = this.salesBillHeaderDTO.salesBillDetailList;
+			this.salesBillHeaderDTO.date = this.helperService.conveertDateTimeToString(new Date(this.salesBillHeaderDTO.date));
+
 			if (isPrint) {
 				this.print();
 				this.back();
@@ -312,9 +314,12 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	public deleteRow(event: any, item: SalesBillDetailsDTO) {
 		this.salesBillHeaderDTO.salesBillDetailList = this.salesBillHeaderDTO.salesBillDetailList.filter(x => x.index != item.index);
 		this.updateTotal();
-		if (this.salesBillHeaderDTO.id) {
-			if (!this.salesBillHeaderDTO.removedSalesBillDetailList) this.salesBillHeaderDTO.removedSalesBillDetailList = [];
-			this.salesBillHeaderDTO.removedSalesBillDetailList.push(item);
+		if (item.productId) {
+			var salesBillDetail = this.originalSalesBillDetailsList?.find(x => x.productId == item.productId);
+			if (this.salesBillHeaderDTO.id && salesBillDetail) {
+				if (!this.salesBillHeaderDTO.removedSalesBillDetailList) this.salesBillHeaderDTO.removedSalesBillDetailList = [];
+				this.salesBillHeaderDTO.removedSalesBillDetailList.push(item);
+			}
 		}
 	}
 
@@ -368,7 +373,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			this.salesBillHeaderDTO.totalAmount = 0;
 			this.salesBillHeaderDTO.paid = 0;
 			this.salesBillHeaderDTO.remaining = 0;
-
+			this.salesBillHeaderDTO.notes = "";
 		}
 
 		let product = this.productList.find(x => x.id == item.productId);

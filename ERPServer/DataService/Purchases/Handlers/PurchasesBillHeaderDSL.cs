@@ -462,9 +462,9 @@ namespace DataService.Setup.Handlers
                 purchasesBillHeaderList = purchasesBillHeaderList.Where(x => x.Number.Contains(searchCriteriaDTO.Number));
             }
 
-            if (searchCriteriaDTO.VendorId.HasValue)
+            if (searchCriteriaDTO.ClientVendorId.HasValue)
             {
-                purchasesBillHeaderList = purchasesBillHeaderList.Where(x => x.ClientVendorId == searchCriteriaDTO.VendorId);
+                purchasesBillHeaderList = purchasesBillHeaderList.Where(x => x.ClientVendorId == searchCriteriaDTO.ClientVendorId);
             }
 
             if (searchCriteriaDTO.RepresentiveId.HasValue)

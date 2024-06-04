@@ -55,7 +55,8 @@ export class PurchasesBillFormComponent {
 	tempPurchasesBillDetailList: PurchasesBillDetailsDTO[];
 	paymentMethodList: LabelValuePair[];
 	disableButton: boolean = false;
-	tempDate: string | undefined;
+	tempDate: string ;
+	originaPurchasesBillDetailList: Array<PurchasesBillDetailsDTO> = new Array<PurchasesBillDetailsDTO>();
 
 	constructor(
 		private purchasesBillService: PurchasesBillService,
@@ -141,12 +142,17 @@ export class PurchasesBillFormComponent {
 	getPurchasesBillById(purchasesBillId: any, isPrint?: boolean) {
 		this.purchasesBillService.getById(purchasesBillId).subscribe((res: any) => {
 			this.purchasesBillHeaderDTO = res;
+			this.purchasesBillHeaderDTO.date = this.helperService.conveertDateTimeToString(new Date(this.purchasesBillHeaderDTO.date));
 			this.tempDate = this.purchasesBillHeaderDTO.date;
+
 			if (isPrint) {
 				this.print();
 				this.back();
 			}
 			else {
+				//To prevent change after cloning
+				this.originaPurchasesBillDetailList = res.purchasesBillDetailList.map((el: any) => Object.assign({}, el));
+
 				this.getAllProducts();
 				this.getAllVendors();
 				this.getAllRepresentives();
@@ -284,9 +290,13 @@ export class PurchasesBillFormComponent {
 	public deleteRow(event: any, item: PurchasesBillDetailsDTO) {
 		this.purchasesBillHeaderDTO.purchasesBillDetailList = this.purchasesBillHeaderDTO.purchasesBillDetailList.filter(x => x.index != item.index);
 		this.updateTotal();
-		if (this.purchasesBillHeaderDTO.id) {
-			if (!this.purchasesBillHeaderDTO.removedPurchasesBillDetailList) this.purchasesBillHeaderDTO.removedPurchasesBillDetailList = [];
-			this.purchasesBillHeaderDTO.removedPurchasesBillDetailList.push(item);
+
+		if (item.productId) {
+			var purchasesBillDetail = this.originaPurchasesBillDetailList?.find(x => x.productId == item.productId);
+			if (this.purchasesBillHeaderDTO.id && purchasesBillDetail) {
+				if (!this.purchasesBillHeaderDTO.removedPurchasesBillDetailList) this.purchasesBillHeaderDTO.removedPurchasesBillDetailList = [];
+				this.purchasesBillHeaderDTO.removedPurchasesBillDetailList.push(item);
+			}
 		}
 	}
 
@@ -321,6 +331,7 @@ export class PurchasesBillFormComponent {
 			this.purchasesBillHeaderDTO.totalAmount = 0;
 			this.purchasesBillHeaderDTO.paid = 0;
 			this.purchasesBillHeaderDTO.remaining = 0;
+			this.purchasesBillHeaderDTO.notes = "";
 
 		}
 		let product = this.productList.find(x => x.id == item.productId);

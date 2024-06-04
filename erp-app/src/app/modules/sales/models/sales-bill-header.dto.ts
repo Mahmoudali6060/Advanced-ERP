@@ -5,7 +5,7 @@ import { AuditDTO } from "src/app/shared/models/audit-dto.model";
 export class SalesBillHeaderDTO extends AuditDTO {
     number: string;
     isActive: boolean;
-    date: string | undefined;
+    date: string ;
     clientVendorId: number | null;
     clientVendorName: string;
     notes: string;
