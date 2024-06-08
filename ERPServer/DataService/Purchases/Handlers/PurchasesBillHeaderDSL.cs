@@ -36,7 +36,7 @@ namespace DataService.Setup.Handlers
             var purchasesBillHeaderList = await _unitOfWork.PurchasesBillHeaderDAL.GetAsync(null, x => x.ClientVendor, x => x.CreatedByProfile, x => x.ModifiedByProfile);
 
             #region Apply Filters
-            purchasesBillHeaderList.OrderByDescending(x => x.Id);
+            purchasesBillHeaderList= purchasesBillHeaderList.OrderByDescending(x => x.Id);
             purchasesBillHeaderList = ApplyFilert(purchasesBillHeaderList, searchCriteriaDTO);
             int total = purchasesBillHeaderList.Count();
             #endregion

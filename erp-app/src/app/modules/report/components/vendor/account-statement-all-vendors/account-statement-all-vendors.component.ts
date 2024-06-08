@@ -63,6 +63,7 @@ export class AccountStatementAllVendorsComponent {
 		this.searchCriteriaDTO = new ClientVendorSearchCriteriaDTO();
 		this.showFilterControls = !this.showFilterControls;
 		this.searchCriteriaDTO.accountStatusId = AccountStatusEnum.All;
+		this.searchCriteriaDTO.pageSize = 1000000;//To get All data 
 	}
 
 	getAllVendors() {
