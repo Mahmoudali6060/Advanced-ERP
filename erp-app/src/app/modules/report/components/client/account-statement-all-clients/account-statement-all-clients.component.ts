@@ -40,6 +40,8 @@ export class AccountStatementAllClientsComponent {
 	statusList: Array<string> | Boolean
 	statusDDL: any;
 	accountStatusList: LabelValuePair[];
+	totalDebit: number;
+	totalCredit: number;
 
 	constructor(private clientVendorService: ClientVendorService,
 		private confirmationDialogService: DialogService,
@@ -78,6 +80,8 @@ export class AccountStatementAllClientsComponent {
 		this.clientVendorService.getAll(this.searchCriteriaDTO).subscribe((res: any) => {
 			this.clientList = res.list;
 			this.total = res.total;
+			this.totalDebit=this.clientList.reduce((sum, current) => sum + current.debit, 0);
+			this.totalCredit=this.clientList.reduce((sum, current) => sum + current.credit, 0);
 			this.serverUrl = this._configService.getServerUrl();
 		});
 	}

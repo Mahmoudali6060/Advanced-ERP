@@ -175,8 +175,8 @@
     <br>
     <br>
     <br>
-    <h2 class="text-center" *ngIf="treasuryDTO.outComing>0"> إيصال إستلام نقدية</h2>
-    <h2 class="text-center" *ngIf="treasuryDTO.inComing>0"> إيصال صرف نقدية</h2>
+    <h2 class="text-center" *ngIf="treasuryDTO.inComing>0"> إيصال إستلام نقدية</h2>
+    <h2 class="text-center" *ngIf="treasuryDTO.outComing>0"> إيصال صرف نقدية</h2>
     <!-- <h5 class="text-center">رقم:{{treasuryDTO.number}}</h5> -->
     <h6 class="text-center">التاريخ:{{treasuryDTO.date}}</h6>
     <h6 class="text-center" >رقم الإيصال: <span id="treasuryNumber"></span></h6>
@@ -188,12 +188,12 @@
         <div class="col-12">
             <table class="table-report" style="background-color: white !important;border: none !important" border="0">
 
-                <tr *ngIf="treasuryDTO.outComing>0">
+                <tr *ngIf="treasuryDTO.inComing>0">
                     <td class="text-right"> استلمنا من السيد </td>
                     <td class="text-center text-bold"> {{treasuryDTO.beneficiaryName}} </td>
                     <td class="text-left">We received from</td>
                 </tr>
-                <tr *ngIf="treasuryDTO.inComing>0">
+                <tr *ngIf="treasuryDTO.outComing>0">
                     <td class="text-right"> اصرفوا الى السيد </td>
                     <td class="text-center text-bold"> {{treasuryDTO.beneficiaryName}} </td>
                     <td class="text-left">Pay for</td>

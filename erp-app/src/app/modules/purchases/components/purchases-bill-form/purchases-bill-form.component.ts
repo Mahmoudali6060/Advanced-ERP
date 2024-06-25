@@ -89,7 +89,7 @@ export class PurchasesBillFormComponent {
 			this.purchasesBillHeaderDTO.clientVendorId = null;
 			this.addNewRow();
 			//set today by default>>Insert Mode
-			this.purchasesBillHeaderDTO.date = this.helperService.conveertDateToString(new Date());
+			this.purchasesBillHeaderDTO.date = this.helperService.convertDateToString(new Date());
 			this.getAllProducts();
 			this.getAllVendors();
 			this.getAllRepresentives();
@@ -142,7 +142,7 @@ export class PurchasesBillFormComponent {
 	getPurchasesBillById(purchasesBillId: any, isPrint?: boolean) {
 		this.purchasesBillService.getById(purchasesBillId).subscribe((res: any) => {
 			this.purchasesBillHeaderDTO = res;
-			this.purchasesBillHeaderDTO.date = this.helperService.conveertDateTimeToString(new Date(this.purchasesBillHeaderDTO.date));
+			this.purchasesBillHeaderDTO.date = this.helperService.convertDateTimeToString(new Date(this.purchasesBillHeaderDTO.date));
 			this.tempDate = this.purchasesBillHeaderDTO.date;
 
 			if (isPrint) {
@@ -361,7 +361,7 @@ export class PurchasesBillFormComponent {
 
 	onTransfereToBillChange() {
 		if (this.isTransfereToBill) {
-			this.purchasesBillHeaderDTO.date = this.helperService.conveertDateToString(new Date());
+			this.purchasesBillHeaderDTO.date = this.helperService.convertDateToString(new Date());
 		}
 		else {
 			this.purchasesBillHeaderDTO.date = this.tempDate;

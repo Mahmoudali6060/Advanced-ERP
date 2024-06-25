@@ -34,6 +34,8 @@ export class AccountStatementAllVendorsComponent {
 	statusList: Array<string> | Boolean
 	statusDDL: any;
 	accountStatusList: LabelValuePair[];
+	totalDebit: number;
+	totalCredit: number;
 
 	constructor(private clientVendorService: ClientVendorService,
 		private confirmationDialogService: DialogService,
@@ -71,6 +73,8 @@ export class AccountStatementAllVendorsComponent {
 		this.clientVendorService.getAll(this.searchCriteriaDTO).subscribe((res: any) => {
 			this.vendorList = res.list;
 			this.total = res.total;
+			this.totalDebit=this.vendorList.reduce((sum, current) => sum + current.debit, 0);
+			this.totalCredit=this.vendorList.reduce((sum, current) => sum + current.credit, 0);
 			this.serverUrl = this._configService.getServerUrl();
 		});
 	}

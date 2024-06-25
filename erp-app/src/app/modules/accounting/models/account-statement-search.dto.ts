@@ -8,6 +8,7 @@ export class AccountStatementSearchDTO extends PagingDTO {
     dateFrom: string | undefined;
     dateTo: string | undefined;
     clientVendorId: number | null;
+    phone: string| null;
     beneficiaryName: string;
     paymentMethodId: PaymentMethodEnum | null;
     refNo: string;

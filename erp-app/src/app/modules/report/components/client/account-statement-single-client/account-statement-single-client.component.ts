@@ -44,6 +44,8 @@ export class AccountStatementSingleClientComponent {
 	billType = BillTypeEnum;
 	searchDateFrom: string;
 	searchDateTo: string;
+	searchCriteria: AccountStatementSearchDTO = new AccountStatementSearchDTO();
+
 	constructor(private clientVendorService: ClientVendorService,
 		private confirmationDialogService: DialogService,
 		private toastrService: ToastrService,
@@ -61,7 +63,7 @@ export class AccountStatementSingleClientComponent {
 		this.getAllClients();
 	}
 
-	onClientChange() {
+	onClientChange(event?: any) {
 		if (this.selectedClientId) {
 			let selectedClient: any = this.clientList.find(c => c.id == this.selectedClientId);
 			if (selectedClient) {
@@ -88,14 +90,13 @@ export class AccountStatementSingleClientComponent {
 
 	getAllByClientId(isPrint?: boolean) {
 		// if (this.selectedClientId) {
-		let searchCriteria: AccountStatementSearchDTO = new AccountStatementSearchDTO();
-		searchCriteria.pageSize = 1000000;
-		searchCriteria.clientVendorId = this.selectedClientId;
-		searchCriteria.representiveId = this.selectedClientRepresentiveId;
-		searchCriteria.dateFrom = this.searchDateFrom;
-		searchCriteria.dateTo = this.searchDateTo;
+		this.searchCriteria.pageSize = 1000000;
+		this.searchCriteria.clientVendorId = this.selectedClientId;
+		this.searchCriteria.representiveId = this.selectedClientRepresentiveId;
+		this.searchCriteria.dateFrom = this.searchDateFrom;
+		this.searchCriteria.dateTo = this.searchDateTo;
 
-		this.accountStatementService.getAll(searchCriteria).subscribe((res: any) => {
+		this.accountStatementService.getAll(this.searchCriteria).subscribe((res: any) => {
 			this.clientVendorBalanceList = res.list;
 			if (isPrint)
 				setTimeout(() => {

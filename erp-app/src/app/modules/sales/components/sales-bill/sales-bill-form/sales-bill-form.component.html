@@ -283,7 +283,7 @@
                                             [(ngModel)]="showProductWithoutPrice" name="showProductWithoutPrice"
                                             class="input-switch" [ngModelOptions]="{standalone: true}"></p-inputSwitch>
                                     </div>
-                                    <div class="col-l-3" *ngIf="salesBillHeaderDTO.isTemp">
+                                    <div class="col-l-3" *ngIf="isTemp">
                                         <label for="isTransfereToBill"
                                             class=" form-control-label">{{'General.TransfereToBill'
                                             |translate}}</label>

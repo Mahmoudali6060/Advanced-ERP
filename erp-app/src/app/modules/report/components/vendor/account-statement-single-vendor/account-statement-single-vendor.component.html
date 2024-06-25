@@ -13,7 +13,7 @@
                             <div class="col-lg-12">
 
                                 <div class="row">
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-6">
                                         <label class="form-label"
                                             for="selectedVendorId">{{'General.Vendor'|translate}}</label>
                                         <ng-select name="selectedVendorId" id="selectedVendorId"
@@ -22,7 +22,8 @@
                                             <ng-option value=" null"
                                                 disabled>{{'General.SelectClient'|translate}}</ng-option>
                                             <ng-option *ngFor="let item of vendorList" [value]="item.id">
-                                                {{item.fullName}}
+                                        {{item.fullName}} {{item.phoneNumber1?"|"+item.phoneNumber1:""}}  {{item.phoneNumber2?"|"+item.phoneNumber2:""}}
+
                                             </ng-option>
                                         </ng-select>
                                     </div>

@@ -46,6 +46,6 @@ namespace Shared.Entities.Sales
         public bool ChangeProductPriceFromSales { get; set; }
         public virtual List<SalesBillDetailDTO> SalesBillDetailList { get; set; }
         public virtual List<SalesBillDetailDTO> RemovedSalesBillDetailList { get; set; }
-
+        public bool IsTempPageMode { get; set; }
     }
 }

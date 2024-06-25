@@ -23,14 +23,15 @@ export class HelperService {
         return this._datePipe.transform(date, "yyyy-MM-dd"); //whatever format you need. 
     }
 
-    conveertDateToString(date: Date):any {
+    convertDateToString(date: Date):any {
         return (this._datePipe.transform(date, "yyyy-MM-dd"))?.toString(); //whatever format you need. 
     }
 
-    conveertDateTimeToString(date: Date) {
-        let newDate = new Date(date.setHours(date.getHours() + 2));
-        return newDate.toISOString().slice(0, 16);;
+    convertDateTimeToString(date: Date):any {
+        return (this._datePipe.transform(date, "yyyy-MM-dd hh:mm"))?.toString(); //whatever format you need. 
     }
+
+   
     useLanguage(language: string): void {
         const htmlTag = document.getElementsByTagName("html")[0] as HTMLHtmlElement;
         htmlTag.dir = language === "ar" ? "rtl" : "ltr";

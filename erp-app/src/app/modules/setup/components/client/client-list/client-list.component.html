@@ -127,7 +127,8 @@
                         <td>{{item.code}}</td>
                         <td>{{item.fullName}}</td>
                         <td>{{item.debit-item.credit}}</td>
-                        <td>{{item.phoneNumber1}} | {{item.phoneNumber2}}</td>
+                        <td> {{item.phoneNumber1?item.phoneNumber1:""}}
+                            {{item.phoneNumber2?"|"+item.phoneNumber2:""}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.notes}}</td>
                         <td>

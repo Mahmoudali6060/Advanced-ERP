@@ -36,20 +36,20 @@ namespace DataService.Accounting.Handlers
         #region Query
         public async Task<ResponseEntityList<AccountStatementDTO>> GetAll(AccountStatementSearchDTO searchCriteriaDTO)
         {
-            var treasuryList = await _unitOfWork.AccountStatementDAL.GetAsync(x => x.IsCancel == false, x => x.ClientVendor);
+            var accountStatementList = await _unitOfWork.AccountStatementDAL.GetAsync(x => x.IsCancel == false, x => x.ClientVendor);
             #region Apply Filters
-            treasuryList = treasuryList.OrderByDescending(x => x.Id);
-            treasuryList = ApplyFilert(treasuryList, searchCriteriaDTO);
-            int total = treasuryList.Count();
+            accountStatementList = accountStatementList.OrderByDescending(x => x.Id);
+            accountStatementList = ApplyFilert(accountStatementList, searchCriteriaDTO);
+            int total = accountStatementList.Count();
 
             #endregion
 
             #region Apply Pagination
-            treasuryList = treasuryList.Skip((searchCriteriaDTO.Page - 1) * searchCriteriaDTO.PageSize).Take(searchCriteriaDTO.PageSize);
+            accountStatementList = accountStatementList.Skip((searchCriteriaDTO.Page - 1) * searchCriteriaDTO.PageSize).Take(searchCriteriaDTO.PageSize);
             #endregion
 
             #region Mapping and Return List
-            var treasuryDTOList = _mapper.Map<IEnumerable<AccountStatementDTO>>(treasuryList);
+            var treasuryDTOList = _mapper.Map<IEnumerable<AccountStatementDTO>>(accountStatementList);
             return new ResponseEntityList<AccountStatementDTO>
             {
                 List = treasuryDTOList,
@@ -198,6 +198,12 @@ namespace DataService.Accounting.Handlers
             {
                 AccountStatementList = AccountStatementList.Where(x => x.ClientVendorId == searchCriteriaDTO.ClientVendorId);
             }
+
+            if (!string.IsNullOrWhiteSpace(searchCriteriaDTO.PhoneNumber))
+            {
+                AccountStatementList = AccountStatementList.Where(x => x.ClientVendor.PhoneNumber1 == searchCriteriaDTO.PhoneNumber || x.ClientVendor.PhoneNumber2 == searchCriteriaDTO.PhoneNumber);
+            }
+
             if (searchCriteriaDTO.RepresentiveId.HasValue)
             {
                 AccountStatementList = AccountStatementList.Where(x => x.RepresentiveId == searchCriteriaDTO.RepresentiveId);

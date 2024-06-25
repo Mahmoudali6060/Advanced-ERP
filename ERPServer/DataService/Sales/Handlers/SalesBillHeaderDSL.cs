@@ -215,7 +215,7 @@ namespace DataService.Sales.Handlers
                 foreach (var item in tempSalesBillDetailList)
                 {
                     var exsitedSalesBillDetails = exsitedSalesBillDetailList.SingleOrDefault(x => x.Id == item.Id && x.ProductId == item.ProductId);
-                    decimal quantity = exsitedSalesBillDetails != null ? item.Quantity - exsitedSalesBillDetails.Quantity : item.Quantity;
+                    decimal quantity = exsitedSalesBillDetails != null && entity.IsTempPageMode==false ? item.Quantity - exsitedSalesBillDetails.Quantity : item.Quantity;
                     var product = await _unitOfWork.ProductDAL.GetByIdAsync(item.ProductId);
                     product.ActualQuantity = entity.IsReturned == true ? product.ActualQuantity + quantity : product.ActualQuantity - quantity;
                     if (entity.ChangeProductPriceFromSales == true)

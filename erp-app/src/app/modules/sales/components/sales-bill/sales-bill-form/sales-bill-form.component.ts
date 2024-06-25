@@ -112,7 +112,7 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 			this.salesBillHeaderDTO.clientVendorId = null;
 			this.addNewRow();
 			//set today by default>>Insert Mode
-			this.salesBillHeaderDTO.date = this.helperService.conveertDateToString(new Date());
+			this.salesBillHeaderDTO.date = this.helperService.convertDateToString(new Date());
 			this.getAllProducts();
 			this.getAllClients();
 			this.getAllRepresentives();
@@ -178,9 +178,12 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 	getSalesBillById(salesBillId: any, isPrint?: boolean) {
 		this.salesBillService.getById(salesBillId).subscribe((res: any) => {
 			this.salesBillHeaderDTO = res;
-			this.tempDate = this.salesBillHeaderDTO.date;
 			this.tempSalesBillDetailList = this.salesBillHeaderDTO.salesBillDetailList;
-			this.salesBillHeaderDTO.date = this.helperService.conveertDateTimeToString(new Date(this.salesBillHeaderDTO.date));
+			this.salesBillHeaderDTO.date = this.helperService.convertDateTimeToString(new Date(this.salesBillHeaderDTO.date));
+			this.tempDate = this.salesBillHeaderDTO.date;
+			
+			this.isTemp = this.salesBillHeaderDTO.isTemp;
+			this.salesBillHeaderDTO.isTempPageMode=this.salesBillHeaderDTO.isTemp;
 
 			if (isPrint) {
 				this.print();
@@ -402,11 +405,14 @@ export class SalesBillFormComponent implements ComponentCanDeactivate {
 
 	onTransfereToBillChange() {
 		debugger;
+		this.salesBillHeaderDTO.paid=null;
 		if (this.isTransfereToBill) {
-			this.salesBillHeaderDTO.date = this.helperService.conveertDateToString(new Date());
+			this.salesBillHeaderDTO.date = this.helperService.convertDateTimeToString(new Date());
+			this.salesBillHeaderDTO.isTemp = false;
 		}
 		else {
 			this.salesBillHeaderDTO.date = this.tempDate;
+			this.salesBillHeaderDTO.isTemp = true;
 		}
 	}
 

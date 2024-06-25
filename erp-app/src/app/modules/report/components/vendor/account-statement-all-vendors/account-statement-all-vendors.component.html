@@ -7,6 +7,14 @@
                 <button class="au-btn-filter" (click)="toggleFilter()">
                     <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
             </div>
+            <h6>
+                {{'General.TotalDebit'|translate}}: {{totalDebit |  currency:' '}}
+                &nbsp;
+                {{'General.TotalCredit'|translate}}: {{totalCredit |  currency:' '}}
+                &nbsp;
+                {{'General.Balance'|translate}}: {{(totalDebit-totalCredit) |  currency:' '}}
+            </h6>
+         
             <button (click)="print()" type="button" class="btn btn-outline-success mr-1">
                 <i class="fa fa-print"></i>{{'General.Print' |translate}}
             </button>
@@ -22,7 +30,8 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label class="form-label" for="dateFrom">{{'General.DateFrom'|translate}}</label>
+                                        <label class="form-label"
+                                            for="dateFrom">{{'General.DateFrom'|translate}}</label>
                                         <input [(ngModel)]="searchCriteriaDTO.dateFrom" type="date" id="dateFrom"
                                             class="form-control" #dateFrom="ngModel" name="dateFrom"
                                             [value]="searchCriteriaDTO.dateFrom" aria-describedby="helpId">
@@ -38,7 +47,7 @@
 
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-label"
@@ -54,7 +63,7 @@
                                     <div class="form-group">
                                         <label class="form-label"
                                             for="form3Example3c">{{'General.AccountStatus'|translate}}</label>
-                                        <ng-select  name="accountStatusId" id="accountStatusId"
+                                        <ng-select name="accountStatusId" id="accountStatusId"
                                             [(ngModel)]="searchCriteriaDTO.accountStatusId">
                                             <ng-option *ngFor="let item of accountStatusList" [value]="item.value">
                                                 {{'AccountStatusEnum.'+item.label |translate}}
@@ -138,7 +147,8 @@
                     <tr class="tr-shadow" *ngFor="let item of vendorList">
                         <td>{{item.code}}</td>
                         <td>
-                            <a [routerLink]="['/report/account-statement-single-vendor/'+item.id]"> {{item.fullName}}</a>
+                            <a [routerLink]="['/report/account-statement-single-vendor/'+item.id]">
+                                {{item.fullName}}</a>
                         </td>
                         <td>{{item.debit-item.credit}}</td>
                         <td>{{item.phoneNumber1}} | {{item.phoneNumber2}}</td>

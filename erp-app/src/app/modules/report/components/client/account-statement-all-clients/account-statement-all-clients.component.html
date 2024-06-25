@@ -7,6 +7,14 @@
                 <button class="au-btn-filter" (click)="toggleFilter()">
                     <i class="zmdi zmdi-filter-list"></i>{{'General.Filter'|translate}}</button>
             </div>
+            <h6>
+                {{'General.TotalDebit'|translate}}: {{totalDebit}}
+                &nbsp;
+                {{'General.TotalCredit'|translate}}: {{totalCredit}}
+                &nbsp;
+                {{'General.Balance'|translate}}: {{totalDebit-totalCredit}}
+            </h6>
+         
             <button (click)="print()" type="button" class="btn btn-outline-success mr-1">
                 <i class="fa fa-print"></i>{{'General.Print' |translate}}
             </button>

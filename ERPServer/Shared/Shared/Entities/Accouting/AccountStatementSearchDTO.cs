@@ -17,5 +17,6 @@ namespace Shared.Entities.Accouting
         public string CheckNo { get; set; }
         public string Notes { get; set; }
         public long? RepresentiveId { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }
